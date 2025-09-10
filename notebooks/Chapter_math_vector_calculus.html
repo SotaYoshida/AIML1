@@ -1,0 +1,845 @@
+
+<!DOCTYPE html>
+
+
+<html lang="ja" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>1. ベクトル解析 &#8212; AI・機械学習論1</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=1cf7f4d9"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/translations.js?v=91613774"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/Chapter_math_vector_calculus';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="2. 線形代数" href="Chapter_math_linearalgebra.html" />
+    <link rel="prev" title="AI・機械学習論1" href="../home.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="ja"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">本文へスキップ</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>トップに戻る</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="バージョン警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../home.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo_AIML1.png" class="logo__image only-light" alt="AI・機械学習論1 - Home"/>
+    <img src="../_static/logo_AIML1.png" class="logo__image only-dark pst-js-only" alt="AI・機械学習論1 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">検索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../home.html">
+                    AI・機械学習論1
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">機械学習のための数学</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">1. ベクトル解析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_math_linearalgebra.html">2. 線形代数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_math_probabilitydistributions.html">3. 確率と確率分布</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">回帰</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter_regression.html">4. 回帰の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_linear_regression.html">5. 線形回帰</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_GaussianProcess.html">6. ガウス過程（Gaussian Process）</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">分類</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_1.html">7. 分類問題の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_2.html">8. 多クラス分類</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">ニューラルネットワーク</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN_Intro.html">9. ニューラルネットワークの概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN2_Backprop.html">10. 誤差逆伝播法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_Optimization.html">11. 機械学習における最適化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN_regression.html">12. 機械学習: ニューラルネットワークによる回帰</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">データの表現・モデルの評価</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Data_representation.html">13. 機械学習におけるデータ表現の基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_Model_evaluation.html">14. モデルの評価・過学習・正則化</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">発展的な話題</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter_PCA.html">15. 主成分分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_GMM.html">16. 混合ガウシアンモデル(Gaussian Mixture Model, GMM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_KAN.html">17. KAN: Kolmogorov–Arnold Networks</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="ソースリポジトリ"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fnotebooks/Chapter_math_vector_calculus.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="問題を報告"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="このページをダウンロード">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/notebooks/Chapter_math_vector_calculus.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="ソースファイルをダウンロード"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="PDFに印刷"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全画面モード"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="ライト"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="ダーク"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>ベクトル解析</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目次 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.1. 一変数の微分</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">1.1.1. テイラー展開</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1.1.2. 微分の基本的性質</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">1.2. 偏微分: 多変数への拡張</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">1.3. ベクトル値関数の微分</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hessian">1.3.1. Hessian</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">1.4. 条件つき最適化</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1><span class="section-number">1. </span>ベクトル解析<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>機械学習アルゴリズムの多くは、目的関数と呼ばれる関数の最小化に基づいている。例えば:</p>
+<ul class="simple">
+<li><p>線形回帰(≒曲線のフィッティング)では、尤度が最大となるように重みパラメータを調整する。</p></li>
+<li><p>ニューラルネットワークでは、損失関数が最小となるように重みやバイアスと呼ばれるパラメータを調整する。</p></li>
+<li><p>クラスタリングでは、クラスタの中心がデータ点から最も近いように調整する。</p></li>
+<li><p>オートエンコーダでは、入力データと復元されたデータの差が最小となるようにパラメータを調整する。</p></li>
+<li><p>混合ガウスモデル(GMM)では、各ガウス分布の平均・分散を調整して尤度が最大となるようにする。</p></li>
+</ul>
+<p>これらの問題は、勾配に基づく最適化アルゴリズムを用いて解くことが多い。</p>
+<p>こうした目的関数を最小化するためには、一般に多変数の関数の微分を計算する必要がある。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+f: \mathbb{R}^D &amp;\to \mathbb{R} \\
+\mathbf{x} &amp;\mapsto f(\mathbf{x}) = f(x_1, x_2, \ldots, x_D)
+\end{align}
+\end{split}\]</div>
+<p>上で関数<span class="math notranslate nohighlight">\(f\)</span>は<span class="math notranslate nohighlight">\(D\)</span>次元の実数値ベクトル<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>を入力として受け取り、実数値を出力する関数である。</p>
+<p><span class="math notranslate nohighlight">\(N\)</span>個のデータ点を持つデータセット <span class="math notranslate nohighlight">\(\{(x_i, y_i)\}_{i=1}^N\)</span> が与えられた際、直線<span class="math notranslate nohighlight">\(f(x)=ax+b\)</span>で近似する線形回帰を考えるとする。この際、最小化すべき目的関数は次のように定義される。</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+f(a, b) &amp;= \frac{1}{N} \sum_{i=1}^N (y_i - (ax_i + b))^2 
+\end{align}
+\]</div>
+<p>ここで、<span class="math notranslate nohighlight">\(y_i\)</span>は<span class="math notranslate nohighlight">\(i\)</span>番目のデータ点の出力値、<span class="math notranslate nohighlight">\(x_i\)</span>は<span class="math notranslate nohighlight">\(i\)</span>番目のデータ点の入力値である。
+データ点が固定されているとき、傾きと切片のパラメータ<span class="math notranslate nohighlight">\((a, b)\)</span>を調整して
+目的関数<span class="math notranslate nohighlight">\(f(a, b)\)</span>を最小化することが目的となる。
+これはまさに上の多変数関数の定義の特殊な場合になっている。</p>
+<section id="id2">
+<h2><span class="section-number">1.1. </span>一変数の微分<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>関数<span class="math notranslate nohighlight">\(f\)</span>が一変数のとき、微分は次のように定義される。</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+\frac{df}{dx} &amp;= \lim_{h \to 0} \frac{f(x + h) - f(x)}{h}
+\end{align}
+\]</div>
+<section id="id3">
+<h3><span class="section-number">1.1.1. </span>テイラー展開<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<div class="tip admonition">
+<p class="admonition-title">定義: テイラー級数</p>
+<p>滑らかな関数<span class="math notranslate nohighlight">\(f \in C^\infty\)</span>が点<span class="math notranslate nohighlight">\(x_0\)</span>で定義されているとき、<span class="math notranslate nohighlight">\(f\)</span>のテイラー級数は次のように定義される。</p>
+<div class="math notranslate nohighlight" id="equation-taylorseries">
+<span class="eqno">(1.1)<a class="headerlink" href="#equation-taylorseries" title="Link to this equation">#</a></span>\[
+\begin{align}
+T_\infty(x) &amp;= \sum_{n=0}^\infty \frac{f^{(n)}(x_0)}{n!} (x - x_0)^n
+\end{align}
+\]</div>
+<p>特に<span class="math notranslate nohighlight">\(x_0 = 0\)</span>のとき、テイラー級数はマクローリン級数と呼ばれる。</p>
+<p>また、<span class="math notranslate nohighlight">\(f(x) = T_\infty(x)\)</span>が成り立つとき、<span class="math notranslate nohighlight">\(f\)</span>は<span class="math notranslate nohighlight">\(x_0\)</span>でテイラー展開可能であるという。</p>
+</div>
+<div class="important admonition">
+<p class="admonition-title">問題</p>
+<p>多項式関数<span class="math notranslate nohighlight">\(f(x) = x^3\)</span>があるとき、<span class="math notranslate nohighlight">\(x_0 = 1\)</span>におけるテイラー多項式</p>
+<div class="math notranslate nohighlight">
+\[
+T_k(x) \equiv \sum_{n=0}^k \frac{f^{(n)}(x_0)}{n!} (x - x_0)^n
+\]</div>
+<p>の次数<span class="math notranslate nohighlight">\(k\)</span>に応じた展開を求め、テイラー級数がもとの関数<span class="math notranslate nohighlight">\(f\)</span>と一致することを確認せよ。<span class="math notranslate nohighlight">\(T^4\)</span>以降が0であることは用いて良い。</p>
+</div>
+</section>
+<section id="id4">
+<h3><span class="section-number">1.1.2. </span>微分の基本的性質<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>線形性: <span class="math notranslate nohighlight">\(\frac{d}{dx}(af(x) + bg(x)) = a\frac{df}{dx} + b\frac{dg}{dx}\)</span></p></li>
+<li><p>積の微分: <span class="math notranslate nohighlight">\(\frac{d}{dx}(f(x)g(x)) = f(x)\frac{dg}{dx} + g(x)\frac{df}{dx}\)</span></p></li>
+<li><p>商の微分: <span class="math notranslate nohighlight">\(\frac{d}{dx}\left(\frac{f(x)}{g(x)}\right) = \frac{f(x)\frac{dg}{dx} - g(x)\frac{df}{dx}}{g(x)^2}\)</span></p></li>
+<li><p>合成関数の微分: <span class="math notranslate nohighlight">\(\frac{d}{dx}f(g(x)) = f'(g(x))\frac{dg}{dx}\)</span></p></li>
+</ul>
+<p>特に合成関数の微分は連鎖律(チェインルール)とも呼ばれ、ニューラルネットワークの逆伝播アルゴリズムにおいて重要な役割を果たす。</p>
+<div class="important admonition">
+<p class="admonition-title">問題</p>
+<p>以下の関数<span class="math notranslate nohighlight">\(f,g\)</span>で定義される合成関数<span class="math notranslate nohighlight">\(h(x) = f(g(x))\)</span>の微分を求めて、連鎖律を確認せよ。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+f(x) &amp;= x^2 + 3x + 1 \\
+g(x) &amp;= \exp(x)
+\end{align}
+\end{split}\]</div>
+</div>
+</section>
+</section>
+<section id="id5">
+<h2><span class="section-number">1.2. </span>偏微分: 多変数への拡張<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p>ここまでの議論を、多変数関数に拡張しよう。</p>
+<div class="tip admonition">
+<p class="admonition-title">定義: 偏微分</p>
+<p><span class="math notranslate nohighlight">\(n\)</span>個の変数<span class="math notranslate nohighlight">\(x_1, x_2, \ldots, x_n\)</span>を持つ関数<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>の偏微分は、次のように定義される。</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+\frac{\partial f}{\partial x_i} &amp;= \lim_{h \to 0} \frac{f(x_1, \ldots, x_i + h, \ldots, x_n) - f(x_1, \ldots, x_i, \ldots, x_n)}{h}
+\end{align}
+\]</div>
+<p>これらの偏微分をまとめた行ベクトルを勾配(gradient)と呼ぶ。</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+\nabla_{\mathbf{x}} f \equiv \mathrm{grad} f &amp;= \begin{bmatrix}
+\frac{\partial f}{\partial x_1} &amp; \frac{\partial f}{\partial x_2} &amp; \cdots &amp; \frac{\partial f}{\partial x_n}
+\end{bmatrix} \in \mathbb{R}^{1 \times n}
+\end{align}
+\]</div>
+<p>※文献によっては、勾配を列ベクトルとして定義することもある。</p>
+</div>
+<p>多変数の場合のチェインルールを整理しておこう。</p>
+<p>二変数関数<span class="math notranslate nohighlight">\(f: \mathbb{R}^2 \to \mathbb{R}\)</span>が<span class="math notranslate nohighlight">\(t\)</span>に依存する変数<span class="math notranslate nohighlight">\(x_1(t), x_2(t)\)</span>を持つとき、<span class="math notranslate nohighlight">\(f\)</span>の<span class="math notranslate nohighlight">\(t\)</span>に関する微分は次のように定義される。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+\frac{d}{dt} f(x_1(t), x_2(t)) &amp;= 
+\begin{bmatrix}
+\frac{\partial f}{\partial x_1} &amp; \frac{\partial f}{\partial x_2}
+\end{bmatrix}
+\begin{bmatrix}
+\frac{\partial x_1}{\partial t} \\
+\frac{\partial x_2}{\partial t}
+\end{bmatrix}
+= \frac{\partial f}{\partial x_1} \frac{\partial x_1(t)}{\partial t} 
++ \frac{\partial f}{\partial x_2} \frac{\partial x_2(t)}{\partial t}
+\end{align}
+\end{split}\]</div>
+<p>あるいは、<span class="math notranslate nohighlight">\(x_1, x_2\)</span>が<span class="math notranslate nohighlight">\(s, t\)</span>に依存する変数であるとき、次のように書くこともできる。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+\frac{df}{d (s,t)} &amp; = \frac{df}{d \mathbf{x}} \frac{d \mathbf{x}}{d (s,t)} 
+= \begin{bmatrix}
+\frac{\partial f}{\partial x_1} &amp; \frac{\partial f}{\partial x_2}
+\end{bmatrix}
+\begin{bmatrix}
+\frac{\partial x_1}{\partial s} &amp; \frac{\partial x_1}{\partial t} \\
+\frac{\partial x_2}{\partial s} &amp; \frac{\partial x_2}{\partial t}
+\end{bmatrix}
+\end{align}
+\end{split}\]</div>
+</section>
+<section id="id6">
+<h2><span class="section-number">1.3. </span>ベクトル値関数の微分<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<p>実数値関数<span class="math notranslate nohighlight">\(f: \mathbb{R}^n \to \mathbb{R}\)</span>に対する偏微分と勾配を、より一般のベクトル値関数<span class="math notranslate nohighlight">\(\mathbf{f}: \mathbb{R}^n \to \mathbb{R}^m\)</span>に拡張する。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+\mathbf{f}(\mathbf{x}) &amp;= \begin{bmatrix}
+f_1(\mathbf{x}) \\
+f_2(\mathbf{x}) \\
+\vdots \\
+f_m(\mathbf{x})
+\end{bmatrix}
+\in \mathbb{R}^m
+\end{align} 
+\end{split}\]</div>
+<p>このベクトル値関数の変数<span class="math notranslate nohighlight">\(x_i, \quad i= 1, \ldots, n\)</span>に関する偏微分は次のように定義される。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+\frac{\partial \mathbf{f}}{\partial x_i} 
+&amp;= \begin{bmatrix}
+\frac{\partial f_1}{\partial x_i} \\
+\frac{\partial f_2}{\partial x_i} \\
+\vdots \\
+\frac{\partial f_m}{\partial x_i}
+\end{bmatrix}
+\end{align}
+\end{split}\]</div>
+<p>上で実数値関数の場合に、勾配を各変数で偏微分した行ベクトルで定義したのに対し、ベクトル値関数の場合は各変数で偏微分した列ベクトルで定義していることに注意しよう。したがって、ベクトル値関数の勾配は次のように定義される。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+\frac{d\mathbf{f}(\mathbf{x})}{d \mathbf{x}}
+&amp;= \begin{bmatrix}
+\frac{\partial f_1}{\partial x_1} &amp; \cdots &amp; \frac{\partial f_1}{\partial x_n} \\
+\vdots &amp;\ddots &amp; \vdots \\
+\frac{\partial f_m}{\partial x_1} &amp; \cdots &amp; \frac{\partial f_m}{\partial x_n}
+\end{bmatrix}
+\in \mathbb{R}^{m \times n}
+\end{align}
+\end{split}\]</div>
+<p>これはまさに、ベクトル値関数<span class="math notranslate nohighlight">\(\mathbf{f}: \mathbb{R}^n \to \mathbb{R}^m\)</span>のヤコビ行列の定義を与えている:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+\mathbf{J} = \nabla_{\mathbf{x}} \mathbf{f} = \frac{d\mathbf{f}(\mathbf{x})}{d \mathbf{x}}
+&amp;= \begin{bmatrix}
+\frac{\partial \mathbf{f}}{\partial x_1} &amp; \frac{\partial \mathbf{f}}{\partial x_2} &amp; \cdots &amp; \frac{\partial \mathbf{f}}{\partial x_n}
+\end{bmatrix}
+= \begin{bmatrix}
+\frac{\partial f_1}{\partial x_1} &amp; \cdots &amp; \frac{\partial f_1}{\partial x_n} \\
+\vdots &amp;\ddots &amp; \vdots \\
+\frac{\partial f_m}{\partial x_1} &amp; \cdots &amp; \frac{\partial f_m}{\partial x_n}
+\end{bmatrix}
+\in \mathbb{R}^{m \times n}
+\end{align}
+\end{split}\]</div>
+<p>Jacobi行列(Jacobian)は、変数変換によるスケール変化を表す行列でもあり、確率密度分布や再パラメータ化などの文脈でも重要な役割を果たす。</p>
+<p>とくに、変数変換を伴う重積分では、ヤコビ行列の行列式が重要な役割を果たす。
+ヤコビ行列の行列式は、変数変換による体積の変化を表す。
+例えば、2次元の変数変換<span class="math notranslate nohighlight">\((x, y) \to (u, v)\)</span>において、ヤコビ行列は次のように定義される。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+\mathbf{J} &amp;= \begin{bmatrix}
+\frac{\partial u}{\partial x} &amp; \frac{\partial u}{\partial y} \\
+\frac{\partial v}{\partial x} &amp; \frac{\partial v}{\partial y}
+\end{bmatrix}
+\end{align}
+\end{split}\]</div>
+<p>このとき、</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+\int_A f(x, y) dxdy &amp;= \int_B g(u, v) |\det(J)| dudv
+\end{align}
+\]</div>
+<p>となる。ここで、<span class="math notranslate nohighlight">\(A\)</span>は<span class="math notranslate nohighlight">\((x, y)\)</span>平面上の領域、<span class="math notranslate nohighlight">\(B\)</span>は<span class="math notranslate nohighlight">\((u, v)\)</span>平面上の領域、<span class="math notranslate nohighlight">\(g(u, v)\)</span>は変数変換後の関数である。
+ヤコビ行列の行列式(Jacobian)の絶対値が積分に現れている。</p>
+<section id="hessian">
+<h3><span class="section-number">1.3.1. </span>Hessian<a class="headerlink" href="#hessian" title="Link to this heading">#</a></h3>
+<p>２階微分可能な実数値関数<span class="math notranslate nohighlight">\(f: \mathbb{R}^n \to \mathbb{R}\)</span>に対して、各変数で２回偏微分した行列をヘッセ行列(Hessian matrix)と呼ぶ。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\boldsymbol{H}_f
+&amp; = 
+\frac{\partial^2 f}{\partial \boldsymbol{x}^2} = \nabla^2 f
+= \begin{pmatrix}
+\frac{\partial^2 f}{\partial x^2_1} &amp; \cdots &amp; \frac{\partial^2 f}{\partial x_1 x_n} \\
+\vdots &amp; \ddots &amp; \vdots \\
+\frac{\partial^2 f}{\partial x_n x_1} &amp; \cdots &amp; \frac{\partial^2 f}{\partial x^2_n}
+\end{pmatrix}
+\end{align*}
+\end{split}\]</div>
+<p>微分が可換である(すなわち、<span class="math notranslate nohighlight">\(f\)</span>が２階連続微分可能である)ならば、ヘッセ行列は対称行列になる。
+ヘッセ行列は、関数<span class="math notranslate nohighlight">\(f\)</span>の２次微分に関する情報を提供し、最適化問題において重要な役割を果たす。</p>
+<p>視覚的には、ヘッセ行列は関数<span class="math notranslate nohighlight">\(f\)</span>の曲率を表し、関数の極値(最小値・最大値)の性質を理解するのに役立つ。</p>
+<p>パラメータが２次元の誤差関数をイメージしてみるとよい。
+ヘッセ行列の固有値が正であれば、その点は局所的な最小値であり、負であれば局所的な最大値である。固有値が混在している場合、その点は鞍点(saddle point)である。</p>
+</section>
+</section>
+<section id="id7">
+<h2><span class="section-number">1.4. </span>条件つき最適化<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<p>機械学習モデルのような特定のモデルでデータの説明を試みる場合、モデルのパラメータや変数に対して制約条件が課されることがある。
+こうした場合、制約条件を満たしつつ目的関数を最小化する必要がある。
+そのような問題を条件つき最適化問題と呼ぶが、中でも非常によく用いられる手法が <strong>ラグランジュ未定乗数法 (Lagrange multipliers)</strong> である。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\text{minimize} \quad &amp; f(\mathbf{x}) \\
+\text{subject to} \quad &amp; g_i(\mathbf{x}) = 0, \quad i = 1, \ldots, m
+\end{align*}
+\end{split}\]</div>
+<p>上の式の意味するところは、<span class="math notranslate nohighlight">\(m\)</span>個の制約条件<span class="math notranslate nohighlight">\(g_i(\mathbf{x}) = 0\)</span>を満たしつつ、目的関数<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>を最小化せよ、ということである。
+制約条件がない場合は、単に<span class="math notranslate nohighlight">\(\nabla f(\mathbf{x}) = 0\)</span>を解けばよいが、制約条件がある場合は以下のようにする。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\mathcal{L}(\mathbf{x}, \boldsymbol{\lambda}) &amp;= f(\mathbf{x}) + \sum_{i=1}^m \lambda_i g_i(\mathbf{x}) \\
+\nabla_{\mathbf{x}} \mathcal{L}(\mathbf{x}, \boldsymbol{\lambda}) &amp;= 0 \\
+\nabla_{\boldsymbol{\lambda}} \mathcal{L}(\mathbf{x}, \boldsymbol{\lambda}) &amp;= 0
+\end{align*}
+\end{split}\]</div>
+<p>この勾配の情報と、制約条件<span class="math notranslate nohighlight">\(g_i(\mathbf{x}) = 0\)</span>を同時に満たす点を探すことで、条件つき最適化問題を解くことができる。</p>
+<p><strong>練習問題</strong></p>
+<blockquote>
+<div><p>制約条件<span class="math notranslate nohighlight">\(x+y=1\)</span>のもとで、関数<span class="math notranslate nohighlight">\(f(x,y) = x^2 + y^2\)</span>を最小化せよ。</p>
+</div></blockquote>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\mathcal{L}(x,y,\lambda) &amp;= f(x,y) + \lambda (g(x,y)) \\
+&amp;= x^2 + y^2 + \lambda (x+y-1)
+\end{align*}
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\nabla_{(x,y,\lambda)} \mathcal{L}(x,y,\lambda) &amp;= 
+\begin{bmatrix}
+2x + \lambda \\
+2y + \lambda \\
+x + y - 1
+\end{bmatrix}   = 0
+\end{align*}
+\end{split}\]</div>
+<p>したがって、<span class="math notranslate nohighlight">\(x = y = \frac{1}{2}\)</span>が最適解である。</p>
+<p>問題の式をみると、<span class="math notranslate nohighlight">\(f(x,y)\)</span>は<span class="math notranslate nohighlight">\(x,y\)</span>の二乗和でありこれを<span class="math notranslate nohighlight">\(r^2\)</span>とおけば、原点を中心とする半径<span class="math notranslate nohighlight">\(r\)</span>の円上の点を表せる。
+一方で、制約条件<span class="math notranslate nohighlight">\(x+y=1\)</span>は、<span class="math notranslate nohighlight">\(x\)</span>軸と<span class="math notranslate nohighlight">\(y\)</span>軸の交点<span class="math notranslate nohighlight">\((1,0)\)</span>と<span class="math notranslate nohighlight">\((0,1)\)</span>を結ぶ直線を表す。
+したがって今の問題は、原点を中心とする半径<span class="math notranslate nohighlight">\(r\)</span>の円が、直線<span class="math notranslate nohighlight">\(x+y=1\)</span>に接するような<span class="math notranslate nohighlight">\(r\)</span>と接点を求める問題である事がわかる。</p>
+<p>簡単な問題の場合は、こうした幾何学的な解釈を行うことで、最適解を直感的に理解できることがあるが、より複雑な問題の場合は、ラグランジュ未定乗数法のような一般的な手法を用いるのが良いだろう。</p>
+<div class="important admonition">
+<p class="admonition-title">問題</p>
+<p>表面積が一定である直方体のうち、体積が最大となるものが立方体であることを示せ。</p>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../home.html"
+       title="前のページ">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">前へ</p>
+        <p class="prev-next-title">AI・機械学習論1</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Chapter_math_linearalgebra.html"
+       title="次ページ">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">次へ</p>
+        <p class="prev-next-title"><span class="section-number">2. </span>線形代数</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目次
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.1. 一変数の微分</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">1.1.1. テイラー展開</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1.1.2. 微分の基本的性質</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">1.2. 偏微分: 多変数への拡張</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">1.3. ベクトル値関数の微分</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hessian">1.3.1. Hessian</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">1.4. 条件つき最適化</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  © Copyright 2025 by 吉田 聡太 (Sota Yoshida). 本コンテンツは<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0 ライセンス</a>の下に提供されています。 <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>　ただし、資料中のコードセル部分は<a rel="license" href="https://opensource.org/licenses/MIT">MITライセンス</a>の下に提供されています。
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

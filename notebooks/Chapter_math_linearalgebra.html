@@ -1,0 +1,964 @@
+
+<!DOCTYPE html>
+
+
+<html lang="ja" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>2. 線形代数 &#8212; AI・機械学習論1</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=1cf7f4d9"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/translations.js?v=91613774"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/Chapter_math_linearalgebra';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="3. 確率と確率分布" href="Chapter_math_probabilitydistributions.html" />
+    <link rel="prev" title="1. ベクトル解析" href="Chapter_math_vector_calculus.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="ja"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">本文へスキップ</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>トップに戻る</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="バージョン警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../home.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo_AIML1.png" class="logo__image only-light" alt="AI・機械学習論1 - Home"/>
+    <img src="../_static/logo_AIML1.png" class="logo__image only-dark pst-js-only" alt="AI・機械学習論1 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">検索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../home.html">
+                    AI・機械学習論1
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">機械学習のための数学</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter_math_vector_calculus.html">1. ベクトル解析</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">2. 線形代数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_math_probabilitydistributions.html">3. 確率と確率分布</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">回帰</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter_regression.html">4. 回帰の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_linear_regression.html">5. 線形回帰</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_GaussianProcess.html">6. ガウス過程（Gaussian Process）</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">分類</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_1.html">7. 分類問題の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_2.html">8. 多クラス分類</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">ニューラルネットワーク</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN_Intro.html">9. ニューラルネットワークの概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN2_Backprop.html">10. 誤差逆伝播法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_Optimization.html">11. 機械学習における最適化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN_regression.html">12. 機械学習: ニューラルネットワークによる回帰</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">データの表現・モデルの評価</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Data_representation.html">13. 機械学習におけるデータ表現の基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_Model_evaluation.html">14. モデルの評価・過学習・正則化</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">発展的な話題</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter_PCA.html">15. 主成分分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_GMM.html">16. 混合ガウシアンモデル(Gaussian Mixture Model, GMM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_KAN.html">17. KAN: Kolmogorov–Arnold Networks</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="ソースリポジトリ"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fnotebooks/Chapter_math_linearalgebra.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="問題を報告"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="このページをダウンロード">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/notebooks/Chapter_math_linearalgebra.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="ソースファイルをダウンロード"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="PDFに印刷"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全画面モード"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="ライト"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="ダーク"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>線形代数</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目次 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.1. 行列・ベクトルの演算/基本的性質</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2.2. 行列式とトレース</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2.3. 逆行列</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">2.3.1. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 行列の条件数</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2.4. 特徴的な行列</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2.5. 固有値・固有ベクトル</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cholesky-decomposition">2.6. コレスキー分解 (Cholesky decomposition)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">2.7. 固有値分解</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.8. 特異値分解</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.9. 行列の指数関数</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pytorch">2.10. PyTorchにおける行列・ベクトルの表現</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1><span class="section-number">2. </span>線形代数<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>この資料では、Pythonの<code class="docutils literal notranslate"><span class="pre">numpy</span></code>や<code class="docutils literal notranslate"><span class="pre">PyTorch</span></code>での演算を意識しつつ線形代数の基本的な演算等の復習を行なう。</p>
+<section id="id2">
+<h2><span class="section-number">2.1. </span>行列・ベクトルの演算/基本的性質<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>行列やベクトルの演算は、機械学習は言わずもがな、計算機を用いて行なう演算の基本である。
+スパコンの性能ランキングを測る一つのベンチマークは行列演算で、TOP500と呼ばれるランキングが非常に有名である。</p>
+<p>日本が有する「富岳」は、2020年6月に1位となり、2021年11月までその座を維持し、
+2025年7月に発表されたTOP500のランキングにおいても世界第7位を記録している。</p>
+<p>ベクトルの一般的な定義は、「和とスカラー倍に関して閉じている集合」であるが、
+機械学習や計算機科学の分野では、実数または複素数成分を持つ量として直感的に定義されることが多い。
+<span class="math notranslate nohighlight">\(\mathbf{v} \in \mathbb{R}^n \quad\)</span> or <span class="math notranslate nohighlight">\(\quad \mathbf{v} \in \mathbb{C}^n\)</span></p>
+<p><code class="docutils literal notranslate"><span class="pre">numpy</span></code>では列ベクトルとして表す。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;v&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="s2">&quot;shape&quot;</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>v [1. 3. 5.] shape (3,)
+</pre></div>
+</div>
+</div>
+</div>
+<p>同様に行列も、二次元配列として表現される。適当な2行3列の行列を定義してみよう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="s2">&quot;shape&quot;</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>A [[1. 2. 3.]
+ [4. 5. 6.]] shape (2, 3)
+</pre></div>
+</div>
+</div>
+</div>
+<p>ベクトルは行列の特殊な場合として定義できるため、以下では特に断りが無い限り行列として扱う。</p>
+<p>行列同士の積は、行列の列数と行数が一致する場合に定義される。
+具体的には、<span class="math notranslate nohighlight">\(A \in \mathbb{R}^{m \times n}, B \in \mathbb{R}^{n \times p}\)</span> のとき、<span class="math notranslate nohighlight">\(C = AB \in \mathbb{R}^{m \times p}\)</span> である。
+<code class="docutils literal notranslate"><span class="pre">numpy</span></code>では、<code class="docutils literal notranslate"><span class="pre">&#64;</span></code>演算子または<code class="docutils literal notranslate"><span class="pre">np.matmul</span></code>関数を用いて行列積を計算することができる。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">C</span> <span class="o">=</span> <span class="n">A</span> <span class="o">@</span> <span class="n">B</span>
+<span class="c1"># または</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">C</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">A</span> <span class="c1"># A^T times A</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="s2">&quot;shape&quot;</span><span class="p">,</span> <span class="n">C</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C [[17. 22. 27.]
+ [22. 29. 36.]
+ [27. 36. 45.]] shape (3, 3)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span> <span class="c1"># A^T times A</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="s2">&quot;shape&quot;</span><span class="p">,</span> <span class="n">C</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C [[17. 22. 27.]
+ [22. 29. 36.]
+ [27. 36. 45.]] shape (3, 3)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id3">
+<h2><span class="section-number">2.2. </span>行列式とトレース<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>行列の行列式やトレースは、行列の特性を表す重要な値である。
+行列 <span class="math notranslate nohighlight">\(A\)</span> の行列式は、その行列が正方行列である場合に定義され、行列のスケーリングや線形変換の特性を示す。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+A = \begin{pmatrix}
+a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} \\
+a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n} \\ 
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+a_{m1} &amp; a_{m2} &amp; \cdots &amp; a_{mn}
+\end{pmatrix}
+\end{align*}
+\end{split}\]</div>
+<p>このとき、行列式は以下のように定義される。</p>
+<div class="math notranslate nohighlight">
+\[
+\det(A) = |A| = \sum_{\sigma \in S_n} \text{sgn}(\sigma) a_{1\sigma(1)} a_{2\sigma(2)} \cdots a_{n\sigma(n)}
+\]</div>
+<p>ここで、<span class="math notranslate nohighlight">\(\sigma\)</span>は<span class="math notranslate nohighlight">\(n\)</span>次対称群 <span class="math notranslate nohighlight">\(S_n\)</span> (1~nまでの整数に対する全ての置換が為す群) の要素であり、<span class="math notranslate nohighlight">\(\text{sgn}(\sigma)\)</span> は置換の符号(偶置換か奇置換か)を示す関数である。
+なお、<span class="math notranslate nohighlight">\(\sigma_{i,j}\)</span>は<span class="math notranslate nohighlight">\(i,j\)</span>の入れ替えを表す。
+元の順列が <span class="math notranslate nohighlight">\((1, 2, 3)\)</span>だったとき、あり得る置換は以下のようになる。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>置換 (右から作用させる)</p></th>
+<th class="head"><p>符号</p></th>
+<th class="head"><p>結果</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Identity</p></td>
+<td><p>偶置換</p></td>
+<td><p>(1, 2, 3)</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\sigma_{1,2}\)</span></p></td>
+<td><p>奇置換</p></td>
+<td><p>(2, 1, 3)</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\sigma_{1,3}\)</span></p></td>
+<td><p>奇置換</p></td>
+<td><p>(3, 2, 1)</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\sigma_{2,3}\)</span></p></td>
+<td><p>奇置換</p></td>
+<td><p>(1, 3, 2)</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\sigma_{1,2} \sigma_{2,3}\)</span></p></td>
+<td><p>偶置換</p></td>
+<td><p>(3, 1, 2)</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\sigma_{1,3} \sigma_{2,3}\)</span></p></td>
+<td><p>偶置換</p></td>
+<td><p>(2, 3, 1)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="important admonition">
+<p class="admonition-title">問題</p>
+<p><span class="math notranslate nohighlight">\(3\times 3\)</span>行列式に対する行列式の公式(Sarrusの式)は以下のように表される。</p>
+<div class="math notranslate nohighlight">
+\[
+\det(A) = a_{11}a_{22}a_{33} + a_{12}a_{23}a_{31} + a_{13}a_{21}a_{32}
+- a_{11}a_{23}a_{32} - a_{12}a_{21}a_{33} - a_{13}a_{22}a_{31}
+\]</div>
+<p>上の行列式の定義から、サラスの公式を導出せよ。</p>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">行列式の性質</p>
+<ul class="simple">
+<li><p>行列式の積: <span class="math notranslate nohighlight">\( \det(AB) = \det(A) \det(B) \)</span></p></li>
+<li><p>行列式の転置: <span class="math notranslate nohighlight">\( \det(A^T) = \det(A) \)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(A\)</span>が逆行列を持つとき、<span class="math notranslate nohighlight">\(\det(A^{-1}) = 1/\det(A)\)</span></p></li>
+<li><p>行ベクトル(あるいは列ベクトル)のスカラー倍を別の行(列)に加えても <span class="math notranslate nohighlight">\(\det(A)\)</span>は不変。</p></li>
+<li><p>ある行ベクトル(列ベクトル)をスカラー<span class="math notranslate nohighlight">\(a\)</span>倍すると、<span class="math notranslate nohighlight">\(\det(A') = a \det(A)\)</span>となる。したがって、<span class="math notranslate nohighlight">\(\det(aA) = a^n \det(A)\)</span>である。</p></li>
+</ul>
+</div>
+<p>行列のトレース(trace)は、対角要素の和で定義される:</p>
+<div class="math notranslate nohighlight">
+\[
+\text{tr}(A) = \sum^n_{i=1} a_{ii}
+\]</div>
+<div class="tip admonition">
+<p class="admonition-title">トレースの性質</p>
+<ul class="simple">
+<li><p>正方行列 <span class="math notranslate nohighlight">\(A,B \in \mathbb{R}^{n \times n}\)</span> に対して、<span class="math notranslate nohighlight">\(\text{tr}(A+B) = \text{tr}(A)+\text{tr}(B)\)</span></p></li>
+<li><p>スカラー<span class="math notranslate nohighlight">\(\alpha \in \mathbb{R}\)</span>に対して<span class="math notranslate nohighlight">\(\text{tr}(\alpha A) = \alpha \text{tr}(A)\)</span></p></li>
+<li><p>行列<span class="math notranslate nohighlight">\(A \in \mathbb{R}^{n \times k}, B \in \mathbb{R}^{k \times n}\)</span>に対して、<span class="math notranslate nohighlight">\(\text{tr}(AB) = \text{tr}(BA)\)</span>が成り立つ.</p></li>
+</ul>
+</div>
+</section>
+<section id="id4">
+<h2><span class="section-number">2.3. </span>逆行列<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>逆行列は、行列 <span class="math notranslate nohighlight">\(A\)</span> に対して <span class="math notranslate nohighlight">\(A^{-1}\)</span> と表され、以下の条件を満たす行列である。</p>
+<div class="math notranslate nohighlight">
+\[
+A A^{-1} = A^{-1} A = I
+\]</div>
+<p>ここで、<span class="math notranslate nohighlight">\(I\)</span> は単位行列であり、対角成分が全て1で他の成分が0の正方行列である。
+逆行列は、行列の線形変換を元に戻す操作を表す。
+逆行列が存在する行列を可逆行列または正則行列と呼ぶ。</p>
+<p><span class="math notranslate nohighlight">\(n\)</span>次正方行列が正則であることと同値な条件は幾つかあるが、代表的なものとして以下が挙げられる:</p>
+<ul class="simple">
+<li><p>行列式が0でない (Aの固有値が全て0でない)</p></li>
+<li><p>列ベクトルが線形独立である</p></li>
+<li><p>行列のランクが<span class="math notranslate nohighlight">\(n\)</span>である</p></li>
+</ul>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>数値計算を専門にする人は、余程のことが無い限り行列の逆行列を求めることは避ける。世の中には逆行列を計算すると破門になる研究室もあるらしい。</p>
+</aside>
+<p>たとえばPythonでは<code class="docutils literal notranslate"><span class="pre">numpy.linalg</span></code>モジュールを用いると、行列の逆行列を計算することができる。
+...と書いたが、実際の数値計算では、行列の逆行列を求めることは数値的に不安定な場合があり、一般には避けるべきである。
+例えば、<span class="math notranslate nohighlight">\(Ax = b\)</span> を解く(<span class="math notranslate nohighlight">\(x\)</span>を求める)のに、<span class="math notranslate nohighlight">\(x = A^{-1}b\)</span> として逆行列を求める方法は、一般に望ましくない。
+Web上に転がっているデータ分析のコードを見ていると、逆行列を求めているものが多いが、これは数値的に不安定な場合があるため、注意が必要である。
+では、逆行列を求めずに様々な演算を行うにはどうすればよいのか。そこで必要になるのが、種々の行列の分解になる。
+例えばコレスキー分解やLU分解、など対象となる行列の特性に応じて様々な分解が存在する。
+これらの分解を用いることで、逆行列を明示的に求めることなく、行列の演算を行うことができる。</p>
+<section id="clubsuit">
+<h3><span class="section-number">2.3.1. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> 行列の条件数<a class="headerlink" href="#clubsuit" title="Link to this heading">#</a></h3>
+<p>行列の条件数(condition number)は、行列の数値的な安定性を評価するためにも用いられる。
+条件数の大きな行列は、数値計算において誤差が増幅されやすく、逆行列の計算などが不安定になる可能性があり、悪条件(ill-conditioned)であるとも言われる。</p>
+<p>行列 <span class="math notranslate nohighlight">\(A\)</span> の条件数は、以下のように定義される。</p>
+<div class="math notranslate nohighlight">
+\[
+\kappa(A) = \|A\| \|A^{-1}\|
+\]</div>
+<p>ここで、<span class="math notranslate nohighlight">\(\|A\|\)</span> は行列 <span class="math notranslate nohighlight">\(A\)</span> のノルムであり、<span class="math notranslate nohighlight">\(\|A^{-1}\|\)</span> は <span class="math notranslate nohighlight">\(A\)</span> の逆行列のノルムである。一般に、条件数は行列の特異値分解を用いて計算されることが多い。
+ノルムの定義によって条件数の値は異なるが、一般的にはL2ノルムがよく用いられる。</p>
+<div class="math notranslate nohighlight">
+\[
+\|A\|_2 = \sigma_{\text{max}}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\kappa_2(A) = \|A\|_2 \|A^{-1}\|_2 = \frac{\sigma_{\text{max}}}{\sigma_{\text{min}}}
+\]</div>
+<p>ここで、<span class="math notranslate nohighlight">\(\sigma_{\text{max}}\)</span> は行列 <span class="math notranslate nohighlight">\(A\)</span> の最大特異値、<span class="math notranslate nohighlight">\(\sigma_{\text{min}}\)</span> は最小特異値である。
+仮に逆行列の計算が難しい場合でも、特異値分解を用いることで条件数を評価することができる。</p>
+<p>また、<span class="math notranslate nohighlight">\(A\)</span>がrank落ちしている場合、つまり<span class="math notranslate nohighlight">\(\sigma_{\text{min}} = 0\)</span>の場合、条件数は無限大となり、逆行列は存在しない。</p>
+</section>
+</section>
+<section id="id5">
+<h2><span class="section-number">2.4. </span>特徴的な行列<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p>行列の中には、特に重要な役割を果たすものがある。以下に、代表的なものを挙げる。</p>
+<ul class="simple">
+<li><p>対称行列: <span class="math notranslate nohighlight">\(A^T = A\)</span></p></li>
+<li><p>直交行列: <span class="math notranslate nohighlight">\(Q^T Q = Q^T Q = I\)</span> (<span class="math notranslate nohighlight">\(Q^T\)</span> は転置行列)</p></li>
+<li><p>エルミート行列: <span class="math notranslate nohighlight">\(A^\dagger = A\)</span> (<span class="math notranslate nohighlight">\(A^\dagger\)</span> はエルミート共役、つまり転置かつ複素共役)</p></li>
+<li><p>反エルミート行列: <span class="math notranslate nohighlight">\(A^\dagger = -A\)</span></p></li>
+<li><p>ユニタリ行列: <span class="math notranslate nohighlight">\(U^\dagger U = I\)</span></p></li>
+<li><p>正定値行列: 任意の非ゼロベクトル<span class="math notranslate nohighlight">\(x\)</span>に対して、<span class="math notranslate nohighlight">\(x^T A x &gt; 0\)</span>を満たす実対称行列</p></li>
+</ul>
+</section>
+<section id="id6">
+<h2><span class="section-number">2.5. </span>固有値・固有ベクトル<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<p>正方行列 <span class="math notranslate nohighlight">\(A \in \mathbb{R}^{n \times n}\)</span>に対して、</p>
+<div class="math notranslate nohighlight">
+\[
+A \mathbf{x} = \lambda \mathbf{x}
+\]</div>
+<p>が非自明な解<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>を持つとき、<span class="math notranslate nohighlight">\(\lambda\)</span>と<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>を、それぞれ<span class="math notranslate nohighlight">\(A\)</span>の固有値・固有ベクトルという。
+簡単な例を示そう。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+A = \begin{pmatrix}
+2 &amp; 1 \\
+1 &amp; 2
+\end{pmatrix}
+\end{split}\]</div>
+<p>この行列は、固有値<span class="math notranslate nohighlight">\(\lambda_1 = 3, \lambda_2 = 1\)</span>を持ち、それぞれの固有ベクトルは<span class="math notranslate nohighlight">\(\mathbf{x}_1 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}, \mathbf{x}_2 = \begin{pmatrix} 1 \\ -1 \end{pmatrix}\)</span>である。</p>
+<p><span class="math notranslate nohighlight">\(\lambda\)</span>が行列<span class="math notranslate nohighlight">\(A\)</span>の固有値であるための必要十分条件は、</p>
+<div class="math notranslate nohighlight">
+\[
+\det(A - \lambda I) = 0
+\]</div>
+<p>という<strong>特性方程式</strong>を満たすことであり、ここで<span class="math notranslate nohighlight">\(I\)</span>は単位行列である。
+式変形をして<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>が非自明な解(<span class="math notranslate nohighlight">\(\mathbf{x} \neq 0\)</span>)を持つための条件が、この特性方程式である。</p>
+<p>この式を解くことができれば、固有値を求めることができる。
+特性方程式は<span class="math notranslate nohighlight">\(n\)</span>次代数方程式であり、<span class="math notranslate nohighlight">\(n \geq 5\)</span>の場合に一般に解くことはできない(アーベル・ルフィニの定理)ため、
+一般の場合に、上記の特性方程式を閉じた形で解くことはできないが、数値的に固有値を求める方法は多く存在する。
+行列分解の一つであるQR分解を用いる方法や、冪乗法、逆冪乗法などが代表的である。
+また、行列の対称性や疎性などの特性を利用することで、効率的に固有値を求めることができる場合もある。</p>
+<p>計算機で行なう種々の計算が、こうした固有値・固有ベクトルの計算に基づいていることは多い。
+例えば、物理・化学分野では、原子核、原子・分子、磁性体などの性質を理解するために、固有値・固有ベクトルの計算が重要な役割を果たす。
+構造力学や制御理論、はたまたWebページのランキングアルゴリズム(ページランク)など、数理的な問題の多くがこうした固有値計算と切っても切り離せない関係にある。</p>
+<div class="tip admonition">
+<p class="admonition-title">行列式・トレースと固有値の関係</p>
+<p>正方行列 <span class="math notranslate nohighlight">\(A \in \mathbb{R}^{n \times n}\)</span>の行列式は、(重複または縮退したものも含めた)固有値の積と一致する。</p>
+<div class="math notranslate nohighlight">
+\[
+\det(A) = \prod^n_{i=1} \lambda_i
+\]</div>
+<p>また、正方行列 <span class="math notranslate nohighlight">\(A \in \mathbb{R}^{n \times n}\)</span>のトレースは、(重複または縮退したものも含めた)固有値の和と一致する。</p>
+<div class="math notranslate nohighlight">
+\[
+\text{tr}(A) = \sum^n_{i=1} \lambda_i
+\]</div>
+</div>
+<div class="admonition- admonition">
+<p class="admonition-title">よくある誤解</p>
+<p>実行列の固有値は実数である、という誤解がよくある。実際には、実行列の固有値は実数であるとは限らない。
+例えば、行列</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+A = \begin{pmatrix}
+0 &amp; -1 \\
+1 &amp; 0
+\end{pmatrix}
+\end{split}\]</div>
+<p>の固有値を求めると、<span class="math notranslate nohighlight">\(\lambda^2 + 1 = 0\)</span>となり、<span class="math notranslate nohighlight">\(\lambda = i, -i\)</span>という虚数解が得られる。
+一方で、対称行列(転置が同一)やエルミート行列(エルミート共役が同一)の固有値は実数となるなど、行列の特性に応じて固有値の性質は異なる。</p>
+</div>
+</section>
+<section id="cholesky-decomposition">
+<h2><span class="section-number">2.6. </span>コレスキー分解 (Cholesky decomposition)<a class="headerlink" href="#cholesky-decomposition" title="Link to this heading">#</a></h2>
+<p>全ての固有値が正である行列を正定値行列と呼ぶ。
+こうした正定値行列は、ガウス分布(正規分布)の共分散行列など、確率分布の性質を表す行列としてもよく現れる。</p>
+<p>正定値行列は、コレスキー分解と呼ばれる特別な分解を持つ。</p>
+<div class="tip admonition">
+<p class="admonition-title">コレスキー分解</p>
+<p>任意の正定値行列 <span class="math notranslate nohighlight">\(A \in \mathbb{R}^{n \times n}\)</span>は、下三角行列 <span class="math notranslate nohighlight">\(L\)</span> とその転置 <span class="math notranslate nohighlight">\(L^T\)</span> を用いて以下のように表現できる。</p>
+<div class="math notranslate nohighlight">
+\[
+A = LL^T
+\]</div>
+<p>対角成分を正の実数に限ると、<span class="math notranslate nohighlight">\(L\)</span>は一意に定まる。</p>
+</div>
+<p>例えば多次元正規分布の条件付き確率の計算や、ガウス過程などの確率過程の計算においてもコレスキー分解は重要な役割を果たす。
+確率分布の章で見るように、多次元正規分布の共分散行列は正定値行列であり、条件付き確率分布の共分散行列の計算の表式には、共分散行列の逆行列が必要になる。実際の数値計算において逆行列を陽に求めるよりも、コレスキー分解を用いることで、数値的に安定な計算で効率よく計算することができる。</p>
+<p><strong>LU分解</strong></p>
+<p>LU分解は、任意の正方行列を下三角行列 <span class="math notranslate nohighlight">\(L\)</span> と上三角行列 <span class="math notranslate nohighlight">\(U\)</span> の積として表現する方法である。</p>
+<div class="tip admonition">
+<p class="admonition-title">LU分解</p>
+<p>正方行列 <span class="math notranslate nohighlight">\(A \in \mathbb{R}^{n \times n}\)</span>は、下三角行列 <span class="math notranslate nohighlight">\(L\)</span> と上三角行列 <span class="math notranslate nohighlight">\(U\)</span> を用いて以下のように表現することを考える。</p>
+<div class="math notranslate nohighlight">
+\[
+A = LU
+\]</div>
+<p>ここで、<span class="math notranslate nohighlight">\(L\)</span>は単位行列の下三角部分を持ち、<span class="math notranslate nohighlight">\(U\)</span>は上三角行列である。</p>
+<p>LU分解が存在するための必要十分条件は、すべての首座小行列式が0でないこと(これは、正則よりも強い条件)である。</p>
+</div>
+<p>コレスキー分解は、LU分解の特別な場合であり、正定値行列に対するLU分解として解釈できる。</p>
+</section>
+<section id="id7">
+<h2><span class="section-number">2.7. </span>固有値分解<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<div class="tip admonition">
+<p class="admonition-title">対角化可能 (diagonalizable)と固有値分解</p>
+<p>正方行列 <span class="math notranslate nohighlight">\(A \in \mathbb{R}^{n \times n}\)</span>が対角化可能であるとは、対角行列<span class="math notranslate nohighlight">\(D\)</span>と可逆な行列 <span class="math notranslate nohighlight">\(P\)</span> を用いて以下のように表現できることをいう。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+D &amp; = P^{-1}AP \\
+A &amp; = P \begin{pmatrix}
+\lambda_1 &amp; 0 &amp; \cdots &amp; 0 \\
+0 &amp; \lambda_2 &amp; \cdots &amp; 0 \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+0 &amp; 0 &amp; \cdots &amp; \lambda_n
+\end{pmatrix} P^{-1}
+\end{align*}
+\end{split}\]</div>
+<p>この表式は固有値分解とも呼ばれる。</p>
+</div>
+<p>対象となる行列が対称行列である場合、固有値分解は常に存在し、固有値は実数となる。
+対称行列の実固有値ベクトルからなる直交基底が存在し(スペクトル定理)、この基底を用いて行列を対角化することができる。
+つまり、<span class="math notranslate nohighlight">\(P\)</span>は直交行列であり、<span class="math notranslate nohighlight">\(P^{-1} = P^T\)</span>となる。</p>
+</section>
+<section id="id8">
+<h2><span class="section-number">2.8. </span>特異値分解<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<p>ここまでは、主に正方行列に対する演算を中心に説明してきた。
+しかし、機械学習やデータ分析の分野では、非正方行列に対する演算も頻繁に行われる。
+そこで、そのような非正方行列に対しても適用できる <strong>特異値分解(Singular Value Decomposition; SVD)</strong> を紹介する。</p>
+<div class="tip admonition">
+<p class="admonition-title">特異値分解 (SVD)</p>
+<p>任意の<span class="math notranslate nohighlight">\(m \times n\)</span>行列 <span class="math notranslate nohighlight">\(A\)</span>は、以下のように表現できる。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+A = U \Sigma V^T 
+= U
+\begin{pmatrix}
+\sigma_1 &amp; 0 &amp; \cdots &amp; 0 &amp; 0 &amp; \cdots &amp; 0 \\
+0 &amp; \sigma_2 &amp; \cdots &amp; 0 &amp; 0 &amp; \cdots &amp; 0 \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+0 &amp; 0 &amp; \cdots &amp; \sigma_m &amp; 0 &amp; \cdots &amp; 0 
+\end{pmatrix}
+V^T
+\end{align*}
+\end{split}\]</div>
+<p>ここで、<span class="math notranslate nohighlight">\(U\)</span>は<span class="math notranslate nohighlight">\(m \times m\)</span>のユニタリ行列、<span class="math notranslate nohighlight">\(\Sigma\)</span>は<span class="math notranslate nohighlight">\(m \times n\)</span>の対角行列、<span class="math notranslate nohighlight">\(V\)</span>は<span class="math notranslate nohighlight">\(n \times n\)</span>のユニタリ行列である。
+<span class="math notranslate nohighlight">\(m &gt; n\)</span>の場合を考えたが、<span class="math notranslate nohighlight">\(m &lt; n\)</span>の場合は0のブロックが下に伸びる形になる。
+<span class="math notranslate nohighlight">\(\Sigma\)</span>の対角成分は、<span class="math notranslate nohighlight">\(A\)</span>の特異値と呼ばれ、<strong>非負の実数</strong>である。正の特異値の数が、<span class="math notranslate nohighlight">\(A\)</span>の階数(rank)に一致する。
+<span class="math notranslate nohighlight">\(m = n\)</span>の場合は、固有値分解に近い形となるが、一般には<span class="math notranslate nohighlight">\(U^T=V\)</span>とは限らない。</p>
+</div>
+<p>特異値分解の重要な性質の一つが、特異値が非負の実数であることで、これにより、もとの行列の情報を圧縮(次元削減)した表現を構成することができる。</p>
+<p>実際、特異値の大きなものから <span class="math notranslate nohighlight">\(k\)</span> 個に対応する<span class="math notranslate nohighlight">\(U\)</span>の列ベクトルと<span class="math notranslate nohighlight">\(V\)</span>の列ベクトルを用いることで、元の行列<span class="math notranslate nohighlight">\(A\)</span>を近似することができる。また、この表現がrank-<span class="math notranslate nohighlight">\(k\)</span>行列の中で、フロベニウスノルムの意味で最も良い近似である(Eckart–Young-Mirsky theorem)ことが知られている</p>
+</section>
+<section id="id9">
+<h2><span class="section-number">2.9. </span>行列の指数関数<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<p>線形常微分方程式の解法や、量子力学における時間発展など、行列の指数関数が重要な役割を果たす場合がある。</p>
+<p>行列<span class="math notranslate nohighlight">\(A\)</span>の指数関数は、テイラー展開を用いて以下のように定義される:</p>
+<div class="math notranslate nohighlight">
+\[
+\exp(A) = \sum^\infty_{n=0} \frac{A^n}{n!} = I + A + \frac{A^2}{2!} + \frac{A^3}{3!} + \cdots
+\]</div>
+<p>行列の指数関数は以下のような性質を持つ:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\exp(-A) * \exp(A) &amp; = I \\
+\exp(A)^\dagger &amp; = \exp(A^\dagger) \\
+B \exp(A) B^{-1} &amp; = \exp(B A B^{-1}) \\
+\exp(A+B) &amp; = \exp(A) \exp(B) \quad (AB=BA \text{ のとき}) \\
+\exp(-A)B \exp(A) &amp; = B + [B, A] + \frac{1}{2!}[[B, A], A] + \frac{1}{3!}[[[B, A], A], A] + \cdots \\
+\exp(A) B \exp(-A) &amp; = B + [A, B] + \frac{1}{2!}[A, [A, B]] + \frac{1}{3!}[A, [A, [A, B]]] + \cdots
+\end{align*}
+\end{split}\]</div>
+<p>なお <span class="math notranslate nohighlight">\([A, B] = AB - BA\)</span> は <span class="math notranslate nohighlight">\(A\)</span> と <span class="math notranslate nohighlight">\(B\)</span> の<strong>交換子</strong>である。最後の2つの式は、<strong>ベーカー・キャンベル・ハウスドルフ(Baker-Campbell-Hausdorff)の公式</strong>と呼ばれる。
+スカラー値の場合と異なり、一般に行列の積は可換でないため、<span class="math notranslate nohighlight">\(\exp(A+B) = \exp(A)\exp(B)\)</span>は一般には成り立たないことに注意が必要である。</p>
+<p>また、行列<span class="math notranslate nohighlight">\(U\)</span>がユニタリ行列(エルミート共役が逆行列に等しい)であるとき、<span class="math notranslate nohighlight">\(U\)</span>は反エルミート行列<span class="math notranslate nohighlight">\(X\)</span>の指数関数として表現できる。</p>
+</section>
+<section id="pytorch">
+<h2><span class="section-number">2.10. </span>PyTorchにおける行列・ベクトルの表現<a class="headerlink" href="#pytorch" title="Link to this heading">#</a></h2>
+<p>PyTorchでは<code class="docutils literal notranslate"><span class="pre">Torch.Tensor</span></code>が行列やベクトルを表現する。
+<code class="docutils literal notranslate"><span class="pre">Torch.Tensor</span></code>は、行列・ベクトルに係る演算を効率化するために最適化されている。</p>
+<p>数値の配列を表現するのに、メモリ上でのデータの連続性を保つように設計されている。
+また、特定の行・列を抽出したり、行列の形状を指定して操作する際に、無駄なメモリコピーを避ける工夫もされている。</p>
+<p>PyTorchのテンソルはGPU上での計算もサポートしており、大規模な行列演算や機械学習モデルの学習において高速な計算が可能である。
+また、ニューラルネットワークの学習で重要となる誤差逆伝播法に適した自動微分機能を備えている。</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Chapter_math_vector_calculus.html"
+       title="前のページ">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">前へ</p>
+        <p class="prev-next-title"><span class="section-number">1. </span>ベクトル解析</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Chapter_math_probabilitydistributions.html"
+       title="次ページ">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">次へ</p>
+        <p class="prev-next-title"><span class="section-number">3. </span>確率と確率分布</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目次
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.1. 行列・ベクトルの演算/基本的性質</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2.2. 行列式とトレース</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2.3. 逆行列</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">2.3.1. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 行列の条件数</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2.4. 特徴的な行列</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2.5. 固有値・固有ベクトル</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cholesky-decomposition">2.6. コレスキー分解 (Cholesky decomposition)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">2.7. 固有値分解</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.8. 特異値分解</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.9. 行列の指数関数</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pytorch">2.10. PyTorchにおける行列・ベクトルの表現</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  © Copyright 2025 by 吉田 聡太 (Sota Yoshida). 本コンテンツは<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0 ライセンス</a>の下に提供されています。 <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>　ただし、資料中のコードセル部分は<a rel="license" href="https://opensource.org/licenses/MIT">MITライセンス</a>の下に提供されています。
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

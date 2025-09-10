@@ -1,0 +1,754 @@
+
+<!DOCTYPE html>
+
+
+<html lang="ja" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>8. 機械学習: ニューラルネットワークの概要 &#8212; AI・機械学習論1</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=1cf7f4d9"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/translations.js?v=91613774"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/Chapter5_ANN_Intro';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="9. 誤差逆伝播法" href="Chapter6_ANN2_Backprop.html" />
+    <link rel="prev" title="7. 多クラス分類" href="Chap4_classification_2.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="ja"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">本文へスキップ</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>トップに戻る</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="バージョン警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../home.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo_AIML1.png" class="logo__image only-light" alt="AI・機械学習論1 - Home"/>
+    <img src="../_static/logo_AIML1.png" class="logo__image only-dark pst-js-only" alt="AI・機械学習論1 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">検索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../home.html">
+                    AI・機械学習論1
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">はじめに</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chap0_Intro.html">はじめに</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">機械学習のための数学</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter_math_vector_calculus.html">1. ベクトル解析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_math_linearalgebra.html">2. 線形代数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_math_probabilitydistributions.html">3. 確率分布</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">回帰</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chap1_regression.html">4. 回帰の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chap2_linear_regression.html">5. 線形回帰</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">分類</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chap3_classification_1.html">6. 分類問題の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chap4_classification_2.html">7. 多クラス分類</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">ニューラルネットワーク</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">8. 機械学習: ニューラルネットワークの概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter6_ANN2_Backprop.html">9. 誤差逆伝播法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter7_ANN3_Optim.html">10. 最適化理論と種々の最適化手法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter8_ANN_regression.html">11. 機械学習: ニューラルネットワークによる回帰</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">発展的な話題</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter_PCA.html">12. 主成分分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_GMM.html">13. 混合ガウシアンモデル(Gaussian Mixture Model, GMM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_SVM.html">14. サポートベクトルマシンによる分類</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_KAN.html">15. KAN: Kolmogorov–Arnold Networks</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="ソースリポジトリ"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fnotebooks/Chapter5_ANN_Intro.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="問題を報告"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="このページをダウンロード">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/notebooks/Chapter5_ANN_Intro.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="ソースファイルをダウンロード"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="PDFに印刷"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全画面モード"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="ライト"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="ダーク"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>機械学習: ニューラルネットワークの概要</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目次 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">8.1. パーセプトロン</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">8.2. ニューラルネットワーク: 全結合</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">8.3. 活性化関数</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">8.3.1. 活性化関数の役割</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <p><a href="https://colab.research.google.com/github/SotaYoshida/Lecture_DataScience/blob/main/notebooks/Python_chapter_ArtificialNeuralNetwork.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></p>
+<section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1><span class="section-number">8. </span>機械学習: ニューラルネットワークの概要<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>AI・機械学習などと称されるデータ分析手法・アルゴリズムの多くは
+「入力データと出力データ間の非自明な関係を人工ニューラルネットワーク(Artificial Neural Networkm, ANN)と呼ばれる、ネットワーク構造を持つ関数によって模倣する」点が本質的である。</p>
+<p>生物の神経回路網を模倣したANNの歴史は古く、遡ると1940年代頃から研究されている一方、
+「ブームを迎えてはしばらくして下火になる」ということを二回ほど繰り返してきた歴史もある。</p>
+<aside class="margin sidebar">
+<p class="sidebar-title">ディープラーニング</p>
+<p>授業でも説明するように、ディープラーニング(深層学習)とは、ニューラルネットワークの層構造が深いアーキテクチャを利用したモデルを指しますが、
+一大分野となった経緯もあり、どこからが&quot;ディープ&quot;なのかについては、広義・狭義、さまざまな定義が混在しています。</p>
+</aside>
+<p>2000年代になり、計算機の発展やアルゴリズムの改良も手伝い、それまで計算量やデータの準備・処理上の問題で
+現実的でなかった様々なタスク(音声・画像・自然言語などにおける処理やパターン認識等)に対して
+ANN及びそれを拡張したモデルが高い性能を発揮することがわかり、数多くの成功を収めるとともに、
+2010年前後にはディープラーニングと称される一分野を形成するに至った。</p>
+<p>ANNは(この文章を初めて書いた)2022年時点においてもその勢いはとどまることを知らず、
+様々な学術分野だけでなく、社会や産業にも浸透し、スマートフォンのカメラなど身近なところでも当たり前のように応用されている。
+皆さんのお手元にスマートフォンがあれば、</p>
+<ul class="simple">
+<li><p>画像認識技術を用いた認証システム (例:端末のロックを解除したり写真に写ったものと類似の商品を調べる)</p></li>
+<li><p>画像生成技術を用いた写真の補正 (例:写真に写り込んだ人を消す)</p></li>
+<li><p>自然言語処理を用いた翻訳・対話・botサービス (例:アシスタント系アプリや翻訳、自動音声)</p></li>
+</ul>
+<p>といったことを当たり前のようにやってのけるハード・ソフト/Webサービス等が既にあるのをご存知だろう。</p>
+<p>さらに、2023年、画像や動画・音声、自然言語処理などのタスクを高い精度でこなす生成AIの対等が社会に大きなインパクトを覚えた。
+これらの背景にあるのも、ニューラルネットワークの発展形である。</p>
+<p>この授業では、機械学習手法の根幹を支えるニューラルネットワークについて、基本的な動作原理を理解することを目標に、主に3層(入力層・隠れ層・出力層)からなる最も単純な構造を持ったニューラルネットワークを題材として説明を行う。
+単純なモデルに注目して理解しておくことは、皆さんが機械学習分野の基礎(理論)あるいは応用に際してより複雑なアーキテクチャを仕様・理解する上での基礎となるはずだ。</p>
+<section id="id2">
+<h2><span class="section-number">8.1. </span>パーセプトロン<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>まず、ニューラルネットワークの基本的な要素となるパーセプトロン(Perceptron)を紹介する。
+パーセプトロンは1957年に考案された模型で、ニューラルネットワークの一種(特殊な場合)とみなせる。</p>
+<p>下図のように、あるノード(節)に注目した際、そのノードに<span class="math notranslate nohighlight">\(n\)</span>個の入力信号があり、一つの値を出力するケースを考える。</p>
+<p><img alt="" src="../_images/perceptron.png" /></p>
+<p>便宜上、入力信号の数を<span class="math notranslate nohighlight">\(n\)</span>とし、それぞれの入力信号を<span class="math notranslate nohighlight">\(x_1,x_2,...,x_n\)</span>のように<span class="math notranslate nohighlight">\(n\)</span>成分を持つベクトルの各成分のように書くことにする。
+また、入力信号を&quot;受け取る&quot;重みを<span class="math notranslate nohighlight">\(w_1,w_2,...,w_n\)</span>のように書くことにする。
+重みは、入力信号の重要度を表すパラメータであり、重みが大きいほどその入力信号の重要度が高いことを意味する。</p>
+<p>このとき、今注目しているノードに対する全入力信号<span class="math notranslate nohighlight">\(X\)</span>は、<span class="math notranslate nohighlight">\(X=x_1w_1+x_2w_2+...+x_nw_n\)</span>あるいはベクトルの内積として<span class="math notranslate nohighlight">\(X=\boldsymbol{w} \cdot \boldsymbol{x}\)</span>と書くことができる。
+この<span class="math notranslate nohighlight">\(X\)</span>の値がある閾値(しきい値,threshold)<span class="math notranslate nohighlight">\(\theta\)</span>を超えた場合に、ノードの出力<span class="math notranslate nohighlight">\(z\)</span>は<span class="math notranslate nohighlight">\(1\)</span>、超えなかった場合には<span class="math notranslate nohighlight">\(0\)</span>となる、と約束する。
+式で書くと、</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+z = \begin{cases}
+1 &amp; (X \ge \theta) \\
+0 &amp; (X &lt; \theta)
+\end{cases}
+\end{split}\]</div>
+<p>となる。この関数は、ある種の信号伝達を担う&quot;関所&quot;のようなものになっていて、
+「自身への入力信号の重み付き和がある値を超えた場合にのみ、次のノードに信号を伝達する」という働きをする。</p>
+<p>適当に<span class="math notranslate nohighlight">\(\theta=2.0\)</span>として、コードでプロットしてみよう</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_stepfunc</span><span class="p">(</span><span class="n">theta</span><span class="o">=</span><span class="mf">2.0</span><span class="p">):</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">10</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;$f(X)$&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$X$&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">plot_stepfunc</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/537fd8d5b56694d06e58a978350de1bb2987a5cd52961138283e1cdacd9ca56c.png" src="../_images/537fd8d5b56694d06e58a978350de1bb2987a5cd52961138283e1cdacd9ca56c.png" />
+</div>
+</div>
+<p>このようなノードをパーセプトロンと呼ぶ。
+ノードの出力は0か1の離散的な2値をとるため、True/Falseのような真偽値とみなすこともできる。</p>
+<p>入出力の具体的な例として、100×100ピクセルの画像を入力として受け取り、その画像が犬の画像であるかどうかを判定するパーセプトロンを考える。
+各ピクセルの画素値を10000成分を持つベクトルの成分とみなし<span class="math notranslate nohighlight">\(x_1,x_2,...,x_{10000}\)</span>とし、
+それぞれの入力に対する重みを<span class="math notranslate nohighlight">\(w_1,w_2,...,w_{10000}\)</span>とする。このとき、パーセプトロンの出力は、</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+z = \begin{cases}
+1 &amp; (x_1w_1+x_2w_2+...+x_{10000}w_{10000} \ge \theta) \\
+0 &amp; (x_1w_1+x_2w_2+...+x_{10000}w_{10000} &lt; \theta)
+\end{cases}
+\end{split}\]</div>
+<p>となり、重みと閾値の値を&quot;うまく調整してやれば&quot;、与えられた画像が犬の画像かどうかの判定ができると<strong>原理的には</strong>考えられる。</p>
+<p>だが実際には「各ピクセルの画素値の重み付き和」が閾値を超えるかどうかで判定するというのは、
+画像の特徴を捉えるのにはあまり適していないと予想ができる。
+なぜなら、例えば犬の画像の場合、犬の画像の特徴は画像の中のどこにあるかによっても異なるし、
+犬が写っているかを判断する上では、上下左右に隣り合うピクセル同士の関係なども重要になるのに対して、
+上記のようなパーセプトロンでは、各ピクセルの画素値の重み付き和しか見ていないからである。</p>
+</section>
+<section id="id3">
+<h2><span class="section-number">8.2. </span>ニューラルネットワーク: 全結合<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>次にニューラルネットワークの最も単純な例として、全結合のニューラルネットワークを紹介する。
+全結合のニューラルネットワークは、パーセプトロンのノードを層状に並べたもので、
+隣り合う層のノード間には全て結合があるというものである。
+図で見るほうがはやいので以下に示そう。</p>
+<p><img alt="" src="../_images/neuralnetworks.png" /></p>
+<p>上のパーセプトロンのように、1つのノードに着目してみよう。
+ニューラルネットワークの各ノードで行う操作は、</p>
+<ol class="arabic simple">
+<li><p>入力信号<span class="math notranslate nohighlight">\(x\)</span>の重み付き和を計算し、バイアス項<span class="math notranslate nohighlight">\(b\)</span>を加える</p></li>
+<li><p>重み付き和＋バイアスを活性化関数<span class="math notranslate nohighlight">\(g\)</span>に入力して、活性化関数の出力を計算する</p></li>
+<li><p>出力を次の(下流の)ノードに伝達する</p></li>
+</ol>
+<p>という3つになる。この内、パーセプトロンを&quot;より拡張した&quot;考え方が1.と2.に含まれている。
+あるノードに対する入力が<span class="math notranslate nohighlight">\(x\)</span>、重みが<span class="math notranslate nohighlight">\(w\)</span>(それぞれ長さ<span class="math notranslate nohighlight">\(n\)</span>のベクトルとする)、バイアスが<span class="math notranslate nohighlight">\(b\)</span>で与えられているとき、上の操作を式で書くと、</p>
+<div class="math notranslate nohighlight">
+\[
+u = g \left(\sum_{i=1}^n w_ix_i + b \right)
+\]</div>
+<p>となる。</p>
+<p>1.の重み付き和を計算する部分は、パーセプトロンと同じである。
+バイアス(bias)は、各ノードにおいて、入力信号に対して計算された重み付き和に各ノード固有の定数を加えることに対応している。</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>例えば、ある<span class="math notranslate nohighlight">\(x\)</span>に関する直線を表すのに<span class="math notranslate nohighlight">\(f(x)=ax+b\)</span>などとするが、この切片に対応するものをイメージするとよい。
+バイアス項が無い、というのは「バイアス<span class="math notranslate nohighlight">\(b\)</span>が0である特殊な場合」に相当するため、バイアス項を導入するのは、極めて自然な拡張や一般化と言える。</p>
+</aside>
+<p>実際には、ノードや層が複数定義されているため、より正確に式で書くと以下のようになる:
+第<span class="math notranslate nohighlight">\(l\)</span>層の<span class="math notranslate nohighlight">\(k\)</span>番目のノードに着目した際の出力を<span class="math notranslate nohighlight">\(z_k^{(l)}\)</span>と表記することにすると、</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+u_k^{(l)} &amp; = \sum_{i=1}^{n_{l-1}} w_{ki}^{(l)}z_i^{(l-1)} + b_k^{(l)}\\
+z_k^{(l)} &amp; = g(u_k^{(l)})
+\end{aligned}
+\end{split}\]</div>
+<p>と書くことができる。
+単一のノードに着目するのではなく、単一の層に着目する表記に直すには
+<span class="math notranslate nohighlight">\(l\)</span>層のノードの数<span class="math notranslate nohighlight">\(n_{l}\)</span>を用いて、各ノードの出力をベクトルの成分、重みを行列の成分として表記するとよい:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\boldsymbol{u}^{(l)} &amp;= \boldsymbol{W}^{(l)}\boldsymbol{z}^{(l-1)} + \boldsymbol{b}^{(l)}\\
+\boldsymbol{z}^{(l)} &amp;= g(\boldsymbol{u}^{(l)})
+\end{aligned}
+\end{split}\]</div>
+<p>それぞれの重み <span class="math notranslate nohighlight">\(W^{(l)}\)</span> は、ノードへの入力の次元(= <span class="math notranslate nohighlight">\(n_{l-1}\)</span>)×ノードからの出力の次元(= <span class="math notranslate nohighlight">\(n_{l}\)</span>)を持つ行列である。
+各ノードで行なう <span class="math notranslate nohighlight">\(Wz + b\)</span> の計算は、線形変換と平行移動に相当する演算で、より一般にはAffine変換と呼ばれる。このことから、全結合ニューラルネットワークのことをAffine Layerなどと呼ぶこともある。</p>
+<p>2.の操作に現れた活性化関数については、後で詳しく述べるが、
+入力の重み付き和(+バイアス)に対して、非線形な関数を適用することで、
+より複雑な関数を表現することができるようになる。
+<strong>パーセプトロンは、この活性化関数が単純なステップ関数である場合に相当</strong>する。</p>
+<p>パーセプトロンと上のニューラルネットワークの大きな違いは、構造や一般化(バイアス・活性化関数)はもちろんだが、
+各ノードの出力が0か1の2値ではなく任意の実数をとりうる(つまり出力の値も一般化している)ことである。
+これにより、最終的な出力を2値だけに限定することなく、
+より複数の&quot;クラス&quot;に対する真偽値を判定する、あるいは連続値を出力しクラスに属する&quot;確率&quot;を計算する、
+ピクセルの画素値を推定する、といった、より複雑な出力に対応することができる。</p>
+<p>ニューラルネットワークにおける<strong>訓練</strong>あるいは<strong>学習</strong>とは、入力データを用いて、出力と<strong>正解</strong>の差を最小化するように、
+各ノードの重みやバイアスを調整(≒最適化)することと言い換えられる。</p>
+</section>
+<section id="id4">
+<h2><span class="section-number">8.3. </span>活性化関数<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>次に、活性化関数について説明する。
+ニューラルネットワークのノードにおいて、重み付き和(+バイアス)に対して適用する関数を活性化関数と呼ぶ。
+パーセプトロンの場合は、活性化関数はステップ関数であったが、
+ニューラルネットワークでは、ステップ関数以外の様々な関数が用いられる。</p>
+<p>活性化関数には、例えば以下のようなものがある:</p>
+<ul class="simple">
+<li><p>シグモイド関数<br />
+<span class="math notranslate nohighlight">\(g(u) = \frac{1}{1 + \exp(-u)}\)</span></p></li>
+<li><p>Tanh関数<br />
+<span class="math notranslate nohighlight">\(g(u) = \frac{\exp(u) - \exp(-u)}{\exp(u) + \exp(-u)}\)</span></p></li>
+<li><p>ReLU関数<br />
+<span class="math notranslate nohighlight">\(g(u) = \max(0, u)\)</span><br />
+Softplus, Leaky ReLU, ELUなどその他にも派生を持つ</p></li>
+<li><p>恒等関数(回帰問題の出力層で用いる。)
+<span class="math notranslate nohighlight">\(g(u) = u\)</span></p></li>
+<li><p>ソフトマックス関数<br />
+主に分類問題において、各クラスに属する確率を出力するために用いられる<br />
+<span class="math notranslate nohighlight">\(g(u) = \frac{\exp(u)}{\sum_{i=1}^n \exp(u_i)}\)</span></p></li>
+</ul>
+<p>活性化関数は、ニューラルネットワークの学習において重要な役割を果たす。
+入力と出力の間の一般には非線形な関係を表現するために用いられ、
+タスクに応じて、予測精度の高い適切な活性化関数を選択することが重要である。</p>
+<aside class="margin sidebar">
+<p class="sidebar-title">勾配消失</p>
+<p>詳しくは「誤差逆伝播法」の資料で説明するが、ニューラルネットワークの学習の際、
+重みパラメータなどを調整するために、各ノードの出力に対する誤差の勾配を計算する必要がある。
+その際、入力側に近い上流側の層で勾配の値が小さくなり、パラメータの学習(モデルの精度の改善)が進まなくなることがある。</p>
+</aside>
+<p>例えば上のReLU関数は、近年の深層学習モデルの中でも最もよく利用されている活性化関数の1つである。
+ReLUには、勾配の計算が自明なことによる計算量的利点と、<strong>勾配消失</strong>の問題を低減する効果があるため、
+画像認識などネットワークの構造が&quot;深い&quot;ニューラルネットワークで効率的に学習をすすめるために採用されることが多い。</p>
+<section id="id5">
+<h3><span class="section-number">8.3.1. </span>活性化関数の役割<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<p>活性化関数の役割について1つ注を添えておこう。
+例えば、3層のニューラルネットワークを用いて、単純な回帰問題を解く、つまり
+<span class="math notranslate nohighlight">\(\boldsymbol{y}=f(\boldsymbol{x})\)</span>という&quot;真の関数&quot;をニューラルネットワークの出力<span class="math notranslate nohighlight">\(f^{NN}(\boldsymbol{x})\)</span>を用いて近似することを考える。
+表式を簡素にするため、各ノードでのバイアス項を省略して考えることにすると、
+上記のようなニューラルネットワークは、以下のように表せる。</p>
+<div class="math notranslate nohighlight">
+\[
+f^{NN}(\boldsymbol{x}) = g_2(\boldsymbol{w_2}  g_1(\boldsymbol{w_1} \boldsymbol{x}))
+\]</div>
+<p>この場合、対象となる問題は回帰問題に分類されるため、出力層における活性化関数<span class="math notranslate nohighlight">\(g_2\)</span>は恒等関数を用いる。
+では、隠れ層における活性化関数<span class="math notranslate nohighlight">\(g_1\)</span>を上のようなTanhやReLUではなく恒等関数を用いた場合、何が起こるだろうか？</p>
+<p>この場合のニューラルネットワークの出力は</p>
+<div class="math notranslate nohighlight">
+\[
+f^{NN}(\boldsymbol{x}) = \boldsymbol{w_2}  \boldsymbol{w_1}  \boldsymbol{x}
+= (\boldsymbol{w_2}  \boldsymbol{w_1}) \boldsymbol{x}
+\]</div>
+<p>となり、層を繰り返すことによって得られる信号の変換は単なる行列の積となり、
+単一の行列<span class="math notranslate nohighlight">\(W=w_1 \times w_2\)</span>による線形変換になってしまう。</p>
+<p>つまり、隠れ層の活性化関数を恒等関数にすると、いくら隠れ層を増やしても
+線形変換による近似しかできないため、ニューラルネットワークの表現力が制限されてしまう。
+入力と出力の間の非線形な関係を表現するためには、隠れ層において非線形な活性化関数を用いる必要があることがわかる。</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Chap4_classification_2.html"
+       title="前のページ">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">前へ</p>
+        <p class="prev-next-title"><span class="section-number">7. </span>多クラス分類</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Chapter6_ANN2_Backprop.html"
+       title="次ページ">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">次へ</p>
+        <p class="prev-next-title"><span class="section-number">9. </span>誤差逆伝播法</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目次
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">8.1. パーセプトロン</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">8.2. ニューラルネットワーク: 全結合</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">8.3. 活性化関数</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">8.3.1. 活性化関数の役割</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  © Copyright 2022 by 吉田 聡太 (Sota Yoshida). 本コンテンツは<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0 ライセンス</a>の下に提供されています。 <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>　ただし、資料中のコードセル部分は<a rel="license" href="https://opensource.org/licenses/MIT">MITライセンス</a>の下に提供されています。
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,794 @@
+
+<!DOCTYPE html>
+
+
+<html lang="ja" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>7. 分類問題の概要 &#8212; AI・機械学習論1</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=1cf7f4d9"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/translations.js?v=91613774"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/Chapter_classification_1';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="8. 多クラス分類" href="Chapter_classification_2.html" />
+    <link rel="prev" title="6. ガウス過程（Gaussian Process）" href="Chapter_GaussianProcess.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="ja"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">本文へスキップ</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>トップに戻る</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="バージョン警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../home.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo_AIML1.png" class="logo__image only-light" alt="AI・機械学習論1 - Home"/>
+    <img src="../_static/logo_AIML1.png" class="logo__image only-dark pst-js-only" alt="AI・機械学習論1 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">検索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../home.html">
+                    AI・機械学習論1
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">機械学習のための数学</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter_math_vector_calculus.html">1. ベクトル解析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_math_linearalgebra.html">2. 線形代数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_math_probabilitydistributions.html">3. 確率と確率分布</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">回帰</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter_regression.html">4. 回帰の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_linear_regression.html">5. 線形回帰</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_GaussianProcess.html">6. ガウス過程（Gaussian Process）</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">分類</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">7. 分類問題の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_2.html">8. 多クラス分類</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">ニューラルネットワーク</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN_Intro.html">9. ニューラルネットワークの概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN2_Backprop.html">10. 誤差逆伝播法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_Optimization.html">11. 機械学習における最適化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN_regression.html">12. 機械学習: ニューラルネットワークによる回帰</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">データの表現・モデルの評価</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Data_representation.html">13. 機械学習におけるデータ表現の基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_Model_evaluation.html">14. モデルの評価・過学習・正則化</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">発展的な話題</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter_PCA.html">15. 主成分分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_GMM.html">16. 混合ガウシアンモデル(Gaussian Mixture Model, GMM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_KAN.html">17. KAN: Kolmogorov–Arnold Networks</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="ソースリポジトリ"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fnotebooks/Chapter_classification_1.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="問題を報告"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="このページをダウンロード">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/notebooks/Chapter_classification_1.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="ソースファイルをダウンロード"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="PDFに印刷"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全画面モード"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="ライト"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="ダーク"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>分類問題の概要</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目次 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">7.1. 線形二値分類</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">7.2. ロジスティック回帰: 線形二値分類の学習の観点から</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1><span class="section-number">7. </span>分類問題の概要<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>この章では、分類問題についての概要と、線形二値分類、ロジスティック回帰などについて説明する。<br />
+分類とはその名の通り、データから真偽値(2値)を判定したり、何らかのカテゴリに分類したりすることを指す。
+例えば、動物の写真を与えて犬かどうかを判定する場合や、
+ラーメンの写真から、醤油系・味噌系・塩系などのカテゴリに分類する場合などを想像すると良い。</p>
+<p>我々は普段、このような分類問題を無意識に解いているが、
+それをコンピュータを用いて機械的に判定するためにはどうすればよいか。<br />
+その基礎づけを与えることが、この章の主眼である。</p>
+<section id="id2">
+<h2><span class="section-number">7.1. </span>線形二値分類<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>まずは、最も単純な分類問題である、二値分類を考える。
+二値分類とは、データが2つのカテゴリのどちらかに属するかを判定する問題である。<br />
+分類の際、注目したいラベルやカテゴリが２値を取る場合というのは、真偽値を判定する問題と等価である。</p>
+<p>以下では例として、身長と体重という2つの特徴量を持つ疑似データを考え、
+それらの特徴量から、その人が成人か未成年かを判定してみよう。</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">指定した人数分、20歳以上・20歳以下のダミーデータを作成する関数。</span>
+<span class="sd">政府統計の国民健康・栄養調査の2019年データを使用し、</span>
+<span class="sd">20歳以上については身長・体重の平均・標準偏差を参考に適当な正の相関(r=0.4)を持たせる。</span>
+<span class="sd">20歳以下については10歳の身長体重の平均・標準偏差を参考に適当な正の相関(r=0.2)を持たせることにした。</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">sample_data_from_multivariatenormal</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
+    <span class="n">mean_o20</span> <span class="o">=</span> <span class="p">[</span><span class="mf">167.7</span><span class="p">,</span><span class="mf">67.4</span><span class="p">]</span>
+    <span class="n">std_o20</span> <span class="o">=</span> <span class="p">[</span><span class="mf">6.9</span><span class="p">,</span> <span class="mf">12.0</span><span class="p">]</span>
+    <span class="n">cov</span> <span class="o">=</span> <span class="mf">0.4</span><span class="o">*</span><span class="n">std_o20</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">std_o20</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">cov_o20</span> <span class="o">=</span>  <span class="p">[[</span><span class="n">std_o20</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">cov</span><span class="p">],</span> <span class="p">[</span><span class="n">cov</span><span class="p">,</span> <span class="n">std_o20</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">]]</span>
+    <span class="n">data_o20</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean_o20</span><span class="p">,</span><span class="n">cov_o20</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+    <span class="n">mean_u20</span> <span class="o">=</span> <span class="p">[</span><span class="mf">138.1</span><span class="p">,</span> <span class="mf">33.9</span><span class="p">]</span>
+    <span class="n">std_u20</span> <span class="o">=</span> <span class="p">[</span><span class="mf">7.5</span><span class="p">,</span> <span class="mf">9.3</span><span class="p">]</span>
+    <span class="n">cov</span> <span class="o">=</span> <span class="mf">0.2</span><span class="o">*</span><span class="n">std_u20</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">std_u20</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">cov_u20</span> <span class="o">=</span>  <span class="p">[[</span><span class="n">std_u20</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">cov</span><span class="p">],</span> <span class="p">[</span><span class="n">cov</span><span class="p">,</span> <span class="n">std_u20</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">]]</span>
+    <span class="n">data_u20</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean_u20</span><span class="p">,</span><span class="n">cov_u20</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">return</span> <span class="n">data_o20</span><span class="p">,</span><span class="n">data_u20</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span><span class="n">data_o20</span><span class="p">,</span><span class="n">data_u20</span><span class="p">):</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_o20</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">data_o20</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;over  20&quot;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_u20</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">data_u20</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;under 20&quot;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;height&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;weight&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">num_people</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">data_o20</span><span class="p">,</span><span class="n">data_u20</span> <span class="o">=</span> <span class="n">sample_data_from_multivariatenormal</span><span class="p">(</span><span class="n">num_people</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">data_o20</span><span class="p">,</span><span class="n">data_u20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/82cbaba0c2e3f8686fd9433f10f1e9459ce3242a8ffc625bae939fade7e12706.png" src="../_images/82cbaba0c2e3f8686fd9433f10f1e9459ce3242a8ffc625bae939fade7e12706.png" />
+</div>
+</div>
+<p>今の場合は、色で20歳以上と20歳未満を塗り分けているため、両者の分類は自明だが、
+年齢のラベル(上図の色)は隠して身長と体重のデータのみが与えられた場合に、
+その人が20歳以上/未満かを判定する状況を考えよう。</p>
+<p>その判定の方法として、最も単純な線形二値分類をこれから定式化する。<br />
+線形二値分類とは、特徴量の線形結合を用いて、2つのカテゴリに分類する方法である。
+噛み砕いて言えば、データの特徴量を線や面(高次元の場合は超平面)で分けてやることで、
+そのデータがどちらのカテゴリに属するかを判定する方法である。
+上の場合は、特徴量が身長と体重の2つだけなので、二次元平面上で境界線を引いてやれば良い。</p>
+<p>今の場合、データは明らかに2つの集団(クラスター)に分かれており、境界線の引き方には幾つかの自由度がある。<br />
+適当に3本ほど引いてみよう。</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_line</span><span class="p">(</span><span class="n">data_o20</span><span class="p">,</span><span class="n">data_u20</span><span class="p">):</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_o20</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">data_o20</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_u20</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">data_u20</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">20</span><span class="p">,</span><span class="mi">80</span><span class="p">],[</span><span class="mi">180</span><span class="p">,</span><span class="mi">120</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dashed&quot;</span><span class="p">)</span>    
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">20</span><span class="p">,</span><span class="mi">80</span><span class="p">],[</span><span class="mi">170</span><span class="p">,</span><span class="mi">130</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dashed&quot;</span><span class="p">)</span>    
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">30</span><span class="p">,</span><span class="mi">70</span><span class="p">],[</span><span class="mi">180</span><span class="p">,</span><span class="mi">120</span><span class="p">],</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dashed&quot;</span><span class="p">)</span>     
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;height&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;weight&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plot_line</span><span class="p">(</span><span class="n">data_o20</span><span class="p">,</span><span class="n">data_u20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/b60df1378de30bff744bc35b8978def362b84aa00f176929b880586d38f51650.png" src="../_images/b60df1378de30bff744bc35b8978def362b84aa00f176929b880586d38f51650.png" />
+</div>
+</div>
+<p>どの直線でも2つの集団を正しく分類することができている。</p>
+<p>より一般の身長・体重のデータでは、13-19歳のデータが含まれる上に、
+20歳以上でも身長・体重の小さい人や、20歳未満でも身長・体重の大きい人がいるため、
+このような境界線でもって全てのデータを分類することはできない。
+そのような場合には、身長・体重以外の別の特徴量を用いることでより精度の高い分類が可能になると期待できる。</p>
+<p>こうしたより一般(任意の数の特徴量)の場合に対応できるよう、少々抽象的だが、線形二値分類を数式で定式化しておこう。</p>
+<p>特徴量の数(次元)を<span class="math notranslate nohighlight">\(n\)</span>としたとき、ある人のデータは<span class="math notranslate nohighlight">\(n\)</span>個の成分を持つベクトル<span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span>で表すことができる。<br />
+例えば、身長と体重の2つの特徴量を持つデータは、身長を<span class="math notranslate nohighlight">\(x_1\)</span>、体重を<span class="math notranslate nohighlight">\(x_2\)</span>として、
+<span class="math notranslate nohighlight">\(\boldsymbol{x} = (x_1, x_2)^T\)</span>と表すことができる。※縦ベクトル(あるいは列ベクトル)を表すために、ベクトルの転置を表す記号<span class="math notranslate nohighlight">\(^T\)</span>を付けた。</p>
+<p>このとき、その人が20歳以上かどうかを表すラベルを<span class="math notranslate nohighlight">\(y=\{0,1\}\)</span>とすると、
+線形二値分類は、特徴量の線形結合を用いて、以下のように表すことができる。</p>
+<div class="important admonition">
+<p class="admonition-title">線形二値分類の式</p>
+<div class="math notranslate nohighlight" id="equation-eq-binary-classification">
+<span class="eqno">(7.1)<a class="headerlink" href="#equation-eq-binary-classification" title="Link to this equation">#</a></span>\[\begin{split}
+y = \begin{cases}
+1 &amp; (\boldsymbol{w}^T \boldsymbol{x} + b \geq 0) \\
+0 &amp; (\boldsymbol{w}^T \boldsymbol{x} + b &lt; 0)
+\end{cases}
+\end{split}\]</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>混乱した人のために、上の<span class="math notranslate nohighlight">\(n=2\)</span>の場合を考えてみよう。
+二次元上の点のうち<span class="math notranslate nohighlight">\(w_1 x + w_2 y + b = 0\)</span>を満たす<span class="math notranslate nohighlight">\((x,y)\)</span>の集まりは、<span class="math notranslate nohighlight">\(y=-w_1/w_2 x -b/w_2\)</span>となる直線をなす。
+したがって、<span class="math notranslate nohighlight">\(w_1 x + w_2 y + b\)</span>という量の符号を考えれば、境界線に対して点<span class="math notranslate nohighlight">\((x,y)\)</span>がどちら側(直線上)にあるかを判定することができる。<br />
+同様に、<span class="math notranslate nohighlight">\(n\)</span>次元上の点のうち<span class="math notranslate nohighlight">\(w_1 x_1 + w_2 x_2 + \cdots + w_n x_n + b = 0\)</span>を満たす<span class="math notranslate nohighlight">\((x_1, x_2, \cdots, x_n)\)</span>の集まりは<span class="math notranslate nohighlight">\(n-1\)</span>次元超平面をなす。
+したがって、任意の点<span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span>があるとき、<span class="math notranslate nohighlight">\(\boldsymbol{w}^T \boldsymbol{x} + b \)</span>という量の正負(または0)を調べれば、境界面に対して点<span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span>がどちら側(超平面上)にあるかを(人間が頭の中で境界や点を思い浮かべることはできなくても)判定することができる。</p>
+</div>
+<p><strong>練習問題</strong></p>
+<p>(a). 任意の二次元ベクトル<span class="math notranslate nohighlight">\(w\)</span>(但し<span class="math notranslate nohighlight">\(w_2 \neq 0\)</span>)とスカラー<span class="math notranslate nohighlight">\(b\)</span>、適当な区間で定義されたベクトル<span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span>を入力に、上の二次元平面上に<span class="math notranslate nohighlight">\(w_1 x + w_2 y + b =0\)</span>を表す直線をプロットする関数を作成し、<span class="math notranslate nohighlight">\(w=(1,1.2), b=-220\)</span>の場合について描画せよ。
+但し、xの区間は[20,80]とすること(np.linspaceなら始点と終点の2点で良い)</p>
+<p>(b). 次に、<span class="math notranslate nohighlight">\(w\)</span>が未定の場合について、直線<span class="math notranslate nohighlight">\(w_1 x + w_2 y + b =0\)</span>の係数<span class="math notranslate nohighlight">\(w_1,w_2\)</span>を求める関数を作成せよ。<br />
+ただし、<span class="math notranslate nohighlight">\((x,y)=(20, 180),(80, 120)\)</span>の2点について既知とし、<span class="math notranslate nohighlight">\(b=1\)</span>とする。</p>
+<p><strong>解答</strong></p>
+<p>(a) xplotに対してyplotを計算するコードを作成し、その出力をプロットしてやれば良い。
+但し、<span class="math notranslate nohighlight">\(w_2=0\)</span>のときは、例外を出すなど、別途対応が必要になる。</p>
+<p>(b) <span class="math notranslate nohighlight">\(w_1 (x_1-x_2) + w_2 (y_1-y_2) = 0 \)</span>から<span class="math notranslate nohighlight">\(w_2 = \frac{w_1 (x_2-x_1)}{y_1-y_2}\)</span>という関係が得られる。
+これを<span class="math notranslate nohighlight">\(w_2\)</span>に代入すると<span class="math notranslate nohighlight">\(w_1 x_1 + \frac{w_1 (x_2-x_1)}{y_1-y_2} (y_1) + 1 = 0\)</span>となるので、<span class="math notranslate nohighlight">\(w_1=-1/(x_1 + (x_2-x_1)y_1/(y_1-y_2))\)</span>と求めることができる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">return_yplot</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;w[1] must be non-zero&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="o">-</span> <span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">x</span> <span class="o">-</span> <span class="n">b</span><span class="o">/</span><span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">y</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">calc_w</span><span class="p">(</span><span class="n">xy_known</span><span class="p">):</span>
+    <span class="n">x_1</span><span class="p">,</span> <span class="n">y_1</span> <span class="o">=</span> <span class="n">xy_known</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">x_2</span><span class="p">,</span> <span class="n">y_2</span> <span class="o">=</span> <span class="n">xy_known</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">w_1</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">x_1</span> <span class="o">+</span> <span class="p">(</span><span class="n">x_2</span><span class="o">-</span><span class="n">x_1</span><span class="p">)</span><span class="o">*</span><span class="n">y_1</span><span class="o">/</span><span class="p">(</span><span class="n">y_1</span><span class="o">-</span><span class="n">y_2</span><span class="p">))</span>
+    <span class="n">w_2</span> <span class="o">=</span> <span class="n">w_1</span> <span class="o">*</span> <span class="p">(</span><span class="n">x_2</span> <span class="o">-</span> <span class="n">x_1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">y_1</span> <span class="o">-</span> <span class="n">y_2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">w_1</span><span class="p">,</span> <span class="n">w_2</span><span class="p">])</span>
+    
+<span class="n">xplot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="c1">#直線なので2点でよい</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;xplot=&quot;</span><span class="p">,</span><span class="n">xplot</span><span class="p">)</span>
+
+
+<span class="c1"># グラフの描画</span>
+<span class="n">b</span> <span class="o">=</span> <span class="o">-</span> <span class="mi">220</span>
+<span class="n">w</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">]</span>
+<span class="n">yplot_a</span> <span class="o">=</span> <span class="n">return_yplot</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">xplot</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_o20</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">data_o20</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_u20</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">data_u20</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span><span class="n">yplot_a</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;height&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;weight&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="c1">#問題B</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">xy_known</span> <span class="o">=</span> <span class="p">[</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">180</span><span class="p">],</span> <span class="p">[</span><span class="mi">80</span><span class="p">,</span> <span class="mi">120</span><span class="p">]</span> <span class="p">]</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">calc_w</span><span class="p">(</span><span class="n">xy_known</span><span class="p">)</span>
+<span class="n">yplot_b</span> <span class="o">=</span> <span class="n">return_yplot</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">xplot</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_o20</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">data_o20</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_u20</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">data_u20</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xy_known</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">xy_known</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xy_known</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">xy_known</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span><span class="n">yplot_a</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;a&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span><span class="n">yplot_b</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;height&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;weight&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>xplot= [20. 80.]
+</pre></div>
+</div>
+<img alt="../_images/2c29beacb23883cda1a9e790ae81c9af9f147167060d1be7e8ac33c13a77a134.png" src="../_images/2c29beacb23883cda1a9e790ae81c9af9f147167060d1be7e8ac33c13a77a134.png" />
+<img alt="../_images/d3bde6f90eb07de0c6a81d2bc4a0912a9d2078325d7dff1d05daa1849cd1dcd9.png" src="../_images/d3bde6f90eb07de0c6a81d2bc4a0912a9d2078325d7dff1d05daa1849cd1dcd9.png" />
+</div>
+</div>
+</section>
+<section id="id3">
+<h2><span class="section-number">7.2. </span>ロジスティック回帰: 線形二値分類の学習の観点から<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>上の式<a class="reference internal" href="#equation-eq-binary-classification">(7.1)</a>は、線形結合<span class="math notranslate nohighlight">\(\boldsymbol{w}^T \boldsymbol{x} + b\)</span>の値が0より大きいか小さいかで、
+ラベル<span class="math notranslate nohighlight">\(y\)</span>を0か1か(今の場合は、20歳以上/未満)に分類する方針を与えている。
+しかし、実際の二値分類では、0か1かのどちらかの値を与えるのではなく、
+0から1の間の値(≒確率)を与える方が都合が良いことが多い。</p>
+<p>上の絵から直感的には、分類直線からの距離が大きいほど、その点が20歳以上(未満)である確率が高くなりそうである。
+そこで、分類直線からの距離を表す量<span class="math notranslate nohighlight">\(\boldsymbol{w}^T \boldsymbol{x} + b\)</span>を、
+0から1の間の値に変換する関数<span class="math notranslate nohighlight">\(f\)</span>を用いて、以下のように変換した量を考えてみよう。</p>
+<div class="math notranslate nohighlight" id="equation-eq-binary-classification-probability">
+<span class="eqno">(7.2)<a class="headerlink" href="#equation-eq-binary-classification-probability" title="Link to this equation">#</a></span>\[
+f(\boldsymbol{w}^T \boldsymbol{x} + b)
+\]</div>
+<p>この<span class="math notranslate nohighlight">\(f\)</span>として、以下のシグモイド(sigmoid)関数(またはロジスティック関数)と呼ばれる関数を用いる。</p>
+<div class="math notranslate nohighlight" id="equation-eq-sigmoid">
+<span class="eqno">(7.3)<a class="headerlink" href="#equation-eq-sigmoid" title="Link to this equation">#</a></span>\[
+f(x) = \frac{1}{1 + \exp(-x)}
+\]</div>
+<p>この関数は、<span class="math notranslate nohighlight">\(x\)</span>が大きいほど1に近づき、<span class="math notranslate nohighlight">\(x\)</span>が小さいほど0に近づく。実際に図示してみよう。</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">sigmoid関数の定義</span>
+<span class="sd">実際にはこのようなnaiveな実装だと、xがoverflowを起こすので、引数に応じて評価する式を変えるなどの工夫が必要である。</span>
+<span class="sd">numpyだと&quot;RuntimeWarning: overflow encountered in exp&quot;と初回に警告を出しつつ、</span>
+<span class="sd">np.exp(1000)=np.Inf, 1/Inf=0.0として(可能な限り)計算を続けてくれる。</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">))</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dotted&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">plot_sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/86c0ce72d44b48dad31ca0d159ebaadf57d98ffe073aaa9a64679af746706156.png" src="../_images/86c0ce72d44b48dad31ca0d159ebaadf57d98ffe073aaa9a64679af746706156.png" />
+</div>
+</div>
+<p>これにより、<span class="math notranslate nohighlight">\(\boldsymbol{w}^T \boldsymbol{x} + b=0\)</span>からの距離を関数とした確率を表現することができ、
+<span class="math notranslate nohighlight">\(f(\boldsymbol{w}^T \boldsymbol{x} + b)=0.5\)</span>となる点の集合(<span class="math notranslate nohighlight">\(\boldsymbol{w}^T \boldsymbol{x} + b=0\)</span>)が境界面(今は二次元なので境界線)に対応している事がわかる。</p>
+<p>0.5より大きい場合は、1と判定し、0.5より小さい場合は0と判定することで、線形二値分類を実現できる。</p>
+<p>また、それだけでなく、２値分類の判定の&quot;自信&quot;のような量を表現することができる点もロジスティック回帰の利点である。</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Chapter_GaussianProcess.html"
+       title="前のページ">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">前へ</p>
+        <p class="prev-next-title"><span class="section-number">6. </span>ガウス過程（Gaussian Process）</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Chapter_classification_2.html"
+       title="次ページ">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">次へ</p>
+        <p class="prev-next-title"><span class="section-number">8. </span>多クラス分類</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目次
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">7.1. 線形二値分類</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">7.2. ロジスティック回帰: 線形二値分類の学習の観点から</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  © Copyright 2025 by 吉田 聡太 (Sota Yoshida). 本コンテンツは<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0 ライセンス</a>の下に提供されています。 <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>　ただし、資料中のコードセル部分は<a rel="license" href="https://opensource.org/licenses/MIT">MITライセンス</a>の下に提供されています。
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

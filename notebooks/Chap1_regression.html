@@ -1,0 +1,676 @@
+
+<!DOCTYPE html>
+
+
+<html lang="ja" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>4. 回帰の概要 &#8212; AI・機械学習論1</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=1cf7f4d9"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/translations.js?v=91613774"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/Chap1_regression';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="5. 線形回帰" href="Chap2_linear_regression.html" />
+    <link rel="prev" title="3. 確率分布" href="Chapter_math_probabilitydistributions.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="ja"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">本文へスキップ</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>トップに戻る</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="バージョン警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../home.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo_AIML1.png" class="logo__image only-light" alt="AI・機械学習論1 - Home"/>
+    <img src="../_static/logo_AIML1.png" class="logo__image only-dark pst-js-only" alt="AI・機械学習論1 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">検索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../home.html">
+                    AI・機械学習論1
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">はじめに</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chap0_Intro.html">はじめに</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">機械学習のための数学</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter_math_vector_calculus.html">1. ベクトル解析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_math_linearalgebra.html">2. 線形代数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_math_probabilitydistributions.html">3. 確率分布</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">回帰</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">4. 回帰の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chap2_linear_regression.html">5. 線形回帰</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">分類</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chap3_classification_1.html">6. 分類問題の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chap4_classification_2.html">7. 多クラス分類</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">ニューラルネットワーク</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter5_ANN_Intro.html">8. 機械学習: ニューラルネットワークの概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter6_ANN2_Backprop.html">9. 誤差逆伝播法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter7_ANN3_Optim.html">10. 最適化理論と種々の最適化手法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter8_ANN_regression.html">11. 機械学習: ニューラルネットワークによる回帰</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">発展的な話題</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter_PCA.html">12. 主成分分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_GMM.html">13. 混合ガウシアンモデル(Gaussian Mixture Model, GMM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_SVM.html">14. サポートベクトルマシンによる分類</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_KAN.html">15. KAN: Kolmogorov–Arnold Networks</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="ソースリポジトリ"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fnotebooks/Chap1_regression.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="問題を報告"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="このページをダウンロード">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/notebooks/Chap1_regression.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="ソースファイルをダウンロード"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="PDFに印刷"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全画面モード"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="ライト"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="ダーク"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>回帰の概要</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目次 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">4.1. 回帰分析</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">4.1.1. 単回帰: 1次元の直線回帰</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1><span class="section-number">4. </span>回帰の概要<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>この章では、回帰分析のモチベーションについて説明するとともに、必要となる基礎について幾つか語句や表式を整理しておこう。</p>
+<section id="id2">
+<h2><span class="section-number">4.1. </span>回帰分析<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<aside class="margin sidebar">
+<p class="sidebar-title">回帰</p>
+<p>回帰分析で用いられる&quot;回帰&quot;という用語は、原義とは異なり歴史的な経緯から来ている。
+詳しくは<a class="reference external" href="https://ja.wikipedia.org/wiki/%E5%9B%9E%E5%B8%B0%E5%88%86%E6%9E%90">Wikipedia</a>に譲る。</p>
+</aside>
+<p>皆さんは普段から「ボールがあのへんに落ちそうだな」「対向車のスピードがそこそこ速いから、いま右折するとぶつかっちゃうな」
+「株価が予測できれば儲けられそうだな」といった具合に、多かれ少なかれ経験やデータに基づいた予測を行っている。<br />
+実生活はもちろん、学術分野や産業界でも日々否応なしにこうした予測の必要に迫られることだろう。
+たとえばあなたが会社経営者なら「<em>需要を正しく見積もって、廃棄が出ないように商品を入荷したい</em>」といったことを考えるはずだ。</p>
+<aside class="margin sidebar">
+<p class="sidebar-title">データのベクトル表記</p>
+<p><span class="math notranslate nohighlight">\(\boldsymbol{x}_n,\boldsymbol{t}_n \)</span>は一般に複数成分を持つベクトルのつもりで太字にしてある</p>
+</aside>
+<p>回帰分析の目標は、<span class="math notranslate nohighlight">\(N\)</span>個の観測点<span class="math notranslate nohighlight">\(\{ \boldsymbol{x}_n \} (n=1,\ldots,N)\)</span>と興味のある観測値<span class="math notranslate nohighlight">\(\{\boldsymbol{t}_n \}\)</span>があったとき
+未知の点<span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span>での値<span class="math notranslate nohighlight">\(\boldsymbol{t}\)</span>の値を予測することである。観測点と観測値の例をあげよう。</p>
+<ul class="simple">
+<li><p>観測点/興味のある量ともに1次元の例: 日時におけるある銘柄の株価</p></li>
+<li><p>観測点/興味のある量ともに2次元の例: 緯度・経度に対する標高と年間雨量</p></li>
+</ul>
+<p>「観測されたデータの振る舞いを説明したり予測したい」「データの背景にある基本原理・物理法則のようなものを明らかにしたい」というのは人間の特性であり知性である。
+一方で、データの背後にある真の関数や因果関係を知ることは一般には極めて困難(ときには不可能)である。</p>
+<p>そこで我々人類が取るべき、あるいはこれまで取ってきた戦略は「<strong>なるべく尤もらしいモデルを作って、それを予測に使う</strong>」というものだ。
+この意味で、回帰によらずデータ分析とは多くの場合「特定のモデル(考え方,立場,仮定, etc.)を採用すること」であり、その選択は必ずしも唯一である必要はない。</p>
+<p>自然科学の領域で得られるデータというのは(例外はあるが)一般的には再現性が高く、
+観測・計測からくる誤差などもわりと自然に考慮できるため、回帰分析などの手法を学習・適用する上での教科書的な例と言える。
+また、特定の観測量に影響を与える量(説明変数)についても予めある程度分かっている場合もある。</p>
+<aside class="margin sidebar">
+<p class="sidebar-title">オームの法則</p>
+<p>実際には電気抵抗<span class="math notranslate nohighlight">\(R\)</span>は温度に依存したりするため厳密には定数ではないため、オームの法則という比例関係はあくまで<span class="math notranslate nohighlight">\(I,R,V\)</span>の関係を(ほとんど)説明する近似に過ぎない。</p>
+</aside>
+<p>一例を挙げよう。「電気回路の2点間の電位差は2点間に流れる電流に比例する」という<strong>オームの法則</strong>は<span class="math notranslate nohighlight">\(V = IR\)</span>と書くことが出来て
+「電気抵抗<span class="math notranslate nohighlight">\(R\)</span>が既知の定数ならば、未知の電流<span class="math notranslate nohighlight">\(I'\)</span>を流した際の電位差<span class="math notranslate nohighlight">\(V'\)</span>は<span class="math notranslate nohighlight">\(I'R\)</span>(+誤差)で与えられるだろう」と予測ができる。
+このような法則性は人類によって長年蓄積された経験とデータによって&quot;尤もらしい&quot;事がわかっているため<strong>法則</strong>として教科書にも載っている。</p>
+<p>一方で、「各都道府県における感染症Cの罹患人数」「組織における意思決定・取り組みの効果」など社会や経営/組織運営などで得られるデータは、様々な因子が複雑に絡み合っている上に、条件を変えて対照実験を行うといったことが困難なため、前述のようなデータよりも分析の難易度が数段上がる。</p>
+<p>もし皆さんが「予測」という言葉を見聞きした際に「どのような仮定・モデルをおいているのだろう？」という疑問が思い浮かんだり
+「完璧なモデルは一般に存在しない」という認識を有していれば、皆さんには既にデータ分析に対する基本的なリテラシーが身についていると言って差し支えないだろう。</p>
+<section id="id3">
+<h3><span class="section-number">4.1.1. </span>単回帰: 1次元の直線回帰<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<p>もっとも単純な回帰の例としては、上のオームの法則のように、興味のある量(目的変数,従属変数などと呼ぶ)とそれを決定づける量(説明変数,独立変数などと呼ぶ)がそれぞれ1つずつ(単回帰と呼ぶ)で
+互いに比例関係にあるもの(直線回帰)がある。</p>
+<p>もしも手元にあるデータが比例関係に従うと仮定すると<span class="math notranslate nohighlight">\(t\)</span>(目的変数)と<span class="math notranslate nohighlight">\(x\)</span>(説明変数)の関係は以下のように与えられる:
+<span class="math notranslate nohighlight">\( t = a x + b\)</span>
+ここで、<span class="math notranslate nohighlight">\(a\)</span>は<span class="math notranslate nohighlight">\(x\)</span>と<span class="math notranslate nohighlight">\(t\)</span>の間の比例係数で<span class="math notranslate nohighlight">\(b\)</span>(y切片)は比例関係からのずれを表す定数である。</p>
+<p>例えば以下のようなデータ(<span class="math notranslate nohighlight">\(x\)</span>と<span class="math notranslate nohighlight">\(y\)</span>)があったとする。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">100</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">273.15</span><span class="p">,</span> <span class="mf">293.15</span><span class="p">,</span> <span class="mf">313.15</span><span class="p">,</span> <span class="mf">333.15</span><span class="p">,</span> <span class="mf">353.15</span><span class="p">,</span> <span class="mf">373.15</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>まずplotしてみよう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>   
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x10d765390&gt;
+</pre></div>
+</div>
+<img alt="../_images/1b4270d658fd23d7ac6535caaf3d72330d4138a7729e1677136f300c62232ac4.png" src="../_images/1b4270d658fd23d7ac6535caaf3d72330d4138a7729e1677136f300c62232ac4.png" />
+</div>
+</div>
+<p>この両者の関係は比例関係にあると言えそうだ。</p>
+<p>直線の係数<span class="math notranslate nohighlight">\(a,b\)</span>の&quot;最適値&quot;を<strong>最小二乗法</strong>、つまり誤差の二乗和を最小化するように求めることを考える。</p>
+<div class="math notranslate nohighlight">
+\[
+L \equiv \sum_{i=1}^n (y_i - (ax_i + b))^2
+\]</div>
+<p>これを<span class="math notranslate nohighlight">\(a,b\)</span>について微分して0とおく(極値を求めるための式を書く)と、
+$<span class="math notranslate nohighlight">\(
+\sum_{i=1}^n (y_i - (ax_i + b))x_i = 0 \\
+\sum_{i=1}^n (y_i - (ax_i + b)) = 0
+\)</span><span class="math notranslate nohighlight">\(
+となる。これを解くと、
+\)</span><span class="math notranslate nohighlight">\(
+a = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^n (x_i - \bar{x})^2}\\
+b = \bar{y} - a \bar{x}
+\)</span>$
+となる。</p>
+<p>Exercise: 単回帰分析の係数の最適値を求める式を導出せよ。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">eval_coeff_1d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">xbar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">ybar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="n">xbar</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">ybar</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="n">xbar</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">ybar</span> <span class="o">-</span> <span class="n">a</span> <span class="o">*</span> <span class="n">xbar</span>
+    <span class="k">return</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span>
+
+<span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="n">eval_coeff_1d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;a = &quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="s2">&quot;b = &quot;</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="c1"># １次式の最適化を行うpolyfit関数を使う</span>
+<span class="n">a_np</span><span class="p">,</span> <span class="n">b_np</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;a = &quot;</span><span class="p">,</span> <span class="n">a_np</span><span class="p">,</span> <span class="s2">&quot;b = &quot;</span><span class="p">,</span> <span class="n">b_np</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a =  1.0 b =  273.15000000000003
+a =  0.9999999999999997 b =  273.15000000000003
+</pre></div>
+</div>
+</div>
+</div>
+<p>解答1.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\bar{x} = \sum_{i=1}^n x_i \\
+\bar{y} = \sum_{i=1}^n y_i \\
+0 = \sum_{i=1}^n (y_i - (ax_i + b))  = n \bar{y} - a n \bar{x} - b n 
+\end{split}\]</div>
+<p>から
+$<span class="math notranslate nohighlight">\(
+b = \bar{y} - a \bar{x}
+\)</span>$
+が得られる。次に、1式目を変形していこう。</p>
+<div class="math notranslate nohighlight">
+\[
+\sum^n_{i=1} ( y_i - \bar{y} ) x_i + a \bar{x} x_i -a x^2_i = 0
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+0 = \sum_{i=1}^n (y_i x_i - a x^2_i - \bar{y}x_i + a \bar{x}x_i) = 
+\sum_{i=1}^n ( (y_i - \bar{y})(x_i - \bar{x}) + \bar{x}y_i - \bar{x}\bar{y} - a (x_i - \bar{x})^2 )= 0
+\]</div>
+<p>ここで、<span class="math notranslate nohighlight">\(\bar{x}y_i - \bar{x}\bar{y}\)</span>は、和を取ると0になるので
+$<span class="math notranslate nohighlight">\(
+a = \frac{\sum_{i=1}^n ( (y_i - \bar{y})(x_i - \bar{x})  }{\sum^n_{i=1} (x_i - \bar{x})^2 }
+\)</span>$</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Chapter_math_probabilitydistributions.html"
+       title="前のページ">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">前へ</p>
+        <p class="prev-next-title"><span class="section-number">3. </span>確率分布</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Chap2_linear_regression.html"
+       title="次ページ">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">次へ</p>
+        <p class="prev-next-title"><span class="section-number">5. </span>線形回帰</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目次
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">4.1. 回帰分析</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">4.1.1. 単回帰: 1次元の直線回帰</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  © Copyright 2022 by 吉田 聡太 (Sota Yoshida). 本コンテンツは<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0 ライセンス</a>の下に提供されています。 <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>　ただし、資料中のコードセル部分は<a rel="license" href="https://opensource.org/licenses/MIT">MITライセンス</a>の下に提供されています。
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,837 @@
+
+<!DOCTYPE html>
+
+
+<html lang="ja" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>3. 確率と確率分布 &#8212; AI・機械学習論1</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=1cf7f4d9"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/translations.js?v=91613774"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/Chapter_math_probabilitydistributions';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="4. 回帰の概要" href="Chapter_regression.html" />
+    <link rel="prev" title="2. 線形代数" href="Chapter_math_linearalgebra.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="ja"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">本文へスキップ</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>トップに戻る</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="バージョン警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../home.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo_AIML1.png" class="logo__image only-light" alt="AI・機械学習論1 - Home"/>
+    <img src="../_static/logo_AIML1.png" class="logo__image only-dark pst-js-only" alt="AI・機械学習論1 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">検索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../home.html">
+                    AI・機械学習論1
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">機械学習のための数学</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter_math_vector_calculus.html">1. ベクトル解析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_math_linearalgebra.html">2. 線形代数</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">3. 確率と確率分布</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">回帰</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter_regression.html">4. 回帰の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_linear_regression.html">5. 線形回帰</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_GaussianProcess.html">6. ガウス過程（Gaussian Process）</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">分類</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_1.html">7. 分類問題の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_2.html">8. 多クラス分類</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">ニューラルネットワーク</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN_Intro.html">9. ニューラルネットワークの概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN2_Backprop.html">10. 誤差逆伝播法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_Optimization.html">11. 機械学習における最適化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN_regression.html">12. 機械学習: ニューラルネットワークによる回帰</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">データの表現・モデルの評価</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Data_representation.html">13. 機械学習におけるデータ表現の基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_Model_evaluation.html">14. モデルの評価・過学習・正則化</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">発展的な話題</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter_PCA.html">15. 主成分分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_GMM.html">16. 混合ガウシアンモデル(Gaussian Mixture Model, GMM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_KAN.html">17. KAN: Kolmogorov–Arnold Networks</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="ソースリポジトリ"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fnotebooks/Chapter_math_probabilitydistributions.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="問題を報告"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="このページをダウンロード">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/notebooks/Chapter_math_probabilitydistributions.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="ソースファイルをダウンロード"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="PDFに印刷"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全画面モード"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="ライト"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="ダーク"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>確率と確率分布</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目次 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.1. 条件付き確率</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3.1.1. ベイズの定理</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3.2. 確率密度関数</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">3.3. ガウス分布</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3.4. 確率分布のベイズ推定</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">3.4.1. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 事後分布からのサンプリング</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.5. ガウス分布と機械学習の関係</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1><span class="section-number">3. </span>確率と確率分布<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<section id="id2">
+<h2><span class="section-number">3.1. </span>条件付き確率<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>事象の確率を、他の事象が起こったことを前提にして求めることを条件付き確率(conditional probability)という。
+もちろん、それぞれの事象が独立であれば、条件付き確率は単純にその事象の確率(の積)で表現できるが、一般の場合は必ずしも事象が独立であるとは限らない。</p>
+<p>例えば、<span class="math notranslate nohighlight">\(A\)</span>と<span class="math notranslate nohighlight">\(B\)</span>という2つの事象があるとき、<span class="math notranslate nohighlight">\(A\)</span>が起こったという条件の下で<span class="math notranslate nohighlight">\(B\)</span>が起こる確率は、<span class="math notranslate nohighlight">\(P(B|A)\)</span>と表される。このとき、<span class="math notranslate nohighlight">\(P(B|A)\)</span>は<span class="math notranslate nohighlight">\(P(A)\)</span>と<span class="math notranslate nohighlight">\(P(B)\)</span>の積ではなく、<span class="math notranslate nohighlight">\(A\)</span>が起こったときの<span class="math notranslate nohighlight">\(B\)</span>の起こりやすさを考慮した確率である。</p>
+<p>例としてある集団の50%が身長160cm以上であるとする。一方、この集団は50%が60kg以上の体重を持つとする。
+このとき、ランダムに選んだ人が身長160cm以上である確率(<span class="math notranslate nohighlight">\(P(A)\)</span>としよう)は50%であり、体重60kg以上である確率<span class="math notranslate nohighlight">\(P(B)\)</span>も50%である。</p>
+<p>もし、身長と体重が完全に独立であれば、身長160cm以上で体重60kg以上である確率<span class="math notranslate nohighlight">\(P(A, B)\)</span>は<span class="math notranslate nohighlight">\(P(A) \times P(B) = 0.5 \times 0.5 = 0.25\)</span>となる。
+しかし、身長と体重は正の相関を持つことが多く、実際の<span class="math notranslate nohighlight">\(P(A, B)\)</span>は0.25よりも大きくなることが一般的でろう。</p>
+<p>このような場合、<span class="math notranslate nohighlight">\(P(A,B) \neq P(A) \times P(B)\)</span>となる。
+このとき、条件付き確率は次のように定義される。</p>
+<div class="math notranslate nohighlight">
+\[
+P(B|A) = \frac{P(A,B)}{P(A)}
+\]</div>
+<p>この式は、<span class="math notranslate nohighlight">\(A\)</span>が起こったときの<span class="math notranslate nohighlight">\(B\)</span>の起こりやすさを表している。
+同様に、<span class="math notranslate nohighlight">\(P(A|B)\)</span>は次のように定義される</p>
+<div class="math notranslate nohighlight">
+\[
+P(A|B) = \frac{P(A,B)}{P(B)}
+\]</div>
+<p>このように、条件付き確率は事象の依存関係を考慮して確率を計算するための重要な概念である。</p>
+<section id="id3">
+<h3><span class="section-number">3.1.1. </span>ベイズの定理<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<p>ベイズの定理(Bayes' theorem)は、条件付き確率を用いて事象の確率を更新するための重要な法則である。
+ベイズの定理は、次のように表される。</p>
+<div class="math notranslate nohighlight">
+\[
+P(A|B) = \frac{P(B|A) P(A)}{P(B)}
+\]</div>
+<p>この式は、事象<span class="math notranslate nohighlight">\(B\)</span>が起こったときに事象<span class="math notranslate nohighlight">\(A\)</span>が起こる確率を、事象<span class="math notranslate nohighlight">\(A\)</span>が起こったときの事象<span class="math notranslate nohighlight">\(B\)</span>の確率と、事象<span class="math notranslate nohighlight">\(A\)</span>の確率、および事象<span class="math notranslate nohighlight">\(B\)</span>の確率を用いて計算する方法を示している。
+なんのことはない、これは条件付き確率の定義そのものである。</p>
+<p>一方で、ベイズの定理の有用性を示すために、医療分野での応用を例に考えてみよう。</p>
+<p>ある病気の検査があり、その検査は病気にかかっている人の90%を正しく検出し、病気にかかっていない人の95%を正しく陰性と判定するものとする。</p>
+<p>このとき、検査結果が陽性であった場合に実際に病気にかかっている確率を求めることができる。
+ここで、次のような情報が与えられているとする。</p>
+<ul class="simple">
+<li><p>病気にかかっている人の割合（事前確率）: <span class="math notranslate nohighlight">\(P(A) = 0.01\)</span>（1%）</p></li>
+<li><p>検査が陽性である確率（事後確率）: <span class="math notranslate nohighlight">\(P(B|A) = 0.9\)</span>（病気にかかっている人の90%が陽性と判定される; 真陽性）</p></li>
+<li><p>検査が陰性である確率: <span class="math notranslate nohighlight">\(P(B|\neg A) = 0.05\)</span>（病気にかかっている人の5%が陰性と判定される; 偽陰性）</p></li>
+<li><p>検査が陽性である確率: <span class="math notranslate nohighlight">\(P(B) = P(B|A) P(A) + P(B|\neg A) P(\neg A)\)</span></p></li>
+</ul>
+<p>このとき、ベイズの定理を用いて、検査結果が陽性であった場合に実際に病気にかかっている確率<span class="math notranslate nohighlight">\(P(A|B)\)</span>を求めることができる。</p>
+<div class="math notranslate nohighlight">
+\[
+P(A|B) = \frac{P(B|A) P(A)}{P(B)} = \frac{0.9 \times 0.01}{0.9 \times 0.01 + 0.05 \times 0.99}
+ \approx 0.154
+\]</div>
+</section>
+</section>
+<section id="id4">
+<h2><span class="section-number">3.2. </span>確率密度関数<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>上では、事象が離散的に起こる場合を考えた。
+以下では、実数値を取る連続型確率変数(continuous random variable)について考えることにする。</p>
+<p>関数<span class="math notranslate nohighlight">\(f: \mathbb{R}^D \to \mathbb{R}\)</span>が確率密度関数(probability density function; pdf)であるとは、次を満たすことをいう。</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(f(\mathbf{x}) \geq 0\)</span> である。</p></li>
+<li><p>全ての値に対する<span class="math notranslate nohighlight">\(f\)</span>の積分は1である。</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+\int_{\mathbb{R}^D} f(\mathbf{x}) \, d\mathbf{x} = 1
+\]</div>
+<p>ここから、連続型確率変数<span class="math notranslate nohighlight">\(X\)</span>が</p>
+<div class="math notranslate nohighlight">
+\[
+P( a \leq X \leq b ) = \int_{a}^{b} f(x) \, dx
+\]</div>
+<p>を満たすことがわかる。確率変数<span class="math notranslate nohighlight">\(X\)</span>が微小区間<span class="math notranslate nohighlight">\([x, x+dx]\)</span>に入る確率は<span class="math notranslate nohighlight">\(\simeq f(x)dx\)</span>であることから、<span class="math notranslate nohighlight">\(f(x)\)</span>が確率密度と呼ばれることも理解できる。</p>
+<p>連続型確率変数<span class="math notranslate nohighlight">\(X\)</span>の累積分布関数(cumulative distribution function; cdf)は、次のように定義される。</p>
+<div class="math notranslate nohighlight">
+\[
+F_X(\mathbf{x}) = P(X_1 \leq x_1, X_2 \leq x_2, \ldots, X_D \leq x_D) = \int_{-\infty}^{x_1} \int_{-\infty}^{x_2} \cdots \int_{-\infty}^{x_D} f(\mathbf{x}) \, dx_1 \, dx_2 \cdots dx_D
+\]</div>
+<p>次に、確率変数<span class="math notranslate nohighlight">\(X\)</span>の期待値(expectation)と分散(variance)を定義する。</p>
+<p>期待値は、確率変数<span class="math notranslate nohighlight">\(X\)</span>の取り得る値にその確率を重み付けして合計したもので、次のように定義される。</p>
+<div class="math notranslate nohighlight">
+\[
+E[X] = \int_{-\infty}^{\infty} x f(x) \, dx
+\]</div>
+<p>分散は、確率変数<span class="math notranslate nohighlight">\(X\)</span>の値が期待値からどれだけ散らばっているかを示す指標で、次のように定義される。</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Var}[X] = E[(X - E[X])^2] = \int_{-\infty}^{\infty} (x - E[X])^2 f(x) \, dx
+\]</div>
+<p>確率密度関数を明示する <span class="math notranslate nohighlight">\(E_f[X]\)</span>といった表記もあるが、ここでは単に<span class="math notranslate nohighlight">\(E[X]\)</span>と書くことにした。</p>
+</section>
+<section id="id5">
+<h2><span class="section-number">3.3. </span>ガウス分布<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p>ガウス分布(Gaussian distribution)は、確率密度関数が次の形を持つ確率分布である。
+単変量の場合と多変量の場合をそれぞれ定義しておく:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+f(x) &amp; = \frac{1}{\sqrt{2 \pi \sigma^2}} \exp\left(-\frac{(x - \mu)^2}{2 \sigma^2}\right) \\
+f(\mathbf{x}) &amp; = \frac{1}{\sqrt{ (2\pi)^D |\Sigma|}} \exp\left(-\frac{1}{2} (\mathbf{x} - \boldsymbol{\mu})^T \Sigma^{-1} (\mathbf{x} - \boldsymbol{\mu})\right) 
+\end{align*}
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+p(\mathbf{x}, \mathbf{y}) = \mathcal{N}\left(
+    \begin{bmatrix}
+        \mathbf{\mu}_x \\
+        \mathbf{\mu}_y
+    \end{bmatrix},
+    \begin{bmatrix}
+        \Sigma_{xx} &amp; \Sigma_{xy} \\
+        \Sigma_{yx} &amp; \Sigma_{yy}
+    \end{bmatrix}
+\right) 
+\end{split}\]</div>
+<p>指数関数の前にある係数は、確率密度関数が正規化されていることを保証するためのもので、ガウス分布を全空間で積分したときに１になるようになっている。
+1変数の場合のガウス積分の簡単な証明を与えておこう。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+I &amp;\equiv \int_{-\infty}^{\infty} e^{(-\alpha x^2)} dx \\
+I^2 &amp; = \left( \int_{-\infty}^{\infty} e^{-\alpha x^2} dx \right) \left( \int_{-\infty}^{\infty} e^{-\alpha y^2} dy \right) \\
+&amp; = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} e^{-\alpha (x^2 + y^2)} dx dy \\
+&amp; = \int_{0}^{2\pi} \int_{0}^{\infty} e^{-\alpha r^2} r dr d\theta \\
+&amp; = 2\pi \left[ -\frac{1}{2\alpha} e^{-\alpha r^2} \right]_{0}^{\infty} \\
+I &amp; = \sqrt{\frac{\pi}{\alpha}} 
+\end{align*}
+\end{split}\]</div>
+<p><span class="math notranslate nohighlight">\(x=r \cos \theta, y=r \sin \theta\)</span>と置換して、極座標に変換した。Jacobianは<span class="math notranslate nohighlight">\(r\)</span>である。
+<span class="math notranslate nohighlight">\(\alpha=1/(2\sigma^2)\)</span>と置換すると、ガウス分布の正規化定数が得られる。</p>
+<p>ガウス分布の重要な性質として、周辺分布(特定の変数の積分を取ることで得られる分布)と条件付き分布もまたガウス分布になる性質がある。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+p(\mathbf{x} | \mathbf{y}) &amp; = \mathcal{N}\left(
+    \mathbf{\mu}_{x|y},
+    \Sigma_{x|y}\right) \\
+\mathbf{\mu}_{x|y} &amp; = \mathbf{\mu}_x + \Sigma_{xy} \Sigma_{yy}^{-1} (\mathbf{y} - \mathbf{\mu}_y) \\
+\Sigma_{x|y} &amp; = \Sigma_{xx} - \Sigma_{xy} \Sigma_{yy}^{-1} \Sigma_{yx}
+\end{align}
+\end{split}\]</div>
+<p>ある行列<span class="math notranslate nohighlight">\(M\)</span>の部分行列が以下のように書けるとき</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+M &amp; = \left( 
+\begin{matrix}
+A &amp; B \\
+C &amp; D
+\end{matrix}
+\right)^{-1} \\
+\end{align*}
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[
+S \equiv (A - B D^{-1} C)^{-1}
+\]</div>
+<p>で定義される行列<span class="math notranslate nohighlight">\(S\)</span>を用いて、<span class="math notranslate nohighlight">\(M\)</span>は以下のように表される:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+M = \begin{pmatrix}
+S &amp; -S B D^{-1} \\
+-D^{-1} C S &amp; D^{-1} + D^{-1} C S B D^{-1}
+\end{pmatrix}
+\end{split}\]</div>
+<p>この関係を用いて、共分散行列の逆行列を、分割したそれぞれの部分行列の逆行列で表現することにする。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\Sigma^{-1} &amp; \equiv
+\left( 
+\begin{matrix}
+\Sigma_{xx} &amp; \Sigma_{xy} \\
+\Sigma_{yx} &amp; \Sigma_{yy}
+\end{matrix}
+\right)^{-1} \equiv \begin{pmatrix}
+\Lambda_{xx} &amp; \Lambda_{xy} \\
+\Lambda_{yx} &amp; \Lambda_{yy}
+\end{pmatrix} 
+\end{align*}
+\end{split}\]</div>
+<p>共分散行列の逆行列を精度行列(precision matrix)と呼び、<span class="math notranslate nohighlight">\(\Lambda\)</span>で表す慣例に倣った。</p>
+<p>確率分布に係る係数等は一旦忘れて、条件付き確率分布のexponential関数の中身を見ていく。</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align*}
+\log P(\mathbf{x}, \mathbf{y}) &amp;= -\frac{1}{2} (\mathbf{x} - \boldsymbol{\mu}_x)^T \Lambda_{xx} (\mathbf{x} - \boldsymbol{\mu}_x) -\frac{1}{2} (\mathbf{x} - \boldsymbol{\mu}_x)^T \Lambda_{xy} (\mathbf{y} - \boldsymbol{\mu}_y) 
+-\frac{1}{2} (\mathbf{y} - \boldsymbol{\mu}_y)^T \Lambda_{yx} (\mathbf{x} - \boldsymbol{\mu}_x) 
+-\frac{1}{2} (\mathbf{y} - \boldsymbol{\mu}_y)^T \Lambda_{yy} (\mathbf{y} - \boldsymbol{\mu}_y) + \text{const.} 
+\end{align*}
+\]</div>
+<p><span class="math notranslate nohighlight">\(\mathbf{x}\)</span>に関する1・2次の項をまとめよう。</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align*}
+-\frac{1}{2} \mathbf{x}^T \Lambda_{xx} \mathbf{x} 
++ \mathbf{x}^T (\Lambda_{xx} \boldsymbol{\mu}_x - \Lambda_{xy} (\mathbf{y} - \boldsymbol{\mu}_y) )
+\end{align*}
+\]</div>
+<p>ここで、<span class="math notranslate nohighlight">\(\Lambda_{xy} = \Lambda_{yx}^T\)</span>であることを用いた。</p>
+<p>さらに、</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\Lambda_{xx} &amp;= (\Sigma_{xx} - \Sigma_{xy} \Sigma_{yy}^{-1} \Sigma_{yx})^{-1} = \Sigma_{x|y}^{-1}\\
+\Lambda_{xy} &amp;= -\Sigma_{x|y}^{-1} \Sigma_{xy} \Sigma_{yy}^{-1}
+\end{align*}
+\end{split}\]</div>
+<p>から、</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align*}
+\log P(\mathbf{x} | \mathbf{y}) &amp;= -\frac{1}{2} (\mathbf{x} - \boldsymbol{\mu}_{x|y})^T \Sigma_{x|y}^{-1} (\mathbf{x} - \boldsymbol{\mu}_{x|y}) + \text{const.}
+\end{align*}
+\]</div>
+<p>となる。正規化すると、条件確率が上のガウス分布になることがわかる。</p>
+</section>
+<section id="id6">
+<h2><span class="section-number">3.4. </span>確率分布のベイズ推定<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<p>2つの確率変数の同時分布を <span class="math notranslate nohighlight">\(p(\mathbf{x}, \mathbf{y})\)</span>、
+<span class="math notranslate nohighlight">\(p(\mathbf{x}), p(\mathbf{y})\)</span> はそれぞれの確率変数の周辺分布と呼ぶ。</p>
+<p>確率の和の規則により、</p>
+<div class="math notranslate nohighlight">
+\[
+p(\mathbf{x}) = \int p(\mathbf{x}, \mathbf{y}) d\mathbf{y}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+p(\mathbf{y}) = \int p(\mathbf{x}, \mathbf{y}) d\mathbf{x}
+\]</div>
+<p>が成り立つ。離散的な場合は積分を和に置き換えればよい。</p>
+<p>また積の規則と呼ばれる法則は、同時分布と条件付き分布を結びつける:</p>
+<div class="math notranslate nohighlight">
+\[
+p(\mathbf{x}, \mathbf{y}) = p(\mathbf{x} | \mathbf{y}) p(\mathbf{y}) = p(\mathbf{y} | \mathbf{x}) p(\mathbf{x})
+\]</div>
+<p>ここから確率分布に対するベイズの定理が導かれる:</p>
+<div class="math notranslate nohighlight">
+\[
+p(\mathbf{x} | \mathbf{y}) = \frac{p(\mathbf{y} | \mathbf{x}) p(\mathbf{x})}{p(\mathbf{y})}
+\]</div>
+<p>特に、<span class="math notranslate nohighlight">\(p(\mathbf{x})\)</span>を事前分布(prior distribution)、<span class="math notranslate nohighlight">\(p(\mathbf{y} | \mathbf{x})\)</span>を尤度(likelihood)、<span class="math notranslate nohighlight">\(p(\mathbf{x} | \mathbf{y})\)</span>を事後分布(posterior distribution)と呼ぶ。</p>
+<p>確率変数を<span class="math notranslate nohighlight">\(x, y\)</span>とかくと、なんとなく等価・類似性のある量を２つ並べたように見えるが、もう少し機械学習の文脈に即した例を考えてみよう。</p>
+<p>いま何らかの現象やデータを説明することを目的に何らかのパラメータを持つ関数(ニューラルネットワークなど)を考え、
+さらにそのパラメータを<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>という変数で表すことにする。
+このとき、入力データを<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>、出力データを<span class="math notranslate nohighlight">\(\mathbf{y}\)</span>とし、幾つかのデータ点 <span class="math notranslate nohighlight">\(D = \{(\mathbf{x}_i, \mathbf{y}_i)\}_{i=1}^N\)</span>が得られていたとする。</p>
+<p>決められたデータセットに対して、最適なパラメータ<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>を求めることが最適化問題の主要な目的であるが、
+いま考えているパラメータ<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>がどのような値を取るかは不確実であり、確率変数として扱い分布を考えることもできる。
+その利点は、パラメータの不確実性を考慮に入れることで、より堅牢なモデルを構築できる点にある。
+さて、パラメータをある次元の特定の値ではなく、確率分布として扱うとき、次のような確率分布を考えることができる:</p>
+<div class="math notranslate nohighlight">
+\[
+p(\mathbf{\theta} | D) \propto p(D | \mathbf{\theta}) p(\mathbf{\theta})
+\]</div>
+<p>左辺の<span class="math notranslate nohighlight">\(p(\mathbf{\theta} | D)\)</span>は、与えられたデータ<span class="math notranslate nohighlight">\(D\)</span>に基づくパラメータ<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>の事後分布を表す。
+右辺の<span class="math notranslate nohighlight">\(p(D | \mathbf{\theta})\)</span>は、パラメータ<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>が与えられたときのデータ<span class="math notranslate nohighlight">\(D\)</span>の尤度を表し、<span class="math notranslate nohighlight">\(p(\mathbf{\theta})\)</span>はパラメータ<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>の事前分布を表す。
+これにより、パラメータに対する事前分布(事前知識や仮定)を、観測したデータに基づいて更新することができる。</p>
+<p>また、上ではあえて比例関係<span class="math notranslate nohighlight">\(\propto\)</span>を用いたが、分母にあたる<span class="math notranslate nohighlight">\(p(D)\)</span>はデータ<span class="math notranslate nohighlight">\(D\)</span>に関する正規化定数であり、パラメータ<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>に依存しないため、事後分布を計算する際には無視できる(というより、計算が非常に難しいことが多い)ことによる。</p>
+<section id="clubsuit">
+<h3><span class="section-number">3.4.1. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> 事後分布からのサンプリング<a class="headerlink" href="#clubsuit" title="Link to this heading">#</a></h3>
+<p>事後分布に従うサンプルを生成するための方法としては、大別すると、近似推論(≒事後分布を性質の良い分布で近似する)と、MCMC(Markov Chain Monte Carlo; マルコフ連鎖モンテカルロ法)がある。
+事前分布及び尤度を性質の良い(共役分布; conjugate distribution)で選ぶと、事後分布も特定の分布族に属することが保証され、解析的に計算できる場合がある。
+近似推論では、こうした仮定を積極的に用いて、事後分布を計算しやすい分布で近似する。</p>
+<p>一方で、MCMCは、事後分布からのサンプルを生成するための確率的なアルゴリズムであり、事後分布の形状に関する仮定を必要としない。
+十分に多くのサンプルを&quot;きちんと&quot;生成できれば、事後分布を反映したサンプルを得ることができるが、実際にはサンプルの自己相関や収束性などに注意が必要であり、適切なアルゴリズムの選択とパラメータ設定が重要である。
+とくに多次元の分布からサンプルを生成する場合は、サンプルの自己相関が高くなりやすく、効率的なサンプリングが難しいことが多い。
+代表的なMCMCアルゴリズムには以下のようなものがある:</p>
+<ul class="simple">
+<li><p>ギブスサンプリング(Gibbs sampling): 各変数を順番に更新する方法。条件付き分布が計算しやすい場合に有効。</p></li>
+<li><p>メトロポリス・ヘイスティングス法(Metropolis-Hastings): 提案分布から新しいサンプルを生成し、受け入れるかどうかを確率的に決定する方法。提案分布の選択が重要。</p></li>
+<li><p>ハミルトニアンモンテカルロ(Hamiltonian Monte Carlo; HMC): 物理学のハミルトン力学に基づく方法で、効率的に高次元空間を探索できる。勾配情報を利用するため、計算コストが高い場合がある。</p></li>
+<li><p>レプリカ交換法(Replica Exchange MCMC; REMC) あるいはparallel tempering: 複数のマルコフ連鎖を異なるスケール因子(温度とも呼ばれる)で滑らかにしながら、レプリカ間でサンプルを交換する方法。多峰性分布のサンプリングに有効。</p></li>
+<li><p>Affine Invariant MCMC: 複数のサンプルを同時に更新する方法で、アフィン変換に対して不変な性質を持つ。高次元空間でのサンプリングに適している。特に並列性が優れているほか、職人芸による提案分布の調整が不要であることが利点である。
+最初に提案されたのは Goodman &amp; Weare (2010) で、天文学の分野で広く用いられているemcee (Foreman-Mackey et al., 2013) はこのアルゴリズムを実装したPythonライブラリである。</p></li>
+</ul>
+<p>筆者自身も、大学院生の頃〜大学教員になりたての頃に、物理学の文脈で近似推論/MCMCを用いた事後分布推定の研究を行っていた。
+その頃の経験則にはなるが、効率的なサンプリングを実現するにはデータの特性をよく理解し、適切なアルゴリズムとパラメータ設定を選ぶことが重要であり、試行錯誤や、適応的にパラメータを調整する手法が有効であると感じている。
+また、次元(≒パラメータ数)の小さい領域では、HMCが比較的安定して収束したサンプリングを与えることが多いが、勾配の計算が高コストになる状況ではあまり適さず、複数のworkerで並列に動作する方法、とくにAffine Invariant MCMCが有効であることが多い印象を持っている。</p>
+</section>
+</section>
+<section id="id7">
+<h2><span class="section-number">3.5. </span>ガウス分布と機械学習の関係<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<p>機械学習分野において、ガウス分布は非常に重要な役割を果たす。
+全てを列挙することはできないが、幾つか代表的な例を挙げておく。</p>
+<ul class="simple">
+<li><p><strong>線形回帰</strong>: 線形回帰では、目的変数がガウス分布に従うと仮定することが多い。これは、誤差項がガウス分布に従うと仮定することで、線形モデルのパラメータを推定するだけでなく予測の信頼区間(不確実性)を計算できる。</p></li>
+<li><p><strong>ガウス過程</strong>: ガウス過程は、関数の分布を多次元正規分布で表現する手法であり、非線形回帰や分類問題において強力なツールとなる。ガウス過程は、データ点間の相関を考慮し、予測の不確実性を定量化することができ、ベイズ最適化などメタ的なアプローチにおいても利用される。</p></li>
+<li><p><strong>混合ガウス分布</strong>: 混合ガウス分布は、複数のガウス分布の線形結合であり、クラスタリングや密度推定に利用される。特に、Gaussian Mixture Model (GMM)は、データが複数の異なるガウス分布から生成されていると仮定し、各クラスタのパラメータを推定するために使用される。</p></li>
+<li><p><strong>変分オートエンコーダ</strong>: 変分オートエンコーダ(VAE)は、潜在変数モデルの一種であり、潜在変数がガウス分布に従うと仮定することで、データの生成過程を学習することが多い。</p></li>
+<li><p><strong>拡散モデル</strong>: 拡散モデルは、データの生成過程を逆拡散過程としてモデル化する手法であり、特に画像生成タスクにおいて注目されている。拡散モデルは、データにノイズを加えながら生成過程を学習し、最終的に高品質なサンプルを生成することができる。</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Chapter_math_linearalgebra.html"
+       title="前のページ">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">前へ</p>
+        <p class="prev-next-title"><span class="section-number">2. </span>線形代数</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Chapter_regression.html"
+       title="次ページ">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">次へ</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>回帰の概要</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目次
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.1. 条件付き確率</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3.1.1. ベイズの定理</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3.2. 確率密度関数</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">3.3. ガウス分布</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3.4. 確率分布のベイズ推定</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">3.4.1. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 事後分布からのサンプリング</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.5. ガウス分布と機械学習の関係</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  © Copyright 2025 by 吉田 聡太 (Sota Yoshida). 本コンテンツは<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0 ライセンス</a>の下に提供されています。 <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>　ただし、資料中のコードセル部分は<a rel="license" href="https://opensource.org/licenses/MIT">MITライセンス</a>の下に提供されています。
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
