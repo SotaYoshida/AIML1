@@ -4,10 +4,10 @@
 この講義では、データ分析の基本的なタスクである回帰・識別を中心とした題材を用いて機械学習の基礎について学修します。
 
 
-
 ## 資料の使い方
 
 本資料は一部、理解の補助のためにPythonのコードを含んでおり、Google Colaboratoryや受講者の手元のJupyterNoteBook環境での使用を想定している。
+※リンク切れの管理などが煩雑なので、Google Colaboratoryで開くためのバッジは貼っていない。各自でipynbファイルをColabやローカルのJupyter Notebookで開いて利用してほしい。
 
 本資料は[Jupyter Notebook](https://github.com/jupyter/notebook)形式で作成されたソースファイルを[Jupyter Book](https://jupyterbook.org/en/stable/intro.html)を用いて変換することで作成されたコンテンツになっている。この形式の資料を授業内では**ブック**ないし**Book**と表記・呼称する。
 
