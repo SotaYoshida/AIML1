@@ -1,0 +1,45 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: home
+
+parts: 
+- caption: 機械学習のための数学
+  numbered: true
+  chapters:
+  - file: notebooks/Chapter_math_vector_calculus
+  - file: notebooks/Chapter_math_linearalgebra
+  - file: notebooks/Chapter_math_probabilitydistributions
+- caption: 回帰
+  numbered: true
+  chapters:
+  - file: notebooks/Chapter_regression
+  - file: notebooks/Chapter_linear_regression
+  - file: notebooks/Chapter_GaussianProcess
+- caption: 分類
+  numbered: true
+  chapters:
+  - file: notebooks/Chapter_classification_1
+  - file: notebooks/Chapter_classification_2
+- caption: ニューラルネットワーク
+  numbered: true
+  chapters:
+  - file: notebooks/Chapter_ANN_Intro
+  - file: notebooks/Chapter_ANN2_Backprop
+  - file: notebooks/Chapter_Optimization
+  - file: notebooks/Chapter_ANN_regression
+  - file: notebooks/
+- caption: データの表現・モデルの評価
+  numbered: true
+  chapters:
+  - file: notebooks/Data_representation
+  - file: notebooks/Chapter_Model_evaluation
+- caption: 発展的な話題
+  numbered: true
+  chapters:
+  #- file: notebooks/Chapter_PyTorch
+  - file: notebooks/Chapter_PCA
+  - file: notebooks/Chapter_GMM
+  - file: notebooks/Chapter_SVM
+  - file: notebooks/Chapter_KAN
