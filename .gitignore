@@ -211,3 +211,6 @@ _build/
 logo.pdf
 logo.pptx
 *~
+
+# MacOS
+.DS_Store
