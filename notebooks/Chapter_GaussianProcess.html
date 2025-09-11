@@ -747,6 +747,13 @@ K(\mathbf{x}, \mathbf{x})^{-1} = (L^T)^{-1} L^{-1}
 <p>例えば今の関数の振る舞いを、パラメータ空間に対するコスト関数だと考え、その最小化や最大化を目指すとする。
 すでに得られているデータ点をもとに、次に評価する点を獲得関数で決定する。
 言い換えると、情報利得が高そうかつ、良さそうな点を次に評価するための、戦略を立てるための枠組みとも言える。</p>
+<p>以下に、実装例を示す。
+なお、獲得関数には、期待改善量(Expected Improvement, EI)を用いている。</p>
+<div class="math notranslate nohighlight">
+\[
+EI(x) = (\mu(x) - y_\mathrm{best}) \Phi(z) + \sigma(x) \phi(z), \quad z = \frac{\mu(x) - y_\mathrm{best}}{\sigma(x)}
+\]</div>
+<p>ここで<span class="math notranslate nohighlight">\(\Phi, \phi\)</span>はそれぞれ標準正規分布の累積分布関数と確率密度関数である。</p>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
