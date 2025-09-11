@@ -208,6 +208,7 @@ __marimo__/
 
 # My stuff
 _build/
+local_files
 logo.pdf
 logo.pptx
 *~
