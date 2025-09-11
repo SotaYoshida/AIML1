@@ -30,7 +30,7 @@
   <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -434,8 +434,8 @@
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">指定した人数分、20歳以上・20歳以下のダミーデータを作成する関数。</span>
@@ -443,7 +443,7 @@
 <span class="sd">20歳以上については身長・体重の平均・標準偏差を参考に適当な正の相関(r=0.4)を持たせる。</span>
 <span class="sd">20歳以下については10歳の身長体重の平均・標準偏差を参考に適当な正の相関(r=0.2)を持たせることにした。</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">sample_data_from_multivariatenormal</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">sample_data_from_multivariatenormal</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
     <span class="n">mean_o20</span> <span class="o">=</span> <span class="p">[</span><span class="mf">167.7</span><span class="p">,</span><span class="mf">67.4</span><span class="p">]</span>
     <span class="n">std_o20</span> <span class="o">=</span> <span class="p">[</span><span class="mf">6.9</span><span class="p">,</span> <span class="mf">12.0</span><span class="p">]</span>
@@ -458,7 +458,7 @@
     <span class="n">data_u20</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean_u20</span><span class="p">,</span><span class="n">cov_u20</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
     <span class="k">return</span> <span class="n">data_o20</span><span class="p">,</span><span class="n">data_u20</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span><span class="n">data_o20</span><span class="p">,</span><span class="n">data_u20</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="n">data_o20</span><span class="p">,</span><span class="n">data_u20</span><span class="p">):</span>
     <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_o20</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">data_o20</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;over  20&quot;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_u20</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">data_u20</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;under 20&quot;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
@@ -495,7 +495,7 @@
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_line</span><span class="p">(</span><span class="n">data_o20</span><span class="p">,</span><span class="n">data_u20</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_line</span><span class="p">(</span><span class="n">data_o20</span><span class="p">,</span><span class="n">data_u20</span><span class="p">):</span>
     <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_o20</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">data_o20</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_u20</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">data_u20</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
@@ -556,7 +556,7 @@ y = \begin{cases}
 これを<span class="math notranslate nohighlight">\(w_2\)</span>に代入すると<span class="math notranslate nohighlight">\(w_1 x_1 + \frac{w_1 (x_2-x_1)}{y_1-y_2} (y_1) + 1 = 0\)</span>となるので、<span class="math notranslate nohighlight">\(w_1=-1/(x_1 + (x_2-x_1)y_1/(y_1-y_2))\)</span>と求めることができる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">return_yplot</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">return_yplot</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;w[1] must be non-zero&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>
@@ -564,7 +564,7 @@ y = \begin{cases}
         <span class="n">y</span> <span class="o">=</span> <span class="o">-</span> <span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">x</span> <span class="o">-</span> <span class="n">b</span><span class="o">/</span><span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">y</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">calc_w</span><span class="p">(</span><span class="n">xy_known</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">calc_w</span><span class="p">(</span><span class="n">xy_known</span><span class="p">):</span>
     <span class="n">x_1</span><span class="p">,</span> <span class="n">y_1</span> <span class="o">=</span> <span class="n">xy_known</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">x_2</span><span class="p">,</span> <span class="n">y_2</span> <span class="o">=</span> <span class="n">xy_known</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">w_1</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">x_1</span> <span class="o">+</span> <span class="p">(</span><span class="n">x_2</span><span class="o">-</span><span class="n">x_1</span><span class="p">)</span><span class="o">*</span><span class="n">y_1</span><span class="o">/</span><span class="p">(</span><span class="n">y_1</span><span class="o">-</span><span class="n">y_2</span><span class="p">))</span>
@@ -651,10 +651,10 @@ f(x) = \frac{1}{1 + \exp(-x)}
 <span class="sd">numpyだと&quot;RuntimeWarning: overflow encountered in exp&quot;と初回に警告を出しつつ、</span>
 <span class="sd">np.exp(1000)=np.Inf, 1/Inf=0.0として(可能な限り)計算を続けてくれる。</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">))</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">plot_sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">plot_sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
     <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dotted&quot;</span><span class="p">)</span>

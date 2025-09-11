@@ -30,7 +30,7 @@
   <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -500,7 +500,7 @@ KANは、ノード間を繋ぐ関数を学習することで、任意の多変�
 <p>2次元入力、1次元出力, 隠れそうのノード数は5として、cubic B-spline (k=3)をグリッド数5で初期化する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kan</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">kan</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="n">torch</span><span class="o">.</span><span class="n">set_default_dtype</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">KAN</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">grid</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 </pre></div>
@@ -521,7 +521,7 @@ f(x,y) = \exp(\sin(\pi x) + y^2)
 <p>に従うデータセットを作成する。(x,y)は[0,1]の範囲でランダムに生成する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kan.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_dataset</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">kan.utils</span> <span class="kn">import</span> <span class="n">create_dataset</span>
 <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="p">[:,[</span><span class="mi">0</span><span class="p">]])</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,[</span><span class="mi">1</span><span class="p">]]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">create_dataset</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">n_var</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">dataset</span><span class="p">[</span><span class="s1">&#39;train_input&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dataset</span><span class="p">[</span><span class="s1">&#39;train_label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
@@ -678,7 +678,7 @@ saving model version 0.6
 <p><strong>シンボリック回帰の結果を表示</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kan.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">ex_round</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">kan.utils</span> <span class="kn">import</span> <span class="n">ex_round</span>
 <span class="n">ex_round</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">symbolic_formula</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="mi">4</span><span class="p">)</span>
 </pre></div>
 </div>
