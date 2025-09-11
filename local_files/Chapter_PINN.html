@@ -1,0 +1,923 @@
+
+<!DOCTYPE html>
+
+
+<html lang="ja" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>PINNs (Physics Informed Neural Networks) &#8212; AI・機械学習論1</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=1cf7f4d9"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/translations.js?v=91613774"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'local_files/Chapter_PINN';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="ja"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">本文へスキップ</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>トップに戻る</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="バージョン警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../home.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo_AIML1.png" class="logo__image only-light" alt="AI・機械学習論1 - Home"/>
+    <img src="../_static/logo_AIML1.png" class="logo__image only-dark pst-js-only" alt="AI・機械学習論1 - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">検索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../home.html">
+                    AI・機械学習論1
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">機械学習のための数学</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_math_vector_calculus.html">1. ベクトル解析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_math_linearalgebra.html">2. 線形代数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_math_probabilitydistributions.html">3. 確率と確率分布</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">回帰</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_regression.html">4. 回帰の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_linear_regression.html">5. 線形回帰</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_GaussianProcess.html">6. ガウス過程（Gaussian Process）</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">分類</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_classification_1.html">7. 分類問題の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_classification_2.html">8. 多クラス分類</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">ニューラルネットワーク</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_ANN_Intro.html">9. ニューラルネットワークの概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_ANN2_Backprop.html">10. 誤差逆伝播法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_Optimization.html">11. 機械学習における最適化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_ANN_regression.html">12. 機械学習: ニューラルネットワークによる回帰</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">データの表現・モデルの評価</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Data_representation.html">13. 機械学習におけるデータ表現の基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_Model_evaluation.html">14. モデルの評価・過学習・正則化</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">発展的な話題</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_PCA.html">15. 主成分分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_GMM.html">16. 混合ガウシアンモデル(Gaussian Mixture Model, GMM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_KAN.html">17. KAN: Kolmogorov–Arnold Networks</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/SotaYoshida/AIML1" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="ソースリポジトリ"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/SotaYoshida/AIML1/issues/new?title=Issue%20on%20page%20%2Flocal_files/Chapter_PINN.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="問題を報告"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="このページをダウンロード">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/local_files/Chapter_PINN.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="ソースファイルをダウンロード"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="PDFに印刷"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全画面モード"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="ライト"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="ダーク"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>PINNs (Physics Informed Neural Networks)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目次 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pinn">PINNの概要</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bethe-weizsacker-formula">Bethe-Weizsäcker formula</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">ニューラルネットワークの構築</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <p><a href="https://colab.research.google.com/github/SotaYoshida/Lecture_DataScience/blob/main/notebooks/Python_chapter_PINNs.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></p>
+<section class="tex2jax_ignore mathjax_ignore" id="pinns-physics-informed-neural-networks">
+<h1>PINNs (Physics Informed Neural Networks)<a class="headerlink" href="#pinns-physics-informed-neural-networks" title="Link to this heading">#</a></h1>
+<p>この章では、Physics-Informed Neural Network、通称PINNsについて紹介します。</p>
+<p>2010年代から続くneural networkブームにおいて、我々は機械学習モデルが様々な分野でそれまでに実現できなかった高い精度で
+いろんなタスクを解いたり、その補助をしてくれることを目撃してきました。<br />
+すると当然のように沸き起こる疑問が「基礎方程式に従うhigh-fidelityなモデルを、データ駆動的なアプローチで解いたりできないか？」
+というものです。</p>
+<p>自然科学などの分野では<br />
+「問題(の大部分)を説明する基礎方程式が既に定式化されているものの、実際にそれを数値的に解くのが難しい」
+といった状況がしばしおこります。</p>
+<p>Maziar Raissi, Paris Perdikaris, and George E. Karniadakis, &quot;Physics-Informed Neural Networks: A Deep Learning Framework for Solving Forward and Inverse Problems Involving Nonlinear Partial Differential Equations&quot;, Journal of Computational Physics, 2019.</p>
+<section id="pinn">
+<h2>PINNの概要<a class="headerlink" href="#pinn" title="Link to this heading">#</a></h2>
+</section>
+<section id="bethe-weizsacker-formula">
+<h2>Bethe-Weizsäcker formula<a class="headerlink" href="#bethe-weizsacker-formula" title="Link to this heading">#</a></h2>
+<p>ここでは、例として原子核の結合エネルギーを計算する経験的な公式であるBethe-Weizsäcker formulaを考えよう。</p>
+<p>ある<span class="math notranslate nohighlight">\(Z\)</span>個の陽子と<span class="math notranslate nohighlight">\(N\)</span>個の中性子を持つ原子核の結合エネルギー<span class="math notranslate nohighlight">\(E_B\)</span>は、次式で大まかに説明できることが知られている。
+$<span class="math notranslate nohighlight">\(
+\begin{align}
+E_B &amp;= a_V A - a_S A^{2/3} - a_C \frac{Z(Z-1)}{A^{1/3}} - a_\mathrm{sym.} \frac{(N-Z)^2}{4A} + \delta(A,Z)\\
+\delta(A,Z) &amp;=
+\begin{cases}
+a_p A^{-1/2} &amp; \text{even-even nuclei}\\
+-a_p A^{-1/2} &amp; \text{odd-odd nuclei}\\
+0 &amp; otherwise
+\end{cases}
+\end{align}
+\)</span>$
+それぞれの項は体積項(volume term), 表面項(surface term), クーロン項(Coulomb term), 対称性項(symmetry term), ペアリング項(paring term)などと呼ばれる。
+これらの詳細は<a class="reference external" href="https://ja.wikipedia.org/wiki/%E3%83%99%E3%83%BC%E3%83%86%E3%83%BB%E3%83%B4%E3%82%A1%E3%82%A4%E3%83%84%E3%82%BC%E3%83%83%E3%82%AB%E3%83%BC%E3%81%AE%E5%85%AC%E5%BC%8F">Wikipedia</a>や原子核物理学の教科書に譲るとして、</p>
+<p>この式をそれぞれ<span class="math notranslate nohighlight">\(Z\)</span>と<span class="math notranslate nohighlight">\(N\)</span>について偏微分すると<br />
+<span class="math notranslate nohighlight">\(\frac{\partial E_B}{\partial Z} = a_V - \frac{2}{3} a_S A^{-1/3} - a_C \{ (2Z-1)A^{-1/3}-\frac{1}{3}Z(Z-1)A^{-4/3} \} - a_\mathrm{sym.} \{\frac{2(Z-N)}{4A} + \frac{(N-Z)^2}{4A^2} \} + \delta_Z(A,Z)\)</span></p>
+<p><span class="math notranslate nohighlight">\(\frac{\partial E_B}{\partial N} = a_V - \frac{2}{3} a_S A^{-1/3} + a_C \{ \frac{Z(Z-1)}{4A^2} \} - a_\mathrm{sym.} \{\frac{2(N-Z)}{4A} + \frac{(N-Z)^2}{4A^2} \} + \delta_N(A,Z)\)</span></p>
+<p>という関係が得られる。</p>
+<p>上の経験的な公式を<span class="math notranslate nohighlight">\(Z,N\)</span>の関数として表現した際、質量公式の出力値をいくつか訓練データとして使用し、
+ニューラルネットワークを用いた代理モデルを構成し、テストデータに対する予測性能を調べてみよう。</p>
+<p>なお各項につくパラメータ<span class="math notranslate nohighlight">\(a_V,a_S,a_C,a_\mathrm{sym.},a_p\)</span>については、以下のような文献値を使うことにする。</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(a_V\)</span> = 15.67 MeV</p></li>
+<li><p><span class="math notranslate nohighlight">\(a_S\)</span> = 17.23 MeV</p></li>
+<li><p><span class="math notranslate nohighlight">\(a_C\)</span> = 0.714 MeV</p></li>
+<li><p><span class="math notranslate nohighlight">\(a_\mathrm{sym.}\)</span> = 93.15 MeV</p></li>
+<li><p><span class="math notranslate nohighlight">\(a_p\)</span> = 11.2 MeV</p></li>
+</ul>
+<p>まず、質量公式を与える関数を自作し、データを適当に生成する。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">BW_formula</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">typeof_return</span><span class="o">=</span><span class="s2">&quot;E/A&quot;</span><span class="p">,</span><span class="n">der</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span> <span class="c1"># in MeV</span>
+    <span class="c1"># coefficients </span>
+    <span class="n">a_V</span> <span class="o">=</span> <span class="mf">15.67</span>
+    <span class="n">a_S</span> <span class="o">=</span> <span class="mf">17.23</span>
+    <span class="n">a_C</span> <span class="o">=</span> <span class="mf">0.714</span>
+    <span class="n">a_sym</span> <span class="o">=</span> <span class="mf">93.15</span>
+    <span class="n">a_p</span> <span class="o">=</span> <span class="mf">11.2</span>
+
+    <span class="n">A</span> <span class="o">=</span> <span class="n">Z</span><span class="o">+</span><span class="n">N</span>
+    <span class="n">delta_term</span> <span class="o">=</span> <span class="n">delta_term_der</span> <span class="o">=</span> <span class="n">delta_term_der_parA</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">if</span> <span class="n">Z</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">N</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+        <span class="n">delta_term</span> <span class="o">=</span> <span class="n">a_p</span> <span class="o">*</span> <span class="n">A</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">delta_term_der</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a_p</span> <span class="o">*</span> <span class="n">A</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">delta_term_der_parA</span> <span class="o">=</span> <span class="o">-</span> <span class="mi">3</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a_p</span> <span class="o">*</span> <span class="n">A</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">Z</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">N</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">delta_term</span> <span class="o">=</span> <span class="o">-</span><span class="n">a_p</span> <span class="o">*</span> <span class="n">A</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">delta_term_der</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a_p</span> <span class="o">*</span> <span class="n">A</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">delta_term_der_parA</span> <span class="o">=</span> <span class="mi">3</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a_p</span> <span class="o">*</span> <span class="n">A</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">BE</span> <span class="o">=</span> <span class="n">a_V</span> <span class="o">*</span> <span class="n">A</span> <span class="o">-</span> <span class="n">a_S</span> <span class="o">*</span> <span class="n">A</span><span class="o">**</span><span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="n">a_C</span> <span class="o">*</span> <span class="n">Z</span><span class="o">*</span><span class="p">(</span><span class="n">Z</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">A</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="n">a_sym</span> <span class="o">*</span> <span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="n">Z</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="n">delta_term</span>
+    <span class="k">if</span> <span class="n">der</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">typeof_return</span> <span class="o">==</span> <span class="s2">&quot;E/A&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">BE</span><span class="o">/</span><span class="n">A</span>
+        <span class="k">elif</span> <span class="n">typeof_return</span> <span class="o">==</span> <span class="s2">&quot;E&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">BE</span>
+    <span class="k">elif</span> <span class="n">der</span> <span class="o">==</span> <span class="s2">&quot;dEdZ&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">typeof_return</span> <span class="o">==</span> <span class="s2">&quot;E/A&quot;</span><span class="p">:</span>
+            <span class="n">ret</span>  <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span> <span class="o">*</span> <span class="n">a_S</span> <span class="o">*</span> <span class="n">A</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="n">a_C</span> <span class="o">*</span> <span class="p">(</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">Z</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">A</span><span class="o">**</span><span class="p">(</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="p">))</span> <span class="o">-</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span> <span class="o">*</span><span class="n">Z</span><span class="o">*</span><span class="p">(</span><span class="n">Z</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">A</span><span class="o">**</span><span class="p">(</span><span class="mi">7</span><span class="o">/</span><span class="mi">3</span><span class="p">))</span> <span class="p">)</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="o">-</span> <span class="n">a_sym</span> <span class="o">*</span> <span class="p">(</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">Z</span><span class="o">-</span><span class="n">N</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">A</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="n">Z</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">A</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span> <span class="p">)</span> <span class="o">+</span> <span class="n">delta_term_der_parA</span>
+            <span class="k">return</span> <span class="n">ret</span>
+        <span class="k">else</span><span class="p">:</span> <span class="c1"># may be wrong</span>
+            <span class="n">ret</span>  <span class="o">=</span> <span class="n">a_V</span> <span class="o">-</span> <span class="mi">2</span><span class="o">/</span><span class="mi">3</span> <span class="o">*</span> <span class="n">a_S</span> <span class="o">*</span> <span class="n">A</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="n">a_C</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">Z</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">A</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="n">a_C</span><span class="o">/</span><span class="mi">3</span> <span class="o">*</span> <span class="n">Z</span><span class="o">*</span><span class="p">(</span><span class="n">Z</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">A</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> 
+            <span class="n">ret</span> <span class="o">-=</span> <span class="n">a_sym</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">Z</span><span class="o">-</span><span class="n">N</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="n">Z</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">A</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="p">)</span> <span class="o">+</span> <span class="n">delta_term_der</span>
+            <span class="k">return</span> <span class="n">ret</span>
+    <span class="k">elif</span> <span class="n">der</span> <span class="o">==</span> <span class="s2">&quot;dEdN&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">typeof_return</span> <span class="o">==</span> <span class="s2">&quot;E/A&quot;</span><span class="p">:</span>
+            <span class="n">ret</span>  <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span> <span class="o">*</span> <span class="n">a_S</span> <span class="o">*</span> <span class="n">A</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="n">a_C</span> <span class="o">*</span> <span class="p">(</span> <span class="o">-</span><span class="mi">4</span><span class="o">/</span><span class="mi">3</span> <span class="o">*</span> <span class="n">Z</span><span class="o">*</span><span class="p">(</span><span class="n">Z</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">A</span><span class="o">**</span><span class="p">(</span><span class="mi">7</span><span class="o">/</span><span class="mi">3</span><span class="p">))</span> <span class="p">)</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="o">-</span><span class="n">a_sym</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="n">Z</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">A</span><span class="o">*</span><span class="n">A</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="n">Z</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">A</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span> <span class="p">)</span> <span class="o">+</span> <span class="n">delta_term_der_parA</span>
+            <span class="k">return</span> <span class="n">ret</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ret</span>  <span class="o">=</span> <span class="n">a_V</span> <span class="o">-</span> <span class="mi">2</span><span class="o">/</span><span class="mi">3</span> <span class="o">*</span> <span class="n">a_S</span> <span class="o">*</span> <span class="n">A</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="n">a_C</span> <span class="o">*</span> <span class="n">Z</span><span class="o">*</span><span class="p">(</span><span class="n">Z</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span><span class="o">*</span> <span class="n">A</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">ret</span> <span class="o">-=</span> <span class="n">a_sym</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="n">Z</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">A</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="n">Z</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">A</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="p">)</span> <span class="o">+</span> <span class="n">delta_term_der</span>
+            <span class="k">return</span> <span class="n">ret</span>  
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">typeof_return</span><span class="p">,</span> <span class="s2">&quot;not supported!&quot;</span><span class="p">)</span>      
+        <span class="n">exit</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;He4&quot;</span><span class="p">,</span> <span class="n">BW_formula</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="s2">&quot;O16&quot;</span><span class="p">,</span> <span class="n">BW_formula</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span> <span class="p">)</span>
+
+<span class="c1"># ZとNの最大値を100として、可能な組み合わせ全てについて質量公式の値を計算しておく。</span>
+<span class="n">Zmax</span> <span class="o">=</span> <span class="n">Nmax</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">Data</span> <span class="o">=</span> <span class="p">[</span> <span class="p">]</span>
+<span class="k">for</span> <span class="n">Z</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Zmax</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">N</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nmax</span><span class="p">):</span>
+        <span class="k">if</span>  <span class="n">Z</span> <span class="o">+</span> <span class="n">N</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">Data</span> <span class="o">+=</span> <span class="p">[</span> <span class="p">[</span><span class="n">Z</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">BW_formula</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span><span class="n">N</span><span class="p">)]</span> <span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>He4 5.990884247749431 O16 8.01554116142985
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># 結果の再現性のためseedを固定</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
+
+<span class="c1"># データの配分を決める</span>
+<span class="n">rate_train_data</span> <span class="o">=</span> <span class="mf">0.05</span>
+<span class="n">rate_test_data</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">rate_train_data</span>
+
+<span class="c1"># データのシャッフル</span>
+<span class="n">idxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Data</span><span class="p">)),</span><span class="nb">len</span><span class="p">(</span><span class="n">Data</span><span class="p">),</span><span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Data</span><span class="p">)</span><span class="o">*</span><span class="n">rate_train_data</span><span class="p">)</span>
+<span class="n">idxs_train</span> <span class="o">=</span> <span class="n">idxs</span><span class="p">[:</span><span class="n">idx</span><span class="p">]</span>
+<span class="n">idxs_test</span> <span class="o">=</span> <span class="n">idxs</span><span class="p">[</span><span class="n">idx</span><span class="p">:]</span>
+
+<span class="n">data_train</span> <span class="o">=</span> <span class="p">[</span> <span class="n">Data</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">idxs_train</span><span class="p">]</span>
+<span class="n">data_test</span> <span class="o">=</span> <span class="p">[</span> <span class="n">Data</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">idxs_test</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;# of data train:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_train</span><span class="p">),</span><span class="s2">&quot;test:&quot;</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">data_test</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span># of data train: 499 test: 9500
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id1">
+<h2>ニューラルネットワークの構築<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>適当な構造を持ったニューラルネットワークを作ってみよう。<br />
+ここでは、PyTorchを用いることにする。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pytorch_memlab</span><span class="w"> </span><span class="kn">import</span> <span class="n">profile</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">()</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">DataSet</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data_train</span><span class="p">,</span><span class="n">data_test</span><span class="p">,</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ntrain</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_train</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ntest</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data_train</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data_test</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">normalize</span> <span class="o">=</span> <span class="n">normalize</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x_train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_train</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">,:]</span><span class="o">.</span><span class="n">T</span><span class="p">;</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_train</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_train</span><span class="p">[</span><span class="mi">2</span><span class="p">:,:]</span><span class="o">.</span><span class="n">T</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_test</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">,:]</span><span class="o">.</span><span class="n">T</span><span class="p">;</span>   <span class="bp">self</span><span class="o">.</span><span class="n">y_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_test</span><span class="p">[</span><span class="mi">2</span><span class="p">:,:]</span><span class="o">.</span><span class="n">T</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ymean</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ystd</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalize</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ymean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_train</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ystd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_train</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_train</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ymean</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_test</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ymean</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_train</span> <span class="o">/=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ystd</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y_test</span> <span class="o">/=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ystd</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">x_train</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_train</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span><span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">y_train</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_train</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="n">x_test</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_test</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="n">y_test</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_test</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">PINN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_nodes</span> <span class="o">=</span> <span class="mi">64</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PINN</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">biasTF</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_dim</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_dim</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_node</span> <span class="o">=</span> <span class="mi">32</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc_inp</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_dim</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_node</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hl1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_node</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">num_node</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">act</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Softplus</span><span class="p">()</span>
+        <span class="c1">#self.act = nn.Sigmoid()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">act_hl</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ELU</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hl2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_node</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">num_node</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hl_edge</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_node</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">num_node</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc_out</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_node</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_dim</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">act</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fc_inp</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">act_hl</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hl1</span><span class="p">(</span><span class="n">out</span><span class="p">))</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">act_hl</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hl2</span><span class="p">(</span><span class="n">out</span><span class="p">))</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">act_hl</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hl_edge</span><span class="p">(</span><span class="n">out</span><span class="p">))</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc_out</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">out</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inp</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">loss_mse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span><span class="n">ynn</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()(</span><span class="n">ynn</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">loss_der</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_in</span><span class="p">,</span> <span class="n">ynn</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1.e-4</span><span class="p">):</span>
+        <span class="n">lossval</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">idxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">ynn</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="nb">int</span><span class="p">(</span><span class="mf">0.05</span><span class="o">*</span><span class="n">ynn</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">idxs</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x_in</span><span class="p">[</span><span class="n">n</span><span class="p">,:]</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">dy_dx</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">autograd</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">grad_outputs</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">create_graph</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">u_Z</span> <span class="o">=</span> <span class="n">BW_formula</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">der</span><span class="o">=</span><span class="s2">&quot;dEdZ&quot;</span><span class="p">)</span>
+            <span class="n">u_N</span> <span class="o">=</span> <span class="n">BW_formula</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">der</span><span class="o">=</span><span class="s2">&quot;dEdN&quot;</span><span class="p">)</span>
+            <span class="n">lossval</span> <span class="o">+=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()(</span><span class="n">dy_dx</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">u_Z</span><span class="p">)</span> <span class="o">+</span> <span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()(</span><span class="n">dy_dx</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="n">u_N</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">lossval</span>   
+<span class="w">    </span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">mainplot</span>
+
+<span class="sd">function to plot heatmap</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">mainplot</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">,</span><span class="n">x_test</span><span class="p">,</span><span class="n">y_test</span><span class="p">,</span><span class="n">y_mean</span><span class="p">,</span><span class="n">y_std</span><span class="p">,</span><span class="n">yNN_train</span><span class="p">,</span><span class="n">yNN_test</span><span class="p">):</span>
+    <span class="n">x_train</span> <span class="o">=</span> <span class="n">x_train</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+    <span class="n">y_train</span> <span class="o">=</span> <span class="n">y_train</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+    <span class="n">x_test</span> <span class="o">=</span> <span class="n">x_test</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+    <span class="n">y_test</span> <span class="o">=</span> <span class="n">y_test</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+    <span class="c1">#y_train = y_train * y_std + y_mean</span>
+    <span class="c1">#y_test = y_test * y_std + y_mean</span>
+    <span class="c1">#yNN_train = yNN_train * y_std + y_mean</span>
+    <span class="c1">#yNN_test = yNN_test * y_std + y_mean</span>
+
+    <span class="c1">#err_train = np.log10( [1.e-10 + (y_train[n] - BW_formula(x_train[n,0],x_train[n,1],&quot;E&quot;))**2 for n in range(len(y_train))])</span>
+    <span class="c1">#err_test =  np.log10( [1.e-10 + (y_test[n] - BW_formula(x_test[n,0],x_test[n,1],&quot;E&quot;))**2 for n in range(len(y_test))])</span>
+    <span class="n">err_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="p">(</span><span class="n">yNN_train</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">-</span> <span class="n">y_train</span><span class="p">[</span><span class="n">n</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y_train</span><span class="p">))])</span> <span class="o">+</span> <span class="mf">1.e-10</span><span class="p">)</span>
+    <span class="n">err_test</span> <span class="o">=</span>  <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="p">(</span><span class="n">yNN_test</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">-</span> <span class="n">y_test</span><span class="p">[</span><span class="n">n</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y_test</span><span class="p">))])</span> <span class="o">+</span> <span class="mf">1.e-10</span><span class="p">)</span>
+    <span class="n">vmin</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10</span>
+    <span class="n">vmax</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_train</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="n">x_train</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">c</span><span class="o">=</span><span class="n">err_train</span><span class="p">,</span><span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span><span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">,</span><span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_test</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="n">x_test</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">c</span><span class="o">=</span><span class="n">err_test</span><span class="p">,</span><span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span><span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;s&quot;</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">,</span><span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>    
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_train</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="n">x_train</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;N&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Z&quot;</span><span class="p">)</span>    
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;BW_heatmap.pdf&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span> <span class="p">:</span>
+    <span class="c1"># データをPyTorch用に整形</span>
+    <span class="n">mydata</span> <span class="o">=</span> <span class="n">DataSet</span><span class="p">(</span><span class="n">data_train</span><span class="p">,</span><span class="n">data_test</span><span class="p">)</span>
+    <span class="n">x_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">,</span><span class="n">x_test</span><span class="p">,</span><span class="n">y_test</span> <span class="o">=</span> <span class="n">mydata</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+    <span class="n">y_std</span> <span class="o">=</span> <span class="n">mydata</span><span class="o">.</span><span class="n">ystd</span>
+    <span class="n">y_mean</span> <span class="o">=</span> <span class="n">mydata</span><span class="o">.</span><span class="n">ymean</span>
+
+    <span class="c1"># ハイパラ</span>
+    <span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">num_epoch_show</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">3.e-3</span>
+    <span class="n">lam_der</span> <span class="o">=</span> <span class="mf">1.e-1</span>
+    <span class="n">wd</span> <span class="o">=</span> <span class="mf">1.e-2</span>
+    <span class="n">use_der</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">use_der</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="c1"># 可能ならcudaを使用</span>
+    <span class="n">device</span> <span class="o">=</span> <span class="s1">&#39;cuda&#39;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s1">&#39;cpu&#39;</span>
+
+    <span class="c1"># 乱数シードの固定</span>
+    <span class="n">seed</span> <span class="o">=</span> <span class="mi">123</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="c1">#torch.backends.cudnn.deterministic = True</span>
+    <span class="c1">#torch.use_deterministic_algorithms = True</span>
+    <span class="c1">#torch.backends.cudnn.benchmark = False</span>
+                  
+    <span class="c1"># モデルの定義</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">PINN</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+    <span class="c1"># 最適化手法の選択</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">AdamW</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span> <span class="o">=</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">weight_decay</span><span class="o">=</span><span class="n">wd</span><span class="p">)</span>
+    <span class="c1">#optimizer = torch.optim.Adam(model.parameters(), lr = learning_rate)</span>
+    <span class="c1">#optimizer = torch.optim.SGD(model.parameters(), lr = 0.1 ,momentum=0.9,weight_decay=wd) </span>
+              
+    <span class="c1"># モデルの学習</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+    <span class="n">bestloss</span> <span class="o">=</span> <span class="mf">1.e+10</span>
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">num_epochs</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x_train</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">y_train</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">ynn</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">(</span><span class="n">set_to_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">loss_mse</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">loss_mse</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">ynn</span><span class="p">)</span>
+        <span class="n">loss_der</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">loss_der</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">ynn</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">use_der</span><span class="p">:</span>            
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_mse</span> <span class="o">+</span> <span class="n">lam_der</span> <span class="o">*</span> <span class="n">loss_der</span> 
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_mse</span>
+        <span class="k">if</span> <span class="n">epoch</span> <span class="o">%</span> <span class="n">num_epoch_show</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Epoch: &quot;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%6i</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">epoch</span><span class="p">),</span> <span class="s2">&quot;MSE&quot;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%9.3e</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">loss_mse</span><span class="o">.</span><span class="n">item</span><span class="p">()),</span> <span class="s2">&quot;MSE&#39;&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%9.3e</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">loss_der</span><span class="o">.</span><span class="n">item</span><span class="p">()))</span>    
+        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">bestloss</span><span class="p">:</span>
+            <span class="n">bestloss</span> <span class="o">=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="s1">&#39;best_model.pth&#39;</span><span class="p">)</span>
+
+    <span class="c1"># モデルの評価</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;best_model.pth&#39;</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x_train</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">y_train</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">yNN_train</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">trainloss</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()(</span><span class="n">yNN_train</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="n">yNN_train</span> <span class="o">=</span> <span class="n">yNN_train</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;trainloss:&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%9.3e</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">trainloss</span><span class="p">))</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;test:&quot;</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x_test</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">y_test</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">yNN</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">testloss</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()(</span><span class="n">yNN</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="n">yNN_test</span> <span class="o">=</span> <span class="n">yNN</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;testloss:&quot;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%9.3e</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">testloss</span><span class="p">))</span>
+
+    <span class="n">mainplot</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">,</span><span class="n">x_test</span><span class="p">,</span><span class="n">y_test</span><span class="p">,</span><span class="n">y_mean</span><span class="p">,</span><span class="n">y_std</span><span class="p">,</span><span class="n">yNN_train</span><span class="p">,</span><span class="n">yNN_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch:     100 MSE 1.580e-01 MSE&#39; 9.870e-01
+Epoch:     200 MSE 1.782e-01 MSE&#39; 3.743e+00
+Epoch:     300 MSE 8.928e-02 MSE&#39; 1.113e+01
+Epoch:     400 MSE 6.866e-02 MSE&#39; 6.100e+00
+Epoch:     500 MSE 1.654e-01 MSE&#39; 2.706e+00
+Epoch:     600 MSE 3.408e-01 MSE&#39; 4.405e+00
+Epoch:     700 MSE 1.870e-01 MSE&#39; 4.903e+00
+Epoch:     800 MSE 4.555e-01 MSE&#39; 1.529e+01
+Epoch:     900 MSE 2.055e-01 MSE&#39; 4.608e+00
+Epoch:    1000 MSE 2.253e-01 MSE&#39; 8.357e+00
+Epoch:    1100 MSE 6.241e-02 MSE&#39; 1.512e+00
+Epoch:    1200 MSE 2.299e-01 MSE&#39; 6.178e+00
+Epoch:    1300 MSE 1.533e-01 MSE&#39; 1.589e+00
+Epoch:    1400 MSE 6.166e-02 MSE&#39; 6.254e+00
+Epoch:    1500 MSE 1.323e-01 MSE&#39; 5.924e+00
+Epoch:    1600 MSE 1.090e-01 MSE&#39; 1.842e+00
+Epoch:    1700 MSE 7.916e-01 MSE&#39; 6.346e-01
+Epoch:    1800 MSE 2.372e-01 MSE&#39; 9.507e+00
+Epoch:    1900 MSE 2.092e-01 MSE&#39; 7.943e+01
+Epoch:    2000 MSE 8.917e-02 MSE&#39; 3.725e+00
+Epoch:    2100 MSE 1.217e+00 MSE&#39; 6.235e+00
+Epoch:    2200 MSE 1.716e-01 MSE&#39; 2.563e+00
+Epoch:    2300 MSE 1.480e-01 MSE&#39; 3.737e+00
+Epoch:    2400 MSE 1.623e-01 MSE&#39; 1.002e+01
+Epoch:    2500 MSE 2.907e-01 MSE&#39; 6.285e+00
+Epoch:    2600 MSE 1.172e-01 MSE&#39; 1.559e+00
+Epoch:    2700 MSE 9.754e-02 MSE&#39; 7.798e+00
+Epoch:    2800 MSE 1.653e-01 MSE&#39; 2.224e+00
+Epoch:    2900 MSE 1.382e-01 MSE&#39; 2.424e+00
+Epoch:    3000 MSE 1.446e-01 MSE&#39; 4.237e+00
+Epoch:    3100 MSE 1.031e-01 MSE&#39; 6.122e+00
+Epoch:    3200 MSE 7.745e-02 MSE&#39; 1.304e+00
+Epoch:    3300 MSE 8.410e-02 MSE&#39; 6.327e+00
+Epoch:    3400 MSE 6.576e-02 MSE&#39; 4.705e+00
+Epoch:    3500 MSE 5.315e-01 MSE&#39; 1.722e+00
+Epoch:    3600 MSE 1.024e-01 MSE&#39; 2.790e+00
+Epoch:    3700 MSE 8.585e-02 MSE&#39; 4.211e+00
+Epoch:    3800 MSE 5.264e-02 MSE&#39; 4.230e+00
+Epoch:    3900 MSE 1.198e-01 MSE&#39; 3.105e+00
+Epoch:    4000 MSE 6.962e-02 MSE&#39; 3.768e+00
+Epoch:    4100 MSE 1.180e-01 MSE&#39; 2.785e+00
+Epoch:    4200 MSE 1.948e-01 MSE&#39; 2.339e+00
+Epoch:    4300 MSE 1.175e-01 MSE&#39; 3.827e+00
+Epoch:    4400 MSE 1.329e-01 MSE&#39; 2.028e+00
+Epoch:    4500 MSE 7.382e-02 MSE&#39; 5.275e+00
+Epoch:    4600 MSE 1.775e-01 MSE&#39; 2.889e+00
+Epoch:    4700 MSE 9.644e-02 MSE&#39; 4.824e+00
+Epoch:    4800 MSE 1.223e-01 MSE&#39; 3.249e+00
+Epoch:    4900 MSE 2.401e-01 MSE&#39; 4.601e+00
+Epoch:    5000 MSE 8.073e-02 MSE&#39; 2.298e+00
+trainloss: 5.730e-02
+test:
+testloss: 2.887e-01
+</pre></div>
+</div>
+<img alt="../_images/450e8a269d9c6e668a6d8bbee92cf91791cd86331439c39fd83588517c61dd73.png" src="../_images/450e8a269d9c6e668a6d8bbee92cf91791cd86331439c39fd83588517c61dd73.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./local_files"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目次
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pinn">PINNの概要</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bethe-weizsacker-formula">Bethe-Weizsäcker formula</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">ニューラルネットワークの構築</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+著者 Sota Yoshida
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  © Copyright 2025〜 by 吉田 聡太 (Sota Yoshida). 本コンテンツは<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0 ライセンス</a>の下に提供されています。 <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>　ただし、資料中のコードセル部分は<a rel="license" href="https://opensource.org/licenses/MIT">MITライセンス</a>の下に提供されています。
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

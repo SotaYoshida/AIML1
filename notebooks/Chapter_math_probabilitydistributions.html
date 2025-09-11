@@ -459,10 +459,11 @@ P(A|B) = \frac{P(B|A) P(A)}{P(B)}
 ここで、次のような情報が与えられているとする。</p>
 <ul class="simple">
 <li><p>病気にかかっている人の割合（事前確率）: <span class="math notranslate nohighlight">\(P(A) = 0.01\)</span>（1%）</p></li>
-<li><p>検査が陽性である確率（事後確率）: <span class="math notranslate nohighlight">\(P(B|A) = 0.9\)</span>（病気にかかっている人の90%が陽性と判定される; 真陽性）</p></li>
-<li><p>検査が陰性である確率: <span class="math notranslate nohighlight">\(P(B|\neg A) = 0.05\)</span>（病気にかかっている人の5%が陰性と判定される; 偽陰性）</p></li>
+<li><p>病気が検査で陽性と判定される確率（事後確率）: <span class="math notranslate nohighlight">\(P(B|A) = 0.9\)</span>（病気にかかっている人の90%が陽性と判定される; 真陽性）</p></li>
+<li><p>病気にかかっていない人が陽性と判定される確率: <span class="math notranslate nohighlight">\(P(B|\neg A) = 0.05\)</span>（病気にかかっていない人の5%が陽性と判定される; 偽陽性）</p></li>
 <li><p>検査が陽性である確率: <span class="math notranslate nohighlight">\(P(B) = P(B|A) P(A) + P(B|\neg A) P(\neg A)\)</span></p></li>
 </ul>
+<p>したがって <span class="math notranslate nohighlight">\(A\)</span>は「病気にかかっている」という事象、<span class="math notranslate nohighlight">\(B\)</span>は「検査が陽性である」という事象に対応している。</p>
 <p>このとき、ベイズの定理を用いて、検査結果が陽性であった場合に実際に病気にかかっている確率<span class="math notranslate nohighlight">\(P(A|B)\)</span>を求めることができる。</p>
 <div class="math notranslate nohighlight">
 \[
@@ -582,7 +583,8 @@ S &amp; -S B D^{-1} \\
 -D^{-1} C S &amp; D^{-1} + D^{-1} C S B D^{-1}
 \end{pmatrix}
 \end{split}\]</div>
-<p>この関係を用いて、共分散行列の逆行列を、分割したそれぞれの部分行列の逆行列で表現することにする。</p>
+<p>なお、<span class="math notranslate nohighlight">\(S^{-1}\)</span>は行列<span class="math notranslate nohighlight">\(M\)</span>のSchur補行列(Schur complement)と呼ばれる。</p>
+<p>上記の関係を用いて、共分散行列の逆行列を、分割したそれぞれの部分行列の逆行列で表現することにする。</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align*}
@@ -660,8 +662,8 @@ p(\mathbf{x} | \mathbf{y}) = \frac{p(\mathbf{y} | \mathbf{x}) p(\mathbf{x})}{p(\
 \]</div>
 <p>特に、<span class="math notranslate nohighlight">\(p(\mathbf{x})\)</span>を事前分布(prior distribution)、<span class="math notranslate nohighlight">\(p(\mathbf{y} | \mathbf{x})\)</span>を尤度(likelihood)、<span class="math notranslate nohighlight">\(p(\mathbf{x} | \mathbf{y})\)</span>を事後分布(posterior distribution)と呼ぶ。</p>
 <p>確率変数を<span class="math notranslate nohighlight">\(x, y\)</span>とかくと、なんとなく等価・類似性のある量を２つ並べたように見えるが、もう少し機械学習の文脈に即した例を考えてみよう。</p>
-<p>いま何らかの現象やデータを説明することを目的に何らかのパラメータを持つ関数(ニューラルネットワークなど)を考え、
-さらにそのパラメータを<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>という変数で表すことにする。
+<p>いま何らかの現象やデータを説明することを目的に何らかのパラメータを持つモデル(ニューラルネットワークなど)を考え、
+さらにそのモデルのパラメータを<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>という変数で表すことにする。
 このとき、入力データを<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>、出力データを<span class="math notranslate nohighlight">\(\mathbf{y}\)</span>とし、幾つかのデータ点 <span class="math notranslate nohighlight">\(D = \{(\mathbf{x}_i, \mathbf{y}_i)\}_{i=1}^N\)</span>が得られていたとする。</p>
 <p>決められたデータセットに対して、最適なパラメータ<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>を求めることが最適化問題の主要な目的であるが、
 いま考えているパラメータ<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>がどのような値を取るかは不確実であり、確率変数として扱い分布を考えることもできる。
@@ -671,9 +673,15 @@ p(\mathbf{x} | \mathbf{y}) = \frac{p(\mathbf{y} | \mathbf{x}) p(\mathbf{x})}{p(\
 \[
 p(\mathbf{\theta} | D) \propto p(D | \mathbf{\theta}) p(\mathbf{\theta})
 \]</div>
-<p>左辺の<span class="math notranslate nohighlight">\(p(\mathbf{\theta} | D)\)</span>は、与えられたデータ<span class="math notranslate nohighlight">\(D\)</span>に基づくパラメータ<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>の事後分布を表す。
-右辺の<span class="math notranslate nohighlight">\(p(D | \mathbf{\theta})\)</span>は、パラメータ<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>が与えられたときのデータ<span class="math notranslate nohighlight">\(D\)</span>の尤度を表し、<span class="math notranslate nohighlight">\(p(\mathbf{\theta})\)</span>はパラメータ<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>の事前分布を表す。
-これにより、パラメータに対する事前分布(事前知識や仮定)を、観測したデータに基づいて更新することができる。</p>
+<p>左辺の<span class="math notranslate nohighlight">\(p(\mathbf{\theta} | D)\)</span>は、与えられたデータ<span class="math notranslate nohighlight">\(D\)</span>に基づくパラメータ<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>の**事後分布(posterior)**を表す。
+右辺の<span class="math notranslate nohighlight">\(p(D | \mathbf{\theta})\)</span>は、パラメータ<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>が与えられたときのデータ<span class="math notranslate nohighlight">\(D\)</span>の <strong>尤度(likelihood)</strong> を表し、<span class="math notranslate nohighlight">\(p(\mathbf{\theta})\)</span>はパラメータ<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>の <strong>事前分布(prior)</strong> を表す。
+上記の比例関係の式から、パラメータに対する事前分布(事前知識や仮定)を、観測したデータに基づいて更新することができる。</p>
+<p>この文脈での尤度は、モデルがデータをどれだけよく説明できるかを示す指標であり、例えば、回帰問題であれば、観測データとモデルの平均二乗誤差を基にしたガウス分布を用いることも多い。</p>
+<div class="math notranslate nohighlight">
+\[
+p(D | \mathbf{\theta}) =C \exp\left(-\frac{1}{2\sigma^2} \sum_{i=1}^N ||\mathbf{y}_i - f(\mathbf{x}_i; \mathbf{\theta})||^2 \right)
+\]</div>
+<p><span class="math notranslate nohighlight">\(C\)</span>は正規化定数である。</p>
 <p>また、上ではあえて比例関係<span class="math notranslate nohighlight">\(\propto\)</span>を用いたが、分母にあたる<span class="math notranslate nohighlight">\(p(D)\)</span>はデータ<span class="math notranslate nohighlight">\(D\)</span>に関する正規化定数であり、パラメータ<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>に依存しないため、事後分布を計算する際には無視できる(というより、計算が非常に難しいことが多い)ことによる。</p>
 <section id="clubsuit">
 <h3><span class="section-number">3.4.1. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> 事後分布からのサンプリング<a class="headerlink" href="#clubsuit" title="Link to this heading">#</a></h3>
@@ -708,6 +716,7 @@ p(\mathbf{\theta} | D) \propto p(D | \mathbf{\theta}) p(\mathbf{\theta})
 <li><p><strong>変分オートエンコーダ</strong>: 変分オートエンコーダ(VAE)は、潜在変数モデルの一種であり、潜在変数がガウス分布に従うと仮定することで、データの生成過程を学習することが多い。</p></li>
 <li><p><strong>拡散モデル</strong>: 拡散モデルは、データの生成過程を逆拡散過程としてモデル化する手法であり、特に画像生成タスクにおいて注目されている。拡散モデルは、データにノイズを加えながら生成過程を学習し、最終的に高品質なサンプルを生成することができる。</p></li>
 </ul>
+<p>上記のうちのいくつかは、この資料でも説明してあるので適宜参照のこと。</p>
 </section>
 </section>
 

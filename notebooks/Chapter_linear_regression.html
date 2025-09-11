@@ -441,20 +441,29 @@ y({\bf x},{\bf w})= \sum^{M-1}_{j=0} w_j \phi_j({\bf x}) = {\bf w}^T\boldsymbol{
 <p>つまり、<span class="math notranslate nohighlight">\(t\)</span>の確率分布が<span class="math notranslate nohighlight">\(p(t|{\bf x},{\bf w},\beta) = \mathcal{N}(t|y({\bf x},{\bf w}),\beta^{-1})\)</span>で与えられるとする。
 <span class="math notranslate nohighlight">\(\mathcal{N}(x|\mu,\Sigma)\)</span>は平均ベクトルが<span class="math notranslate nohighlight">\(\mu\)</span>、共分散行列が<span class="math notranslate nohighlight">\(\Sigma\)</span>の多変量正規分布を表す。</p>
 <p>いまデータ点が<span class="math notranslate nohighlight">\(N\)</span>個あるとする。入力<span class="math notranslate nohighlight">\(\boldsymbol{\mathrm{X}}=\{{\bf x_1},{\bf x_2},\ldots, {\bf x_N}\}\)</span>と、対応する目標値を<span class="math notranslate nohighlight">\(\boldsymbol{\mathrm{t}}=\{t_1,t_2,\ldots, t_N\}\)</span>と表すことにしておこう。</p>
-<p>これらのデータ点が上の分布<span class="math notranslate nohighlight">\(p(t|{\bf x},{\bf w},\beta)\)</span>から独立に生成されたと仮定すると、データの目標変数についての確率分布は<span class="math notranslate nohighlight">\(p(\boldsymbol{\mathrm{t}}|\boldsymbol{\mathrm{X}},{\bf w},\beta) = \prod^N_{n=1} \mathcal{N}(t_n|{\bf w}^T \boldsymbol{\phi}({\bf x_n}) ,\beta^{-1})\)</span>で与えられる。
-つまり、(少々くどいが)<span class="math notranslate nohighlight">\(t\)</span>の各点が<span class="math notranslate nohighlight">\(y({\bf x},{\bf w})\)</span>の周りに、精度<span class="math notranslate nohighlight">\(\beta\)</span>のガウス分布でばらついているということである。</p>
-<p>(以下では、確率分布の条件部分にある<span class="math notranslate nohighlight">\({\bf x}\)</span>などを適宜省略する)</p>
-<aside class="margin sidebar">
-<p class="sidebar-title"></p>
-<p>対数尤度等の用語は確率統計などで馴染みがあるだろうか？もしなければ、当面は、対数尤度が大きいほど、データに当てはまりが良いということだけ覚えておけば良い。</p>
-</aside>
-<p>このとき、<strong>対数尤度</strong>と呼ばれる量は<span class="math notranslate nohighlight">\(\ln p(\boldsymbol{\mathrm{t}}|{\bf w},\beta) = \sum^N_{n=1} \ln \mathcal{N}(t_n|{\bf w}^T\boldsymbol{\phi}({\bf x_n}) ,\beta^{-1}) = \frac{N}{2}\ln\beta - \frac{N}{2}\ln(2\pi) -\beta E_D({\bf w})\)</span>となる。<br />
-なお<span class="math notranslate nohighlight">\(E_D\)</span>は二乗和誤差: <span class="math notranslate nohighlight">\(E_D({\bf w}) \equiv \frac{1}{2}\sum^N_{n=1} \{ t_n- {\bf w}^T \boldsymbol{\phi}({\bf x_n})  \}\)</span>で、
-この式から、<strong>対数尤度の最大化</strong>が、<strong>二乗和誤差の最小化</strong>と等価であることがわかる。</p>
+<p>これらのデータ点が上の分布<span class="math notranslate nohighlight">\(p(t|{\bf x},{\bf w},\beta)\)</span>から独立に生成されたと仮定すると、データの目標変数についての確率分布は</p>
+<div class="math notranslate nohighlight">
+\[
+p(\boldsymbol{\mathrm{t}}|\boldsymbol{\mathrm{X}},{\bf w},\beta) = \prod^N_{n=1} \mathcal{N}(t_n|{\bf w}^T \boldsymbol{\phi}({\bf x_n}) ,\beta^{-1})
+\]</div>
+<p>で与えられる。つまり、(少々くどいが)<span class="math notranslate nohighlight">\(t\)</span>の各点が<span class="math notranslate nohighlight">\(y({\bf x},{\bf w})\)</span>の周りに、精度<span class="math notranslate nohighlight">\(\beta\)</span>のガウス分布でばらついているということである。</p>
+<p>(以下では、確率分布の条件部分にある<span class="math notranslate nohighlight">\({\bf x}\)</span>などを適宜省略する)
+このとき、<strong>対数尤度</strong>と呼ばれる量は</p>
+<div class="math notranslate nohighlight">
+\[
+\ln p(\boldsymbol{\mathrm{t}}|{\bf w},\beta) = \sum^N_{n=1} \ln \mathcal{N}(t_n|{\bf w}^T\boldsymbol{\phi}({\bf x_n}),
+\beta^{-1}) = \frac{N}{2}\ln\beta - \frac{N}{2}\ln(2\pi) -\beta E_D({\bf w})
+\]</div>
+<p>となる。なお<span class="math notranslate nohighlight">\(E_D\)</span>は二乗和誤差:</p>
+<div class="math notranslate nohighlight">
+\[
+E_D({\bf w}) \equiv \frac{1}{2}\sum^N_{n=1} \left( t_n- {\bf w}^T \boldsymbol{\phi}({\bf x_n})  \right)^2
+\]</div>
+<p>で、前の2つの項はモデルパラメータ<span class="math notranslate nohighlight">\({\bf w}\)</span>に依存しないことから、<strong>対数尤度の最大化</strong>が、<strong>二乗和誤差の最小化と等価</strong>であることがわかる。</p>
 <p>対数尤度の勾配を書き下し、勾配を用いて対数尤度の最大化(<strong>最尤推定</strong>と呼ぶ)を考えよう。つまり</p>
 <div class="math notranslate nohighlight">
 \[
-\nabla \ln p(\boldsymbol{\mathrm{t}}|{\bf w},\beta) = \beta \sum^N_{n=1} \{ t_n -{\bf w}^T \boldsymbol{\phi}({\bf x_n}) \} \boldsymbol{\phi}({\bf x_n})^T =0
+\nabla_\mathbf{w} \ln p(\boldsymbol{\mathrm{t}}|{\bf w},\beta) = \beta \sum^N_{n=1} \left( t_n -{\bf w}^T \boldsymbol{\phi}({\bf x_n}) \right) \boldsymbol{\phi}({\bf x_n})^T =0
 \]</div>
 <p>の根を求めてやれば良い。</p>
 <p>上の式を変形すると
@@ -471,33 +480,46 @@ $<span class="math notranslate nohighlight">\(
 <hr class="docutils" />
 <p>上の式を用いて、最尤推定を与えるパラメータ<span class="math notranslate nohighlight">\({\bf w}_{ML}\)</span>を求める関数を実装してみよう。</p>
 <p>次の１次元擬似データの回帰を考えてみる。</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 
 <span class="c1">## データ点の生成</span>
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">2.0</span><span class="p">,</span><span class="mf">6.0</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
 <span class="n">beta</span> <span class="o">=</span> <span class="mf">1.e+2</span>
 <span class="n">xt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">4.0</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span>
 <span class="n">yt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">xt</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">1.0</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">beta</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">xt</span><span class="p">))])</span>
 
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
 <span class="n">axs</span> <span class="o">=</span> <span class="p">[</span><span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)]</span>
 <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xt</span><span class="p">,</span><span class="n">yt</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Data&quot;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
 <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> 
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
-<img alt="../_images/869f14c4619ac389eb62e60665148788bab86bf7eef0eccb7cde7264127ea280.png" src="../_images/869f14c4619ac389eb62e60665148788bab86bf7eef0eccb7cde7264127ea280.png" />
+<img alt="../_images/90f05e67783bc720d14fe142cf3283bb4725297f59dc41ab9c252544905d3841.png" src="../_images/90f05e67783bc720d14fe142cf3283bb4725297f59dc41ab9c252544905d3841.png" />
 </div>
 </div>
 <p>これを,numpyモジュールの多項式fit関数と、上の計画行列によって3次式で回帰してみると...</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">xt</span><span class="p">)</span>
 
@@ -521,25 +543,26 @@ $<span class="math notranslate nohighlight">\(
 <span class="n">yD</span> <span class="o">=</span> <span class="p">[</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">wML</span><span class="p">,</span><span class="n">phi</span><span class="p">(</span><span class="n">xn</span><span class="p">,</span><span class="n">p</span><span class="p">))</span> <span class="k">for</span> <span class="n">xn</span> <span class="ow">in</span> <span class="n">x</span> <span class="p">]</span>
 
 <span class="c1">#図のplot</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">13</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
 <span class="n">axs</span> <span class="o">=</span> <span class="p">[</span><span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">),</span><span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)]</span>
 <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xt</span><span class="p">,</span><span class="n">yt</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Data&quot;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
 <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">yp</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;np.polyfit&quot;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">yD</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;DMat&quot;</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dotted&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
 <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
 <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">yp</span><span class="o">-</span><span class="n">yD</span><span class="p">)))</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;log10|y_np - y_DMat|&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> 
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/8z/9_7wnny57zn_g89m70cl4w3m0000gn/T/ipykernel_17226/432805879.py:30: RuntimeWarning: divide by zero encountered in log10
-  axs[1].plot(x,np.log10(abs(yp-yD)))
-</pre></div>
-</div>
-<img alt="../_images/8716a6a7b567c0a165f9bd32f60ba1d8ecd39e4026755ca175b8b6d64fdef10e.png" src="../_images/8716a6a7b567c0a165f9bd32f60ba1d8ecd39e4026755ca175b8b6d64fdef10e.png" />
+<img alt="../_images/73643efe694b152c17231e18ae6c7efda098c8f946ea5d0cae762fcc706729c5.png" src="../_images/73643efe694b152c17231e18ae6c7efda098c8f946ea5d0cae762fcc706729c5.png" />
 </div>
 </div>
 <p>となり、ライブラリの出力と計画行列を用いた最尤推定の結果とがピッタリ(ざっくり14桁程度)一致していることがわかる。</p>
@@ -552,18 +575,18 @@ $<span class="math notranslate nohighlight">\(
 <p>今まで、モデルとなる関数の良さを測る際は、二乗和誤差関数を用いていたが、これにL2正則化項と呼ばれる重みの二乗和を加えたものを用いる。</p>
 <div class="math notranslate nohighlight">
 \[
-\frac{1}{2}\sum^N_{n=1} \{ t_n- {\bf w}^T \boldsymbol{\phi}({\bf x_n})  \} + \frac{\lambda}{2} {\bf w}^T{\bf w}
+\mathcal{L}(\mathbf{w}, \lambda) \equiv  \frac{1}{2}\sum^N_{n=1} \left( t_n- {\bf w}^T \boldsymbol{\phi}({\bf x_n})  \right)^2 + \frac{\lambda}{2} {\bf w}^T{\bf w}
 \]</div>
-<p>第二項がL2正則化項で、重みが大きければ大きいほど、対数尤度が小さく(=二乗和誤差が大きく)なってしまうような尺度になっていることがわかる。
+<p>第二項がL2正則化項で、重みが大きければ大きいほど、対数尤度が小さく(誤差関数<span class="math notranslate nohighlight">\(\mathcal{L}\)</span>の値が大きく)なってしまうような尺度になっていることがわかる。
 ここで、<span class="math notranslate nohighlight">\(\lambda\)</span>は正則化の強さを決めるパラメータで、<span class="math notranslate nohighlight">\(\lambda\)</span>が大きいほど、正則化の制限の強さが増す。</p>
 <p>この式について、上と同様に勾配を計算し、しばらく計算してやると、最尤推定を与えるパラメータ<span class="math notranslate nohighlight">\({\bf w}\)</span>は</p>
 <div class="math notranslate nohighlight">
 \[
 {\bf w}_{ML,L2} = (\lambda I + \boldsymbol{\Phi}^T\boldsymbol{\Phi}  )^{-1} \boldsymbol{\Phi}^T \boldsymbol{\mathrm{t}}
 \]</div>
-<p>となり、計画行列に<span class="math notranslate nohighlight">\(\lambda \times\)</span>単位行列を足した形となる。</p>
+<p>となり、計画行列に<span class="math notranslate nohighlight">\(\lambda \times\)</span>(単位行列)を足した形となる。</p>
 <p>対数尤度が<span class="math notranslate nohighlight">\(|w|^2\)</span>に比例することから実はほとんど自明なのだが、あとで示すように「L2正則化を課すこと」は、
-パラメータのベイズ的取り扱いにおいて「事前分布にガウス分布を仮定すること」と等価である。</p>
+「パラメータの事前分布にガウス分布を仮定すること」と等価である。</p>
 </section>
 <section id="id3">
 <h3><span class="section-number">5.1.2. </span>データの規模に関する注意点<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
@@ -572,11 +595,11 @@ $<span class="math notranslate nohighlight">\(
 <p>まずデータ数<span class="math notranslate nohighlight">\(N\)</span>が大きくなれば、数値計算上のボトルネックは行列に対する演算となる。
 例えば<span class="math notranslate nohighlight">\(N=10^6\)</span>とすると、正方行列の行列要素を倍精度(Float64)の浮動小数点で保持しようとすると、
 変数だけで<span class="math notranslate nohighlight">\((10^6)^2 \times 8 = 8 \times 10^{12}\)</span>バイトとなり、約8TBとなる。
-これは、明らかに一般的なPCのメモリの容量を超えている。</p>
+これは、明らかに一般的なPCのメモリや記憶容量のサイズを超えている。</p>
 <p>また、一般に主要な行列演算は、計算量が<span class="math notranslate nohighlight">\(O(N^2)\)</span>や<span class="math notranslate nohighlight">\(O(N^3)\)</span>となるため、データ数が大きくなると、計算量が膨大になり現実的な時間で計算が終わらなくなる。</p>
 <p>このような理由から、データ数が大きくなると、線形回帰のような閉じた形で解けるモデルでも、
 逐次パラメータを更新し、最適解を探索するような手法が必要となる。</p>
-<p>機械学習のパラメータ最適化などは、このような逐次的な手法が用いられることが多いため、詳しくは後の章で説明する。</p>
+<p>機械学習のパラメータ最適化などは、このような逐次的な手法が用いられることが多く、詳しくは後の章で説明する。</p>
 </section>
 </section>
 <section id="id4">
@@ -595,7 +618,12 @@ $<span class="math notranslate nohighlight">\(
 <p>このとき、事後分布の平均および共分散は以下のように簡略化される:<br />
 <span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\Sigma}}^{-1} =\alpha I +\beta\boldsymbol{\Phi}^T \boldsymbol{\Phi},
 \hspace{0.5cm} \tilde{\boldsymbol{\mu}}=  \beta \tilde{\boldsymbol{\Sigma}} \boldsymbol{\Phi}^T \boldsymbol{\mathcal{t}}\)</span></p>
-<p>この条件のもとで対数事後確率(log posterior)と呼ばれる量は、<span class="math notranslate nohighlight">\(\ln p({\bf w}|\boldsymbol{\mathrm{t}}) = -\frac{\beta}{2}\sum^N_{n=1} \{t_n - {\bf w}^T \phi(x_n) \}^2 -\frac{\alpha}{2} {\bf w}^T{\bf w} + \)</span> (正規分布の係数からくるオマケの定数)となる。</p>
+<p>この条件のもとで対数事後確率(log posterior)と呼ばれる量は、</p>
+<div class="math notranslate nohighlight">
+\[
+\ln p({\bf w}|\boldsymbol{\mathrm{t}}) = -\frac{\beta}{2}\sum^N_{n=1} \left(t_n - {\bf w}^T \phi(x_n) \right)^2 -\frac{\alpha}{2} {\bf w}^T{\bf w} +  \text{const.}
+\]</div>
+<p>となる。</p>
 <p>右辺の2項は、二乗誤差とL2正則化項に対応していることがわかる(最後の項は定数なので最大化/最小化とは関係ない)。したがって、正規分布で与えられる事前分布のもとでパラメータ<span class="math notranslate nohighlight">\({\bf w}\)</span>の事後分布を最大化することは、L2正則化項がある場合の誤差関数の最小化と(<span class="math notranslate nohighlight">\(\lambda=\beta/\alpha\)</span>とすれば)等価であることがわかる。</p>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
@@ -656,12 +684,11 @@ p(t^*|{\bf x},\boldsymbol{\mathrm{t}},\alpha,\beta) = \mathcal{N}(t^*|\tilde{\bo
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/ac16ce67c4cd1ef592f021f1add15027f70e72e2a1544d4296a53c17ff10eb70.png" src="../_images/ac16ce67c4cd1ef592f021f1add15027f70e72e2a1544d4296a53c17ff10eb70.png" />
+<img alt="../_images/628d0a2150ec70313f1b0cd9ecbf46c792d7559954676d5949bb7c5c1d2ee79c.png" src="../_images/628d0a2150ec70313f1b0cd9ecbf46c792d7559954676d5949bb7c5c1d2ee79c.png" />
 </div>
 </div>
 <p>パラメータの広がりが予測に伝搬され、データが無いところで予測が不確かになっていることが見て取れる。</p>
-<p>注) 上では、データの精度<span class="math notranslate nohighlight">\(\beta\)</span>(分散の逆数)や、パラメータ<span class="math notranslate nohighlight">\({\bf w}\)</span>の精度<span class="math notranslate nohighlight">\(\alpha\)</span>を既知とした。<br />
-実際には、<span class="math notranslate nohighlight">\(\beta\)</span>そのものがわからなかったりする。</p>
+<p>注) 上では、データの精度<span class="math notranslate nohighlight">\(\beta\)</span>(分散の逆数)や、パラメータ<span class="math notranslate nohighlight">\({\bf w}\)</span>の精度<span class="math notranslate nohighlight">\(\alpha\)</span>を既知としたが、実際には、<span class="math notranslate nohighlight">\(\beta\)</span>そのものがわからなかったりする。</p>
 </section>
 </section>
 
