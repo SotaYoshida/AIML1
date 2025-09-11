@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -627,11 +627,10 @@ K(\mathbf{x}, \mathbf{x}) + \sigma_n^2 I
 <span class="n">xp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
 
 <span class="c1">## ガウス過程の実装</span>
-<span class="k">for</span> <span class="n">Thetas</span> <span class="ow">in</span> <span class="p">[[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.e-2</span><span class="p">],</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.15</span><span class="p">),</span> <span class="mf">1.49</span><span class="p">,</span> <span class="mf">1.e-2</span><span class="p">]]:</span>
+<span class="k">for</span> <span class="n">Thetas</span> <span class="ow">in</span> <span class="p">[[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1e-1</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">]]:</span>
     <span class="n">lt</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">);</span> <span class="n">lp</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">xp</span><span class="p">)</span>
     <span class="n">Ktt</span><span class="p">,</span><span class="n">Kpt</span><span class="p">,</span><span class="n">Kpp</span> <span class="o">=</span> <span class="n">KernelMat</span><span class="p">(</span><span class="n">Thetas</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span> <span class="n">x</span><span class="p">,</span> <span class="n">xp</span><span class="p">)</span>
-    <span class="n">Ktt</span> <span class="o">+=</span> <span class="n">Thetas</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">lt</span><span class="p">)</span>  <span class="c1"># 観測ノイズの分散を対角成分に加える</span>
-
+ 
     <span class="n">mu_yt</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">lt</span><span class="p">)</span>
     <span class="n">mu_yp</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">lp</span><span class="p">)</span>
 
@@ -648,7 +647,7 @@ K(\mathbf{x}, \mathbf{x}) + \sigma_n^2 I
         <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xp</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;GP regression with Mat52 kernel (tau=</span><span class="si">{</span><span class="n">Thetas</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">6.2f</span><span class="si">}</span><span class="s2">, sigma=</span><span class="si">{</span><span class="n">Thetas</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">, noise_var=</span><span class="si">{</span><span class="n">Thetas</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;GP regression with Mat52 kernel (tau=</span><span class="si">{</span><span class="n">Thetas</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">6.2f</span><span class="si">}</span><span class="s2">, sigma=</span><span class="si">{</span><span class="n">Thetas</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -657,8 +656,8 @@ K(\mathbf{x}, \mathbf{x}) + \sigma_n^2 I
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/1e319973135a93044eba2291c6eb3a37c5348faab23c70b0f18f9b5012def5ad.png" src="../_images/1e319973135a93044eba2291c6eb3a37c5348faab23c70b0f18f9b5012def5ad.png" />
-<img alt="../_images/9ff5e622b8c38b084344c53de2e2bb5ce271fb4f621cb88d69292d0902e5a6ae.png" src="../_images/9ff5e622b8c38b084344c53de2e2bb5ce271fb4f621cb88d69292d0902e5a6ae.png" />
+<img alt="../_images/600c9ba899c4b229c02538502f1eff3fc848ae855f07300865000ef37226d421.png" src="../_images/600c9ba899c4b229c02538502f1eff3fc848ae855f07300865000ef37226d421.png" />
+<img alt="../_images/57d6e0e48569dd620bb544f660835d04373a992d1fb7bd3a1ced86a9465ff934.png" src="../_images/57d6e0e48569dd620bb544f660835d04373a992d1fb7bd3a1ced86a9465ff934.png" />
 </div>
 </div>
 <p>青線が、事後分布の平均、青色のバンドが、95%信頼区間を示している。破線で示したのは、事後確率から得られたサンプルである。</p>
@@ -673,7 +672,7 @@ K(\mathbf{x}, \mathbf{x}) = LL^T
 \[
 K(\mathbf{x}, \mathbf{x})^{-1} = (L^T)^{-1} L^{-1}
 \]</div>
-<p>念の為、同じハイパーパラメータで、<code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>のガウス過程の実装と比較してみよう。</p>
+<p>念の為、同じハイパーパラメータで、<code class="docutils literal notranslate"><span class="pre">GPy</span></code>のガウス過程の実装と比較してみよう。</p>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -683,9 +682,7 @@ K(\mathbf{x}, \mathbf{x})^{-1} = (L^T)^{-1} L^{-1}
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">sklearn.gaussian_process</span> <span class="kn">import</span> <span class="n">GaussianProcessRegressor</span>
-<span class="kn">from</span> <span class="nn">sklearn.gaussian_process.kernels</span> <span class="kn">import</span> <span class="n">Matern</span><span class="p">,</span> <span class="n">ConstantKernel</span> <span class="k">as</span> <span class="n">C</span>
-<span class="kn">from</span> <span class="nn">sklearn.gaussian_process.kernels</span> <span class="kn">import</span> <span class="n">WhiteKernel</span><span class="p">,</span> <span class="n">Product</span>
+<span class="kn">import</span> <span class="nn">GPy</span>
 
 <span class="c1"># テスト関数（自作コードで使っていた f(x) と同じものを定義してください）</span>
 <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -698,34 +695,34 @@ K(\mathbf{x}, \mathbf{x})^{-1} = (L^T)^{-1} L^{-1}
 <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>  <span class="c1"># 標準化</span>
 <span class="n">xp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
 
-<span class="c1"># sklearn でのガウス過程</span>
+<span class="c1"># GPyでのガウス過程の実装</span>
 <span class="n">Thetas</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.e-2</span><span class="p">]</span>
 <span class="n">tau</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">noise_var</span> <span class="o">=</span> <span class="n">Thetas</span>
 
 <span class="c1"># カーネル: tau * Matern52(length_scale=sigma)</span>
-<span class="n">kernel</span> <span class="o">=</span> <span class="n">Product</span><span class="p">(</span><span class="n">C</span><span class="p">(</span><span class="n">tau</span><span class="p">),</span> <span class="n">Matern</span><span class="p">(</span><span class="n">length_scale</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">nu</span><span class="o">=</span><span class="mi">5</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
-<span class="n">gp</span> <span class="o">=</span> <span class="n">GaussianProcessRegressor</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="n">kernel</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">noise_var</span><span class="p">,</span> <span class="n">n_restarts_optimizer</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">normalize_y</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">kernel</span> <span class="o">=</span> <span class="n">GPy</span><span class="o">.</span><span class="n">kern</span><span class="o">.</span><span class="n">Matern52</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">variance</span><span class="o">=</span><span class="n">tau</span><span class="p">,</span> <span class="n">lengthscale</span><span class="o">=</span><span class="n">sigma</span><span class="p">)</span>
+<span class="n">gp</span> <span class="o">=</span> <span class="n">GPy</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">GPRegression</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">noise_var</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-<span class="c1"># モデルのフィッティング</span>
-<span class="n">gp</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">gp</span><span class="o">.</span><span class="n">kernel_</span><span class="p">)</span>
 
 <span class="c1"># 予測</span>
-<span class="n">mujoint</span><span class="p">,</span> <span class="n">stdj</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">xp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">return_std</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">ysamples</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">sample_y</span><span class="p">(</span><span class="n">xp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">y2</span><span class="p">,</span> <span class="n">e2</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">xp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">mujoint_</span> <span class="o">=</span> <span class="n">y2</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,)</span>
+<span class="n">stdj_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span> <span class="n">e2</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,)</span> <span class="p">)</span>
 
 <span class="c1"># 可視化</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;data&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xp</span><span class="p">,</span> <span class="n">mujoint</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">xp</span><span class="p">,</span> <span class="n">mujoint</span><span class="o">-</span><span class="mf">1.96</span><span class="o">*</span><span class="n">stdj</span><span class="p">,</span> <span class="n">mujoint</span><span class="o">+</span><span class="mf">1.96</span><span class="o">*</span><span class="n">stdj</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;95% CI&quot;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">ys</span> <span class="ow">in</span> <span class="n">ysamples</span><span class="o">.</span><span class="n">T</span><span class="p">:</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xp</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xp</span><span class="p">,</span> <span class="n">mujoint_</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;mean (my code)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">xp</span><span class="p">,</span> <span class="n">mujoint_</span><span class="o">-</span><span class="mf">1.96</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sigmaj</span><span class="p">),</span> <span class="n">mujoint_</span><span class="o">+</span><span class="mf">1.96</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sigmaj</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;95% CI (my code)&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xp</span><span class="p">,</span> <span class="n">mujoint_</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">xp</span><span class="p">,</span> <span class="n">mujoint_</span><span class="o">-</span><span class="mf">1.96</span><span class="o">*</span><span class="n">stdj_</span><span class="p">,</span> <span class="n">mujoint_</span><span class="o">+</span><span class="mf">1.96</span><span class="o">*</span><span class="n">stdj_</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;95% CI&quot;</span><span class="p">)</span>
+
+<span class="c1">#for ys in ysamples.T:</span>
+<span class="c1">#    plt.plot(xp, ys, &quot;--&quot;, alpha=0.3)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
-<span class="n">tau_</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">kernel_</span><span class="o">.</span><span class="n">k1</span><span class="o">.</span><span class="n">constant_value</span><span class="p">;</span> <span class="n">tau_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">tau_</span><span class="p">)</span>
-<span class="n">sigma_</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">kernel_</span><span class="o">.</span><span class="n">k2</span><span class="o">.</span><span class="n">length_scale</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;sklearn GP (Mat52 kernel, tau=</span><span class="si">{</span><span class="n">tau_</span><span class="si">:</span><span class="s2">6.2f</span><span class="si">}</span><span class="s2">, sigma=</span><span class="si">{</span><span class="n">sigma_</span><span class="si">:</span><span class="s2">6.2f</span><span class="si">}</span><span class="s2">, noise=</span><span class="si">{</span><span class="n">noise_var</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;sklearn GP (Mat52 kernel, tau=</span><span class="si">{</span><span class="n">tau</span><span class="si">:</span><span class="s2">6.2f</span><span class="si">}</span><span class="s2">, sigma=</span><span class="si">{</span><span class="n">sigma</span><span class="si">:</span><span class="s2">6.2f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -733,12 +730,10 @@ K(\mathbf{x}, \mathbf{x})^{-1} = (L^T)^{-1} L^{-1}
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.15**2 * Matern(length_scale=1.49, nu=2.5)
-</pre></div>
-</div>
-<img alt="../_images/8bde187a715df9abf8b0d5d6c4d1a866efa713ed209376d224a9d6b1a2a012eb.png" src="../_images/8bde187a715df9abf8b0d5d6c4d1a866efa713ed209376d224a9d6b1a2a012eb.png" />
+<img alt="../_images/8544eea230ca032b08d8956c93ddb9dfe5c3937e9e59e0c2e287757b580bc6cc.png" src="../_images/8544eea230ca032b08d8956c93ddb9dfe5c3937e9e59e0c2e287757b580bc6cc.png" />
 </div>
 </div>
+<p>両者がピッタリ重なっている事がわかる。ただし、<code class="docutils literal notranslate"><span class="pre">GPy</span></code>や<code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>などのライブラリでは、データの分散や予測分散を別々にカスタマイズするのがやや面倒だったりもする。</p>
 </section>
 <section id="id6">
 <h2><span class="section-number">6.6. </span>ベイズ最適化<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
@@ -1068,42 +1063,42 @@ input[type=range].anim-slider {
 </style>
 
 <div class="animation">
-  <img id="_anim_img8cecd0d4f1e449d6a498c1d65d460af3">
+  <img id="_anim_imgaac1c3bca1fd481cba0da1568d7a9713">
   <div class="anim-controls">
-    <input id="_anim_slider8cecd0d4f1e449d6a498c1d65d460af3" type="range" class="anim-slider"
+    <input id="_anim_slideraac1c3bca1fd481cba0da1568d7a9713" type="range" class="anim-slider"
            name="points" min="0" max="1" step="1" value="0"
-           oninput="anim8cecd0d4f1e449d6a498c1d65d460af3.set_frame(parseInt(this.value));">
+           oninput="animaac1c3bca1fd481cba0da1568d7a9713.set_frame(parseInt(this.value));">
     <div class="anim-buttons">
-      <button title="Decrease speed" aria-label="Decrease speed" onclick="anim8cecd0d4f1e449d6a498c1d65d460af3.slower()">
+      <button title="Decrease speed" aria-label="Decrease speed" onclick="animaac1c3bca1fd481cba0da1568d7a9713.slower()">
           <i class="fa fa-minus"></i></button>
-      <button title="First frame" aria-label="First frame" onclick="anim8cecd0d4f1e449d6a498c1d65d460af3.first_frame()">
+      <button title="First frame" aria-label="First frame" onclick="animaac1c3bca1fd481cba0da1568d7a9713.first_frame()">
         <i class="fa fa-fast-backward"></i></button>
-      <button title="Previous frame" aria-label="Previous frame" onclick="anim8cecd0d4f1e449d6a498c1d65d460af3.previous_frame()">
+      <button title="Previous frame" aria-label="Previous frame" onclick="animaac1c3bca1fd481cba0da1568d7a9713.previous_frame()">
           <i class="fa fa-step-backward"></i></button>
-      <button title="Play backwards" aria-label="Play backwards" onclick="anim8cecd0d4f1e449d6a498c1d65d460af3.reverse_animation()">
+      <button title="Play backwards" aria-label="Play backwards" onclick="animaac1c3bca1fd481cba0da1568d7a9713.reverse_animation()">
           <i class="fa fa-play fa-flip-horizontal"></i></button>
-      <button title="Pause" aria-label="Pause" onclick="anim8cecd0d4f1e449d6a498c1d65d460af3.pause_animation()">
+      <button title="Pause" aria-label="Pause" onclick="animaac1c3bca1fd481cba0da1568d7a9713.pause_animation()">
           <i class="fa fa-pause"></i></button>
-      <button title="Play" aria-label="Play" onclick="anim8cecd0d4f1e449d6a498c1d65d460af3.play_animation()">
+      <button title="Play" aria-label="Play" onclick="animaac1c3bca1fd481cba0da1568d7a9713.play_animation()">
           <i class="fa fa-play"></i></button>
-      <button title="Next frame" aria-label="Next frame" onclick="anim8cecd0d4f1e449d6a498c1d65d460af3.next_frame()">
+      <button title="Next frame" aria-label="Next frame" onclick="animaac1c3bca1fd481cba0da1568d7a9713.next_frame()">
           <i class="fa fa-step-forward"></i></button>
-      <button title="Last frame" aria-label="Last frame" onclick="anim8cecd0d4f1e449d6a498c1d65d460af3.last_frame()">
+      <button title="Last frame" aria-label="Last frame" onclick="animaac1c3bca1fd481cba0da1568d7a9713.last_frame()">
           <i class="fa fa-fast-forward"></i></button>
-      <button title="Increase speed" aria-label="Increase speed" onclick="anim8cecd0d4f1e449d6a498c1d65d460af3.faster()">
+      <button title="Increase speed" aria-label="Increase speed" onclick="animaac1c3bca1fd481cba0da1568d7a9713.faster()">
           <i class="fa fa-plus"></i></button>
     </div>
-    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_select8cecd0d4f1e449d6a498c1d65d460af3"
+    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_selectaac1c3bca1fd481cba0da1568d7a9713"
           class="anim-state">
-      <input type="radio" name="state" value="once" id="_anim_radio1_8cecd0d4f1e449d6a498c1d65d460af3"
+      <input type="radio" name="state" value="once" id="_anim_radio1_aac1c3bca1fd481cba0da1568d7a9713"
              >
-      <label for="_anim_radio1_8cecd0d4f1e449d6a498c1d65d460af3">Once</label>
-      <input type="radio" name="state" value="loop" id="_anim_radio2_8cecd0d4f1e449d6a498c1d65d460af3"
+      <label for="_anim_radio1_aac1c3bca1fd481cba0da1568d7a9713">Once</label>
+      <input type="radio" name="state" value="loop" id="_anim_radio2_aac1c3bca1fd481cba0da1568d7a9713"
              checked>
-      <label for="_anim_radio2_8cecd0d4f1e449d6a498c1d65d460af3">Loop</label>
-      <input type="radio" name="state" value="reflect" id="_anim_radio3_8cecd0d4f1e449d6a498c1d65d460af3"
+      <label for="_anim_radio2_aac1c3bca1fd481cba0da1568d7a9713">Loop</label>
+      <input type="radio" name="state" value="reflect" id="_anim_radio3_aac1c3bca1fd481cba0da1568d7a9713"
              >
-      <label for="_anim_radio3_8cecd0d4f1e449d6a498c1d65d460af3">Reflect</label>
+      <label for="_anim_radio3_aac1c3bca1fd481cba0da1568d7a9713">Reflect</label>
     </form>
   </div>
 </div>
@@ -1113,9 +1108,9 @@ input[type=range].anim-slider {
   /* Instantiate the Animation class. */
   /* The IDs given should match those used in the template above. */
   (function() {
-    var img_id = "_anim_img8cecd0d4f1e449d6a498c1d65d460af3";
-    var slider_id = "_anim_slider8cecd0d4f1e449d6a498c1d65d460af3";
-    var loop_select_id = "_anim_loop_select8cecd0d4f1e449d6a498c1d65d460af3";
+    var img_id = "_anim_imgaac1c3bca1fd481cba0da1568d7a9713";
+    var slider_id = "_anim_slideraac1c3bca1fd481cba0da1568d7a9713";
+    var loop_select_id = "_anim_loop_selectaac1c3bca1fd481cba0da1568d7a9713";
     var frames = new Array(10);
     
   frames[0] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gAAAGQCAYAAAA9TUphAAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90\
@@ -13118,7 +13113,7 @@ yTXcqp0AAAAASUVORK5CYII=\
     /* set a timeout to make sure all the above elements are created before
        the object is initialized. */
     setTimeout(function() {
-        anim8cecd0d4f1e449d6a498c1d65d460af3 = new Animation(frames, img_id, slider_id, 1000.0,
+        animaac1c3bca1fd481cba0da1568d7a9713 = new Animation(frames, img_id, slider_id, 1000.0,
                                  loop_select_id);
     }, 0);
   })()
