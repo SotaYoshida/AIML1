@@ -28,7 +28,7 @@ parts:
   - file: notebooks/Chapter_ANN_Intro
   - file: notebooks/Chapter_ANN2_Backprop
   - file: notebooks/Chapter_Optimization
-  - file: notebooks/Chapter_ANN_regression
+  #- file: notebooks/Chapter_ANN_regression
   - file: notebooks/
 - caption: データの表現・モデルの評価
   numbered: true
