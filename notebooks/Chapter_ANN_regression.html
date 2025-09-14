@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>12. 機械学習: ニューラルネットワークによる回帰 &#8212; AI・機械学習論1</title>
+    <title>機械学習: ニューラルネットワークによる回帰 &#8212; AI・機械学習論1</title>
   
   
   
@@ -63,8 +63,6 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/Chapter_ANN_regression';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="next" title="13. 機械学習におけるデータ表現の基礎" href="Data_representation.html" />
-    <link rel="prev" title="11. 機械学習における最適化" href="Chapter_Optimization.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="ja"/>
   </head>
@@ -126,6 +124,8 @@
     <div class="bd-container__inner bd-page-width">
       
       
+      
+        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -200,22 +200,21 @@
 <li class="toctree-l1"><a class="reference internal" href="Chapter_classification_2.html">8. 多クラス分類</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">ニューラルネットワーク</span></p>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Chapter_ANN_Intro.html">9. ニューラルネットワークの概要</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_ANN2_Backprop.html">10. 誤差逆伝播法</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_Optimization.html">11. 機械学習における最適化</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">12. 機械学習: ニューラルネットワークによる回帰</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">データの表現・モデルの評価</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Data_representation.html">13. 機械学習におけるデータ表現の基礎</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_Model_evaluation.html">14. モデルの評価・過学習・正則化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Data_representation.html">12. 機械学習におけるデータ表現の基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_Model_evaluation.html">13. モデルの評価・過学習・正則化</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">発展的な話題</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Chapter_PCA.html">15. 主成分分析</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_GMM.html">16. 混合ガウシアンモデル(Gaussian Mixture Model, GMM)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_KAN.html">17. KAN: Kolmogorov–Arnold Networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_PCA.html">14. 主成分分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_GMM.html">15. 混合ガウシアンモデル(Gaussian Mixture Model, GMM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_KAN.html">16. KAN: Kolmogorov–Arnold Networks</a></li>
 </ul>
 
     </div>
@@ -411,10 +410,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">12.1. データの下処理</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">12.2. 勾配降下法</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adam">12.3. Adam</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">12.4. 最適化手法に関するまとめ</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">データの下処理</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">勾配降下法</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adam">Adam</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">最適化手法に関するまとめ</a></li>
 </ul>
             </nav>
         </div>
@@ -427,7 +426,7 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">12. </span>機械学習: ニューラルネットワークによる回帰<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<h1>機械学習: ニューラルネットワークによる回帰<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
 <p>この章では、最も単純な、入力層・隠れ層・出力層からなるニューラルネットワークを使って、データから尤もらしい予測を与える関数を構築してみましょう。</p>
 <p>対象とする(疑似)データは、多項式回帰の際に用いたデータと同じsin関数＋ノイズで生成することにします。</p>
 <ul class="simple">
@@ -515,7 +514,7 @@ def calc_tloss(x,y,tW,tV,tbs,tb0,acf):
 <p>上ではcalc_tlossの引数にacfという変数を指定し、acfにsigmoidを指定しました。<br />
 この様にしておくと、sigmoid関数以外の活性化関数を使う際にも、上のcalc_tloss関数が使いまわせますね。</p>
 <section id="id2">
-<h2><span class="section-number">12.1. </span>データの下処理<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<h2>データの下処理<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <p>機械学習などの分析では、データの値を中心0,分散1に変換して扱うのが基本です。</p>
 <p>このことを、データの標準化と呼びます。</p>
 <div class="cell docutils container">
@@ -598,7 +597,7 @@ plt.show(); plt.close()
 <p>以下では、勾配降下法, Adamの2通りの最適化手法を用いてパラメータを更新することとします。</p>
 </section>
 <section id="id3">
-<h2><span class="section-number">12.2. </span>勾配降下法<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<h2>勾配降下法<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <p>勾配降下法とは、目的関数を微分した勾配の値のみを使ってパラメータを更新する方法です。<br />
 たとえば,重み<span class="math notranslate nohighlight">\(W\)</span>の<span class="math notranslate nohighlight">\(i\)</span>番目を更新する際には<br />
 <span class="math notranslate nohighlight">\(W_i := W_i - \eta \frac{\partial f}{\partial W_i}\)</span><br />
@@ -780,7 +779,7 @@ W,V,bs,b0,dw,dv,dbs,db0=fitGD(xt,ny,W,V,bs,b0,acf,acfder,nepoch,eta,verbose)
 <p>以下では、Adamと呼ばれる別の最適化手法を試してみましょう。</p>
 </section>
 <section id="adam">
-<h2><span class="section-number">12.3. </span>Adam<a class="headerlink" href="#adam" title="Link to this heading">#</a></h2>
+<h2>Adam<a class="headerlink" href="#adam" title="Link to this heading">#</a></h2>
 <p>Adamは、勾配降下法の様にその都度の勾配の情報だけを使うのではなく、
 以前の勾配の情報も有効活用する手法です。</p>
 <p>Adamは2014年に提唱された比較的新しい手法で、以降の機械学習の論文では、Adamが最もよく使われています。(*最も&quot;良い&quot;という意味では必ずしもありません)</p>
@@ -873,7 +872,7 @@ plt.close()
 <p>ニューラルネットワークの構造をより複雑化したりしながら、より複雑で高次元な回帰問題に応用したり、回帰問題だけではなく分類問題・画像生成・物体検知などなど、各種の楽しい実社会の問題に応用していきます。 (例: 第2回で説明した敵対的生成ネットワーク)</p>
 </section>
 <section id="id4">
-<h2><span class="section-number">12.4. </span>最適化手法に関するまとめ<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<h2>最適化手法に関するまとめ<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
 <p>ニューラルネットワークの学習がうまく進むかどうかは一般に</p>
 <ol class="arabic simple">
 <li><p>ネットワークの構造(アーキテクチャとも言ったりします)や活性化関数(とその微分)の持つ性質</p></li>
@@ -997,24 +996,6 @@ plt.close()
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="Chapter_Optimization.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">前へ</p>
-        <p class="prev-next-title"><span class="section-number">11. </span>機械学習における最適化</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="Data_representation.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">次へ</p>
-        <p class="prev-next-title"><span class="section-number">13. </span>機械学習におけるデータ表現の基礎</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
@@ -1031,10 +1012,10 @@ plt.close()
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">12.1. データの下処理</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">12.2. 勾配降下法</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adam">12.3. Adam</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">12.4. 最適化手法に関するまとめ</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">データの下処理</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">勾配降下法</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adam">Adam</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">最適化手法に関するまとめ</a></li>
 </ul>
   </nav></div>
 

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>13. 機械学習におけるデータ表現の基礎 &#8212; AI・機械学習論1</title>
+    <title>12. 機械学習におけるデータ表現の基礎 &#8212; AI・機械学習論1</title>
   
   
   
@@ -63,8 +63,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/Data_representation';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="next" title="14. モデルの評価・過学習・正則化" href="Chapter_Model_evaluation.html" />
-    <link rel="prev" title="12. 機械学習: ニューラルネットワークによる回帰" href="Chapter_ANN_regression.html" />
+    <link rel="next" title="13. モデルの評価・過学習・正則化" href="Chapter_Model_evaluation.html" />
+    <link rel="prev" title="11. 機械学習における最適化" href="Chapter_Optimization.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="ja"/>
   </head>
@@ -204,18 +204,17 @@
 <li class="toctree-l1"><a class="reference internal" href="Chapter_ANN_Intro.html">9. ニューラルネットワークの概要</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_ANN2_Backprop.html">10. 誤差逆伝播法</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_Optimization.html">11. 機械学習における最適化</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN_regression.html">12. 機械学習: ニューラルネットワークによる回帰</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">データの表現・モデルの評価</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">13. 機械学習におけるデータ表現の基礎</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_Model_evaluation.html">14. モデルの評価・過学習・正則化</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">12. 機械学習におけるデータ表現の基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_Model_evaluation.html">13. モデルの評価・過学習・正則化</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">発展的な話題</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Chapter_PCA.html">15. 主成分分析</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_GMM.html">16. 混合ガウシアンモデル(Gaussian Mixture Model, GMM)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_KAN.html">17. KAN: Kolmogorov–Arnold Networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_PCA.html">14. 主成分分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_GMM.html">15. 混合ガウシアンモデル(Gaussian Mixture Model, GMM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_KAN.html">16. KAN: Kolmogorov–Arnold Networks</a></li>
 </ul>
 
     </div>
@@ -411,17 +410,17 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">13.1. 画像データの数値表現（白黒画像）</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">13.1.1. 例：3×3ピクセルの白黒画像</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">12.1. 画像データの数値表現（白黒画像）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">12.1.1. 例：3×3ピクセルの白黒画像</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">13.2. 画像データの数値表現（カラー画像）</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">13.2.1. 例：2×2ピクセルのカラー画像</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">12.2. 画像データの数値表現（カラー画像）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">12.2.1. 例：2×2ピクセルのカラー画像</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bit">13.3. 文字データの数値表現 (bit列との対応関係)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">13.4. 文字データの数値表現（埋め込みベクトルの概要）</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">13.5. データのスケーリング</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bit">12.3. 文字データの数値表現 (bit列との対応関係)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">12.4. 文字データの数値表現（埋め込みベクトルの概要）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">12.5. データのスケーリング</a></li>
 </ul>
             </nav>
         </div>
@@ -434,11 +433,11 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">13. </span>機械学習におけるデータ表現の基礎<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<h1><span class="section-number">12. </span>機械学習におけるデータ表現の基礎<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
 <p>このノートブックでは、機械学習で扱う「画像」や「文字」などのデータが、どのように数値として表現されるのかを初歩から解説する。</p>
 <hr class="docutils" />
 <section id="id2">
-<h2><span class="section-number">13.1. </span>画像データの数値表現（白黒画像）<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">12.1. </span>画像データの数値表現（白黒画像）<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <p>白黒画像（グレースケール画像）は、各ピクセルが「明るさ（輝度）」を表す値で構成される。</p>
 <ul class="simple">
 <li><p>画像は2次元の格子（配列）として表現される。</p></li>
@@ -451,7 +450,7 @@ document.write(`
 </li>
 </ul>
 <section id="id3">
-<h3><span class="section-number">13.1.1. </span>例：3×3ピクセルの白黒画像<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">12.1.1. </span>例：3×3ピクセルの白黒画像<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <p>グレースケールの画像は、次のような2次元配列（行列）として数値で表現できる。
 実際に、<code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code>でピクセル値を作成して、白黒画像を表示してみよう。</p>
 <div class="cell docutils container">
@@ -483,7 +482,7 @@ document.write(`
 </section>
 <hr class="docutils" />
 <section id="id4">
-<h2><span class="section-number">13.2. </span>画像データの数値表現（カラー画像）<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">12.2. </span>画像データの数値表現（カラー画像）<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
 <p>カラー画像は、各ピクセルが「赤（R）」「緑（G）」「青（B）」の3つの成分で表現される。</p>
 <ul class="simple">
 <li><p>各ピクセルは3つの値（R, G, B）を持つ。</p></li>
@@ -491,7 +490,7 @@ document.write(`
 <li><p>各成分は0〜255の整数値で表されることが多い。</p></li>
 </ul>
 <section id="id5">
-<h3><span class="section-number">13.2.1. </span>例：2×2ピクセルのカラー画像<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">12.2.1. </span>例：2×2ピクセルのカラー画像<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head text-center"><p>ピクセル位置 (行・列番号)</p></th>
@@ -546,7 +545,7 @@ document.write(`
 </section>
 <hr class="docutils" />
 <section id="bit">
-<h2><span class="section-number">13.3. </span>文字データの数値表現 (bit列との対応関係)<a class="headerlink" href="#bit" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">12.3. </span>文字データの数値表現 (bit列との対応関係)<a class="headerlink" href="#bit" title="Link to this heading">#</a></h2>
 <p>最も単純に文字を数値で表現する方法は、各文字に一意の整数を割り当てる方法である。<br />
 例:</p>
 <ul class="simple">
@@ -569,7 +568,7 @@ document.write(`
 よく、csvファイルをテキストエディタやExcelなどのソフトウェアで開いたときに、文字化けして大量の糸偏の漢字が表示されることがあるが、これは文字コードの対応表が異なるために起こる現象である。</p>
 </section>
 <section id="id6">
-<h2><span class="section-number">13.4. </span>文字データの数値表現（埋め込みベクトルの概要）<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">12.4. </span>文字データの数値表現（埋め込みベクトルの概要）<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
 <p>上記のようなbit列との対応関係は、単純で分かりやすいが、より高度な自然言語処理にはビット数を増やすだけでは十分ではない。
 というのも、例えば日本語の全ての単語をデータベース化して対応する整数を割り当てたとして、
 「大学」と「大学院」が近い意味を持つことを、整数の大小関係や距離で表現することはできない。
@@ -629,7 +628,7 @@ queen-appleの距離: 0.6324555320336759
 その最たる例が、大規模言語モデル(LLM)である。</p>
 </section>
 <section id="id7">
-<h2><span class="section-number">13.5. </span>データのスケーリング<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">12.5. </span>データのスケーリング<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
 <p>上記のように、様々なデータを数値で表現できる例は挙げたが、実際に機械学習で扱う際には、データのスケール・分布が重要になる場合が多い。
 というのも、あらかじめ決めた規則に従ってデータを数値化しても、データのスケール(≒数値の範囲や分布)が異なると、機械学習モデルの学習がうまくいかないことがあるからである。</p>
 <p>例えば上の画像データの例で、白黒画像のピクセル値は0〜255の範囲であるが、もし別のデータセットでピクセル値が限られた範囲で表現されている場合(つまり、人間には分かりにくい僅かな濃淡だけがある場合)、これらをそのまま同じモデルで学習させると、うまくいかないことがある。
@@ -669,12 +668,12 @@ queen-appleの距離: 0.6324555320336759
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="Chapter_ANN_regression.html"
+       href="Chapter_Optimization.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">前へ</p>
-        <p class="prev-next-title"><span class="section-number">12. </span>機械学習: ニューラルネットワークによる回帰</p>
+        <p class="prev-next-title"><span class="section-number">11. </span>機械学習における最適化</p>
       </div>
     </a>
     <a class="right-next"
@@ -682,7 +681,7 @@ queen-appleの距離: 0.6324555320336759
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">次へ</p>
-        <p class="prev-next-title"><span class="section-number">14. </span>モデルの評価・過学習・正則化</p>
+        <p class="prev-next-title"><span class="section-number">13. </span>モデルの評価・過学習・正則化</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -702,17 +701,17 @@ queen-appleの距離: 0.6324555320336759
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">13.1. 画像データの数値表現（白黒画像）</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">13.1.1. 例：3×3ピクセルの白黒画像</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">12.1. 画像データの数値表現（白黒画像）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">12.1.1. 例：3×3ピクセルの白黒画像</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">13.2. 画像データの数値表現（カラー画像）</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">13.2.1. 例：2×2ピクセルのカラー画像</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">12.2. 画像データの数値表現（カラー画像）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">12.2.1. 例：2×2ピクセルのカラー画像</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bit">13.3. 文字データの数値表現 (bit列との対応関係)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">13.4. 文字データの数値表現（埋め込みベクトルの概要）</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">13.5. データのスケーリング</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bit">12.3. 文字データの数値表現 (bit列との対応関係)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">12.4. 文字データの数値表現（埋め込みベクトルの概要）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">12.5. データのスケーリング</a></li>
 </ul>
   </nav></div>
 
