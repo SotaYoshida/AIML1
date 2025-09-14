@@ -16,33 +16,30 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!--
-    this give us a css class that will be invisible only if js is disabled
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
-
-    </style>
-  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
-  <!-- So that users can add custom icons -->
-  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="../_static/documentation_options.js?v=1cf7f4d9"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
@@ -70,7 +67,6 @@
     <link rel="prev" title="2. 線形代数" href="Chapter_math_linearalgebra.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="ja"/>
-  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -78,16 +74,27 @@
 
   
   
-  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">本文へスキップ</a></div>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>トップに戻る</button>
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <dialog id="pst-search-dialog">
-    
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
 <form class="bd-search d-flex align-items-center"
       action="../search.html"
       method="get">
@@ -95,6 +102,7 @@
   <input type="search"
          class="form-control"
          name="q"
+         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -102,11 +110,11 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-  </dialog>
+</form></div>
+  </div>
 
   <div class="pst-async-banner-revealer d-none">
-  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="バージョン警告"></aside>
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
 
   
@@ -119,8 +127,7 @@
       
       
       
-      <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -150,17 +157,21 @@
     
     
     <img src="../_static/logo_AIML1.png" class="logo__image only-light" alt="AI・機械学習論1 - Home"/>
-    <img src="../_static/logo_AIML1.png" class="logo__image only-dark pst-js-only" alt="AI・機械学習論1 - Home"/>
+    <script>document.write(`<img src="../_static/logo_AIML1.png" class="logo__image only-dark" alt="AI・機械学習論1 - Home"/>`);</script>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
-<button class="btn search-button-field search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">検索</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button></div>
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">検索</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
@@ -213,14 +224,9 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
-      <div class="sidebar-primary-item">
-<div id="ethical-ad-placement"
-      class="flat"
-      data-ea-publisher="readthedocs"
-      data-ea-type="readthedocs-sidebar"
-      data-ea-manual="true">
-</div></div>
   </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -364,16 +370,24 @@
 
 
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="ライト"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="ダーク"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
 
 
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-</button>
+  </button>
+`);
+</script>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -403,11 +417,12 @@
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3.2. 確率密度関数</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">3.3. ガウス分布</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3.4. 確率分布のベイズ推定</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">3.4.1. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 事後分布からのサンプリング</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3.4. ガウス分布と機械学習の関係</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.5. 確率分布のベイズ推定</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">3.5.1. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 事後分布からのサンプリング</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.5. ガウス分布と機械学習の関係</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">3.6. 多次元ガウス分布の最尤推定</a></li>
 </ul>
             </nav>
         </div>
@@ -637,7 +652,20 @@ S &amp; -S B D^{-1} \\
 <p>となる。正規化すると、条件確率が上のガウス分布になることがわかる。</p>
 </section>
 <section id="id6">
-<h2><span class="section-number">3.4. </span>確率分布のベイズ推定<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">3.4. </span>ガウス分布と機械学習の関係<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<p>機械学習分野において、ガウス分布は非常に重要な役割を果たす。
+全てを列挙することはできないが、幾つか代表的な例を挙げておく。</p>
+<ul class="simple">
+<li><p><strong>線形回帰</strong>: 線形回帰では、目的変数がガウス分布に従うと仮定することが多い。これは、誤差項がガウス分布に従うと仮定することで、線形モデルのパラメータを推定するだけでなく予測の信頼区間(不確実性)を計算できる。</p></li>
+<li><p><strong>ガウス過程</strong>: ガウス過程は、関数の分布を多次元正規分布で表現する手法であり、非線形回帰や分類問題において強力なツールとなる。ガウス過程は、データ点間の相関を考慮し、予測の不確実性を定量化することができ、ベイズ最適化などメタ的なアプローチにおいても利用される。</p></li>
+<li><p><strong>混合ガウス分布</strong>: 混合ガウス分布は、複数のガウス分布の線形結合であり、クラスタリングや密度推定に利用される。特に、Gaussian Mixture Model (GMM)は、データが複数の異なるガウス分布から生成されていると仮定し、各クラスタのパラメータを推定するために使用される。</p></li>
+<li><p><strong>変分オートエンコーダ</strong>: 変分オートエンコーダ(VAE)は、潜在変数モデルの一種であり、潜在変数がガウス分布に従うと仮定することで、データの生成過程を学習することが多い。</p></li>
+<li><p><strong>拡散モデル</strong>: 拡散モデルは、データの生成過程を逆拡散過程としてモデル化する手法であり、特に画像生成タスクにおいて注目されている。拡散モデルは、データにノイズを加えながら生成過程を学習し、最終的に高品質なサンプルを生成することができる。</p></li>
+</ul>
+<p>上記のうちのいくつかは、この資料でも説明してあるので適宜参照のこと。</p>
+</section>
+<section id="id7">
+<h2><span class="section-number">3.5. </span>確率分布のベイズ推定<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
 <p>2つの確率変数の同時分布を <span class="math notranslate nohighlight">\(p(\mathbf{x}, \mathbf{y})\)</span>、
 <span class="math notranslate nohighlight">\(p(\mathbf{x}), p(\mathbf{y})\)</span> はそれぞれの確率変数の周辺分布と呼ぶ。</p>
 <p>確率の和の規則により、</p>
@@ -684,7 +712,7 @@ p(D | \mathbf{\theta}) =C \exp\left(-\frac{1}{2\sigma^2} \sum_{i=1}^N ||\mathbf{
 <p><span class="math notranslate nohighlight">\(C\)</span>は正規化定数である。</p>
 <p>また、上ではあえて比例関係<span class="math notranslate nohighlight">\(\propto\)</span>を用いたが、分母にあたる<span class="math notranslate nohighlight">\(p(D)\)</span>はデータ<span class="math notranslate nohighlight">\(D\)</span>に関する正規化定数であり、パラメータ<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>に依存しないため、事後分布を計算する際には無視できる(というより、計算が非常に難しいことが多い)ことによる。</p>
 <section id="clubsuit">
-<h3><span class="section-number">3.4.1. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> 事後分布からのサンプリング<a class="headerlink" href="#clubsuit" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">3.5.1. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> 事後分布からのサンプリング<a class="headerlink" href="#clubsuit" title="Link to this heading">#</a></h3>
 <p>事後分布に従うサンプルを生成するための方法としては、大別すると、近似推論(≒事後分布を性質の良い分布で近似する)と、MCMC(Markov Chain Monte Carlo; マルコフ連鎖モンテカルロ法)がある。
 事前分布及び尤度を性質の良い(共役分布; conjugate distribution)で選ぶと、事後分布も特定の分布族に属することが保証され、解析的に計算できる場合がある。
 近似推論では、こうした仮定を積極的に用いて、事後分布を計算しやすい分布で近似する。</p>
@@ -705,18 +733,82 @@ p(D | \mathbf{\theta}) =C \exp\left(-\frac{1}{2\sigma^2} \sum_{i=1}^N ||\mathbf{
 また、次元(≒パラメータ数)の小さい領域では、HMCが比較的安定して収束したサンプリングを与えることが多いが、勾配の計算が高コストになる状況ではあまり適さず、複数のworkerで並列に動作する方法、とくにAffine Invariant MCMCが有効であることが多い印象を持っている。</p>
 </section>
 </section>
-<section id="id7">
-<h2><span class="section-number">3.5. </span>ガウス分布と機械学習の関係<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
-<p>機械学習分野において、ガウス分布は非常に重要な役割を果たす。
-全てを列挙することはできないが、幾つか代表的な例を挙げておく。</p>
-<ul class="simple">
-<li><p><strong>線形回帰</strong>: 線形回帰では、目的変数がガウス分布に従うと仮定することが多い。これは、誤差項がガウス分布に従うと仮定することで、線形モデルのパラメータを推定するだけでなく予測の信頼区間(不確実性)を計算できる。</p></li>
-<li><p><strong>ガウス過程</strong>: ガウス過程は、関数の分布を多次元正規分布で表現する手法であり、非線形回帰や分類問題において強力なツールとなる。ガウス過程は、データ点間の相関を考慮し、予測の不確実性を定量化することができ、ベイズ最適化などメタ的なアプローチにおいても利用される。</p></li>
-<li><p><strong>混合ガウス分布</strong>: 混合ガウス分布は、複数のガウス分布の線形結合であり、クラスタリングや密度推定に利用される。特に、Gaussian Mixture Model (GMM)は、データが複数の異なるガウス分布から生成されていると仮定し、各クラスタのパラメータを推定するために使用される。</p></li>
-<li><p><strong>変分オートエンコーダ</strong>: 変分オートエンコーダ(VAE)は、潜在変数モデルの一種であり、潜在変数がガウス分布に従うと仮定することで、データの生成過程を学習することが多い。</p></li>
-<li><p><strong>拡散モデル</strong>: 拡散モデルは、データの生成過程を逆拡散過程としてモデル化する手法であり、特に画像生成タスクにおいて注目されている。拡散モデルは、データにノイズを加えながら生成過程を学習し、最終的に高品質なサンプルを生成することができる。</p></li>
-</ul>
-<p>上記のうちのいくつかは、この資料でも説明してあるので適宜参照のこと。</p>
+<section id="id8">
+<h2><span class="section-number">3.6. </span>多次元ガウス分布の最尤推定<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{N}(\mathbf{x}; \boldsymbol{\mu}, \boldsymbol{\Sigma}) 
+= \frac{1}{(2\pi)^D |\boldsymbol{\Sigma}|}
+\exp \left( 
+- \frac{1}{2} (\mathbf{x} - \boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1} (\mathbf{x} - \boldsymbol{\mu})
+\right)
+\]</div>
+<p>多次元ガウス分布のパラメータを最尤推定することを考える。
+つまり、ガウス分布からのサンプル(とみなすデータ)が与えられたとき、そのガウス分布の平均ベクトルと共分散行列を推定することを考える。
+データが <span class="math notranslate nohighlight">\(\{\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_N\}\)</span> であり、各データ点 <span class="math notranslate nohighlight">\(\mathbf{x}_i\)</span> が <span class="math notranslate nohighlight">\(D\)</span> 次元のベクトルであるとする。
+このとき、データの生成分布として尤もらしいガウス分布のパラメータ<span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span>と<span class="math notranslate nohighlight">\(\Sigma\)</span>を求めることが目的である。
+対数尤度を、以下のように与えよう:</p>
+<div class="math notranslate nohighlight">
+\[
+L(\boldsymbol{\mu}, \boldsymbol{\Sigma})
+= \log \prod^N_{i=1} \mathcal{N} (\mathbf{x}_i; \boldsymbol{\mu}, \boldsymbol{\Sigma})
+\]</div>
+<p>結論から先に書くと、ガウス分布の平均ベクトルと共分散行列の最尤推定量はそれぞれ次のようになる:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\hat{\boldsymbol{\mu}} &amp; = \frac{1}{N} \sum_{i=1}^{N} \mathbf{x}_i \\
+\hat{\Sigma} &amp;= \frac{1}{N} \sum_{i=1}^{N} (\mathbf{x}_i - \hat{\boldsymbol{\mu}})(\mathbf{x}_i - \hat{\boldsymbol{\mu}})^T
+\end{align*}
+\end{split}\]</div>
+<p>順番に示そう。まず対数尤度を少し整理しておこう。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}L(\boldsymbol{\mu}, \boldsymbol{\Sigma})
+&amp; = \log \prod^N_{i=1} \mathcal{N} (\mathbf{x}_i; \boldsymbol{\mu}, \boldsymbol{\Sigma}) \\
+&amp; = -\frac{ND}{2} \log(2\pi) - \frac{N}{2}\log|\boldsymbol{\Sigma}| - \frac{1}{2} \sum^N_{i=1} (\mathbf{x}_i - \boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1} (\mathbf{x}_i - \boldsymbol{\mu})
+\end{align*}
+\end{split}\]</div>
+<p><strong><span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span>の最尤推定</strong></p>
+<p>上の対数尤度の表式の末尾の項だけを考えれば良い。</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial}{\partial \boldsymbol{\mu}} \left( 
+   (\mathbf{x}_i - \boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1} (\mathbf{x}_i - \boldsymbol{\mu}) 
+\right) = -2 \boldsymbol{\Sigma}^{-1} (\mathbf{x}_i - \boldsymbol{\mu})
+\]</div>
+<p>を用いると、</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial L}{\partial \boldsymbol{\mu}}
+= \boldsymbol{\Sigma}^{-1} \sum_{i=1}^{N} (\mathbf{x}_i - \boldsymbol{\mu})
+\]</div>
+<p>共分散行列は正則なので、</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+&amp; \sum_{i=1}^{N} (\mathbf{x}_i - \boldsymbol{\mu}) = 0 \\
+&amp; \Leftrightarrow \boldsymbol{\mu} = \frac{1}{N} \sum_{i=1}^{N} \mathbf{x}_i
+\end{align*}
+\end{split}\]</div>
+<p>となる。</p>
+<p><strong><span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}\)</span>の最尤推定</strong></p>
+<p>以下の2式を用いればよい:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\frac{\partial}{\partial \boldsymbol{\Sigma}} \log |\boldsymbol{\Sigma}| &amp; = \left(  \boldsymbol{\Sigma}^{-1} \right)^T \\
+\frac{\partial}{\partial \boldsymbol{\Sigma}} \left( \sum^N_{i=1} (\mathbf{x}_i - \boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1} (\mathbf{x}_i - \boldsymbol{\mu}) \right)
+&amp; = - \left(\boldsymbol{\Sigma}^{-1}  \sum^N_{i=1} (\mathbf{x}_i - \boldsymbol{\mu})^T  (\mathbf{x}_i - \boldsymbol{\mu}) \boldsymbol{\Sigma}^{-1} \right)
+\end{align*}
+\end{split}\]</div>
+<p>ここから、</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial L}{\partial \boldsymbol{\Sigma}}
+= \frac{N}{2} \left( \boldsymbol{\Sigma}^{-1} \right)^T + \frac{1}{2} \left(\boldsymbol{\Sigma}^{-1} \sum^N_{i=1} (\mathbf{x}_i - \boldsymbol{\mu})^T  (\mathbf{x}_i - \boldsymbol{\mu})  \boldsymbol{\Sigma}^{-1} \right)^T = 0
+\]</div>
+<p>から、上の式が従う。</p>
 </section>
 </section>
 
@@ -752,7 +844,7 @@ p(D | \mathbf{\theta}) =C \exp\left(-\frac{1}{2\sigma^2} \sum_{i=1}^N ||\mathbf{
 <div class="prev-next-area">
     <a class="left-prev"
        href="Chapter_math_linearalgebra.html"
-       title="前のページ">
+       title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">前へ</p>
@@ -761,7 +853,7 @@ p(D | \mathbf{\theta}) =C \exp\left(-\frac{1}{2\sigma^2} \sum_{i=1}^N ||\mathbf{
     </a>
     <a class="right-next"
        href="Chapter_regression.html"
-       title="次ページ">
+       title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">次へ</p>
         <p class="prev-next-title"><span class="section-number">4. </span>回帰の概要</p>
@@ -775,8 +867,7 @@ p(D | \mathbf{\theta}) =C \exp\left(-\frac{1}{2\sigma^2} \sum_{i=1}^N ||\mathbf{
             
             
               
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -791,11 +882,12 @@ p(D | \mathbf{\theta}) =C \exp\left(-\frac{1}{2\sigma^2} \sum_{i=1}^N ||\mathbf{
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3.2. 確率密度関数</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">3.3. ガウス分布</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3.4. 確率分布のベイズ推定</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">3.4.1. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 事後分布からのサンプリング</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3.4. ガウス分布と機械学習の関係</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.5. 確率分布のベイズ推定</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">3.5.1. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 事後分布からのサンプリング</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.5. ガウス分布と機械学習の関係</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">3.6. 多次元ガウス分布の最尤推定</a></li>
 </ul>
   </nav></div>
 
@@ -841,8 +933,8 @@ p(D | \mathbf{\theta}) =C \exp\left(-\frac{1}{2\sigma^2} \sum_{i=1}^N ||\mathbf{
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>
