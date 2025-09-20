@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -207,7 +207,7 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">データの表現・モデルの評価</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="notebooks/Data_representation.html">12. 機械学習におけるデータ表現の基礎</a></li>
-<li class="toctree-l1"><a class="reference internal" href="notebooks/Chapter_Model_evaluation.html">13. モデルの評価・過学習・正則化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/Chapter_Model_evaluation.html">13. モデルの選択・評価・過学習・正則化</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">発展的な話題</span></p>
 <ul class="nav bd-sidenav">
@@ -427,7 +427,7 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="ai1">
 <h1>AI・機械学習論1<a class="headerlink" href="#ai1" title="Link to this heading">#</a></h1>
 <p>この資料は、宇都宮大学データサイエンス経営学部の専門科目「AI・機械学習論1」の授業資料です。
-この講義では、データ分析の基本的なタスクである回帰・識別を中心とした題材を用いて機械学習の基礎について学修します。</p>
+この講義では、データ分析の基本的なタスクである回帰・分類を中心に機械学習の基礎について学修します。</p>
 <section id="id1">
 <h2>資料の使い方<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <p>本資料は一部、理解の補助のためにPythonのコードを含んでおり、Google Colaboratoryや受講者の手元のJupyterNoteBook環境での使用を想定している。
@@ -467,7 +467,7 @@ PCAを用いた分析を行うことができるが、<code class="docutils lite
 <p>上述の通り、この授業は機械学習フレームワークを用いた<strong>応用を志向した授業ではない</strong>が、
 近年の大規模言語モデル(LLM)の発展により、機械学習の基礎を学ぶ上でのハードルは大きく下がっている。
 例えば各種のライブラリの使い方を尋ねたり、ドキュメントを翻訳させてみると、驚くような精度で回答を得られることもある。実際の実装についてはドキュメントを当たるのが一番だが、こうしたLLMの活用も検討してみると良いだろう。
-しかし一方で、LLMが生成したコードにはバグが含まれていることも多いし、そもそもLLMが生成したコードが正しいかどうかを判断するためには基礎的な知識が必要である。ここで、Brave New World (邦題: 『素晴らしい新世界』)で名高いAldous Huxleyの言葉を引用しよう。</p>
+しかし一方で、LLMが生成したコードにはバグが含まれていることもあるし、そもそもLLMが生成したコードが正しいかどうかを判断するためには基礎的な知識が必要である。ここで、Brave New World (邦題: 『素晴らしい新世界』)で名高いAldous Huxleyの言葉を引用しよう。</p>
 <blockquote>
 <div><p>Technological progress has merely provided us with more efficient means for going backwards.</p>
 </div></blockquote>
