@@ -1150,15 +1150,16 @@ yにマイナスをかけて向きをあわせてみると...</p>
 </section>
 <section id="clubsuit">
 <h2><span class="section-number">14.5. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> オートエンコーダ(自己符号化器)<a class="headerlink" href="#clubsuit" title="Link to this heading">#</a></h2>
-<p>上で紹介したPCAは、式(or 直交変換の定義)からもわかるように<br />
-空間上に&quot;平坦に&quot;分布するデータの特徴を説明するのにはうってつけです。</p>
-<p>一方、一般のデータは必ずしも直線的な分布を持っているわけではなく<br />
-空間上で曲がったり複雑な幾何学形状をしていてもおかしくありません。</p>
-<p>そんなデータに対して、データの冗長性を削減したり特徴をとらえるための方法の一つが<br />
-以下で説明するオートエンコーダです。</p>
-<p>最も基本的なオートエンコーダは隠れ層がくびれた<br />
-以下のようなニューラルネットワークで構成されます。</p>
-<div class="cell docutils container">
+<p>上で紹介したPCAは、式(or 直交変換の定義)からもわかるように空間上に&quot;平坦に&quot;分布するデータの特徴を説明するのにはうってつけである。
+一方、一般のデータは必ずしも直線的な分布を持っているわけではなく空間上で曲がったり複雑な幾何学形状をしていてもおかしくない。</p>
+<p>そんなデータに対して、データの冗長性を削減したり特徴をとらえるための方法の一つが以下で説明するオートエンコーダ (autoencoder)である。
+最も基本的なオートエンコーダは隠れ層がくびれた以下のようなニューラルネットワークである。</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">capture</span>
 <span class="c1">#from keras.models import Sequential</span>
@@ -1172,8 +1173,14 @@ yにマイナスをかけて向きをあわせてみると...</p>
 </pre></div>
 </div>
 </div>
+</details>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">graph</span> <span class="o">=</span> <span class="n">temp</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
 <span class="s1">... digraph G {</span>
@@ -1251,17 +1258,18 @@ yにマイナスをかけて向きをあわせてみると...</p>
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <img alt="../_images/48bd6bcdf56f435c8206599ff533b3896d17f8d0321b42a16e523a442b64800b.png" src="../_images/48bd6bcdf56f435c8206599ff533b3896d17f8d0321b42a16e523a442b64800b.png" />
 </div>
 </div>
-<p>上には、入出力の次元が6で、隠れ層が1つ(ノード4)の場合のニューラルネットワークの図を描きました。
-オートエンコーダではこのようなニューラルネットワークのパラメータを出力<span class="math notranslate nohighlight">\(y\)</span>が<span class="math notranslate nohighlight">\(x\)</span>にできるだけ一致するよう学習させるということを考えます。</p>
-<p>入力層から隠れ層への信号の伝播を符号化(エンコード)と呼び隠れ層から出力層への信号の伝播を復号化(デコード)と呼びます。
-それぞれを別々に眺めるとエンコーダ部分はもとの入力の情報を圧縮するような働きをしているとみなせますし、一方デコーダ部分は一度圧縮した情報をもとに元の信号を再構成するような働きをします。</p>
-<p>オートエンコーダはPCAを特殊な場合として含むためPCAの拡張とみなすことができます。<br />
-詳しくは記載しませんが、活性化関数を恒等変換にとって重み行列を直交行列に取り二乗誤差関数を最小化する表式を書き下すとPCAの表式が現れます。</p>
-<p>上では単純な順伝播型のニューラルネットワークを描きましたがオートエンコーダを構成するアーキテクチャは上記のような単純なANNに限らず畳み込みニューラルネットワークを用いた畳み込みオートエンコーダなども知られています。</p>
+<p>上には、入出力の次元が6で、隠れ層が1つ(ノード4)の場合のニューラルネットワークの図を描いた。
+オートエンコーダではこのようなニューラルネットワークのパラメータを出力<span class="math notranslate nohighlight">\(y\)</span>が<span class="math notranslate nohighlight">\(x\)</span>にできるだけ一致するよう学習させるということを考える。</p>
+<p>入力層から隠れ層への信号の伝播を符号化(エンコード)と呼び隠れ層から出力層への信号の伝播を復号化(デコード)と呼ぶ。
+それぞれを別々に眺めるとエンコーダ部分はもとの入力の情報を圧縮するような働きをしているとみなせる一方、デコーダ部分は一度圧縮した情報をもとに元の信号を再構成するような働きをする。</p>
+<p>オートエンコーダはPCAを特殊な場合として含むためPCAの拡張とみなすこともできる。
+詳しくは記載しないが、活性化関数を恒等変換にとって重み行列を直交行列に取り二乗誤差関数を最小化する表式を書き下すとPCAの表式が現れる。
+上では単純な順伝播型のニューラルネットワークを描いたが、オートエンコーダを構成するアーキテクチャは上記のような単純なANNに限らず畳み込みニューラルネットワークを用いた畳み込みオートエンコーダなども知られている。</p>
 </section>
 </section>
 
