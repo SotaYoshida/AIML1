@@ -443,22 +443,29 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1><span class="section-number">5. </span>線形回帰<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
 <p>この章では、前章の単回帰を拡張した線形回帰について解説する。</p>
-<p>最も単純な線形回帰は、</p>
+<p>最も単純な線形回帰は、以下の多項式回帰である。</p>
+<div class="tip admonition">
+<p class="admonition-title">定義: 多項式回帰</p>
+<p>回帰曲線を、多項式の重み付き和で表現する回帰を<strong>多項式回帰</strong>(polynomial regression)と呼ぶ。</p>
 <div class="math notranslate nohighlight">
 \[
 y(\boldsymbol{x}, \boldsymbol{w}) = w_0 + w_1 x + w_2 x^2 + \cdots + w_M x^M = \sum_{j=0}^M w_j x^j
 \]</div>
-<p>による多項式回帰である。ここで、<span class="math notranslate nohighlight">\(x\)</span>は入力変数、<span class="math notranslate nohighlight">\(y\)</span>は出力変数、<span class="math notranslate nohighlight">\(w\)</span>はパラメータ、<span class="math notranslate nohighlight">\(M\)</span>は多項式の次数である。
-線形回帰(Linear Regression)はしばし、この多項式回帰を指すこともあるが、
-より一般には、基底関数と呼ばれる関数を用いて</p>
+<p>ここで、<span class="math notranslate nohighlight">\(x\)</span>は入力変数、<span class="math notranslate nohighlight">\(y\)</span>は出力変数、<span class="math notranslate nohighlight">\(w\)</span>はパラメータ、<span class="math notranslate nohighlight">\(M\)</span>は多項式の次数である。</p>
+</div>
+<p>線形回帰(Linear Regression)はしばし、この多項式回帰を指すこともあるが、
+より一般には、基底関数と呼ばれる関数を用いた定義となる:</p>
+<div class="tip admonition">
+<p class="admonition-title">定義: 線形回帰</p>
 <div class="math notranslate nohighlight">
 \[
 y({\bf x},{\bf w})= \sum^{M-1}_{j=0} w_j \phi_j({\bf x}) = {\bf w}^T\boldsymbol{\phi}({\bf x})
 \]</div>
-<p>というモデルを用いた回帰を指す。ここで、<span class="math notranslate nohighlight">\(\boldsymbol{\phi}({\bf x})\)</span>は<strong>基底関数</strong>と呼ばれる。
-&quot;線形&quot;の意味するところは、基底関数を重ね合わせるパラメータ(重み)<span class="math notranslate nohighlight">\(w\)</span>の意味での線形であることに注意しよう。</p>
+<p>ここで、<span class="math notranslate nohighlight">\(\boldsymbol{\phi}({\bf x})\)</span>は<strong>基底関数</strong>と呼ばれる。
+&quot;線形&quot;の意味するところは、基底関数の形状が線形であることではなく、基底関数を重ね合わせるパラメータ(重み)<span class="math notranslate nohighlight">\(w\)</span>それぞれについて、1次式で表されることを指す。</p>
+</div>
 <p>上記の基底関数としては、ガウス型基底関数、シグモイド基底関数、スプライン基底関数、フーリエ基底関数などがある。
-「幾つかの関数を重みをつけて重ね合わせることで、データをうまく表現するような関数を作る」というイメージを持つと良い。</p>
+**「幾つかの関数を重みをつけて重ね合わせることで、データをうまく表現するような柔軟な関数を作る」**というイメージを持つと良い。</p>
 <section id="id2">
 <h2><span class="section-number">5.1. </span>線形回帰の一般的な性質<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <p>線形回帰モデル:<span class="math notranslate nohighlight">\(y({\bf x},{\bf w})= \sum^{M-1}_{j=0} w_j \phi_j({\bf x}) = {\bf w}^T\boldsymbol{\phi}({\bf x})\)</span>を考える。</p>
@@ -594,8 +601,7 @@ $<span class="math notranslate nohighlight">\(
 <p>となり、ライブラリの出力と計画行列を用いた最尤推定の結果とがピッタリ(ざっくり14桁程度)一致していることがわかる。</p>
 <section id="clubsuit-l2">
 <h3><span class="section-number">5.1.1. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> L2正則化項がある場合への拡張<a class="headerlink" href="#clubsuit-l2" title="Link to this heading">#</a></h3>
-<p>詳しくはニューラルネットワークの回に解説するが、一般に回帰問題においては、与えられたデータに対する過度な適合(過適合)とそれによる汎化性能(予測性能)の低下を防ぐために、正則化と呼ばれる手法が用いられる。
-今の場合も、データは背後にある関数にノイズを足して生成されているが、そのノイズを含んだデータに対して、完全に適合するようなモデルを作ると、ノイズまで含んだ関数を作ってしまうことになる。これは多くの場合、望ましくない。</p>
+<p>詳しくはニューラルネットワークや正則化の章で解説するが、一般に回帰問題においては、与えられたデータに対する過度な適合(過適合)とそれによる汎化性能(予測性能)の低下を防ぐために、正則化と呼ばれる手法が用いられる。今の場合も、データは背後にある関数にノイズを足して生成されているが、そのノイズを含んだデータに対して、完全に適合するようなモデルを作ると、ノイズまで含んだ関数を作ってしまうことになる。これは多くの場合、望ましくない。</p>
 <p>正則化とは、モデルの複雑さを制限することで、過適合を防ぐ手法である。
 なかでも、L2正則化は、パラメータの二乗和を小さくするように、最尤推定を行う手法であり、機械学習を始めとする多くの分野で用いられている。</p>
 <p>今まで、モデルとなる関数の良さを測る際は、二乗和誤差関数を用いていたが、これにL2正則化項と呼ばれる重みの二乗和を加えたものを用いる。</p>
