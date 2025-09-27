@@ -430,11 +430,14 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2.4. 特徴的な行列</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2.5. 固有値・固有ベクトル</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2.5. 固有値・固有ベクトル</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">2.5.1. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 一般化固有値問題</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cholesky-decomposition">2.6. コレスキー分解 (Cholesky decomposition)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">2.7. 固有値分解</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.8. 特異値分解</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.9. 行列の指数関数</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.7. 固有値分解</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.8. 特異値分解</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">2.9. 行列の指数関数</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pytorch">2.10. PyTorchにおける行列・ベクトルの表現</a></li>
 </ul>
             </nav>
@@ -657,8 +660,12 @@ Web上に転がっているデータ分析のコードを見ていると、逆�
 \[
 \kappa(A) = \|A\| \|A^{-1}\|
 \]</div>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>行列のノルムという際、誘導されたノルム(作用素ノルム)を指す場合と、成分ごとのノルム(例: 最大ノルム、フロベニウスノルム)を指す場合があるため注意が必要。</p>
+</aside>
 <p>ここで、<span class="math notranslate nohighlight">\(\|A\|\)</span> は行列 <span class="math notranslate nohighlight">\(A\)</span> のノルムであり、<span class="math notranslate nohighlight">\(\|A^{-1}\|\)</span> は <span class="math notranslate nohighlight">\(A\)</span> の逆行列のノルムである。一般に、条件数は行列の特異値分解を用いて計算されることが多い。
-ノルムの定義によって条件数の値は異なるが、一般的にはL2ノルムがよく用いられる。</p>
+ノルムの定義によって条件数の値は異なるが、一般的にはスペクトルノルムがよく用いられる。</p>
 <div class="math notranslate nohighlight">
 \[
 \|A\|_2 = \sigma_{\text{max}}
@@ -743,6 +750,16 @@ A = \begin{pmatrix}
 <p>の固有値を求めると、<span class="math notranslate nohighlight">\(\lambda^2 + 1 = 0\)</span>となり、<span class="math notranslate nohighlight">\(\lambda = i, -i\)</span>という虚数解が得られる。
 一方で、対称行列(転置が同一)やエルミート行列(エルミート共役が同一)の固有値は実数となるなど、行列の特性に応じて固有値の性質は異なる。</p>
 </div>
+<section id="id7">
+<h3><span class="section-number">2.5.1. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> 一般化固有値問題<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<p>上記の標準的な固有値問題を拡張したものとして、一般化固有値問題がある。</p>
+<div class="math notranslate nohighlight">
+\[
+A \mathbf{x} = \lambda B \mathbf{x}
+\]</div>
+<p>よくあるのが、<span class="math notranslate nohighlight">\(B\)</span>が正定値行列である場合で、<span class="math notranslate nohighlight">\(B\)</span>が正則なら、<span class="math notranslate nohighlight">\(B^{-1}A \mathbf{x} = \lambda \mathbf{x}\)</span>と変形でき、標準的な固有値問題に帰着できる。
+実用上は<span class="math notranslate nohighlight">\(B^{-1}\)</span>を明示的に計算することは避け、<span class="math notranslate nohighlight">\(B\)</span>に対するコレスキー分解などを用いて解くことが多い。</p>
+</section>
 </section>
 <section id="cholesky-decomposition">
 <h2><span class="section-number">2.6. </span>コレスキー分解 (Cholesky decomposition)<a class="headerlink" href="#cholesky-decomposition" title="Link to this heading">#</a></h2>
@@ -774,8 +791,8 @@ A = LU
 </div>
 <p>コレスキー分解は、LU分解の特別な場合であり、正定値行列に対するLU分解として解釈できる。</p>
 </section>
-<section id="id7">
-<h2><span class="section-number">2.7. </span>固有値分解<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<section id="id8">
+<h2><span class="section-number">2.7. </span>固有値分解<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
 <div class="tip admonition">
 <p class="admonition-title">対角化可能 (diagonalizable)と固有値分解</p>
 <p>正方行列 <span class="math notranslate nohighlight">\(A \in \mathbb{R}^{n \times n}\)</span>が対角化可能であるとは、対角行列<span class="math notranslate nohighlight">\(D\)</span>と可逆な行列 <span class="math notranslate nohighlight">\(P\)</span> を用いて以下のように表現できることをいう。</p>
@@ -797,8 +814,8 @@ A &amp; = P \begin{pmatrix}
 対称行列の実固有値ベクトルからなる直交基底が存在し(スペクトル定理)、この基底を用いて行列を対角化することができる。
 つまり、<span class="math notranslate nohighlight">\(P\)</span>は直交行列であり、<span class="math notranslate nohighlight">\(P^{-1} = P^T\)</span>となる。</p>
 </section>
-<section id="id8">
-<h2><span class="section-number">2.8. </span>特異値分解<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<section id="id9">
+<h2><span class="section-number">2.8. </span>特異値分解<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
 <p>ここまでは、主に正方行列に対する演算を中心に説明してきた。
 しかし、機械学習やデータ分析の分野では、非正方行列に対する演算も頻繁に行われる。
 そこで、そのような非正方行列に対しても適用できる <strong>特異値分解(Singular Value Decomposition; SVD)</strong> を紹介する。</p>
@@ -820,15 +837,15 @@ V^T
 \end{align*}
 \end{split}\]</div>
 <p>ここで、<span class="math notranslate nohighlight">\(U\)</span>は<span class="math notranslate nohighlight">\(m \times m\)</span>のユニタリ行列、<span class="math notranslate nohighlight">\(\Sigma\)</span>は<span class="math notranslate nohighlight">\(m \times n\)</span>の対角行列、<span class="math notranslate nohighlight">\(V\)</span>は<span class="math notranslate nohighlight">\(n \times n\)</span>のユニタリ行列である。
-<span class="math notranslate nohighlight">\(m &gt; n\)</span>の場合を考えたが、<span class="math notranslate nohighlight">\(m &lt; n\)</span>の場合は0のブロックが下に伸びる形になる。
-<span class="math notranslate nohighlight">\(\Sigma\)</span>の対角成分は、<span class="math notranslate nohighlight">\(A\)</span>の特異値と呼ばれ、<strong>非負の実数</strong>である。正の特異値の数が、<span class="math notranslate nohighlight">\(A\)</span>の階数(rank)に一致する。
+<span class="math notranslate nohighlight">\(m &lt; n\)</span>の場合を考えたが、<span class="math notranslate nohighlight">\(m &gt; n\)</span>の場合は0のブロックが下に伸びる形になる。
+<span class="math notranslate nohighlight">\(\Sigma\)</span>の対角成分は、<span class="math notranslate nohighlight">\(A\)</span>の特異値と呼ばれ、<strong>非負の実数</strong>である。正の特異値の数が、<span class="math notranslate nohighlight">\(A\)</span>の <strong>階数(rank)</strong> に一致する。
 <span class="math notranslate nohighlight">\(m = n\)</span>の場合は、固有値分解に近い形となるが、一般には<span class="math notranslate nohighlight">\(U^T=V\)</span>とは限らない。</p>
 </div>
 <p>特異値分解の重要な性質の一つが、特異値が非負の実数であることで、これにより、もとの行列の情報を圧縮(次元削減)した表現を構成することができる。</p>
 <p>実際、特異値の大きなものから <span class="math notranslate nohighlight">\(k\)</span> 個に対応する<span class="math notranslate nohighlight">\(U\)</span>の列ベクトルと<span class="math notranslate nohighlight">\(V\)</span>の列ベクトルを用いることで、元の行列<span class="math notranslate nohighlight">\(A\)</span>を近似することができる。また、この表現がrank-<span class="math notranslate nohighlight">\(k\)</span>行列の中で、フロベニウスノルムの意味で最も良い近似である(Eckart–Young-Mirsky theorem)ことが知られている</p>
 </section>
-<section id="id9">
-<h2><span class="section-number">2.9. </span>行列の指数関数<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<section id="id10">
+<h2><span class="section-number">2.9. </span>行列の指数関数<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
 <p>線形常微分方程式の解法や、量子力学における時間発展など、行列の指数関数が重要な役割を果たす場合がある。</p>
 <p>行列<span class="math notranslate nohighlight">\(A\)</span>の指数関数は、テイラー展開を用いて以下のように定義される:</p>
 <div class="math notranslate nohighlight">
@@ -933,11 +950,14 @@ B \exp(A) B^{-1} &amp; = \exp(B A B^{-1}) \\
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2.4. 特徴的な行列</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2.5. 固有値・固有ベクトル</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2.5. 固有値・固有ベクトル</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">2.5.1. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 一般化固有値問題</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cholesky-decomposition">2.6. コレスキー分解 (Cholesky decomposition)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">2.7. 固有値分解</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.8. 特異値分解</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.9. 行列の指数関数</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.7. 固有値分解</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.8. 特異値分解</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">2.9. 行列の指数関数</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pytorch">2.10. PyTorchにおける行列・ベクトルの表現</a></li>
 </ul>
   </nav></div>
