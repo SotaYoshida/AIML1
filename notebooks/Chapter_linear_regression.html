@@ -645,7 +645,14 @@ E_D({\bf w}) \equiv \frac{1}{2}\sum^N_{n=1} \left( t_n- {\bf w}^T \boldsymbol{\p
 {\bf w} \sim \mathcal{N}(\boldsymbol{\mu},\boldsymbol{\Sigma})
 \]</div>
 <p>このとき、データ点<span class="math notranslate nohighlight">\(t\)</span>が観測されたときのパラメータの事後分布は<span class="math notranslate nohighlight">\(p({\bf w}|\boldsymbol{\mathcal{t}}) = \mathcal{N}(\tilde{\boldsymbol{\mu}},\tilde{\boldsymbol{\Sigma}})\)</span>で与えられる。</p>
-<p>ここで事後分布の平均および共分散は以下のとおりである:<span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\Sigma}}^{-1} =\boldsymbol{\Sigma}^{-1}+\beta\boldsymbol{\Phi}^T \boldsymbol{\Phi},\hspace{0.5cm} \tilde{\boldsymbol{\mu}}= \tilde{\boldsymbol{\Sigma}} (\boldsymbol{\Sigma} \boldsymbol{\mu} + \beta \boldsymbol{\Phi}^T \boldsymbol{\mathcal{t}})\)</span></p>
+<p>ここで事後分布の平均および共分散は以下のとおりである:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\tilde{\boldsymbol{\Sigma}}^{-1} &amp; =\boldsymbol{\Sigma}^{-1}+\beta\boldsymbol{\Phi}^T \boldsymbol{\Phi}, \\
+\tilde{\boldsymbol{\mu} } &amp; = \tilde{\boldsymbol{\Sigma}} (\boldsymbol{\Sigma} \boldsymbol{\mu} + \beta \boldsymbol{\Phi}^T \boldsymbol{\mathcal{t}})
+\end{align*}
+\end{split}\]</div>
 <p>ここで簡単のため事前分布をさらに簡略化しよう。</p>
 <p>事前分布の平均<span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span>が<span class="math notranslate nohighlight">\(0\)</span>(ベクトル)かつ、パラメータの事前分布の共分散が対角的(独立な分散をもつ)でなおかつ値が同じ,つまり、上の<span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}=\alpha^{-1}I\)</span>とかける場合を考える。</p>
 <p>このとき、事後分布の平均および共分散は以下のように簡略化される:<br />
