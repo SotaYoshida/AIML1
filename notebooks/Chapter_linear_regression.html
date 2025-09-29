@@ -499,10 +499,11 @@ E_D({\bf w}) \equiv \frac{1}{2}\sum^N_{n=1} \left( t_n- {\bf w}^T \boldsymbol{\p
 \nabla_\mathbf{w} \ln p(\boldsymbol{\mathrm{t}}|{\bf w},\beta) = \beta \sum^N_{n=1} \left( t_n -{\bf w}^T \boldsymbol{\phi}({\bf x_n}) \right) \boldsymbol{\phi}({\bf x_n})^T =0
 \]</div>
 <p>の根を求めてやれば良い。</p>
-<p>上の式を変形すると
-$<span class="math notranslate nohighlight">\(
+<p>上の式を変形すると</p>
+<div class="math notranslate nohighlight">
+\[
 \sum^N_{n=1} t_n \boldsymbol{\phi}({\bf x_n})^T = \sum^N_{n=1} {\bf w}^T \boldsymbol{\phi}({\bf x_n}) \boldsymbol{\phi}({\bf x_n})^T
-\)</span>$</p>
+\]</div>
 <p>となり、これを<span class="math notranslate nohighlight">\({\bf w}\)</span>について解くことで、</p>
 <div class="math notranslate nohighlight">
 \[
