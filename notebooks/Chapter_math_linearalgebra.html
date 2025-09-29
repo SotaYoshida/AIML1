@@ -437,8 +437,9 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cholesky-decomposition">2.6. コレスキー分解 (Cholesky decomposition)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.7. 固有値分解</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.8. 特異値分解</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">2.9. 行列の指数関数</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pytorch">2.10. PyTorchにおける行列・ベクトルの表現</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">2.9. 行列の微分</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">2.10. 行列の指数関数</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pytorch">2.11. PyTorchにおける行列・ベクトルの表現</a></li>
 </ul>
             </nav>
         </div>
@@ -845,7 +846,138 @@ V^T
 <p>実際、特異値の大きなものから <span class="math notranslate nohighlight">\(k\)</span> 個に対応する<span class="math notranslate nohighlight">\(U\)</span>の列ベクトルと<span class="math notranslate nohighlight">\(V\)</span>の列ベクトルを用いることで、元の行列<span class="math notranslate nohighlight">\(A\)</span>を近似することができる。また、この表現がrank-<span class="math notranslate nohighlight">\(k\)</span>行列の中で、フロベニウスノルムの意味で最も良い近似である(Eckart–Young-Mirsky theorem)ことが知られている</p>
 </section>
 <section id="id10">
-<h2><span class="section-number">2.9. </span>行列の指数関数<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">2.9. </span>行列の微分<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<p>ベクトル解析の章と重複する部分があるが、行列の微分についても簡単に触れておく。</p>
+<p>ベクトルに対する微分を拡張して、行列に対する微分を考えることができる。
+まず、ベクトル <span class="math notranslate nohighlight">\(\mathbf{a} \)</span>に対するスカラー<span class="math notranslate nohighlight">\(x\)</span>による微分を以下のように定義する:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+&amp; \left( \frac{\partial \mathbf{a}}{\partial x} \right)_i = \frac{\partial a_i}{\partial x}  \\
+&amp; \Leftrightarrow
+\frac{\partial \mathbf{a}}{\partial x} = \begin{bmatrix}
+\frac{\partial a_1}{\partial x} &amp; 
+\frac{\partial a_2}{\partial x} &amp; \cdots &amp; \frac{\partial a_n}{\partial x}
+\end{bmatrix}^T
+\end{align*}
+\end{split}\]</div>
+<p>同様に、行列 <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> に対するスカラー <span class="math notranslate nohighlight">\(x\)</span> による微分は次のように定義される:</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align*}
+\left( \frac{\partial \mathbf{A}}{\partial x} \right)_{ij} &amp;= \frac{\partial A_{ij}}{\partial x}
+\end{align*}
+\]</div>
+<p>また、スカラー値<span class="math notranslate nohighlight">\(x\)</span>に対するベクトル<span class="math notranslate nohighlight">\(\mathbf{a}\)</span>の微分は次のように定義される:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\left( \frac{\partial x}{\partial \mathbf{a}} \right)_i &amp;= \frac{\partial x}{\partial a_i} \\
+\Leftrightarrow
+\frac{\partial x}{\partial \mathbf{a}} &amp;= \begin{bmatrix}
+\frac{\partial x}{\partial a_1} &amp; \frac{\partial x}{\partial a_2} &amp; \cdots &amp; \frac{\partial x}{\partial a_n}
+\end{bmatrix}^T
+\end{align*}
+\end{split}\]</div>
+<p>これから、スカラー値<span class="math notranslate nohighlight">\(\mathbf{x}^T \mathbf{a}\)</span>の<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>に関する微分は以下のように計算できる:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\frac{\partial}{\partial \mathbf{x}} (\mathbf{x}^T \mathbf{a}) 
+&amp;= \frac{\partial}{\partial \mathbf{x}} (\mathbf{a}^T \mathbf{x})  
+= \frac{\partial}{\partial \mathbf{x}} \left( \sum_{i=1}^n x_i a_i \right) \\
+&amp;= \begin{bmatrix}
+\frac{\partial}{\partial x_1} \left( \sum_{i=1}^n x_i a_i \right) &amp;
+\frac{\partial}{\partial x_2} \left( \sum_{i=1}^n x_i a_i   \right) &amp;
+\cdots &amp; \frac{\partial}{\partial x_n} \left( \sum_{i=1}^n x_i a_i   \right)
+\end{bmatrix}^T \\
+&amp;= \begin{bmatrix}
+a_1 &amp; a_2 &amp; \cdots &amp; a_n
+\end{bmatrix}^T \\
+&amp;= \mathbf{a}
+\end{align*}
+\end{split}\]</div>
+<p>さらにこれを拡張すると、行列<span class="math notranslate nohighlight">\(\mathbf{A}, \mathbf{B}\)</span>に対して次のように計算できる:</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align*}
+\frac{\partial}{\partial \mathbf{x}} ( \mathbf{A} \mathbf{B} )
+&amp; = \frac{\partial \mathbf{A}}{\partial \mathbf{x}} \mathbf{B} + \mathbf{A} \frac{\partial \mathbf{B}}{\partial \mathbf{x}}
+\end{align*}
+\]</div>
+<div class="tip admonition">
+<p class="admonition-title">重要な式</p>
+<p>多次元正規分布の対数尤度の微分などで必要な重要な式を導出しておこう。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\frac{\partial}{\partial x} \mathbf{A}^{-1} &amp;= -\mathbf{A}^{-1} \frac{\partial \mathbf{A}}{\partial x} \mathbf{A}^{-1} \\
+\frac{\partial}{\partial x} \log |\mathbf{A}| &amp;= \mathrm{tr} \left( \mathbf{A}^{-1} \frac{\partial \mathbf{A}}{\partial x} \right)
+\end{align*}
+\end{split}\]</div>
+<p>1つめの式は、<span class="math notranslate nohighlight">\(\mathbf{A} \mathbf{A}^{-1} = \mathbf{I}\)</span>を<span class="math notranslate nohighlight">\(x\)</span>で微分して導出できる。
+2つめの式は、余因子行列を用いて導出する方法や、実対称行列の固有値分解を用いて導出する方法などがある。
+前者について、以下に発展的な注として示しておく。</p>
+</div>
+<p><span class="math notranslate nohighlight">\(\clubsuit\)</span> 余因子行列を用いた行列式の対数の微分の導出</p>
+<p><span class="math notranslate nohighlight">\(a_{ij}\)</span>に対する行列<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>の余因子を<span class="math notranslate nohighlight">\(\tilde{a}_{ij}\)</span>と書く。</p>
+<p>なお、余因子行列は</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align*}
+\tilde{a}_{ij} = (-1)^{i+j} \left| M_{ij}\right|
+\end{align*}
+\]</div>
+<p>で、<span class="math notranslate nohighlight">\(M_{ij}\)</span>は行列<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>の<span class="math notranslate nohighlight">\(i\)</span>行<span class="math notranslate nohighlight">\(j\)</span>列を除いた小行列である。
+行列式の定義(線形代数の教科書などを参照)の一つとして、</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align*}
+|\mathbf{A}| = \sum_{k} a_{ik} \tilde{a}_{ik}
+\end{align*}
+\]</div>
+<p>がある(余因子展開)。</p>
+<p>これを<span class="math notranslate nohighlight">\(a_{ij}\)</span>で微分すると、</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align*}
+\frac{\partial}{\partial a_{ij}} |\mathbf{A}|
+= \frac{\partial}{\partial a_{ij}} \left( \sum_k a_{ik} \tilde{a}_{ik} \right) = \tilde{a}_{ij}
+\end{align*}
+\]</div>
+<p>となる。
+<span class="math notranslate nohighlight">\(|\mathbf{A}|\)</span>の<span class="math notranslate nohighlight">\(x\)</span>に対する偏微分が、各要素<span class="math notranslate nohighlight">\(a_{ij}\)</span>に対する偏微分の総和で表されることから、</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\frac{\partial}{\partial x} |\mathbf{A}|
+&amp;= \sum_{i,j} \frac{\partial |\mathbf{A}|}{\partial a_{ij}} \frac{\partial a_{ij}}{\partial x} \\
+&amp;= \sum_{i,j} \tilde{a}_{ij} \frac{\partial a_{ij}}{\partial x} \\
+&amp;= |\mathbf{A}| \sum_{i,j} (\mathbf{A}^{-1})_{ji} \frac{\partial a_{ij}}{\partial x} \\
+&amp;= |\mathbf{A}| \mathrm{tr} \left( \mathbf{A}^{-1} \frac{\partial \mathbf{A}}{\partial x} \right)
+\end{align*}
+\end{split}\]</div>
+<p>となる。ここでは、以下の余因子行列と逆行列の関係を用いた:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\mathbf{A}^{-1} &amp; = \frac{1}{|\mathbf{A}|} \tilde{\mathbf{A}}\\
+(\tilde{\mathbf{A}}^T)_{ij} &amp; = \tilde{a}_{ij}
+\end{align*}
+\end{split}\]</div>
+<p>したがって、対数の微分を考えると</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\frac{\partial}{\partial x} \log |\mathbf{A}|
+&amp;= \frac{1}{|\mathbf{A}|} \frac{\partial}{\partial x} |\mathbf{A}| \\
+&amp;= \mathrm{tr} \left( \mathbf{A}^{-1} \frac{\partial \mathbf{A}}{\partial x} \right)
+\end{align*}
+\end{split}\]</div>
+<p>となる。</p>
+</section>
+<section id="id11">
+<h2><span class="section-number">2.10. </span>行列の指数関数<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
 <p>線形常微分方程式の解法や、量子力学における時間発展など、行列の指数関数が重要な役割を果たす場合がある。</p>
 <p>行列<span class="math notranslate nohighlight">\(A\)</span>の指数関数は、テイラー展開を用いて以下のように定義される:</p>
 <div class="math notranslate nohighlight">
@@ -869,7 +1001,7 @@ B \exp(A) B^{-1} &amp; = \exp(B A B^{-1}) \\
 <p>また、行列<span class="math notranslate nohighlight">\(U\)</span>がユニタリ行列(エルミート共役が逆行列に等しい)であるとき、<span class="math notranslate nohighlight">\(U\)</span>は反エルミート行列<span class="math notranslate nohighlight">\(X\)</span>の指数関数として表現できる。</p>
 </section>
 <section id="pytorch">
-<h2><span class="section-number">2.10. </span>PyTorchにおける行列・ベクトルの表現<a class="headerlink" href="#pytorch" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">2.11. </span>PyTorchにおける行列・ベクトルの表現<a class="headerlink" href="#pytorch" title="Link to this heading">#</a></h2>
 <p>PyTorchでは<code class="docutils literal notranslate"><span class="pre">Torch.Tensor</span></code>が行列やベクトルを表現する。
 <code class="docutils literal notranslate"><span class="pre">Torch.Tensor</span></code>は、行列・ベクトルに係る演算を効率化するために最適化されている。</p>
 <p>数値の配列を表現するのに、メモリ上でのデータの連続性を保つように設計されている。
@@ -957,8 +1089,9 @@ B \exp(A) B^{-1} &amp; = \exp(B A B^{-1}) \\
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cholesky-decomposition">2.6. コレスキー分解 (Cholesky decomposition)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.7. 固有値分解</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.8. 特異値分解</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">2.9. 行列の指数関数</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pytorch">2.10. PyTorchにおける行列・ベクトルの表現</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">2.9. 行列の微分</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">2.10. 行列の指数関数</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pytorch">2.11. PyTorchにおける行列・ベクトルの表現</a></li>
 </ul>
   </nav></div>
 
