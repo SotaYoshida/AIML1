@@ -419,6 +419,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">4.1.1. 単回帰: 1次元の直線回帰</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">4.2. 誤差関数</a></li>
 </ul>
             </nav>
         </div>
@@ -574,6 +575,53 @@ np.polyfit:	a = 1.00000000, b = 273.15000000
 </div>
 </section>
 </section>
+<section id="id4">
+<h2><span class="section-number">4.2. </span>誤差関数<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>回帰の当てはまりの良さを表す指標として、問題ごとに適切な誤差関数(損失関数や目的関数とも呼ぶ)を選ぶことが重要となる。以下では、代表的な誤差関数をいくつか紹介する。
+なお、以下では観測値を<span class="math notranslate nohighlight">\(t_n\)</span>、予測値を<span class="math notranslate nohighlight">\(y_n\)</span>、データ数を<span class="math notranslate nohighlight">\(N\)</span>とする。</p>
+<ul>
+<li><p>平均二乗誤差(MSE: Mean Squared Error):</p>
+<div class="math notranslate nohighlight">
+\[
+    \mathrm{MSE} = \frac{1}{N} \sum_{n=1}^N (t_n - y_n)^2
+    \]</div>
+<p>予測値と観測値の差の二乗の平均を取ったもので、誤差が大きいものをより重視する。回帰分析で最も一般的に用いられる。</p>
+</li>
+<li><p>平均絶対誤差(MAE: Mean Absolute Error):</p>
+<div class="math notranslate nohighlight">
+\[
+    \mathrm{MAE} = \frac{1}{N} \sum_{n=1}^N |t_n - y_n|
+    \]</div>
+<p>予測値と観測値の差の絶対値の平均を取ったもので、外れ値に対してMSEよりも頑健である。</p>
+</li>
+<li><p>Huber損失関数:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    L_\delta(t_n, y_n) = 
+    \begin{cases} 
+    \frac{1}{2}(t_n - y_n)^2 &amp; \text{if } |t_n - y_n| \leq \delta \\
+    \delta (|t_n - y_n| - \frac{1}{2}\delta) &amp; \text{otherwise}
+    \end{cases}
+    \end{split}\]</div>
+<p>MSEとMAEの両方の特性を持つ損失関数で、誤差が小さい場合は二乗誤差、大きい場合は絶対誤差として扱う。外れ値に対してもある程度頑健である。</p>
+</li>
+<li><p>平均絶対パーセント誤差(MAPE: Mean Absolute Percentage Error):</p>
+<div class="math notranslate nohighlight">
+\[
+    \mathrm{MAPE} = \frac{100\%}{N} \sum_{n=1}^N \left| \frac{t_n - y_n}{t_n} \right|
+    \]</div>
+<p>観測値に対する誤差の割合を評価するもので、スケールに依存しないため、異なるスケールのデータを比較する際に有用である。ただし、観測値が0に近い場合には不安定になる。</p>
+</li>
+<li><p>決定係数(<span class="math notranslate nohighlight">\(R^2\)</span>):</p>
+<p>誤差関数とは少し異なるが、回帰モデルの性能を評価する指標としてよく用いられる。以下の式で定義される:</p>
+<div class="math notranslate nohighlight">
+\[
+    R^2 = 1 - \frac{\sum_{n=1}^N (t_n - y_n)^2}{\sum_{n=1}^N (t_n - \bar{t})^2}
+    \]</div>
+<p>予測モデルが観測値の分散をどれだけ説明できているかを示す指標で、1に近いほど良いモデルであることを示す。負の値になることもあり得る。</p>
+</li>
+</ul>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -644,6 +692,7 @@ np.polyfit:	a = 1.00000000, b = 273.15000000
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">4.1.1. 単回帰: 1次元の直線回帰</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">4.2. 誤差関数</a></li>
 </ul>
   </nav></div>
 
