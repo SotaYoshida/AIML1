@@ -637,13 +637,14 @@ S &amp; -S B D^{-1} \\
 <p>共分散行列の逆行列を精度行列(precision matrix)と呼び、<span class="math notranslate nohighlight">\(\Lambda\)</span>で表す慣例に倣った。</p>
 <p>確率分布に係る係数等は一旦忘れて、条件付き確率分布のexponential関数の中身を見ていく。</p>
 <div class="math notranslate nohighlight">
-\[
+\[\begin{split}
 \begin{align*}
-\log P(\mathbf{x}, \mathbf{y}) &amp;= -\frac{1}{2} (\mathbf{x} - \boldsymbol{\mu}_x)^T \Lambda_{xx} (\mathbf{x} - \boldsymbol{\mu}_x) -\frac{1}{2} (\mathbf{x} - \boldsymbol{\mu}_x)^T \Lambda_{xy} (\mathbf{y} - \boldsymbol{\mu}_y) 
--\frac{1}{2} (\mathbf{y} - \boldsymbol{\mu}_y)^T \Lambda_{yx} (\mathbf{x} - \boldsymbol{\mu}_x) 
+\log P(\mathbf{x}, \mathbf{y}) 
+=&amp; -\frac{1}{2} (\mathbf{x} - \boldsymbol{\mu}_x)^T \Lambda_{xx} (\mathbf{x} - \boldsymbol{\mu}_x) -\frac{1}{2} (\mathbf{x} - \boldsymbol{\mu}_x)^T \Lambda_{xy} (\mathbf{y} - \boldsymbol{\mu}_y) \\
+&amp; -\frac{1}{2} (\mathbf{y} - \boldsymbol{\mu}_y)^T \Lambda_{yx} (\mathbf{x} - \boldsymbol{\mu}_x) 
 -\frac{1}{2} (\mathbf{y} - \boldsymbol{\mu}_y)^T \Lambda_{yy} (\mathbf{y} - \boldsymbol{\mu}_y) + \text{const.} 
 \end{align*}
-\]</div>
+\end{split}\]</div>
 <p><span class="math notranslate nohighlight">\(\mathbf{x}\)</span>に関する1・2次の項をまとめよう。</p>
 <div class="math notranslate nohighlight">
 \[
