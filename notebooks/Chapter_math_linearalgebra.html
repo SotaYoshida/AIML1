@@ -831,21 +831,22 @@ V^T
 <p>特異値分解の重要な性質の一つが、特異値が非負の実数であることで、これにより、もとの行列の情報を圧縮(次元削減)した表現を構成することができる。</p>
 <p>もう少し情報削減や低ランク近似と見なせるように、上の表式を<span class="math notranslate nohighlight">\(U,V\)</span>の列ベクトル<span class="math notranslate nohighlight">\(u_1,...,u_n\)</span>, <span class="math notranslate nohighlight">\(v_1,...,v_n\)</span>を用いて書き換えてみよう。
 簡単のため<span class="math notranslate nohighlight">\(m=n\)</span>として、行列の列ベクトルを用いた表記は</p>
-<p><span class="math notranslate nohighlight">\(
+<div class="math notranslate nohighlight">
+\[\begin{split}
 A = 
 \begin{pmatrix}
 u_1 &amp; u_2 &amp; \cdots &amp; u_n
 \end{pmatrix}
 \begin{pmatrix}
-\sigma_1 &amp; ... &amp; 0  \\
+\sigma_1 &amp; \cdots &amp; 0  \\
 0 &amp; \ddots &amp;  0  \\
-0 &amp; ... &amp;  \sigma_n 
+0 &amp; \cdots &amp;  \sigma_n 
 \end{pmatrix}
 \begin{pmatrix}
 v_1 &amp; v_2 &amp; \cdots &amp; v_n
 \end{pmatrix}^T= \sum^n_{k=1} \sigma_k u_k v_k^T
-\)</span>
-となる。ここで、<span class="math notranslate nohighlight">\(\sigma_1 \geq \sigma_2 \geq ... \geq \sigma_n \geq 0\)</span>と並べてあるとして、<span class="math notranslate nohighlight">\(\sigma_k\)</span>が大きいものから順に<span class="math notranslate nohighlight">\(r\)</span>個を取り出して、<span class="math notranslate nohighlight">\(A\)</span>を近似することを考える。</p>
+\end{split}\]</div>
+<p>となる。ここで、<span class="math notranslate nohighlight">\(\sigma_1 \geq \sigma_2 \geq ... \geq \sigma_n \geq 0\)</span>と並べてあるとして、<span class="math notranslate nohighlight">\(\sigma_k\)</span>が大きいものから順に<span class="math notranslate nohighlight">\(r\)</span>個を取り出して、<span class="math notranslate nohighlight">\(A\)</span>を近似することを考える。</p>
 <div class="math notranslate nohighlight">
 \[
 A \approx \sum^r_{k=1} \sigma_k u_k v_k^T
