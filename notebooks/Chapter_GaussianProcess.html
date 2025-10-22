@@ -30,7 +30,7 @@
   <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -441,9 +441,9 @@
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
@@ -590,21 +590,21 @@ K(\mathbf{x}, \mathbf{x}) + \sigma_n^2 I
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">copy</span>
-<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">special</span>
-<span class="kn">from</span> <span class="nn">matplotlib.animation</span> <span class="kn">import</span> <span class="n">FuncAnimation</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">special</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.animation</span><span class="w"> </span><span class="kn">import</span> <span class="n">FuncAnimation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">HTML</span>
 
 
 <span class="c1">## ガウス過程のカーネル(共分散行列)の設計</span>
-<span class="k">def</span> <span class="nf">Mat52</span><span class="p">(</span><span class="n">Thetas</span><span class="p">,</span><span class="n">r</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">Mat52</span><span class="p">(</span><span class="n">Thetas</span><span class="p">,</span><span class="n">r</span><span class="p">):</span>
     <span class="n">tau</span><span class="p">,</span><span class="n">sigma</span> <span class="o">=</span> <span class="n">Thetas</span>
     <span class="n">thetar</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">5.0</span><span class="p">)</span><span class="o">/</span><span class="n">sigma</span>
     <span class="k">return</span> <span class="n">tau</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">thetar</span> <span class="o">+</span> <span class="p">(</span><span class="n">thetar</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span><span class="mf">3.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">thetar</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">KernelMat</span><span class="p">(</span><span class="n">Thetas</span><span class="p">,</span><span class="n">xt</span><span class="p">,</span><span class="n">xp</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">KernelMat</span><span class="p">(</span><span class="n">Thetas</span><span class="p">,</span><span class="n">xt</span><span class="p">,</span><span class="n">xp</span><span class="p">):</span>
     <span class="n">lt</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">xt</span><span class="p">);</span> <span class="n">lp</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">xp</span><span class="p">)</span>
     <span class="n">Ktt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">lt</span><span class="p">,</span><span class="n">lt</span><span class="p">));</span> <span class="n">Kpt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">lp</span><span class="p">,</span><span class="n">lt</span><span class="p">));</span>  <span class="n">Kpp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">lp</span><span class="p">,</span><span class="n">lp</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">lt</span><span class="p">):</span>
@@ -623,12 +623,12 @@ K(\mathbf{x}, \mathbf{x}) + \sigma_n^2 I
     <span class="k">return</span> <span class="n">Ktt</span><span class="p">,</span><span class="n">Kpt</span><span class="p">,</span><span class="n">Kpp</span>
 
 <span class="c1">## 事後共分散行列の計算</span>
-<span class="k">def</span> <span class="nf">calcSj</span><span class="p">(</span><span class="n">cLinv</span><span class="p">,</span><span class="n">Kpt</span><span class="p">,</span><span class="n">Kpp</span><span class="p">,</span><span class="n">yt</span><span class="p">,</span><span class="n">mu_yt</span><span class="p">,</span><span class="n">mu_yp</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">calcSj</span><span class="p">(</span><span class="n">cLinv</span><span class="p">,</span><span class="n">Kpt</span><span class="p">,</span><span class="n">Kpp</span><span class="p">,</span><span class="n">yt</span><span class="p">,</span><span class="n">mu_yt</span><span class="p">,</span><span class="n">mu_yp</span><span class="p">):</span>
     <span class="n">tKtp</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">cLinv</span><span class="p">,</span><span class="n">Kpt</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">mu_yp</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Kpt</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">cLinv</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">cLinv</span><span class="p">,</span><span class="n">yt</span><span class="o">-</span><span class="n">mu_yt</span><span class="p">))),</span> <span class="n">Kpp</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">tKtp</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">tKtp</span><span class="p">)</span>
 
 <span class="c1">## Cholesky分解</span>
-<span class="k">def</span> <span class="nf">Mchole</span><span class="p">(</span><span class="n">tmpA</span><span class="p">,</span><span class="n">ln</span><span class="p">)</span> <span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">Mchole</span><span class="p">(</span><span class="n">tmpA</span><span class="p">,</span><span class="n">ln</span><span class="p">)</span> <span class="p">:</span>
     <span class="n">cLL</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cholesky</span><span class="p">(</span><span class="n">tmpA</span><span class="p">)</span>
     <span class="n">logLii</span><span class="o">=</span><span class="mf">0.0</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ln</span><span class="p">):</span>
@@ -696,12 +696,12 @@ K(\mathbf{x}, \mathbf{x})^{-1} = (L^T)^{-1} L^{-1}
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">GPy</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">GPy</span>
 
 <span class="c1"># テスト関数（自作コードで使っていた f(x) と同じものを定義してください）</span>
-<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
 
 <span class="c1"># データ点＆予測点の設定</span>
@@ -778,33 +778,33 @@ EI(x) = (\mu(x) - y_\mathrm{best}) \Phi(z) + \sigma(x) \phi(z), \quad z = \frac{
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#使うライブラリのインポート</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">copy</span>
-<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">special</span>
-<span class="kn">from</span> <span class="nn">matplotlib.animation</span> <span class="kn">import</span> <span class="n">FuncAnimation</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">special</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.animation</span><span class="w"> </span><span class="kn">import</span> <span class="n">FuncAnimation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">HTML</span>
 
 <span class="c1">## データの生成用関数</span>
-<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.2</span> <span class="o">*</span> <span class="n">x</span>
 
 <span class="c1">## 獲得関数を計算, 次点の計算点を決める</span>
-<span class="k">def</span> <span class="nf">calcEI</span><span class="p">(</span><span class="n">xp</span><span class="p">,</span><span class="n">mujoint</span><span class="p">,</span><span class="n">sigmaj</span><span class="p">,</span><span class="n">xbest</span><span class="p">,</span><span class="n">ybest</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">calcEI</span><span class="p">(</span><span class="n">xp</span><span class="p">,</span><span class="n">mujoint</span><span class="p">,</span><span class="n">sigmaj</span><span class="p">,</span><span class="n">xbest</span><span class="p">,</span><span class="n">ybest</span><span class="p">):</span>
     <span class="n">EIs</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="n">mujoint</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">ybest</span><span class="p">)</span> <span class="o">*</span> <span class="n">Phi</span><span class="p">((</span><span class="n">mujoint</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">ybest</span><span class="p">)</span><span class="o">/</span><span class="n">sigmaj</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span>
             <span class="n">sigmaj</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="o">*</span> <span class="p">((</span><span class="n">mujoint</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">ybest</span><span class="p">)</span><span class="o">/</span><span class="n">sigmaj</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">xp</span><span class="p">))]</span>
     <span class="n">xnew</span><span class="p">,</span><span class="n">ynew</span><span class="p">,</span><span class="n">ind</span><span class="o">=</span><span class="n">xybest</span><span class="p">(</span><span class="n">xp</span><span class="p">,</span><span class="n">EIs</span><span class="p">)</span>
     <span class="n">ynew</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">xnew</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.2</span><span class="o">*</span><span class="n">xnew</span> <span class="c1">#+ 0.01 * (0.5-np.random.rand())</span>
     <span class="k">return</span> <span class="n">xnew</span><span class="p">,</span><span class="n">ynew</span><span class="p">,</span><span class="n">EIs</span><span class="p">,</span><span class="n">ind</span>
 
-<span class="k">def</span> <span class="nf">Phi</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">Phi</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
     <span class="k">return</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">special</span><span class="o">.</span><span class="n">erfc</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">z</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mf">0.5</span><span class="p">))</span> <span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">xybest</span><span class="p">(</span><span class="n">xt</span><span class="p">,</span><span class="n">yt</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">xybest</span><span class="p">(</span><span class="n">xt</span><span class="p">,</span><span class="n">yt</span><span class="p">):</span>
     <span class="n">ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">yt</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">xt</span><span class="p">[</span><span class="n">ind</span><span class="p">],</span><span class="n">yt</span><span class="p">[</span><span class="n">ind</span><span class="p">],</span><span class="n">ind</span>
 
-<span class="k">def</span> <span class="nf">plotGP</span><span class="p">(</span><span class="n">nxt</span><span class="p">,</span><span class="n">nyt</span><span class="p">,</span><span class="n">nxp</span><span class="p">,</span><span class="n">xp</span><span class="p">,</span><span class="n">ytrue</span><span class="p">,</span><span class="n">mujoint</span><span class="p">,</span><span class="n">sigmaj</span><span class="p">,</span><span class="n">ysamples</span><span class="p">,</span><span class="n">EIs</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plotGP</span><span class="p">(</span><span class="n">nxt</span><span class="p">,</span><span class="n">nyt</span><span class="p">,</span><span class="n">nxp</span><span class="p">,</span><span class="n">xp</span><span class="p">,</span><span class="n">ytrue</span><span class="p">,</span><span class="n">mujoint</span><span class="p">,</span><span class="n">sigmaj</span><span class="p">,</span><span class="n">ysamples</span><span class="p">,</span><span class="n">EIs</span><span class="p">):</span>
     <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
     <span class="n">axT</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
     <span class="n">axB</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
@@ -851,7 +851,7 @@ EI(x) = (\mu(x) - y_\mathrm{best}) \Phi(z) + \sigma(x) \phi(z), \quad z = \frac{
 <span class="n">scatter</span> <span class="o">=</span> <span class="n">axT</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">nxt</span><span class="p">,</span> <span class="n">nyt</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="n">title</span> <span class="o">=</span> <span class="n">axB</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">plotGP</span><span class="p">(</span><span class="nb">iter</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plotGP</span><span class="p">(</span><span class="nb">iter</span><span class="p">):</span>
     <span class="n">nxt</span><span class="p">,</span> <span class="n">nyt</span><span class="p">,</span> <span class="n">nxp</span><span class="p">,</span> <span class="n">mujoint</span><span class="p">,</span> <span class="n">sigmaj</span><span class="p">,</span> <span class="n">ysamples</span><span class="p">,</span> <span class="n">EIs</span><span class="p">,</span> <span class="n">xnew</span> <span class="o">=</span> <span class="n">snapshots</span><span class="p">[</span><span class="nb">iter</span><span class="p">]</span>
     <span class="n">axT</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
     <span class="n">axB</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>

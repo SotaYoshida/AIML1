@@ -30,7 +30,7 @@
   <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -663,7 +663,17 @@ S &amp; -S B D^{-1} \\
 \log P(\mathbf{x} | \mathbf{y}) &amp;= -\frac{1}{2} (\mathbf{x} - \boldsymbol{\mu}_{x|y})^T \Sigma_{x|y}^{-1} (\mathbf{x} - \boldsymbol{\mu}_{x|y}) + \text{const.}
 \end{align*}
 \]</div>
-<p>となる。正規化すると、条件確率が上のガウス分布になることがわかる。</p>
+<p>となる。正規化すると、条件確率が上のガウス分布になることがわかる。
+ここでは、対称可逆な行列に対する下記の性質を用いた。</p>
+<div class="tip admonition">
+<p class="admonition-title">行列式の性質</p>
+<div class="math notranslate nohighlight">
+\[
+-\frac{1}{2} \mathbf{x}^T A \mathbf{x} + \mathbf{x}^T \mathbf{b} = -\frac{1}{2} (\mathbf{x} - A^{-1} \mathbf{b})^T A (\mathbf{x} - A^{-1} \mathbf{b}) + \frac{1}{2} \mathbf{b}^T A^{-1} \mathbf{b}
+\]</div>
+<p>行列版の平方完成と言える。右辺第2項は定数項なので、確率分布の正規化には影響しない。
+上記の式が成り立つことをチェックしてみよう。</p>
+</div>
 </section>
 <section id="id6">
 <h2><span class="section-number">3.4. </span>ガウス分布と機械学習の関係<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
