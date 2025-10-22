@@ -778,6 +778,8 @@ L(\boldsymbol{\mu}, \boldsymbol{\Sigma})
 = \log \prod^N_{i=1} \mathcal{N} (\mathbf{x}_i; \boldsymbol{\mu}, \boldsymbol{\Sigma})
 \]</div>
 <p>結論から先に書くと、ガウス分布の平均ベクトルと共分散行列の最尤推定量はそれぞれ次のようになる:</p>
+<div class="tip admonition">
+<p class="admonition-title">多次元ガウス分布の最尤推定量</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align*}
@@ -785,6 +787,7 @@ L(\boldsymbol{\mu}, \boldsymbol{\Sigma})
 \hat{\Sigma} &amp;= \frac{1}{N} \sum_{i=1}^{N} (\mathbf{x}_i - \hat{\boldsymbol{\mu}})(\mathbf{x}_i - \hat{\boldsymbol{\mu}})^T
 \end{align*}
 \end{split}\]</div>
+</div>
 <p>順番に示そう。まず対数尤度を少し整理しておこう。</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
