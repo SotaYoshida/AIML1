@@ -435,6 +435,7 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">3.6. 多次元ガウス分布の最尤推定</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">3.7. 多次元正規分布に関するベイズの定理</a></li>
 </ul>
             </nav>
         </div>
@@ -851,6 +852,32 @@ L(\boldsymbol{\mu}, \boldsymbol{\Sigma})
 \]</div>
 <p>から、上の式が従う。</p>
 </section>
+<section id="id9">
+<h2><span class="section-number">3.7. </span>多次元正規分布に関するベイズの定理<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<p>多次元正規分布に従う確率変数に関するベイズの定理で度々登場する例を紹介しておく。
+ある変数<span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^D\)</span>が、平均ベクトル<span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span>、共分散行列<span class="math notranslate nohighlight">\(\Sigma\)</span> (あるいは精度行列<span class="math notranslate nohighlight">\(\Lambda = \Sigma^{-1}\)</span>)を持つ多次元正規分布に従うとする:</p>
+<div class="math notranslate nohighlight">
+\[
+p(\mathbf{x}) = \mathcal{N}(\mathbf{x}| \boldsymbol{\mu}, \Lambda^{-1})
+\]</div>
+<p>さらに、別の変数<span class="math notranslate nohighlight">\(\mathbf{y} \in \mathbb{R}^K\)</span>が、<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>に条件付けられた多次元正規分布に従うとしよう。
+このとき、<span class="math notranslate nohighlight">\(\mathbf{y}\)</span>の平均ベクトルは線形関数で与えられ(Affine変換の形)るとする。</p>
+<div class="math notranslate nohighlight">
+\[
+p(\mathbf{y} | \mathbf{x}) = \mathcal{N}(\mathbf{y}| A \mathbf{x} + \mathbf{b}, L^{-1})
+\]</div>
+<p>ここで、<span class="math notranslate nohighlight">\(A\)</span>は<span class="math notranslate nohighlight">\(K \times D\)</span>行列である。
+このとき、<span class="math notranslate nohighlight">\(\mathbf{y}\)</span>の周辺分布と、<span class="math notranslate nohighlight">\(\mathbf{y}\)</span>に条件付けられた<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>の条件付き分布は次のようになる:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+p(\mathbf{y}) &amp; = \mathcal{N}(\mathbf{y}| A \boldsymbol{\mu} + \mathbf{b}, L^{-1} + A \Lambda^{-1} A^T) \\
+p(\mathbf{x} | \mathbf{y}) &amp; = \mathcal{N}(\mathbf{x}| \boldsymbol{\Sigma} \left( A^T L (\mathbf{y} - \mathbf{b}) + \Lambda \boldsymbol{\mu} \right), \boldsymbol{\Sigma}) \\
+\boldsymbol{\Sigma} &amp; = (\Lambda + A^T L A)^{-1}
+\end{align}
+\end{split}\]</div>
+<p>これは、多次元正規分布に従う確率変数の線形変換もまた多次元正規分布に従うことを表している。</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -929,6 +956,7 @@ L(\boldsymbol{\mu}, \boldsymbol{\Sigma})
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">3.6. 多次元ガウス分布の最尤推定</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">3.7. 多次元正規分布に関するベイズの定理</a></li>
 </ul>
   </nav></div>
 

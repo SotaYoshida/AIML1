@@ -428,7 +428,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">5.1.2. データの規模に関する注意点</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">5.2. ベイズ線形回帰</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">5.2. <span class="math notranslate nohighlight">\(\clubsuit\)</span> ベイズ線形回帰</a></li>
 </ul>
             </nav>
         </div>
@@ -656,8 +656,8 @@ E_D({\bf w}) \equiv \frac{1}{2}\sum^D_{n=1} \left( t_n- {\bf w}^T \boldsymbol{\p
 <p>機械学習のパラメータ最適化などは、このような逐次的な手法が用いられることが多く、詳しくは後の章で説明する。</p>
 </section>
 </section>
-<section id="id4">
-<h2><span class="section-number">5.2. </span>ベイズ線形回帰<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<section id="clubsuit">
+<h2><span class="section-number">5.2. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> ベイズ線形回帰<a class="headerlink" href="#clubsuit" title="Link to this heading">#</a></h2>
 <p>次に、パラメータ<span class="math notranslate nohighlight">\({\bf w}\)</span>をベイズ的に取り扱う事を考える。
 このノートでいう&quot;ベイズ的&quot;とはせいぜい「パラメータを点推定する立場より有限の幅をもつ確率分布としてパラメータを考える」という程度の意味である。</p>
 <p>パラメータ<span class="math notranslate nohighlight">\({\bf w}\)</span>が、平均<span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span>,共分散<span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}\)</span>で指定される多次元の正規分布に従うと仮定する:</p>
@@ -674,6 +674,7 @@ E_D({\bf w}) \equiv \frac{1}{2}\sum^D_{n=1} \left( t_n- {\bf w}^T \boldsymbol{\p
 \tilde{\boldsymbol{\mu} } &amp; = \tilde{\boldsymbol{\Sigma}} (\boldsymbol{\Sigma} \boldsymbol{\mu} + \beta \boldsymbol{\Phi}^T \boldsymbol{\mathcal{t}})
 \end{align*}
 \end{split}\]</div>
+<p>この式の導出は、3章末尾に紹介した、多次元正規分布のベイズの定理の節にある式を用いれば良い。</p>
 <p>ここで簡単のため事前分布をさらに簡略化しよう。</p>
 <p>事前分布の平均<span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span>が<span class="math notranslate nohighlight">\(0\)</span>(ベクトル)かつ、パラメータの事前分布の共分散が対角的(独立な分散をもつ)でなおかつ値が同じ,つまり、上の<span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}=\alpha^{-1}I\)</span>とかける場合を考える。</p>
 <p>このとき、事後分布の平均および共分散は以下のように簡略化される:<br />
@@ -822,7 +823,7 @@ p(t^*|{\bf x},\boldsymbol{\mathrm{t}},\alpha,\beta) = \mathcal{N}(t^*|\tilde{\bo
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">5.1.2. データの規模に関する注意点</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">5.2. ベイズ線形回帰</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">5.2. <span class="math notranslate nohighlight">\(\clubsuit\)</span> ベイズ線形回帰</a></li>
 </ul>
   </nav></div>
 
