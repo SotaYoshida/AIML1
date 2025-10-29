@@ -519,17 +519,21 @@ document.write(`
 \[
 L \equiv \sum_{i=1}^n (y_i - (ax_i + b))^2
 \]</div>
-<p>これを<span class="math notranslate nohighlight">\(a,b\)</span>について微分して0とおく(極値を求めるための式を書く)と、
-$<span class="math notranslate nohighlight">\(
+<p>これを<span class="math notranslate nohighlight">\(a,b\)</span>について微分して0とおく(極値を求めるための式を書く)と、</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
 \sum_{i=1}^n (y_i - (ax_i + b))x_i = 0 \\
 \sum_{i=1}^n (y_i - (ax_i + b)) = 0
-\)</span><span class="math notranslate nohighlight">\(
-となる。これを解くと、
-\)</span><span class="math notranslate nohighlight">\(
-a = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^n (x_i - \bar{x})^2}\\
-b = \bar{y} - a \bar{x}
-\)</span>$
-となる。</p>
+\end{split}\]</div>
+<p>となる。これを解くと、</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+a &amp;= \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^n (x_i - \bar{x})^2}\\
+b &amp;= \bar{y} - a \bar{x}
+\end{align*}
+\end{split}\]</div>
+<p>となる。</p>
 <p>Exercise: 単回帰分析の係数の最適値を求める式を導出せよ。</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -537,11 +541,12 @@ b = \bar{y} - a \bar{x}
 \bar{y} = \sum_{i=1}^n y_i \\
 0 = \sum_{i=1}^n (y_i - (ax_i + b))  = n \bar{y} - a n \bar{x} - b n 
 \end{split}\]</div>
-<p>から
-$<span class="math notranslate nohighlight">\(
+<p>から</p>
+<div class="math notranslate nohighlight">
+\[
 b = \bar{y} - a \bar{x}
-\)</span>$
-が得られる。次に、1式目を変形していこう。</p>
+\]</div>
+<p>が得られる。次に、1式目を変形していこう。</p>
 <div class="math notranslate nohighlight">
 \[
 \sum^n_{i=1} ( y_i - \bar{y} ) x_i + a \bar{x} x_i -a x^2_i = 0
@@ -551,10 +556,11 @@ b = \bar{y} - a \bar{x}
 0 = \sum_{i=1}^n (y_i x_i - a x^2_i - \bar{y}x_i + a \bar{x}x_i) = 
 \sum_{i=1}^n ( (y_i - \bar{y})(x_i - \bar{x}) + \bar{x}y_i - \bar{x}\bar{y} - a (x_i - \bar{x})^2 )= 0
 \]</div>
-<p>ここで、<span class="math notranslate nohighlight">\(\bar{x}y_i - \bar{x}\bar{y}\)</span>は、和を取ると0になるので
-$<span class="math notranslate nohighlight">\(
+<p>ここで、<span class="math notranslate nohighlight">\(\bar{x}y_i - \bar{x}\bar{y}\)</span>は、和を取ると0になるので</p>
+<div class="math notranslate nohighlight">
+\[
 a = \frac{\sum_{i=1}^n ( (y_i - \bar{y})(x_i - \bar{x})  }{\sum^n_{i=1} (x_i - \bar{x})^2 }
-\)</span>$</p>
+\]</div>
 <p>数値的にチェックしてみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
