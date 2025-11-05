@@ -655,10 +655,10 @@ E_D({\bf w}) \equiv \frac{1}{2}\sum^D_{n=1} \left( t_n- {\bf w}^T \boldsymbol{\p
 <h2><span class="section-number">5.2. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> ベイズ線形回帰<a class="headerlink" href="#clubsuit" title="Link to this heading">#</a></h2>
 <p>次に、パラメータ<span class="math notranslate nohighlight">\({\bf w}\)</span>をベイズ的に取り扱う事を考える。
 このノートでいう&quot;ベイズ的&quot;とはせいぜい「パラメータを点推定する立場より有限の幅をもつ確率分布としてパラメータを考える」という程度の意味である。</p>
-<p>パラメータ<span class="math notranslate nohighlight">\({\bf w}\)</span>が、平均<span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span>,共分散<span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}\)</span>で指定される多次元の正規分布に従うと仮定する:</p>
+<p>パラメータ<span class="math notranslate nohighlight">\({\bf w}\)</span>が、平均<span class="math notranslate nohighlight">\(\boldsymbol{\mu}_w\)</span>,共分散<span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}_w\)</span>で指定される多次元の正規分布に従うと仮定する:</p>
 <div class="math notranslate nohighlight">
 \[
-{\bf w} \sim \mathcal{N}(\boldsymbol{\mu},\boldsymbol{\Sigma})
+{\bf w} \sim \mathcal{N}(\boldsymbol{\mu}_w,\boldsymbol{\Sigma}_w)
 \]</div>
 <p>このとき、データ点<span class="math notranslate nohighlight">\(t\)</span>が観測されたときのパラメータの事後分布は<span class="math notranslate nohighlight">\(p({\bf w}|\boldsymbol{\mathcal{t}}) = \mathcal{N}(\tilde{\boldsymbol{\mu}},\tilde{\boldsymbol{\Sigma}})\)</span>で与えられる。</p>
 <p>ここで事後分布の平均および共分散は以下のとおりである:</p>
@@ -666,27 +666,54 @@ E_D({\bf w}) \equiv \frac{1}{2}\sum^D_{n=1} \left( t_n- {\bf w}^T \boldsymbol{\p
 \[\begin{split}
 \begin{align*}
 \tilde{\boldsymbol{\Sigma}}^{-1} &amp; =\boldsymbol{\Sigma}^{-1}+\beta\boldsymbol{\Phi}^T \boldsymbol{\Phi}, \\
-\tilde{\boldsymbol{\mu} } &amp; = \tilde{\boldsymbol{\Sigma}} (\boldsymbol{\Sigma} \boldsymbol{\mu} + \beta \boldsymbol{\Phi}^T \boldsymbol{\mathcal{t}})
+\tilde{\boldsymbol{\mu} } &amp; = \tilde{\boldsymbol{\Sigma}} (\boldsymbol{\Sigma}^{-1} \boldsymbol{\mu} + \beta \boldsymbol{\Phi}^T \boldsymbol{\mathcal{t}})
 \end{align*}
 \end{split}\]</div>
-<p>この式の導出は、3章末尾に紹介した、多次元正規分布のベイズの定理の節にある式を用いれば良い。</p>
-<p>ここで簡単のため事前分布をさらに簡略化しよう。</p>
-<p>事前分布の平均<span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span>が<span class="math notranslate nohighlight">\(0\)</span>(ベクトル)かつ、パラメータの事前分布の共分散が対角的(独立な分散をもつ)でなおかつ値が同じ,つまり、上の<span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}=\alpha^{-1}I\)</span>とかける場合を考える。</p>
+<p>この式の導出は、3章末尾に紹介した、多次元正規分布のベイズの定理の節にある式を用いれば良い。
+具体的には、観測点<span class="math notranslate nohighlight">\(\boldsymbol{t}\)</span>が、<span class="math notranslate nohighlight">\(\boldsymbol{w}\)</span>に条件付けられた多次元正規分布に従うことと、</p>
+<div class="math notranslate nohighlight">
+\[
+p(\boldsymbol{\mathrm{t}}|\boldsymbol{w}) = \mathcal{N}(\boldsymbol{\mathrm{t}}|\boldsymbol{\Phi} \boldsymbol{w}, \beta^{-1} I)
+\]</div>
+<p>下記の式(３章)を見比べてやればよい。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+p(\mathbf{x}) &amp;= \mathcal{N}(\mathbf{x}| \boldsymbol{\mu}, \Lambda^{-1}) \\
+p(\mathbf{y} | \mathbf{x}) &amp;= \mathcal{N}(\mathbf{y}| A \mathbf{x} + \mathbf{b}, L^{-1})
+\end{align*}
+\end{split}\]</div>
+<p>いま</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\mathbf{x} &amp; \rightarrow \boldsymbol{w}, \\
+\mathbf{y} &amp; \rightarrow \boldsymbol{t}, \\
+\boldsymbol{\mu} &amp; \rightarrow \boldsymbol{\mu}_w, \\
+\Lambda &amp; \rightarrow \boldsymbol{\Sigma}_w^{-1}, \\
+A &amp; \rightarrow \boldsymbol{\Phi}, \\
+\mathbf{b} &amp; \rightarrow 0, \\
+L &amp; \rightarrow \beta I
+\end{align*}
+\end{split}\]</div>
+<p>と対応させれば良い。</p>
+<p>ここで簡単のため事前分布をさらに簡略化しよう。
+事前分布の平均<span class="math notranslate nohighlight">\(\boldsymbol{\mu}_w\)</span>が<span class="math notranslate nohighlight">\(0\)</span>(ベクトル)かつ、パラメータの事前分布の共分散が対角的(独立な分散をもつ)でなおかつ値が同じ,つまり、上の<span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}_w=\alpha^{-1}I\)</span>とかける場合を考える。</p>
 <p>このとき、事後分布の平均および共分散は以下のように簡略化される:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align*}
 \tilde{\boldsymbol{\Sigma}}^{-1} &amp;= \alpha I +\beta\boldsymbol{\Phi}^T \boldsymbol{\Phi} \\
-\tilde{\boldsymbol{\mu}} &amp; =  \beta \tilde{\boldsymbol{\Sigma}} \boldsymbol{\Phi}^T \boldsymbol{\mathcal{t}}
+\tilde{\boldsymbol{\mu}} &amp; =  \beta \tilde{\boldsymbol{\Sigma}} \boldsymbol{\Phi}^T \boldsymbol{t}
 \end{align*}
 \end{split}\]</div>
-<p>この条件のもとで対数事後確率(log posterior)と呼ばれる量は、</p>
+<p>この条件のもとで**対数事後確率(log posterior)**と呼ばれる量は、対数尤度と対数事前分布の和として、</p>
 <div class="math notranslate nohighlight">
 \[
 \ln p({\bf w}|\boldsymbol{\mathrm{t}}) = -\frac{\beta}{2}\sum^N_{n=1} \left(t_n - {\bf w}^T \phi(x_n) \right)^2 -\frac{\alpha}{2} {\bf w}^T{\bf w} +  \text{const.}
 \]</div>
 <p>となる。</p>
-<p>右辺の2項は、二乗誤差とL2正則化項に対応していることがわかる(最後の項は定数なので最大化/最小化とは関係ない)。したがって、正規分布で与えられる事前分布のもとでパラメータ<span class="math notranslate nohighlight">\({\bf w}\)</span>の事後分布を最大化することは、L2正則化項がある場合の誤差関数の最小化と(<span class="math notranslate nohighlight">\(\lambda=\beta/\alpha\)</span>とすれば)等価であることがわかる。</p>
+<p>右辺の2項は、二乗誤差とL2正則化項に対応していることがわかる(最後の項は定数なので最大化/最小化とは関係ない)。したがって、正規分布で与えられる事前分布のもとでパラメータ<span class="math notranslate nohighlight">\({\bf w}\)</span>の事後分布を最大化すること、言い換えると観測値を考慮に入れた事後分布の平均・共分散行列の推定は、L2正則化項がある場合の誤差関数の最小化と等価であることがわかる。</p>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
 <p><strong>性質の良い</strong>とは、<strong>共役事前分布</strong>と呼ばれるように、事後分布が同じ形の確率分布になるような事前分布のことである。</p>
