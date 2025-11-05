@@ -30,7 +30,7 @@
   <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -433,12 +433,12 @@
 <p>最も単純な線形回帰は、以下の多項式回帰である。</p>
 <div class="tip admonition">
 <p class="admonition-title">定義: 多項式回帰</p>
-<p>回帰曲線を、多項式の重み付き和で表現する回帰を<strong>多項式回帰</strong>(polynomial regression)と呼ぶ。</p>
+<p>回帰曲線を、多項式の重み付き和で表現する回帰を**多項式回帰(polynomial regression)**と呼ぶ。</p>
 <div class="math notranslate nohighlight">
 \[
-y(\boldsymbol{x}, \boldsymbol{w}) = w_0 + w_1 x + w_2 x^2 + \cdots + w_M x^M = \sum_{j=0}^M w_j x^j
+y(x, \boldsymbol{w}) = w_0 + w_1 x + w_2 x^2 + \cdots + w_p x^p = \sum_{j=0}^p w_j x^j
 \]</div>
-<p>ここで、<span class="math notranslate nohighlight">\(x\)</span>は入力変数、<span class="math notranslate nohighlight">\(y\)</span>は出力変数、<span class="math notranslate nohighlight">\(w\)</span>はパラメータ、<span class="math notranslate nohighlight">\(M\)</span>は多項式の次数である。</p>
+<p>ここで、<span class="math notranslate nohighlight">\(x\)</span>は入力変数、<span class="math notranslate nohighlight">\(y\)</span>は出力変数、<span class="math notranslate nohighlight">\(w\)</span>はパラメータベクトル、<span class="math notranslate nohighlight">\(p\)</span>は多項式の次数である。</p>
 </div>
 <p>線形回帰(Linear Regression)はしばし、この多項式回帰を指すこともあるが、
 より一般には、基底関数と呼ばれる関数を用いた定義となる:</p>
@@ -446,7 +446,7 @@ y(\boldsymbol{x}, \boldsymbol{w}) = w_0 + w_1 x + w_2 x^2 + \cdots + w_M x^M = \
 <p class="admonition-title">定義: 線形回帰</p>
 <div class="math notranslate nohighlight">
 \[
-y({\bf x},{\bf w})= \sum^{M-1}_{j=0} w_j \phi_j({\bf x}) = {\bf w}^T\boldsymbol{\phi}({\bf x})
+y(x,{\bf w})= \sum^{M-1}_{j=0} w_j \phi_j(x) = {\bf w}^T\boldsymbol{\phi}(x)
 \]</div>
 <p>ここで、<span class="math notranslate nohighlight">\(\boldsymbol{\phi}({\bf x})\)</span>は<strong>基底関数</strong>と呼ばれる。
 &quot;線形&quot;の意味するところは、基底関数の形状が線形であることではなく、基底関数を重ね合わせるパラメータ(重み)<span class="math notranslate nohighlight">\(w\)</span>それぞれについて、1次式で表されることを指す。</p>
@@ -455,26 +455,24 @@ y({\bf x},{\bf w})= \sum^{M-1}_{j=0} w_j \phi_j({\bf x}) = {\bf w}^T\boldsymbol{
 <strong>「幾つかの関数を重みをつけて重ね合わせることで、データをうまく表現するような柔軟な関数を作る」</strong> というイメージを持つと良い。</p>
 <section id="id2">
 <h2><span class="section-number">5.1. </span>線形回帰の一般的な性質<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
-<p>線形回帰モデル:<span class="math notranslate nohighlight">\(y({\bf x},{\bf w})= \sum^{M-1}_{j=0} w_j \phi_j({\bf x}) = {\bf w}^T\boldsymbol{\phi}({\bf x})\)</span>を考える。</p>
-<p>ここで<span class="math notranslate nohighlight">\(\boldsymbol{\phi}\)</span>は基底関数のベクトルで、<span class="math notranslate nohighlight">\(p\)</span>次の多項式回帰の場合は<span class="math notranslate nohighlight">\(\boldsymbol{\phi}=(1, x, x^2, \ldots, x^p)^T\)</span>となる。実際に、ベクトルの内積の形で書き下すと<span class="math notranslate nohighlight">\({\bf w}^T\boldsymbol{\phi}=w_0 + w_1x+ w_2x^2+ \cdots + w_{p}x^p\)</span>となり、<span class="math notranslate nohighlight">\(p\)</span>次多項式になっている。</p>
-<p>さて目標変数<span class="math notranslate nohighlight">\(t\)</span> (あるいは観測値)が、<span class="math notranslate nohighlight">\(y({\bf x},{\bf w})\)</span>と平均0,精度<span class="math notranslate nohighlight">\(\beta\equiv 1/\sigma^2\)</span>の誤差<span class="math notranslate nohighlight">\(\epsilon\)</span>の和:  <span class="math notranslate nohighlight">\(t=y({\bf x},{\bf w})+\epsilon\)</span>で与えられていると仮定する。</p>
-<p>つまり、<span class="math notranslate nohighlight">\(t\)</span>の確率分布が<span class="math notranslate nohighlight">\(p(t|{\bf x},{\bf w},\beta) = \mathcal{N}(t|y({\bf x},{\bf w}),\beta^{-1})\)</span>で与えられるとする。
-<span class="math notranslate nohighlight">\(\mathcal{N}(x|\mu,\Sigma)\)</span>は平均ベクトルが<span class="math notranslate nohighlight">\(\mu\)</span>、共分散行列が<span class="math notranslate nohighlight">\(\Sigma\)</span>の多変量正規分布を表す。今は1次元を考えるので、それぞれスカラー値になる。<span class="math notranslate nohighlight">\(\beta\)</span>は精度(分散の逆数)とも呼ばれる。</p>
+<p>線形回帰モデル:<span class="math notranslate nohighlight">\(y(x,{\bf w})= \sum^{M-1}_{j=0} w_j \phi_j(x) = {\bf w}^T\boldsymbol{\phi}(x)\)</span>を考える。</p>
+<p>ここで<span class="math notranslate nohighlight">\(\boldsymbol{\phi}(x)\)</span>は基底関数のベクトルで、<span class="math notranslate nohighlight">\(p\)</span>次の多項式回帰の場合は<span class="math notranslate nohighlight">\(\boldsymbol{\phi}(x)=(1, x, x^2, \ldots, x^p)^T\)</span>となる。実際に、ベクトルの内積の形で書き下すと<span class="math notranslate nohighlight">\({\bf w}^T\boldsymbol{\phi}(x)=w_0 + w_1x+ w_2x^2+ \cdots + w_{p}x^p\)</span>となり、<span class="math notranslate nohighlight">\(p\)</span>次多項式の出力を与えることがわかる。</p>
+<p>さて目標変数<span class="math notranslate nohighlight">\(t_i\)</span> (あるいは観測値)が、<span class="math notranslate nohighlight">\(y(x_i,{\bf w})\)</span>と平均0、精度<span class="math notranslate nohighlight">\(\beta\equiv 1/\sigma^2\)</span>の誤差<span class="math notranslate nohighlight">\(\epsilon_i\)</span>の和:  <span class="math notranslate nohighlight">\(t_i=y(x_i,{\bf w})+\epsilon_i\)</span>で与えられていると仮定する。
+つまり、<span class="math notranslate nohighlight">\(t\)</span>の確率分布が<span class="math notranslate nohighlight">\(p(t|x,{\bf w},\beta) = \mathcal{N}(t|y(x,{\bf w}),\beta^{-1})\)</span>で与えられるとする。</p>
 <p>いまデータ点が<span class="math notranslate nohighlight">\(D\)</span>個あるとする。入力<span class="math notranslate nohighlight">\(\boldsymbol{\mathrm{X}}=\{x_1, x_2, \ldots, x_D\}\)</span>と、対応する目標値を<span class="math notranslate nohighlight">\(\boldsymbol{\mathrm{t}}=\{t_1,t_2,\ldots, t_D\}\)</span>と表すことにしておこう。</p>
-<p>これらのデータ点が上の分布<span class="math notranslate nohighlight">\(p(t|{\bf x},{\bf w},\beta)\)</span>から独立に生成されたと仮定すると、データの目標変数についての確率分布は</p>
+<p>これらのデータ点が上の分布<span class="math notranslate nohighlight">\(p(t|x,{\bf w},\beta)\)</span>から独立に生成されたと仮定すると、データの目標変数についての確率分布は</p>
 <div class="math notranslate nohighlight">
 \[
 p(\boldsymbol{\mathrm{t}}|\boldsymbol{\mathrm{X}},{\bf w},\beta) = \prod^D_{n=1} \mathcal{N}(t_n|{\bf w}^T \boldsymbol{\phi}(x_n) ,\beta^{-1})
 \]</div>
-<p>で与えられる。つまり、(少々くどいが)<span class="math notranslate nohighlight">\(t\)</span>の各点が<span class="math notranslate nohighlight">\(y({\bf x},{\bf w})\)</span>の周りに、精度<span class="math notranslate nohighlight">\(\beta\)</span>のガウス分布でばらついているということである。</p>
-<p>(以下では、確率分布の条件部分にある<span class="math notranslate nohighlight">\({\bf x}\)</span>などを適宜省略する)
-このとき、<strong>対数尤度</strong>と呼ばれる量は</p>
+<p>で与えられる。つまり、(少々くどいが)<span class="math notranslate nohighlight">\(t\)</span>の各点が<span class="math notranslate nohighlight">\(y(x,{\bf w})\)</span>の周りに、精度<span class="math notranslate nohighlight">\(\beta\)</span>のガウス分布でばらついているということである。</p>
+<p>(以下では、確率分布の条件部分にある<span class="math notranslate nohighlight">\(x\)</span>などを適宜省略する)このとき、<strong>対数尤度</strong>と呼ばれる量は</p>
 <div class="math notranslate nohighlight">
 \[
 \ln p(\boldsymbol{\mathrm{t}}|{\bf w},\beta) = \sum^D_{n=1} \ln \mathcal{N}(t_n|{\bf w}^T\boldsymbol{\phi}(x_n),
 \beta^{-1}) = \frac{D}{2}\ln\beta - \frac{D}{2}\ln(2\pi) -\beta E_D({\bf w})
 \]</div>
-<p>となる。なお、<span class="math notranslate nohighlight">\(\phi(x_n)\)</span>は点<span class="math notranslate nohighlight">\(x_n\)</span>における基底関数値を並べた<span class="math notranslate nohighlight">\((p, 1)\)</span>ベクトルで、<span class="math notranslate nohighlight">\(E_D\)</span>は二乗和誤差:</p>
+<p>となる。なお、<span class="math notranslate nohighlight">\(\phi(x_n)\)</span>は点<span class="math notranslate nohighlight">\(x_n\)</span>における基底関数値を並べた<span class="math notranslate nohighlight">\(M\)</span>次元のベクトルで、<span class="math notranslate nohighlight">\(E_D\)</span>は二乗和誤差:</p>
 <div class="math notranslate nohighlight">
 \[
 E_D({\bf w}) \equiv \frac{1}{2}\sum^D_{n=1} \left( t_n- {\bf w}^T \boldsymbol{\phi}( x_n)  \right)^2
@@ -483,13 +481,13 @@ E_D({\bf w}) \equiv \frac{1}{2}\sum^D_{n=1} \left( t_n- {\bf w}^T \boldsymbol{\p
 <p>対数尤度の勾配を書き下し、勾配を用いて対数尤度の最大化(<strong>最尤推定</strong>と呼ぶ)を考えよう。つまり</p>
 <div class="math notranslate nohighlight">
 \[
-\nabla_\mathbf{w} \ln p(\boldsymbol{\mathrm{t}}|{\bf w},\beta) = \beta \sum^D_{n=1} \left( t_n -{\bf w}^T \boldsymbol{\phi}({\bf x_n}) \right) \boldsymbol{\phi}({\bf x_n}) =0
+\nabla_\mathbf{w} \ln p(\boldsymbol{\mathrm{t}}|{\bf w},\beta) = \beta \sum^D_{n=1} \left( t_n -{\bf w}^T \boldsymbol{\phi}(x_n) \right) \boldsymbol{\phi}(x_n) =0
 \]</div>
 <p>の(p次元ベクトルに対する)方程式の根を求めてやれば良い。</p>
 <p>上の式を変形すると</p>
 <div class="math notranslate nohighlight">
 \[
-\sum^D_{n=1} t_n \boldsymbol{\phi}({\bf x_n}) = \sum^D_{n=1} ({\bf w}^T \boldsymbol{\phi}({\bf x_n})) \boldsymbol{\phi}({\bf x_n})
+\sum^D_{n=1} t_n \boldsymbol{\phi}(x_n) = \sum^D_{n=1} ({\bf w}^T \boldsymbol{\phi}(x_n)) \boldsymbol{\phi}(x_n)
 \]</div>
 <p>となり、これを<span class="math notranslate nohighlight">\({\bf w}\)</span>について解くことで、</p>
 <div class="math notranslate nohighlight">
@@ -498,25 +496,35 @@ E_D({\bf w}) \equiv \frac{1}{2}\sum^D_{n=1} \left( t_n- {\bf w}^T \boldsymbol{\p
 \]</div>
 <p>が根であることがわかる。
 ここで、<span class="math notranslate nohighlight">\(\boldsymbol{t}\)</span>は目標値ベクトルで、<span class="math notranslate nohighlight">\(\boldsymbol{t}=(t_1, t_2, \ldots, t_D)^T\)</span>で与えられる。
-また、<span class="math notranslate nohighlight">\(\boldsymbol{\Phi}\)</span>は計画行列(Design Matrix)と呼ばれ、<span class="math notranslate nohighlight">\(\boldsymbol{\Phi}_{nj} = \phi_j({\bf x_n})\)</span>で与えられる。顕に書くと...</p>
+また、<span class="math notranslate nohighlight">\(\boldsymbol{\Phi}\)</span>は計画行列(Design Matrix)と呼ばれ、<span class="math notranslate nohighlight">\(\boldsymbol{\Phi}_{nj} = \phi_j(x_n)\)</span>で与えられる。顕に書くと...</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \boldsymbol{\Phi} =
 \begin{pmatrix}
-\phi_0({\bf x_1}) &amp; \phi_1({\bf x_1}) &amp; \phi_2({\bf x_1}) &amp; \cdots &amp; \phi_{p-1}({\bf x_1}) \\
-\phi_0({\bf x_2}) &amp; \phi_1({\bf x_2}) &amp; \phi_2({\bf x_2}) &amp; \cdots &amp; \phi_{p-1}({\bf x_2}) \\
-\vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
-\phi_0({\bf x_D}) &amp; \phi_1({\bf x_D}) &amp; \phi_2  ({\bf x_D}) &amp; \cdots &amp; \phi_{p-1}({\bf x_D}) \\
+\phi_1(x_1) &amp; \phi_2(x_1) &amp; \cdots &amp; \phi_{M}(x_1) \\
+\phi_1(x_2) &amp; \phi_2(x_2) &amp; \cdots &amp; \phi_{M}(x_2) \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+\phi_1(x_D) &amp; \phi_2(x_D) &amp; \cdots &amp; \phi_{M}(x_D) \\
 \end{pmatrix}
 = \begin{pmatrix}
-\boldsymbol{\phi}({\bf x_1})^T \\
-\boldsymbol{\phi}({\bf x_2})^T \\
+\boldsymbol{\phi}(x_1)^T \\
+\boldsymbol{\phi}(x_2)^T \\
 \vdots \\
-\boldsymbol{\phi}({\bf x_D})^T \\
+\boldsymbol{\phi}(x_D)^T \\
 \end{pmatrix}
 \end{split}\]</div>
-<p>つまり、<strong>最尤推定を与えるパラメータ<span class="math notranslate nohighlight">\({\bf w}_{ML}\)</span>は、観測値ベクトル<span class="math notranslate nohighlight">\(\boldsymbol{t}\)</span>と
-計画行列<span class="math notranslate nohighlight">\(\boldsymbol{\Phi}\)</span>を用いて閉じた形で与えられる</strong>。
+<p>多項式回帰の場合は</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boldsymbol{\Phi} =
+\begin{pmatrix}
+1 &amp; x_1 &amp; x_1^2 &amp; \cdots &amp; x_1^p \\
+1 &amp; x_2 &amp; x_2^2 &amp; \cdots &amp; x_2^p \\
+\vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+1 &amp; x_D &amp; x_D^2 &amp; \cdots &amp; x_D^p \\
+\end{pmatrix}
+\end{split}\]</div>
+<p>つまり、<strong>最尤推定を与えるパラメータ<span class="math notranslate nohighlight">\({\bf w}_{ML}\)</span>は、観測値ベクトル<span class="math notranslate nohighlight">\(\boldsymbol{t}\)</span>と計画行列<span class="math notranslate nohighlight">\(\boldsymbol{\Phi}\)</span>を用いて閉じた形で与えられる</strong>。
 別の言い方をすると、<span class="math notranslate nohighlight">\(\boldsymbol{w}\)</span>の値を少しずつ変えて対数尤度を最大化するような反復計算を行う必要がなく、ベクトル・行列の演算だけで最尤推定が求まる。この点が最も重要である。
 なお、ここでは暗黙のうちに、<span class="math notranslate nohighlight">\(\boldsymbol{\Phi}^T\boldsymbol{\Phi}\)</span>の逆行列が数値的に安定に計算できることを仮定している。</p>
 <hr class="docutils" />
@@ -529,8 +537,8 @@ E_D({\bf w}) \equiv \frac{1}{2}\sum^D_{n=1} \left( t_n- {\bf w}^T \boldsymbol{\p
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 
 <span class="c1">## データ点の生成</span>
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
@@ -572,7 +580,7 @@ E_D({\bf w}) \equiv \frac{1}{2}\sum^D_{n=1} \left( t_n- {\bf w}^T \boldsymbol{\p
 <span class="n">yp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">xt</span><span class="p">,</span> <span class="n">yt</span><span class="p">,</span> <span class="n">p</span><span class="p">))(</span><span class="n">x</span><span class="p">)</span> 
 
 <span class="c1">## 計画行列を用いる方法</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">phi</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">p</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">phi</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">p</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="n">x</span><span class="o">**</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="o">+</span><span class="mi">1</span><span class="p">)])</span>
 <span class="n">Phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="n">p</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>

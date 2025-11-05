@@ -30,7 +30,7 @@
   <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -432,8 +432,8 @@
 定式化とnumpyを用いた実装を行う。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </pre></div>
 </div>
 </div>
@@ -448,8 +448,7 @@
 </div></blockquote>
 <p>とある。</p>
 <p>具体例を考えてみよう。<br />
-ある集団200人の身長(<span class="math notranslate nohighlight">\(x\)</span>)と体重(<span class="math notranslate nohighlight">\(y\)</span>)のデータが下のように<br />
-得られているとしよう。</p>
+ある集団200人の身長(<span class="math notranslate nohighlight">\(x\)</span>)と体重(<span class="math notranslate nohighlight">\(y\)</span>)のデータが下のように得られているとしよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mean</span> <span class="o">=</span> <span class="p">[</span><span class="mi">165</span><span class="p">,</span> <span class="mi">68</span><span class="p">]</span>
@@ -480,34 +479,27 @@
 </div>
 </div>
 <p>上では&quot;何らかの方法で&quot;データの分布に沿った直線を描いてみた。</p>
-<p>この赤色の線を&quot;体の大きさ&quot;とでも呼ぶことにすると、<br />
-元々は身長(x)と体重(y)の2つの量によってこの集団のデータを表現していたが、<br />
-集団に属する個人をこの&quot;体の大きさ&quot;という1つの量で<br />
-大雑把に指定(あるいは特徴づけ)できそうなことがわかる。</p>
-<p>主成分分析は<strong>高次元のデータを特徴づける少数の&quot;軸方向&quot;を見つけて<br />
-その新たな軸に沿った値(主成分)でデータを表現し<br />
-データを低次元空間で近似する方法</strong>と言える。</p>
+<p>この赤色の線を&quot;体の大きさ&quot;とでも呼ぶことにすると、元々は身長(x)と体重(y)の2つの量によってこの集団のデータを表現していたが、集団に属する個人をこの&quot;体の大きさ&quot;という1つの量で大雑把に指定(あるいは特徴づけ)できそうなことがわかる。</p>
+<p>主成分分析は<strong>高次元のデータを特徴づける少数の&quot;軸方向&quot;を見つけてその新たな軸に沿った値(主成分)でデータを表現しデータを低次元空間で近似する方法</strong>と言える。</p>
 <p>人間が視覚的に理解できる情報は、3次元までである。<br />
-一方でデータを分析していると、多次元(4~数十など)のデータを扱うことが度々あるが、<br />
-主成分分析などを用いて特徴を抽出することで解釈がしやすくなったり、<br />
-大量のデータがあったときその冗長性を削減することができる。</p>
+一方でデータを分析していると、多次元(4~数十など)のデータを扱うことが度々あるが、主成分分析などを用いて特徴を抽出することで解釈がしやすくなったり、大量のデータがあったときその冗長性を削減することができる。</p>
 </section>
 <section id="pca">
 <h2><span class="section-number">14.2. </span>PCAの定式化<a class="headerlink" href="#pca" title="Link to this heading">#</a></h2>
-<p>主成分分析の大雑把なモチベーションがわかったところで<br />
-上の軸方向/主成分の決め方を定式化しておこう。</p>
-<p>主成分を決める方針は主に、[主成分の分散を最大化する方針]と<br />
-[情報量削減(主成分軸への距離の二乗和)の最小化]の2つがある。<br />
+<p>主成分分析の大雑把なモチベーションがわかったところで上の軸方向/主成分の決め方を定式化しておこう。</p>
+<p>主成分を決める方針は主に、[主成分の分散を最大化する方針]と[情報量削減(主成分軸への距離の二乗和)の最小化]の2つがある。<br />
 以下では、前者を採用することにしよう。</p>
 <p><span class="math notranslate nohighlight">\(p\)</span>次元の量を持つデータが<span class="math notranslate nohighlight">\(N\)</span>個観測されているとする→<span class="math notranslate nohighlight">\(\{ x_{ni}\} (n=1,...,N, i=1,....p)\)</span><br />
 このとき<span class="math notranslate nohighlight">\(p\)</span>個の各変数について、平均値を<span class="math notranslate nohighlight">\(\bar{x}_i = \frac{1}{N} \sum_{n=1}^N x_{ni} \)</span>で定義する。</p>
-<p>このとき、<span class="math notranslate nohighlight">\(p\)</span>次元の成分それぞれの共分散を行列にもつ共分散行列<span class="math notranslate nohighlight">\({\bf C}\)</span>(<span class="math notranslate nohighlight">\(p\times p\)</span>行列)は<br />
-<span class="math notranslate nohighlight">\(
+<p>このとき、<span class="math notranslate nohighlight">\(p\)</span>次元の成分それぞれの共分散を行列にもつ共分散行列<span class="math notranslate nohighlight">\({\bf C}\)</span>(<span class="math notranslate nohighlight">\(p\times p\)</span>行列)は</p>
+<div class="math notranslate nohighlight">
+\[
 {\bf C}  = \frac{1}{N} \sum^N_{n=1,N} ({\bf x}_n - {\bf \bar{x}})\cdot ({\bf x}_n - {\bf \bar{x}})^T
-\)</span><br />
-とかける。</p>
-<p>次に、各データを成分にもつ行列
-<span class="math notranslate nohighlight">\(
+\]</div>
+<p>とかける。</p>
+<p>次に、各データを成分にもつ行列</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
 {\bf X} = 
 \begin{pmatrix}
 x_{11} &amp; x_{12} &amp; ... &amp; x_{1p} \\
@@ -515,47 +507,67 @@ x_{21} &amp; x_{22} &amp; ... &amp; x_{2p} \\
 \vdots &amp; \vdots &amp;\ddots &amp; \vdots \\ 
 x_{n1} &amp; x_{n2} &amp; ... &amp; x_{np} 
 \end{pmatrix}
-\)</span>
-と<br />
-成分が1の<span class="math notranslate nohighlight">\(N\)</span>次元列ベクトル<span class="math notranslate nohighlight">\(1_N\)</span>で以下の(<span class="math notranslate nohighlight">\(N\times p\)</span>)行列を定義する:<br />
-<span class="math notranslate nohighlight">\(
+\end{split}\]</div>
+<p>と  成分が1の<span class="math notranslate nohighlight">\(N\)</span>次元列ベクトル<span class="math notranslate nohighlight">\(1_N\)</span>で以下の(<span class="math notranslate nohighlight">\(N\times p\)</span>)行列を定義する:</p>
+<div class="math notranslate nohighlight">
+\[
 \tilde{{\bf X}} = {\bf X} - 1_N  {\bf \bar{x}}^T
-\)</span></p>
-<p>これを用いて、もとの共分散行列を書き換えると...
-<span class="math notranslate nohighlight">\( {\bf C}  = \frac{1}{N} \tilde{{\bf X}}^T \tilde{{\bf X}}\)</span>とかける。</p>
-<p>次にデータ集合をある<span class="math notranslate nohighlight">\(p\)</span>次元の係数ベクトル<span class="math notranslate nohighlight">\({\bf u}\)</span>で<span class="math notranslate nohighlight">\(p\)</span>次元空間上に射影する:
-<span class="math notranslate nohighlight">\(
+\]</div>
+<p>これを用いて、もとの共分散行列を書き換えると...</p>
+<div class="math notranslate nohighlight">
+\[
+{\bf C}  = \frac{1}{N} \tilde{{\bf X}}^T \tilde{{\bf X}}
+\]</div>
+<p>とかける。</p>
+<p>次にデータ集合をある<span class="math notranslate nohighlight">\(p\)</span>次元の係数ベクトル<span class="math notranslate nohighlight">\({\bf u}\)</span>で<span class="math notranslate nohighlight">\(p\)</span>次元空間上に射影する:</p>
+<div class="math notranslate nohighlight">
+\[
 {\bf s}_n = {\bf u}^T \cdot ( {\bf x}_n - {\bf \bar{x}})
-\)</span><br />
-これを全データ点(<span class="math notranslate nohighlight">\(n=1,2,...,N\)</span>)に対して行って<span class="math notranslate nohighlight">\(s_n\)</span>を縦に並べると<span class="math notranslate nohighlight">\(
+\]</div>
+<p>これを全データ点(<span class="math notranslate nohighlight">\(n=1,2,...,N\)</span>)に対して行って<span class="math notranslate nohighlight">\(s_n\)</span>を縦に並べると<span class="math notranslate nohighlight">\(
+\)</span><span class="math notranslate nohighlight">\(
 {\bf S} = \tilde{{\bf X}} {\bf u}
-\)</span>と書くことができる。</p>
-<p>このとき、適当な係数ベクトル<span class="math notranslate nohighlight">\({\bf u}\)</span>のもとでの射影方向の分散は<br />
-<span class="math notranslate nohighlight">\(\frac{1}{N}\sum^N_{i=1} |{\bf s}_i|^2 = \frac{1}{N} ({\bf u}^T\tilde{{\bf X}}^T) (\tilde{{\bf X}}{\bf u}) = {\bf u}^T {\bf C} {\bf u}
-\)</span>
-となる。</p>
+\)</span>$</p>
+<p>と書くことができる。</p>
+<p>このとき、適当な係数ベクトル<span class="math notranslate nohighlight">\({\bf u}\)</span>のもとでの射影方向の分散は</p>
+<div class="math notranslate nohighlight">
+\[\frac{1}{N}\sum^N_{i=1} |{\bf s}_i|^2 = \frac{1}{N} ({\bf u}^T\tilde{{\bf X}}^T) (\tilde{{\bf X}}{\bf u}) = {\bf u}^T {\bf C} {\bf u}
+\]</div>
+<p>となる。</p>
 <p>今考えたい問題は、この分散を最大化するような射影<span class="math notranslate nohighlight">\({\bf u}\)</span>を見つけることと言い換えられる。</p>
 <p>加えて、以下ではそのような射影として<span class="math notranslate nohighlight">\({\bf u}^T \cdot {\bf u}=1\)</span>という条件を課すことにする。<br />
 (<span class="math notranslate nohighlight">\(p\)</span>次元空間での正規直交基底間の変換を探すことに対応)</p>
-<p>そのためには<span class="math notranslate nohighlight">\(J({\bf u}) = {\bf u}^T {\bf C} {\bf u} - \lambda ({\bf u}^T\cdot {\bf u}-1)\)</span>の最大化を考えれば良い(ラグランジュ未定乗数法)<br />
-<span class="math notranslate nohighlight">\(\frac{\partial J}{\partial {\bf u}} = 2 {\bf C} {\bf u} - 2\lambda{\bf u}=0 \)</span>から、今解きたい最適化問題は固有値問題:<br />
-<span class="math notranslate nohighlight">\({\bf C} {\bf u}  = \lambda{\bf u}\)</span>に帰着されることがわかる。</p>
-<p>この表式と上の分散の式から
-<span class="math notranslate nohighlight">\(\frac{1}{N}\sum^N_{i=1} |{\bf s}_i|^2 = \lambda\)</span>となり<br />
-<strong>未定乗数<span class="math notranslate nohighlight">\(\lambda\)</span>がいま最大化したい分散に対応している</strong>ことがわかる。</p>
+<p>そのためには</p>
+<div class="math notranslate nohighlight">
+\[
+J({\bf u}) = {\bf u}^T {\bf C} {\bf u} - \lambda ({\bf u}^T\cdot {\bf u}-1)
+\]</div>
+<p>の最大化を考えれば良い(ラグランジュ未定乗数法)</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial J}{\partial {\bf u}} = 2 {\bf C} {\bf u} - 2\lambda{\bf u}=0
+\]</div>
+<p>から、今解きたい最適化問題は固有値問題:</p>
+<div class="math notranslate nohighlight">
+\[
+{\bf C} {\bf u}  = \lambda{\bf u}
+\]</div>
+<p>に帰着されることがわかる。この表式と上の分散の式から</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{N}\sum^N_{i=1} |{\bf s}_i|^2 = \lambda
+\]</div>
+<p>となり、<strong>未定乗数<span class="math notranslate nohighlight">\(\lambda\)</span>がいま最大化したい分散に対応している</strong>ことがわかる。</p>
 <p>最大固有値<span class="math notranslate nohighlight">\(\lambda_1\)</span>に属する固有ベクトルを第1主成分ベクトルと呼ぶ。<br />
-第2主成分からは同様にして、第1主成分ベクトルと直行する固有ベクトルを考えれば<br />
-分散を大きくする軸を順番に決定することができる。</p>
-<p>また、<span class="math notranslate nohighlight">\(\frac{\lambda_i}{\sum^p_i \lambda_i}\)</span>を<span class="math notranslate nohighlight">\(i\)</span>番目の寄与率と呼び<br />
-各主成分が元のデータに含まれる特徴をどの程度表現しているか<br />
-あるいは幾つ主成分を保持しておけば元のデータに含まれる特徴を十分に表現(近似)できるのかの指標として用いられる。</p>
+第2主成分からは同様にして、第1主成分ベクトルと直行する固有ベクトルを考えれば、分散を大きくする軸を順番に決定することができる。</p>
+<p>また、<span class="math notranslate nohighlight">\(\frac{\lambda_i}{\sum^p_i \lambda_i}\)</span>を<span class="math notranslate nohighlight">\(i\)</span>番目の寄与率と呼び、各主成分が元のデータに含まれる特徴をどの程度表現しているか、あるいは幾つ主成分を保持しておけば元のデータに含まれる特徴を十分に表現(近似)できるのかの指標として用いられる。</p>
 </section>
 <section id="sklearn">
 <h2><span class="section-number">14.3. </span>sklearnライブラリを使う方法<a class="headerlink" href="#sklearn" title="Link to this heading">#</a></h2>
 <p>irisデータを使ってsklearnで主成分分析をやってみよう</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn</span><span class="w"> </span><span class="kn">import</span> <span class="n">datasets</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span>
  
 <span class="n">target_names</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">target_names</span>
@@ -566,8 +578,7 @@ x_{n1} &amp; x_{n2} &amp; ... &amp; x_{np}
 </div>
 </div>
 </div>
-<p>このデータには、3種類('setosa,versicolor,virginica)のアヤメについて<br />
-がく片の長さ・幅と花弁の長さ・幅のデータが入っている。</p>
+<p>このデータには、3種類('setosa,versicolor,virginica)のアヤメについて、がく片の長さ・幅と花弁の長さ・幅のデータが入っている。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">target_names</span><span class="p">)</span>
@@ -582,8 +593,8 @@ x_{n1} &amp; x_{n2} &amp; ... &amp; x_{np}
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataFrame</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">DataFrame</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">feature_names</span><span class="p">)</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">target_names</span><span class="p">[</span><span class="n">targets</span><span class="p">]</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -750,10 +761,10 @@ x_{n1} &amp; x_{n2} &amp; ... &amp; x_{np}
 そこで、このデータを3次元/2次元に落とし込んで理解することを目指す。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.mplot3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes3D</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 
 <span class="c1"># PCA関数の使用 (3次元)</span>
 <span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
@@ -799,31 +810,26 @@ x_{n1} &amp; x_{n2} &amp; ... &amp; x_{np}
 <img alt="../_images/4627288f76d155e5caef78289be5faadd54e3d0478e50fadc7962eb50201aaa9.png" src="../_images/4627288f76d155e5caef78289be5faadd54e3d0478e50fadc7962eb50201aaa9.png" />
 </div>
 </div>
-<p>このように、４次元のデータを低次元に射影することで<br />
-3種類のアヤメの持つ特徴を可視化できるようになる。</p>
+<p>このように、４次元のデータを低次元に射影することで3種類のアヤメの持つ特徴を可視化できるようになる。</p>
 </section>
 <section id="id3">
 <h2><span class="section-number">14.4. </span>実装してみよう<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
-<p>sklearnなどのライブラリは非常に便利だが<br />
-中で行われている計算を確認するには<br />
-複雑に設計されたソースコードを読み解かなければならず<br />
-「本当に自身が意図した計算をやっているのか」が分かりづらい。</p>
-<p>ライブラリを「使えれば良い」と「中身を分かった上で使う」の間には</p>
+<p>sklearnなどのライブラリは非常に便利だが、中で行われている計算を確認するには、複雑に設計されたソースコードを読み解かなければならず「本当に自身が意図した計算をやっているのか」が分かりづらい。
+ライブラリを「使えれば良い」と「中身を分かった上で使う」の間には</p>
 <ul class="simple">
 <li><p>問題が起きたときの対処能力</p></li>
 <li><p>自身で新規な手法を開発して実装する能力</p></li>
 </ul>
-<p>などなど、様々な面で決定的な差が生じる。</p>
-<p>以下では、必要な計算をなるべくブラックボックスにしないで<br />
-PCAを実装してみよう。</p>
+<p>などなど、様々な面で決定的な差が生じる。
+以下では、必要な計算をなるべくブラックボックスにしないでPCAを実装してみよう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#上のコードと同様 irisデータを取得</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataFrame</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn</span><span class="w"> </span><span class="kn">import</span> <span class="n">datasets</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">DataFrame</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span>
  
 <span class="n">target_names</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">target_names</span>
@@ -1048,19 +1054,12 @@ Numpyの中にある固有値・固有ベクトルを計算する関数<code cla
 </div>
 <p>とすると、両者を整合させることができる。<br />
 以降では、上の定式化を修正して不偏分散を用いることにしよう。</p>
-<p>このように、ライブラリのソースコードを読むか自身で実装した関数と比較することで初めて<br />
-「sklearnでは不偏分散が使われているんだな」ということが分かったりする。</p>
-<p>細かな実装が式と整合しているかどうかを確かめるのは重要で<br />
-これを怠ると、再現性が損なわれたりバグの温床になる。</p>
+<p>このように、ライブラリのソースコードを読むか自身で実装した関数と比較することで初めて「sklearnでは不偏分散が使われているんだな」ということが分かったりする。</p>
+<p>細かな実装が式と整合しているかどうかを確かめるのは重要で、これを怠ると、再現性が損なわれたりバグの温床になる。</p>
 <p>余談:<br />
-世の中でプログラムを書く人が全員「動けばいいや」の考えだと<br />
-それがいつかサービスやシステムを通して社会(や自分自身)に大きな不利益をもたらすかもしれない。<br />
-(たとえば自動運転の車による事故などを想像してみよう)</p>
-<p>各データに対する第1主成分軸に沿った&quot;得点&quot;は、<br />
-最大固有値に対応する固有ベクトル<code class="docutils literal notranslate"><span class="pre">vecs[:,0]</span></code>が<br />
-射影になっていることを思い出すと、内積を取ればよい。<br />
-<code class="docutils literal notranslate"><span class="pre">vecs[0]</span></code>とすると0番目の行ベクトルが取られて誤りになるので注意!</p>
-<p>各点について第1主成分得点を計算してリストに詰めておこう</p>
+世の中でプログラムを書く人が全員「動けばいいや」の考えだと、それがいつかサービスやシステムを通して社会(や自分自身)に大きな不利益をもたらすかもしれない。(たとえば自動運転の車による事故などを想像してみよう)</p>
+<p>各データに対する第1主成分軸に沿った&quot;得点&quot;は、最大固有値に対応する固有ベクトル<code class="docutils literal notranslate"><span class="pre">vecs[:,0]</span></code>が射影になっていることを思い出すと、内積を取ればよい。<code class="docutils literal notranslate"><span class="pre">vecs[0]</span></code>とすると0番目の行ベクトルが取られて誤りになるので注意！</p>
+<p>各点について第1主成分得点を計算してリストに詰めておこう:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">PC1s</span> <span class="o">=</span> <span class="p">[</span> <span class="p">]</span>
@@ -1129,10 +1128,8 @@ yにマイナスをかけて向きをあわせてみると...</p>
 <p>sklearnと同じ結果を与える自作コードを作ることが出来ました。</p>
 <p>上の符号反転について:</p>
 <p>第2主成分に対応する固有ベクトルは、sklearnと自前関数で得られた値で符号が異なっている。<br />
-今のように、分散を大きくする軸を見つける場合、<br />
-当然軸の反転(固有ベクトル全体の符号)の自由度が残されている。<br />
-実装によって符号が異なるのは、固有値問題を解く際に使用されているソルバー
-におけるconventionの違いなどに由来している。</p>
+今のように、分散を大きくする軸を見つける場合、当然軸の反転(固有ベクトル全体の符号)の自由度が残されている。<br />
+実装によって符号が異なるのは、固有値問題を解く際に使用されているソルバーにおけるconventionの違いなどに由来している。</p>
 </section>
 <section id="clubsuit">
 <h2><span class="section-number">14.5. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> オートエンコーダ(自己符号化器)<a class="headerlink" href="#clubsuit" title="Link to this heading">#</a></h2>
@@ -1151,11 +1148,11 @@ yにマイナスをかけて向きをあわせてみると...</p>
 <span class="c1">#from keras.models import Sequential</span>
 <span class="c1">#from keras.layers import Dense</span>
 <span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">ann_visualizer</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">ann_visualizer.visualize</span><span class="w"> </span><span class="kn">import</span> <span class="n">ann_viz</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">graphviz</span><span class="w"> </span><span class="kn">import</span> <span class="n">Source</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">ann_visualizer.visualize</span> <span class="kn">import</span> <span class="n">ann_viz</span>
+<span class="kn">from</span> <span class="nn">graphviz</span> <span class="kn">import</span> <span class="n">Source</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </pre></div>
 </div>
 </div>

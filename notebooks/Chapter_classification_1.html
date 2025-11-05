@@ -30,7 +30,7 @@
   <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -411,6 +411,7 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">7.1. 線形二値分類</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">7.2. ロジスティック回帰: 線形二値分類の学習の観点から</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">7.3. <span class="math notranslate nohighlight">\(\clubsuit\)</span> サポートベクターマシン</a></li>
 </ul>
             </nav>
         </div>
@@ -446,8 +447,8 @@
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">指定した人数分、20歳以上・20歳以下のダミーデータを作成する関数。</span>
@@ -455,7 +456,7 @@
 <span class="sd">20歳以上については身長・体重の平均・標準偏差を参考に適当な正の相関(r=0.4)を持たせる。</span>
 <span class="sd">20歳以下については10歳の身長体重の平均・標準偏差を参考に適当な正の相関(r=0.2)を持たせることにした。</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">sample_data_from_multivariatenormal</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">sample_data_from_multivariatenormal</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
     <span class="n">mean_o20</span> <span class="o">=</span> <span class="p">[</span><span class="mf">167.7</span><span class="p">,</span><span class="mf">67.4</span><span class="p">]</span>
     <span class="n">std_o20</span> <span class="o">=</span> <span class="p">[</span><span class="mf">6.9</span><span class="p">,</span> <span class="mf">12.0</span><span class="p">]</span>
@@ -470,7 +471,7 @@
     <span class="n">data_u20</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean_u20</span><span class="p">,</span><span class="n">cov_u20</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
     <span class="k">return</span> <span class="n">data_o20</span><span class="p">,</span><span class="n">data_u20</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span><span class="n">data_o20</span><span class="p">,</span><span class="n">data_u20</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="n">data_o20</span><span class="p">,</span><span class="n">data_u20</span><span class="p">):</span>
     <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_o20</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">data_o20</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;over  20&quot;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_u20</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">data_u20</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;under 20&quot;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
@@ -507,7 +508,7 @@
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_line</span><span class="p">(</span><span class="n">data_o20</span><span class="p">,</span><span class="n">data_u20</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_line</span><span class="p">(</span><span class="n">data_o20</span><span class="p">,</span><span class="n">data_u20</span><span class="p">):</span>
     <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_o20</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">data_o20</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_u20</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">data_u20</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
@@ -568,7 +569,7 @@ y = \begin{cases}
 これを<span class="math notranslate nohighlight">\(w_2\)</span>に代入すると<span class="math notranslate nohighlight">\(w_1 x_1 + \frac{w_1 (x_2-x_1)}{y_1-y_2} (y_1) + 1 = 0\)</span>となるので、<span class="math notranslate nohighlight">\(w_1=-1/(x_1 + (x_2-x_1)y_1/(y_1-y_2))\)</span>と求めることができる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">return_yplot</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">return_yplot</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;w[1] must be non-zero&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>
@@ -576,7 +577,7 @@ y = \begin{cases}
         <span class="n">y</span> <span class="o">=</span> <span class="o">-</span> <span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">x</span> <span class="o">-</span> <span class="n">b</span><span class="o">/</span><span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">y</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">calc_w</span><span class="p">(</span><span class="n">xy_known</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">calc_w</span><span class="p">(</span><span class="n">xy_known</span><span class="p">):</span>
     <span class="n">x_1</span><span class="p">,</span> <span class="n">y_1</span> <span class="o">=</span> <span class="n">xy_known</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">x_2</span><span class="p">,</span> <span class="n">y_2</span> <span class="o">=</span> <span class="n">xy_known</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">w_1</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">x_1</span> <span class="o">+</span> <span class="p">(</span><span class="n">x_2</span><span class="o">-</span><span class="n">x_1</span><span class="p">)</span><span class="o">*</span><span class="n">y_1</span><span class="o">/</span><span class="p">(</span><span class="n">y_1</span><span class="o">-</span><span class="n">y_2</span><span class="p">))</span>
@@ -663,10 +664,10 @@ f(x) = \frac{1}{1 + \exp(-x)}
 <span class="sd">numpyだと&quot;RuntimeWarning: overflow encountered in exp&quot;と初回に警告を出しつつ、</span>
 <span class="sd">np.exp(1000)=np.Inf, 1/Inf=0.0として(可能な限り)計算を続けてくれる。</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">))</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">plot_sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">plot_sigmoid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
     <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dotted&quot;</span><span class="p">)</span>
@@ -687,6 +688,41 @@ f(x) = \frac{1}{1 + \exp(-x)}
 <span class="math notranslate nohighlight">\(f(\boldsymbol{w}^T \boldsymbol{x} + b)=0.5\)</span>となる点の集合(<span class="math notranslate nohighlight">\(\boldsymbol{w}^T \boldsymbol{x} + b=0\)</span>)が境界面(今は二次元なので境界線)に対応している事がわかる。</p>
 <p>0.5より大きい場合は、1と判定し、0.5より小さい場合は0と判定することで、線形二値分類を実現できる。</p>
 <p>また、それだけでなく、２値分類の判定の&quot;自信&quot;のような量を表現することができる点もロジスティック回帰の利点である。</p>
+</section>
+<section id="clubsuit">
+<h2><span class="section-number">7.3. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> サポートベクターマシン<a class="headerlink" href="#clubsuit" title="Link to this heading">#</a></h2>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>編集注: 幾何的なイメージのための図を後日追加予定</p>
+</aside>
+<p><strong>サポートベクターマシン(Support Vector Machine: SVM)</strong> は、線形二値分類をはじめ、分類問題を解くための強力な手法である。<br />
+SVMの基本的な考え方は、2つのクラスを分ける境界面(超平面)を引く際に、
+その境界面と各クラスの最も近いデータ点(<strong>support vector</strong>)との距離(<strong>margin</strong>)を最大化することである。</p>
+<p>以下では、その基本的な考え方について説明する。</p>
+<p>回帰と同様、教師あり学習の設定を考える。つまり、標本<span class="math notranslate nohighlight">\(x_i \in \mathbb{R}^D\)</span>と、そのラベル<span class="math notranslate nohighlight">\(y_i \in \{-1,1\}\)</span>の組<span class="math notranslate nohighlight">\((x_i, y_i)\)</span>が<span class="math notranslate nohighlight">\(i=1,2,\ldots,m\)</span>について与えられているとする。簡単のため、線形分類を考えよう。</p>
+<p>SVMを説明するうえで重要な概念について説明する。</p>
+<p><strong>support vector</strong>: 各クラスに属するデータ点のうち、境界面に最も近い点。
+<strong>margin</strong>: 境界面とsupport vectorとの距離。分類境界面は<span class="math notranslate nohighlight">\(D\)</span>次元空間における超曲面であり、<span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = 0\)</span>を満たす点の集合である。今<span class="math notranslate nohighlight">\(f(\boldsymbol{x}) = \boldsymbol{w}^T \boldsymbol{x} + b\)</span>なので超平面となる。</p>
+<p>SVMの代表的な実装例の一つは、マージンの最大化である。<br />
+つまり、境界面とsupport vectorとの距離を最大化するような<span class="math notranslate nohighlight">\(\boldsymbol{w}\)</span>と<span class="math notranslate nohighlight">\(b\)</span>を求めることである。
+これは、1章でも説明したような、拘束条件付きの最適化問題として定式化できる。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+&amp; \underset{\boldsymbol{w}, b}{\text{maximize}}\quad \underset{i}{\text{minimize}} \quad \frac{ d_i }{||\boldsymbol{w}||} \\
+&amp; \text{subject to} \quad y_i (\boldsymbol{w}^T \boldsymbol{x}_i + b) \geq 0, \quad i=1,2,\ldots,m
+\end{align}
+\end{split}\]</div>
+<p>だが、上の最適化問題は直接解くのが難しいため、サポートベクターが境界面からの距離が1になるような点にくるようにスケーリングすることで、以下のように変形する。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+&amp; \underset{\boldsymbol{w}, b}{\text{minimize}}\quad \frac{1}{2} ||\boldsymbol{w}||^2 \\
+&amp; \text{subject to} \quad y_i (\boldsymbol{w}^T \bold{x}_i + b) \geq 1, \quad i=1,2,\ldots,m
+\end{align}
+\end{split}\]</div>
+<p>そうすると、データ点が(線形分離可能な場合)、境界面からの距離が1を超えるような分類境界のうち、重みベクトルのノルムが最小となるものを求める問題に帰着される。今この<span class="math notranslate nohighlight">\(||\boldsymbol{w}||\)</span>を小さくすることは、マージンを大きくすることと等価である。</p>
+<p>実際には、分類の誤りを許容するソフトマージンSVMや、カーネル法を応用し非線形変換により線形分離可能にする方法などがあるが、ここでは基本的な考え方のみを説明した。</p>
 </section>
 </section>
 
@@ -757,6 +793,7 @@ f(x) = \frac{1}{1 + \exp(-x)}
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">7.1. 線形二値分類</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">7.2. ロジスティック回帰: 線形二値分類の学習の観点から</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">7.3. <span class="math notranslate nohighlight">\(\clubsuit\)</span> サポートベクターマシン</a></li>
 </ul>
   </nav></div>
 
