@@ -448,8 +448,8 @@ y(x, \boldsymbol{w}) = w_0 + w_1 x + w_2 x^2 + \cdots + w_p x^p = \sum_{j=0}^p w
 \[
 y(x,{\bf w})= \sum^{M-1}_{j=0} w_j \phi_j(x) = {\bf w}^T\boldsymbol{\phi}(x)
 \]</div>
-<p>ここで、<span class="math notranslate nohighlight">\(\boldsymbol{\phi}({\bf x})\)</span>は<strong>基底関数</strong>と呼ばれる。
-&quot;線形&quot;の意味するところは、基底関数の形状が線形であることではなく、基底関数を重ね合わせるパラメータ(重み)<span class="math notranslate nohighlight">\(w\)</span>それぞれについて、1次式で表されることを指す。</p>
+<p>ここで、<span class="math notranslate nohighlight">\(\boldsymbol{\phi}(x)\)</span>は<strong>基底関数</strong>と呼ばれる。
+&quot;線形&quot;の意味するところは、基底関数の形状が線形であることではなく、基底関数を重ね合わせるパラメータ(重み)<span class="math notranslate nohighlight">\(\boldsymbol{w}\)</span>それぞれについて、1次式で表されることを指す。</p>
 </div>
 <p>上記の基底関数としては、ガウス型基底関数、シグモイド基底関数、スプライン基底関数、フーリエ基底関数などがある。
 <strong>「幾つかの関数を重みをつけて重ね合わせることで、データをうまく表現するような柔軟な関数を作る」</strong> というイメージを持つと良い。</p>
@@ -624,7 +624,7 @@ E_D({\bf w}) \equiv \frac{1}{2}\sum^D_{n=1} \left( t_n- {\bf w}^T \boldsymbol{\p
 <p>今まで、モデルとなる関数の良さを測る際は、二乗和誤差関数を用いていたが、これにL2正則化項と呼ばれる重みの二乗和を加えたものを用いる。</p>
 <div class="math notranslate nohighlight">
 \[
-\mathcal{L}(\mathbf{w}, \lambda) \equiv  \frac{1}{2}\sum^N_{n=1} \left( t_n- {\bf w}^T \boldsymbol{\phi}({\bf x_n})  \right)^2 + \frac{\lambda}{2} {\bf w}^T{\bf w}
+\mathcal{L}(\mathbf{w}, \lambda) \equiv  \frac{1}{2}\sum^N_{n=1} \left( t_n- {\bf w}^T \boldsymbol{\phi}(x_n)  \right)^2 + \frac{\lambda}{2} {\bf w}^T{\bf w}
 \]</div>
 <p>第二項がL2正則化項で、重みが大きければ大きいほど、対数尤度が小さく(誤差関数<span class="math notranslate nohighlight">\(\mathcal{L}\)</span>の値が大きく)なってしまうような尺度になっていることがわかる。
 ここで、<span class="math notranslate nohighlight">\(\lambda\)</span>は正則化の強さを決めるパラメータで、<span class="math notranslate nohighlight">\(\lambda\)</span>が大きいほど、正則化の制限の強さが増す。</p>
@@ -672,9 +672,14 @@ E_D({\bf w}) \equiv \frac{1}{2}\sum^D_{n=1} \left( t_n- {\bf w}^T \boldsymbol{\p
 <p>この式の導出は、3章末尾に紹介した、多次元正規分布のベイズの定理の節にある式を用いれば良い。</p>
 <p>ここで簡単のため事前分布をさらに簡略化しよう。</p>
 <p>事前分布の平均<span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span>が<span class="math notranslate nohighlight">\(0\)</span>(ベクトル)かつ、パラメータの事前分布の共分散が対角的(独立な分散をもつ)でなおかつ値が同じ,つまり、上の<span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}=\alpha^{-1}I\)</span>とかける場合を考える。</p>
-<p>このとき、事後分布の平均および共分散は以下のように簡略化される:<br />
-<span class="math notranslate nohighlight">\(\tilde{\boldsymbol{\Sigma}}^{-1} =\alpha I +\beta\boldsymbol{\Phi}^T \boldsymbol{\Phi},
-\hspace{0.5cm} \tilde{\boldsymbol{\mu}}=  \beta \tilde{\boldsymbol{\Sigma}} \boldsymbol{\Phi}^T \boldsymbol{\mathcal{t}}\)</span></p>
+<p>このとき、事後分布の平均および共分散は以下のように簡略化される:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\tilde{\boldsymbol{\Sigma}}^{-1} &amp;= \alpha I +\beta\boldsymbol{\Phi}^T \boldsymbol{\Phi} \\
+\tilde{\boldsymbol{\mu}} &amp; =  \beta \tilde{\boldsymbol{\Sigma}} \boldsymbol{\Phi}^T \boldsymbol{\mathcal{t}}
+\end{align*}
+\end{split}\]</div>
 <p>この条件のもとで対数事後確率(log posterior)と呼ばれる量は、</p>
 <div class="math notranslate nohighlight">
 \[
@@ -697,12 +702,12 @@ p(t^*|\boldsymbol{\mathrm{t}},\alpha,\beta) =
 <p>今の場合、ガウス分布の性質から、予測分布は以下で与えられる</p>
 <div class="math notranslate nohighlight">
 \[
-p(t^*|{\bf x},\boldsymbol{\mathrm{t}},\alpha,\beta) = \mathcal{N}(t^*|\tilde{\boldsymbol{\mu}}^T\boldsymbol{\phi}({\bf x}),\sigma^2_N({\bf x}))
+p(t^*|x,\boldsymbol{\mathrm{t}},\alpha,\beta) = \mathcal{N}(t^*|\tilde{\boldsymbol{\mu}}^T\boldsymbol{\phi}(x),\sigma^2_N(x))
 \]</div>
 <p>ここで、予測分布の分散は</p>
 <div class="math notranslate nohighlight">
 \[
-\sigma^2_N({\bf x})= \frac{1}{\beta}+\boldsymbol{\phi}({\bf x})^T \tilde{\boldsymbol{\Sigma}}\boldsymbol{\phi}({\bf x}) 
+\sigma^2_N(x)= \frac{1}{\beta}+\boldsymbol{\phi}(x)^T \tilde{\boldsymbol{\Sigma}}\boldsymbol{\phi}(x) 
 \]</div>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">

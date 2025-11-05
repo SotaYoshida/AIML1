@@ -718,7 +718,7 @@ SVMの基本的な考え方は、2つのクラスを分ける境界面(超平面
 \[\begin{split}
 \begin{align}
 &amp; \underset{\boldsymbol{w}, b}{\text{minimize}}\quad \frac{1}{2} ||\boldsymbol{w}||^2 \\
-&amp; \text{subject to} \quad y_i (\boldsymbol{w}^T \bold{x}_i + b) \geq 1, \quad i=1,2,\ldots,m
+&amp; \text{subject to} \quad y_i (\boldsymbol{w}^T \boldsymbol{x}_i + b) \geq 1, \quad i=1,2,\ldots,m
 \end{align}
 \end{split}\]</div>
 <p>そうすると、データ点が(線形分離可能な場合)、境界面からの距離が1を超えるような分類境界のうち、重みベクトルのノルムが最小となるものを求める問題に帰着される。今この<span class="math notranslate nohighlight">\(||\boldsymbol{w}||\)</span>を小さくすることは、マージンを大きくすることと等価である。</p>
