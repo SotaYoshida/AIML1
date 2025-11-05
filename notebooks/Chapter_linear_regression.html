@@ -527,6 +527,35 @@ E_D({\bf w}) \equiv \frac{1}{2}\sum^D_{n=1} \left( t_n- {\bf w}^T \boldsymbol{\p
 <p>つまり、<strong>最尤推定を与えるパラメータ<span class="math notranslate nohighlight">\({\bf w}_{ML}\)</span>は、観測値ベクトル<span class="math notranslate nohighlight">\(\boldsymbol{t}\)</span>と計画行列<span class="math notranslate nohighlight">\(\boldsymbol{\Phi}\)</span>を用いて閉じた形で与えられる</strong>。
 別の言い方をすると、<span class="math notranslate nohighlight">\(\boldsymbol{w}\)</span>の値を少しずつ変えて対数尤度を最大化するような反復計算を行う必要がなく、ベクトル・行列の演算だけで最尤推定が求まる。この点が最も重要である。
 なお、ここでは暗黙のうちに、<span class="math notranslate nohighlight">\(\boldsymbol{\Phi}^T\boldsymbol{\Phi}\)</span>の逆行列が数値的に安定に計算できることを仮定している。</p>
+<p>ちなみに...上ではわざわざ観測値が予測値の周りに精度<span class="math notranslate nohighlight">\(\beta\)</span>のガウス分布でばらついていると仮定したが、実際にはこの仮定は、上記の最尤推定の結果を導くためには必要ない。
+後のベイズ線形回帰の導入のために便宜上この仮定を置いた。混乱した人のために、<span class="math notranslate nohighlight">\(\beta\)</span>を省いた形での議論を再度整理しておこう:</p>
+<ol class="arabic">
+<li><p>下記のようなデータ点<span class="math notranslate nohighlight">\(D\)</span>個が与えられたとする:</p>
+<div class="math notranslate nohighlight">
+\[
+    \{(x_1,t_1), (x_2,t_2), \ldots, (x_D,t_D)\}
+    \]</div>
+</li>
+<li><p>これらのデータ点を、基底関数<span class="math notranslate nohighlight">\(\boldsymbol{\phi}(x)\)</span>を用いた線形回帰モデル<span class="math notranslate nohighlight">\(y(x,{\bf w})={\bf w}^T \boldsymbol{\phi}(x)\)</span>で表現したいとする。</p></li>
+<li><p>このとき、<span class="math notranslate nohighlight">\(\boldsymbol{w}\)</span>を、二乗誤差を最小化するように決定したい。</p>
+<div class="math notranslate nohighlight">
+\[
+    E_D({\bf w}) = \frac{1}{2}\sum^D_{n=1} \left( t_n- {\bf w}^T \boldsymbol{\phi}( x_n)  \right)^2
+    \]</div>
+</li>
+<li><p>二乗誤差をパラメータで微分し、勾配が0となる点を求める。</p>
+<div class="math notranslate nohighlight">
+\[
+    \nabla_\mathbf{w} E_D({\bf w}) = - \sum^D_{n=1} \left( t_n -{\bf w}^T \boldsymbol{\phi}(x_n) \right) \boldsymbol{\phi}(x_n) =0
+    \]</div>
+</li>
+<li><p>上の式を変形し、<span class="math notranslate nohighlight">\({\bf w}\)</span>について解くと、最尤推定を与えるパラメータ<span class="math notranslate nohighlight">\({\bf w}_{ML}\)</span>が得られる。</p>
+<div class="math notranslate nohighlight">
+\[
+    {\bf w}_{ML} = ( \boldsymbol{\Phi}^T\boldsymbol{\Phi}  )^{-1} \boldsymbol{\Phi}^T \boldsymbol{t}
+    \]</div>
+</li>
+</ol>
 <hr class="docutils" />
 <p>上の式を用いて、最尤推定を与えるパラメータ<span class="math notranslate nohighlight">\({\bf w}_{ML}\)</span>を求める関数を実装してみよう。</p>
 <p>次の１次元擬似データの回帰を考えてみる。</p>
