@@ -548,6 +548,7 @@ E_D({\bf w}) \equiv \frac{1}{2}\sum^D_{n=1} \left( t_n- {\bf w}^T \boldsymbol{\p
 \[
     \nabla_\mathbf{w} E_D({\bf w}) = - \sum^D_{n=1} \left( t_n -{\bf w}^T \boldsymbol{\phi}(x_n) \right) \boldsymbol{\phi}(x_n) =0
     \]</div>
+<p>このとき、二乗誤差の定義に<span class="math notranslate nohighlight">\(1/2\)</span>や<span class="math notranslate nohighlight">\(1/D\)</span>、<span class="math notranslate nohighlight">\(\beta\)</span>などの定数をかけても、勾配が0となる点は変わらないことに注意。</p>
 </li>
 <li><p>上の式を変形し、<span class="math notranslate nohighlight">\({\bf w}\)</span>について解くと、最尤推定を与えるパラメータ<span class="math notranslate nohighlight">\({\bf w}_{ML}\)</span>が得られる。</p>
 <div class="math notranslate nohighlight">
