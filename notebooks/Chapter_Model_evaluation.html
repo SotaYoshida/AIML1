@@ -544,7 +544,7 @@
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/a694d827b9427684e5469d1409ed897748e5609bd7cca17085ff05ee2e6d834c.png" src="../_images/a694d827b9427684e5469d1409ed897748e5609bd7cca17085ff05ee2e6d834c.png" />
+<img alt="../_images/fed5dae0c6749aeb47cbb83553aa4af19617f9e53802cc9779badc693e503f8f.png" src="../_images/fed5dae0c6749aeb47cbb83553aa4af19617f9e53802cc9779badc693e503f8f.png" />
 </div>
 </div>
 <p>なんだか直線か、ゆるやかな二次関数で説明できそうなデータである。
@@ -578,8 +578,8 @@
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/e3d58c7b38d57ba52e9c3891a57f89fea7197762acc9644f4e3c4326e0a1532c.png" src="../_images/e3d58c7b38d57ba52e9c3891a57f89fea7197762acc9644f4e3c4326e0a1532c.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MSE = 5.370278283993142e-32
+<img alt="../_images/cd1e9c8f48243080998a32e84a1d21d07936376efd0d8a70f952b4a0cd7f672b.png" src="../_images/cd1e9c8f48243080998a32e84a1d21d07936376efd0d8a70f952b4a0cd7f672b.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MSE = 4.242079718787449e-32
 </pre></div>
 </div>
 </div>
@@ -620,7 +620,7 @@
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/b8c37feb7c8b624364bba5f9ac6d263169fa270780fd5ab34914ef23e09279bd.png" src="../_images/b8c37feb7c8b624364bba5f9ac6d263169fa270780fd5ab34914ef23e09279bd.png" />
+<img alt="../_images/6109bf1859b1a7dca53aecc804ae836d761653e2f6725b6883d4be0a7ee75222.png" src="../_images/6109bf1859b1a7dca53aecc804ae836d761653e2f6725b6883d4be0a7ee75222.png" />
 </div>
 </div>
 <p>もちろんこの例は意図的に&quot;意地悪な&quot;例を選んでいるが、実際のデータ分析においても、過学習はしばしば発生する。
@@ -721,6 +721,8 @@ L = \frac{1}{N} \sum_{i=1}^{N} (y_i - \hat{y}_i)^2 + \lambda \sum_{j=1}^{M} w_j^
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
+<span class="n">lin_reg</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">lin_reg</span><span class="o">.</span><span class="n">intercept_</span>
+<span class="n">ridge_reg</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">ridge_reg</span><span class="o">.</span><span class="n">intercept_</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;coeffs (no reg.):&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c</span><span class="si">:</span><span class="s2">8.3f</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">lin_reg</span><span class="o">.</span><span class="n">coef_</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;coeffs (L2 reg.):&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c</span><span class="si">:</span><span class="s2">8.3f</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ridge_reg</span><span class="o">.</span><span class="n">coef_</span><span class="p">))</span>
 </pre></div>
@@ -728,9 +730,9 @@ L = \frac{1}{N} \sum_{i=1}^{N} (y_i - \hat{y}_i)^2 + \lambda \sum_{j=1}^{M} w_j^
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/dc238d9b3a9227981726bcbcde55d12338d865928165d840643a8e2a3a7e208f.png" src="../_images/dc238d9b3a9227981726bcbcde55d12338d865928165d840643a8e2a3a7e208f.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>coeffs (no reg.):    0.000   -4.491    6.944   -3.807    0.953   -0.114    0.005
-coeffs (L2 reg.):    0.000   -0.060    0.147    0.152   -0.126    0.025   -0.001
+<img alt="../_images/3a1a805d9ea22db05cc1fd97f7640c6a382696d54cd78faafa2437f2e6d4dd46.png" src="../_images/3a1a805d9ea22db05cc1fd97f7640c6a382696d54cd78faafa2437f2e6d4dd46.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>coeffs (no reg.):    0.908   -4.491    6.944   -3.807    0.953   -0.114    0.005
+coeffs (L2 reg.):    0.568   -0.060    0.147    0.152   -0.126    0.025   -0.001
 </pre></div>
 </div>
 </div>
@@ -768,7 +770,6 @@ L1正則化がスパースな解をもたらすのであれば、9次の多項�
 <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">PolynomialFeatures</span>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span><span class="p">,</span> <span class="n">Ridge</span><span class="p">,</span> <span class="n">Lasso</span>
 
-
 <span class="k">def</span> <span class="nf">ftrue</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">add_noise</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="n">y</span> <span class="o">=</span> <span class="mf">0.05</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">add_noise</span><span class="p">:</span>
@@ -790,14 +791,12 @@ L1正則化がスパースな解をもたらすのであれば、9次の多項�
 <span class="n">lin_reg</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
 <span class="n">lin_reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_poly</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
-
 <span class="c1"># L2正則化（Ridge回帰）</span>
 <span class="n">ridge_reg</span> <span class="o">=</span> <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
 <span class="n">ridge_reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_poly</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
-
 <span class="c1"># L1正則化（Lasso回帰）</span>
-<span class="n">lasso_reg</span> <span class="o">=</span> <span class="n">Lasso</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+<span class="n">lasso_reg</span> <span class="o">=</span> <span class="n">Lasso</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">10</span><span class="o">**</span><span class="mi">4</span><span class="p">)</span>
 <span class="n">lasso_reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_poly</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
 
@@ -807,6 +806,11 @@ L1正則化がスパースな解をもたらすのであれば、9次の多項�
 <span class="n">y_lin</span> <span class="o">=</span> <span class="n">lin_reg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">t_poly</span><span class="p">)</span>
 <span class="n">y_ridge</span> <span class="o">=</span> <span class="n">ridge_reg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">t_poly</span><span class="p">)</span>
 <span class="n">y_lasso</span> <span class="o">=</span> <span class="n">lasso_reg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">t_poly</span><span class="p">)</span>
+
+<span class="c1"># # 内部的に正規化されるので、表示用に定数項を修正</span>
+<span class="n">lasso_reg</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">lasso_reg</span><span class="o">.</span><span class="n">intercept_</span>
+<span class="n">lin_reg</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">lin_reg</span><span class="o">.</span><span class="n">intercept_</span>
+<span class="n">ridge_reg</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">ridge_reg</span><span class="o">.</span><span class="n">intercept_</span>
 
 <span class="c1"># プロット</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;data&quot;</span><span class="p">)</span>
@@ -827,14 +831,14 @@ L1正則化がスパースな解をもたらすのであれば、9次の多項�
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/sym4p/my_python3_env_forQC/lib/python3.13/site-packages/sklearn/linear_model/_coordinate_descent.py:695: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations, check the scale of the features or consider increasing regularisation. Duality gap: 7.795e-01, tolerance: 7.214e-04
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/sotair/.pyenv/versions/3.11.4/lib/python3.11/site-packages/sklearn/linear_model/_coordinate_descent.py:697: ConvergenceWarning: Objective did not converge. You might want to increase the number of iterations, check the scale of the features or consider increasing regularisation. Duality gap: 7.795e-01, tolerance: 7.214e-04
   model = cd_fast.enet_coordinate_descent(
 </pre></div>
 </div>
-<img alt="../_images/aab960196a45d7b51f30ca082d29558b6aec752e0a5c8b860a02d6e8a438955c.png" src="../_images/aab960196a45d7b51f30ca082d29558b6aec752e0a5c8b860a02d6e8a438955c.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>coeffs (no reg.):    0.000  -38.418  140.647 -208.584  163.228  -74.026   20.074   -3.205    0.278   -0.010
-coeffs (L2 reg.):    0.000   -0.140    0.030    0.140    0.091   -0.081    0.000    0.008   -0.002    0.000
-coeffs (L1 reg.):    0.000   -0.000    0.352   -0.130   -0.002    0.001    0.000    0.000   -0.000   -0.000
+<img alt="../_images/28af3c2b3c61795d4fb8ff30c84250600ef2487fe23a141db2af1c27fa1e9676.png" src="../_images/28af3c2b3c61795d4fb8ff30c84250600ef2487fe23a141db2af1c27fa1e9676.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>coeffs (no reg.):    0.882  -38.418  140.647 -208.584  163.228  -74.026   20.074   -3.205    0.278   -0.010
+coeffs (L2 reg.):    0.566   -0.140    0.030    0.140    0.091   -0.081    0.000    0.008   -0.002    0.000
+coeffs (L1 reg.):    0.530   -0.000    0.352   -0.130   -0.002    0.001    0.000    0.000   -0.000   -0.000
 </pre></div>
 </div>
 </div>
