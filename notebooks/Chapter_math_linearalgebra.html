@@ -799,7 +799,7 @@ A = \begin{pmatrix}
 <p>計算機で行なう種々の計算が、こうした固有値・固有ベクトルの計算に基づいていることは多い。
 例えば、物理・化学分野では、原子核、原子・分子、磁性体などの性質を理解するために、固有値・固有ベクトルの計算が重要な役割を果たす。
 構造力学や制御理論、はたまたWebページのランキングアルゴリズム(ページランク)など、数理的な問題の多くがこうした固有値計算と切っても切り離せない関係にある。</p>
-<div class="tip admonition">
+<div class="note admonition">
 <p class="admonition-title">行列式・トレースと固有値の関係</p>
 <p>正方行列 <span class="math notranslate nohighlight">\(A \in \mathbb{R}^{n \times n}\)</span>の行列式は、(重複または縮退したものも含めた)固有値の積と一致する。</p>
 <div class="math notranslate nohighlight">
@@ -842,7 +842,7 @@ A \mathbf{x} = \lambda B \mathbf{x}
 <p>全ての固有値が正である行列を正定値行列と呼ぶ。
 こうした正定値行列は、ガウス分布(正規分布)の共分散行列など、確率分布の性質を表す行列としてもよく現れる。</p>
 <p>正定値行列は、コレスキー分解と呼ばれる特別な分解を持つ。</p>
-<div class="tip admonition">
+<div class="note admonition">
 <p class="admonition-title">コレスキー分解</p>
 <p>任意の正定値行列 <span class="math notranslate nohighlight">\(A \in \mathbb{R}^{n \times n}\)</span>は、下三角行列 <span class="math notranslate nohighlight">\(L\)</span> とその転置 <span class="math notranslate nohighlight">\(L^T\)</span> を用いて以下のように表現できる。</p>
 <div class="math notranslate nohighlight">
@@ -855,7 +855,7 @@ A = LL^T
 確率分布の章で見るように、多次元正規分布の共分散行列は正定値行列であり、条件付き確率分布の共分散行列の計算の表式には、共分散行列の逆行列が必要になる。実際の数値計算において逆行列を陽に求めるよりも、コレスキー分解を用いることで、数値的に安定な計算で効率よく計算することができる。</p>
 <p><strong>LU分解</strong></p>
 <p>LU分解は、任意の正方行列を下三角行列 <span class="math notranslate nohighlight">\(L\)</span> と上三角行列 <span class="math notranslate nohighlight">\(U\)</span> の積として表現する方法である。</p>
-<div class="tip admonition">
+<div class="note admonition">
 <p class="admonition-title">LU分解</p>
 <p>正方行列 <span class="math notranslate nohighlight">\(A \in \mathbb{R}^{n \times n}\)</span>は、下三角行列 <span class="math notranslate nohighlight">\(L\)</span> と上三角行列 <span class="math notranslate nohighlight">\(U\)</span> を用いて以下のように表現することを考える。</p>
 <div class="math notranslate nohighlight">
@@ -870,7 +870,7 @@ A = LU
 </div>
 <div class="section" id="id8">
 <h2><span class="section-number">2.7. </span>固有値分解<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
-<div class="tip admonition">
+<div class="note admonition">
 <p class="admonition-title">対角化可能 (diagonalizable)と固有値分解</p>
 <p>正方行列 <span class="math notranslate nohighlight">\(A \in \mathbb{R}^{n \times n}\)</span>が対角化可能であるとは、対角行列<span class="math notranslate nohighlight">\(D\)</span>と可逆な行列 <span class="math notranslate nohighlight">\(P\)</span> を用いて以下のように表現できることをいう。</p>
 <div class="math notranslate nohighlight">
@@ -896,7 +896,7 @@ A &amp; = P \begin{pmatrix}
 <p>ここまでは、主に正方行列に対する演算を中心に説明してきた。
 しかし、機械学習やデータ分析の分野では、非正方行列に対する演算も頻繁に行われる。
 そこで、そのような非正方行列に対しても適用できる <strong>特異値分解(Singular Value Decomposition; SVD)</strong> を紹介する。</p>
-<div class="tip admonition">
+<div class="note admonition">
 <p class="admonition-title">特異値分解 (SVD)</p>
 <p>任意の<span class="math notranslate nohighlight">\(m \times n\)</span>行列 <span class="math notranslate nohighlight">\(A\)</span>は、以下のように表現できる。</p>
 <div class="math notranslate nohighlight">
