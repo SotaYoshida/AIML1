@@ -1,448 +1,537 @@
 
 <!DOCTYPE html>
 
-
-<html lang="ja" data-content_root="../" >
-
+<html lang="ja">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>2. 線形代数 &#8212; AI・機械学習論1</title>
-  
-  
-  
-  <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
-  </script>
-  <!--
-    this give us a css class that will be invisible only if js is disabled
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
 
-    </style>
-  </noscript>
-  
-  <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-  
-  <!-- So that users can add custom icons -->
-  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
-  <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+    
+      
 
-    <script src="../_static/documentation_options.js?v=1cf7f4d9"></script>
-    <script src="../_static/doctools.js?v=9a2dae69"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
-    <script src="../_static/translations.js?v=91613774"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js?v=f930bc37"></script>
-    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-VHT6K3HJ64"></script>
-    <script>
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){ dataLayer.push(arguments); }
-                gtag('js', new Date());
-                gtag('config', 'G-VHT6K3HJ64');
-            </script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){ dataLayer.push(arguments); }
-                gtag('js', new Date());
-                gtag('config', 'G-VHT6K3HJ64');
-            </script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/translations.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/Chapter_math_linearalgebra';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="next" title="3. 確率と確率分布" href="Chapter_math_probabilitydistributions.html" />
     <link rel="prev" title="1. ベクトル解析" href="Chapter_math_vector_calculus.html" />
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="docsearch:language" content="ja"/>
-  <meta name="docsearch:version" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="ja">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-VHT6K3HJ64"></script>
+<script>
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){ dataLayer.push(arguments); }
+                    gtag('js', new Date());
+                    gtag('config', 'G-VHT6K3HJ64');
+                </script>
+
   </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
-
-  
-  
-  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">本文へスキップ</a></div>
-  
-  <div id="pst-scroll-pixel-helper"></div>
-  
-  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>トップに戻る</button>
-
-  
-  <dialog id="pst-search-dialog">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
     
-<form class="bd-search d-flex align-items-center"
-      action="../search.html"
-      method="get">
-  <i class="fa-solid fa-magnifying-glass"></i>
-  <input type="search"
-         class="form-control"
-         name="q"
-         placeholder="Search this book..."
-         aria-label="Search this book..."
-         autocomplete="off"
-         autocorrect="off"
-         autocapitalize="off"
-         spellcheck="false"/>
-  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-  </dialog>
+    <div class="container-fluid" id="banner"></div>
 
-  <div class="pst-async-banner-revealer d-none">
-  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="バージョン警告"></aside>
-</div>
+    
 
-  
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
-    </header>
-  
-
-  <div class="bd-container">
-    <div class="bd-container__inner bd-page-width">
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
       
-      
-      
-      <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
         
-
-  
-  <div class="sidebar-header-items sidebar-primary__section">
-    
-    
-    
-    
-  </div>
-  
-    <div class="sidebar-primary-items__start sidebar-primary__section">
-        <div class="sidebar-primary-item">
-
-  
-    
-  
-
-<a class="navbar-brand logo" href="../home.html">
-  
-  
-  
-  
-  
-    
-    
       
-    
-    
-    <img src="../_static/logo_AIML1.png" class="logo__image only-light" alt="AI・機械学習論1 - Home"/>
-    <img src="../_static/logo_AIML1.png" class="logo__image only-dark pst-js-only" alt="AI・機械学習論1 - Home"/>
-  
-  
-</a></div>
-        <div class="sidebar-primary-item">
-
-<button class="btn search-button-field search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">検索</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button></div>
-        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item navbar-nav active">
-        
-        <ul class="nav bd-sidenav bd-sidenav__home-link">
-            <li class="toctree-l1">
-                <a class="reference internal" href="../home.html">
-                    AI・機械学習論1
-                </a>
-            </li>
-        </ul>
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">機械学習のための数学</span></p>
+      
+      <img src="../_static/logo_AIML1.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">AI・機械学習論1</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="この本を検索..." aria-label="この本を検索..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../home.html">
+   AI・機械学習論1
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  機械学習のための数学
+ </span>
+</p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Chapter_math_vector_calculus.html">1. ベクトル解析</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">2. 線形代数</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_math_probabilitydistributions.html">3. 確率と確率分布</a></li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Chapter_math_vector_calculus.html">
+   1. ベクトル解析
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   2. 線形代数
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Chapter_math_probabilitydistributions.html">
+   3. 確率と確率分布
+  </a>
+ </li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">回帰</span></p>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  回帰
+ </span>
+</p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Chapter_regression.html">4. 回帰の概要</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_linear_regression.html">5. 線形回帰</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_GaussianProcess.html">6. ガウス過程（Gaussian Process）</a></li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Chapter_regression.html">
+   4. 回帰の概要
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Chapter_linear_regression.html">
+   5. 線形回帰
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Chapter_GaussianProcess.html">
+   6. ガウス過程（Gaussian Process）
+  </a>
+ </li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">分類</span></p>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  分類
+ </span>
+</p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_1.html">7. 分類問題の概要</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_2.html">8. 多クラス分類</a></li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Chapter_classification_1.html">
+   7. 分類問題の概要
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Chapter_classification_2.html">
+   8. 多クラス分類
+  </a>
+ </li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">ニューラルネットワーク</span></p>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  ニューラルネットワーク
+ </span>
+</p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN_Intro.html">9. ニューラルネットワークの概要</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN2_Backprop.html">10. 誤差逆伝播法</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_Optimization.html">11. 機械学習における最適化</a></li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Chapter_ANN_Intro.html">
+   9. ニューラルネットワークの概要
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Chapter_ANN2_Backprop.html">
+   10. 誤差逆伝播法
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Chapter_Optimization.html">
+   11. 機械学習における最適化
+  </a>
+ </li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">データの表現・モデルの評価</span></p>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  データの表現・モデルの評価
+ </span>
+</p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Data_representation.html">12. 機械学習におけるデータ表現の基礎</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_Model_evaluation.html">13. モデルの選択・評価・過学習・正則化</a></li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Data_representation.html">
+   12. 機械学習におけるデータ表現の基礎
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Chapter_Model_evaluation.html">
+   13. モデルの選択・評価・過学習・正則化
+  </a>
+ </li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">発展的な話題</span></p>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  発展的な話題
+ </span>
+</p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Chapter_PCA.html">14. 主成分分析</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_GMM.html">15. 混合ガウスモデル(Gaussian Mixture Model, GMM)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_KAN.html">16. KAN: Kolmogorov–Arnold Networks</a></li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Chapter_PCA.html">
+   14. 主成分分析
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Chapter_GMM.html">
+   15. 混合ガウスモデル(Gaussian Mixture Model, GMM)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Chapter_KAN.html">
+   16. KAN: Kolmogorov–Arnold Networks
+  </a>
+ </li>
 </ul>
 
     </div>
-</nav></div>
-    </div>
-  
-  
-  <div class="sidebar-primary-items__end sidebar-primary__section">
-      <div class="sidebar-primary-item">
-<div id="ethical-ad-placement"
-      class="flat"
-      data-ea-publisher="readthedocs"
-      data-ea-type="readthedocs-sidebar"
-      data-ea-manual="true">
-</div></div>
-  </div>
+</nav> <!-- To handle the deprecated key -->
 
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
 
-      </div>
-      
-      <main id="main-content" class="bd-main" role="main">
-        
-        
-
-<div class="sbt-scroll-pixel-helper"></div>
-
-          <div class="bd-content">
-            <div class="bd-article-container">
-              
-              <div class="bd-header-article d-print-none">
-<div class="header-article-items header-article__inner">
-  
-    <div class="header-article-items__start">
-      
-        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <span class="fa-solid fa-bars"></span>
-</button></div>
-      
-    </div>
-  
-  
-    <div class="header-article-items__end">
-      
-        <div class="header-article-item">
-
-<div class="article-header-buttons">
-
-
-
-
-
-<div class="dropdown dropdown-source-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
-    <i class="fab fa-github"></i>
-  </button>
-  <ul class="dropdown-menu">
-      
-      
-      
-      <li><a href="https://github.com/SotaYoshida/AIML1" target="_blank"
-   class="btn btn-sm btn-source-repository-button dropdown-item"
-   title="ソースリポジトリ"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-<span class="btn__text-container">Repository</span>
-</a>
-</li>
-      
-      
-      
-      
-      <li><a href="https://github.com/SotaYoshida/AIML1/issues/new?title=Issue%20on%20page%20%2Fnotebooks/Chapter_math_linearalgebra.html&body=Your%20issue%20content%20here." target="_blank"
-   class="btn btn-sm btn-source-issues-button dropdown-item"
-   title="問題を報告"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-lightbulb"></i>
-  </span>
-<span class="btn__text-container">Open issue</span>
-</a>
-</li>
-      
-  </ul>
 </div>
 
 
+          
 
 
-
-
-<div class="dropdown dropdown-download-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="このページをダウンロード">
-    <i class="fas fa-download"></i>
-  </button>
-  <ul class="dropdown-menu">
-      
-      
-      
-      <li><a href="../_sources/notebooks/Chapter_math_linearalgebra.ipynb" target="_blank"
-   class="btn btn-sm btn-download-source-button dropdown-item"
-   title="ソースファイルをダウンロード"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="btn__text-container">.ipynb</span>
-</a>
-</li>
-      
-      
-      
-      
-      <li>
-<button onclick="window.print()"
-  class="btn btn-sm btn-download-pdf-button dropdown-item"
-  title="PDFに印刷"
-  data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="btn__text-container">.pdf</span>
-</button>
-</li>
-      
-  </ul>
-</div>
-
-
-
-
-<button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
-  title="全画面モード"
-  data-bs-placement="bottom" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-expand"></i>
-  </span>
-
-</button>
-
-
-
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="ライト"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="ダーク"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
-
-
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-</button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
-</div></div>
-      
-    </div>
-  
-</div>
-</div>
-              
-              
-
-<div id="jb-print-docs-body" class="onlyprint">
-    <h1>線形代数</h1>
-    <!-- Table of contents -->
-    <div id="print-main-content">
-        <div id="jb-print-toc">
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
             
-            <div>
-                <h2> 目次 </h2>
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="ナビゲーションを切り替え" aria-controls="site-navigation"
+                title="ナビゲーションを切り替え" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="このページをダウンロード"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/notebooks/Chapter_math_linearalgebra.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="ソースファイルをダウンロード" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="PDFに印刷"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/SotaYoshida/AIML1"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="ソースリポジトリ"><i
+                    class="fab fa-github"></i>リポジトリ</button></a>
+        <a class="issues-button"
+            href="https://github.com/SotaYoshida/AIML1/issues/new?title=Issue%20on%20page%20%2Fnotebooks/Chapter_math_linearalgebra.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="問題を開く"><i class="fas fa-lightbulb"></i>未解決の問題</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="全画面モード"
+        title="全画面モード"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/SotaYoshida/AIML1/master?urlpath=tree/docs/notebooks/Chapter_math_linearalgebra.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="発売 Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> 目次
             </div>
-            <nav aria-label="Page">
+            <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.1. 行列・ベクトルの演算/基本的性質</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2.2. 行列式とトレース</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2.3. 逆行列</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">2.3.1. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 行列の条件数</a></li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   2.1. 行列・ベクトルの演算/基本的性質
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   2.2. 行列式とトレース
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   2.3. 逆行列
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#clubsuit">
+     2.3.1.
+     <span class="math notranslate nohighlight">
+      \(\clubsuit\)
+     </span>
+     行列の条件数
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   2.4. 特徴的な行列
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   2.5. 固有値・固有ベクトル
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id7">
+     2.5.1.
+     <span class="math notranslate nohighlight">
+      \(\clubsuit\)
+     </span>
+     一般化固有値問題
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cholesky-decomposition">
+   2.6. コレスキー分解 (Cholesky decomposition)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   2.7. 固有値分解
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id9">
+   2.8. 特異値分解
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id10">
+   2.9. 行列の微分
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id11">
+   2.10. 行列の指数関数
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pytorch">
+   2.11. PyTorchにおける行列・ベクトルの表現
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id12">
+   2.12. 学習の振り返りのためのチェックリスト
+  </a>
+ </li>
 </ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2.4. 特徴的な行列</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2.5. 固有値・固有ベクトル</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">2.5.1. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 一般化固有値問題</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cholesky-decomposition">2.6. コレスキー分解 (Cholesky decomposition)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.7. 固有値分解</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.8. 特異値分解</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">2.9. 行列の微分</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">2.10. 行列の指数関数</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pytorch">2.11. PyTorchにおける行列・ベクトルの表現</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">2.12. 学習の振り返りのためのチェックリスト</a></li>
-</ul>
+
             </nav>
         </div>
     </div>
 </div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>線形代数</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> 目次 </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   2.1. 行列・ベクトルの演算/基本的性質
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   2.2. 行列式とトレース
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   2.3. 逆行列
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#clubsuit">
+     2.3.1.
+     <span class="math notranslate nohighlight">
+      \(\clubsuit\)
+     </span>
+     行列の条件数
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   2.4. 特徴的な行列
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   2.5. 固有値・固有ベクトル
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id7">
+     2.5.1.
+     <span class="math notranslate nohighlight">
+      \(\clubsuit\)
+     </span>
+     一般化固有値問題
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cholesky-decomposition">
+   2.6. コレスキー分解 (Cholesky decomposition)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   2.7. 固有値分解
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id9">
+   2.8. 特異値分解
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id10">
+   2.9. 行列の微分
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id11">
+   2.10. 行列の指数関数
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pytorch">
+   2.11. PyTorchにおける行列・ベクトルの表現
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id12">
+   2.12. 学習の振り返りのためのチェックリスト
+  </a>
+ </li>
+</ul>
 
-              
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
                 
-<div id="searchbox"></div>
-                <article class="bd-article">
-                  
-  <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">2. </span>線形代数<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+  <div class="tex2jax_ignore mathjax_ignore section" id="id1">
+<h1><span class="section-number">2. </span>線形代数<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>この章では、線形代数の基本的な事項をまとめる。</p>
-<section id="id2">
-<h2><span class="section-number">2.1. </span>行列・ベクトルの演算/基本的性質<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<div class="section" id="id2">
+<h2><span class="section-number">2.1. </span>行列・ベクトルの演算/基本的性質<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>行列やベクトルの演算は、機械学習は言わずもがな、計算機を用いて行なう演算の基本である。
 スパコンの性能ランキングを測る一つのベンチマークは行列演算で、TOP500と呼ばれるランキングが非常に有名である。</p>
 <p>日本が有する「富岳」は、2020年6月に1位となり、2021年11月までその座を維持し、
@@ -519,9 +608,9 @@
 </div>
 </div>
 </div>
-</section>
-<section id="id3">
-<h2><span class="section-number">2.2. </span>行列式とトレース<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+</div>
+<div class="section" id="id3">
+<h2><span class="section-number">2.2. </span>行列式とトレース<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>行列の行列式やトレースは、行列の特性を表す重要な値である。
 行列 <span class="math notranslate nohighlight">\(A\)</span> の行列式は、その行列が正方行列である場合に定義され、行列のスケーリングや線形変換の特性を示す。</p>
 <div class="math notranslate nohighlight">
@@ -543,7 +632,7 @@ a_{m1} &amp; a_{m2} &amp; \cdots &amp; a_{mn}
 <p>ここで、<span class="math notranslate nohighlight">\(\sigma\)</span>は<span class="math notranslate nohighlight">\(n\)</span>次対称群 <span class="math notranslate nohighlight">\(S_n\)</span> (1~nまでの整数に対する全ての置換が為す群) の要素であり、<span class="math notranslate nohighlight">\(\text{sgn}(\sigma)\)</span> は置換の符号(偶置換か奇置換か)を示す関数である。
 なお、<span class="math notranslate nohighlight">\(\sigma_{i,j}\)</span>は<span class="math notranslate nohighlight">\(i,j\)</span>の入れ替えを表す。
 元の順列が <span class="math notranslate nohighlight">\((1, 2, 3)\)</span>だったとき、あり得る置換は以下のようになる。</p>
-<div class="pst-scrollable-table-container"><table class="table">
+<table class="colwidths-auto table">
 <thead>
 <tr class="row-odd"><th class="head"><p>置換 (右から作用させる)</p></th>
 <th class="head"><p>符号</p></th>
@@ -577,7 +666,6 @@ a_{m1} &amp; a_{m2} &amp; \cdots &amp; a_{mn}
 </tr>
 </tbody>
 </table>
-</div>
 <div class="important admonition">
 <p class="admonition-title">問題</p>
 <p><span class="math notranslate nohighlight">\(3\times 3\)</span>行列式に対する行列式の公式(Sarrusの式)は以下のように表される。</p>
@@ -611,9 +699,9 @@ a_{m1} &amp; a_{m2} &amp; \cdots &amp; a_{mn}
 <li><p>行列<span class="math notranslate nohighlight">\(A \in \mathbb{R}^{n \times k}, B \in \mathbb{R}^{k \times n}\)</span>に対して、<span class="math notranslate nohighlight">\(\text{tr}(AB) = \text{tr}(BA)\)</span>が成り立つ.</p></li>
 </ul>
 </div>
-</section>
-<section id="id4">
-<h2><span class="section-number">2.3. </span>逆行列<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+</div>
+<div class="section" id="id4">
+<h2><span class="section-number">2.3. </span>逆行列<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>逆行列は、行列 <span class="math notranslate nohighlight">\(A\)</span> に対して <span class="math notranslate nohighlight">\(A^{-1}\)</span> と表され、以下の条件を満たす行列である。</p>
 <div class="math notranslate nohighlight">
 \[
@@ -628,10 +716,10 @@ A A^{-1} = A^{-1} A = I
 <li><p>列ベクトルが線形独立である</p></li>
 <li><p>行列のランクが<span class="math notranslate nohighlight">\(n\)</span>である</p></li>
 </ul>
-<aside class="margin sidebar">
+<div class="margin sidebar">
 <p class="sidebar-title"></p>
 <p>数値計算を専門にする人は、余程のことが無い限り行列の逆行列を求めることは避ける。世の中には逆行列を計算すると破門になる研究室もあるらしい。</p>
-</aside>
+</div>
 <p>たとえばPythonでは<code class="docutils literal notranslate"><span class="pre">numpy.linalg</span></code>モジュールを用いると、行列の逆行列を計算することができる。
 ...と書いたが、実際の数値計算では、行列の逆行列を求めることは数値的に不安定な場合があり、一般には避けるべきである。
 例えば、<span class="math notranslate nohighlight">\(Ax = b\)</span> を解く(<span class="math notranslate nohighlight">\(x\)</span>を求める)のに、<span class="math notranslate nohighlight">\(x = A^{-1}b\)</span> として逆行列を求める方法は、一般に望ましくない。
@@ -639,8 +727,8 @@ Web上に転がっているデータ分析のコードを見ていると、逆�
 では、逆行列を求めずに様々な演算を行うにはどうすればよいのか。そこで必要になるのが、種々の行列の分解になる。
 例えばコレスキー分解やLU分解、など対象となる行列の特性に応じて様々な分解が存在する。
 これらの分解を用いることで、逆行列を明示的に求めることなく、行列の演算を行うことができる。</p>
-<section id="clubsuit">
-<h3><span class="section-number">2.3.1. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> 行列の条件数<a class="headerlink" href="#clubsuit" title="Link to this heading">#</a></h3>
+<div class="section" id="clubsuit">
+<h3><span class="section-number">2.3.1. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> 行列の条件数<a class="headerlink" href="#clubsuit" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>行列の条件数(condition number)は、行列の数値的な安定性を評価するためにも用いられる。
 条件数の大きな行列は、数値計算において誤差が増幅されやすく、逆行列の計算などが不安定になる可能性があり、悪条件(ill-conditioned)であるとも言われる。</p>
 <p>行列 <span class="math notranslate nohighlight">\(A\)</span> の条件数は、以下のように定義される。</p>
@@ -648,10 +736,10 @@ Web上に転がっているデータ分析のコードを見ていると、逆�
 \[
 \kappa(A) = \|A\| \|A^{-1}\|
 \]</div>
-<aside class="margin sidebar">
+<div class="margin sidebar">
 <p class="sidebar-title"></p>
 <p>行列のノルムという際、誘導されたノルム(作用素ノルム)を指す場合と、成分ごとのノルム(例: 最大ノルム、フロベニウスノルム)を指す場合があるため注意が必要。</p>
-</aside>
+</div>
 <p>ここで、<span class="math notranslate nohighlight">\(\|A\|\)</span> は行列 <span class="math notranslate nohighlight">\(A\)</span> のノルムであり、<span class="math notranslate nohighlight">\(\|A^{-1}\|\)</span> は <span class="math notranslate nohighlight">\(A\)</span> の逆行列のノルムである。一般に、条件数は行列の特異値分解を用いて計算されることが多い。
 ノルムの定義によって条件数の値は異なるが、一般的にはスペクトルノルムがよく用いられる。</p>
 <div class="math notranslate nohighlight">
@@ -665,10 +753,10 @@ Web上に転がっているデータ分析のコードを見ていると、逆�
 <p>ここで、<span class="math notranslate nohighlight">\(\sigma_{\text{max}}\)</span> は行列 <span class="math notranslate nohighlight">\(A\)</span> の最大特異値、<span class="math notranslate nohighlight">\(\sigma_{\text{min}}\)</span> は最小特異値である。
 仮に逆行列の計算が難しい場合でも、特異値分解を用いることで条件数を評価することができる。</p>
 <p>また、<span class="math notranslate nohighlight">\(A\)</span>がrank落ちしている場合、つまり<span class="math notranslate nohighlight">\(\sigma_{\text{min}} = 0\)</span>の場合、条件数は無限大となり、逆行列は存在しない。</p>
-</section>
-</section>
-<section id="id5">
-<h2><span class="section-number">2.4. </span>特徴的な行列<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+</div>
+</div>
+<div class="section" id="id5">
+<h2><span class="section-number">2.4. </span>特徴的な行列<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>行列の中には、特に重要な役割を果たすものがある。以下に、代表的なものを挙げる。</p>
 <ul class="simple">
 <li><p>対称行列: <span class="math notranslate nohighlight">\(A^T = A\)</span></p></li>
@@ -678,9 +766,9 @@ Web上に転がっているデータ分析のコードを見ていると、逆�
 <li><p>ユニタリ行列: <span class="math notranslate nohighlight">\(U^\dagger U = I\)</span></p></li>
 <li><p>正定値行列: 任意の非ゼロベクトル<span class="math notranslate nohighlight">\(x\)</span>に対して、<span class="math notranslate nohighlight">\(x^T A x &gt; 0\)</span>を満たす実対称行列</p></li>
 </ul>
-</section>
-<section id="id6">
-<h2><span class="section-number">2.5. </span>固有値・固有ベクトル<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+</div>
+<div class="section" id="id6">
+<h2><span class="section-number">2.5. </span>固有値・固有ベクトル<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>正方行列 <span class="math notranslate nohighlight">\(A \in \mathbb{R}^{n \times n}\)</span>に対して、</p>
 <div class="math notranslate nohighlight">
 \[
@@ -738,8 +826,8 @@ A = \begin{pmatrix}
 <p>の固有値を求めると、<span class="math notranslate nohighlight">\(\lambda^2 + 1 = 0\)</span>となり、<span class="math notranslate nohighlight">\(\lambda = i, -i\)</span>という虚数解が得られる。
 一方で、対称行列(転置が同一)やエルミート行列(エルミート共役が同一)の固有値は実数となるなど、行列の特性に応じて固有値の性質は異なる。</p>
 </div>
-<section id="id7">
-<h3><span class="section-number">2.5.1. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> 一般化固有値問題<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<div class="section" id="id7">
+<h3><span class="section-number">2.5.1. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> 一般化固有値問題<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
 <p>上記の標準的な固有値問題を拡張したものとして、一般化固有値問題がある。</p>
 <div class="math notranslate nohighlight">
 \[
@@ -747,10 +835,10 @@ A \mathbf{x} = \lambda B \mathbf{x}
 \]</div>
 <p>よくあるのが、<span class="math notranslate nohighlight">\(B\)</span>が正定値行列である場合で、<span class="math notranslate nohighlight">\(B\)</span>が正則なら、<span class="math notranslate nohighlight">\(B^{-1}A \mathbf{x} = \lambda \mathbf{x}\)</span>と変形でき、標準的な固有値問題に帰着できる。
 実用上は<span class="math notranslate nohighlight">\(B^{-1}\)</span>を明示的に計算することは避け、<span class="math notranslate nohighlight">\(B\)</span>に対するコレスキー分解などを用いて解くことが多い。</p>
-</section>
-</section>
-<section id="cholesky-decomposition">
-<h2><span class="section-number">2.6. </span>コレスキー分解 (Cholesky decomposition)<a class="headerlink" href="#cholesky-decomposition" title="Link to this heading">#</a></h2>
+</div>
+</div>
+<div class="section" id="cholesky-decomposition">
+<h2><span class="section-number">2.6. </span>コレスキー分解 (Cholesky decomposition)<a class="headerlink" href="#cholesky-decomposition" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>全ての固有値が正である行列を正定値行列と呼ぶ。
 こうした正定値行列は、ガウス分布(正規分布)の共分散行列など、確率分布の性質を表す行列としてもよく現れる。</p>
 <p>正定値行列は、コレスキー分解と呼ばれる特別な分解を持つ。</p>
@@ -779,9 +867,9 @@ A = LU
 </div>
 <p>コレスキー分解は、LU分解の特別な場合であり、正定値行列に対するLU分解として解釈できる。
 <span class="math notranslate nohighlight">\(L\)</span>の対角成分を1にすると分解は一意に定まる。</p>
-</section>
-<section id="id8">
-<h2><span class="section-number">2.7. </span>固有値分解<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+</div>
+<div class="section" id="id8">
+<h2><span class="section-number">2.7. </span>固有値分解<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="tip admonition">
 <p class="admonition-title">対角化可能 (diagonalizable)と固有値分解</p>
 <p>正方行列 <span class="math notranslate nohighlight">\(A \in \mathbb{R}^{n \times n}\)</span>が対角化可能であるとは、対角行列<span class="math notranslate nohighlight">\(D\)</span>と可逆な行列 <span class="math notranslate nohighlight">\(P\)</span> を用いて以下のように表現できることをいう。</p>
@@ -802,9 +890,9 @@ A &amp; = P \begin{pmatrix}
 <p>対象となる行列が対称行列である場合、固有値分解は常に存在し、固有値は実数となる。
 対称行列の実固有値ベクトルからなる直交基底が存在し(スペクトル定理)、この基底を用いて行列を対角化することができる。
 つまり、<span class="math notranslate nohighlight">\(P\)</span>は直交行列であり、<span class="math notranslate nohighlight">\(P^{-1} = P^T\)</span>となる。</p>
-</section>
-<section id="id9">
-<h2><span class="section-number">2.8. </span>特異値分解<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+</div>
+<div class="section" id="id9">
+<h2><span class="section-number">2.8. </span>特異値分解<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ここまでは、主に正方行列に対する演算を中心に説明してきた。
 しかし、機械学習やデータ分析の分野では、非正方行列に対する演算も頻繁に行われる。
 そこで、そのような非正方行列に対しても適用できる <strong>特異値分解(Singular Value Decomposition; SVD)</strong> を紹介する。</p>
@@ -860,11 +948,6 @@ A \approx \sum^r_{k=1} \sigma_k u_k v_k^T
 宇都宮大学オリジナルキャラクター「宇～太」の写真をグレースケールに変換して使うことにする。</p>
 <p>元の画像は、650×790ピクセル(513,500成分を持つ行列)である。なお表示の際は3分の1にリサイズしている。</p>
 <div class="cell tag_hide-input docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell source</span>
-<span class="expanded">Hide code cell source</span>
-</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
@@ -879,17 +962,11 @@ A \approx \sum^r_{k=1} \sigma_k u_k v_k^T
 </pre></div>
 </div>
 </div>
-</details>
 <div class="cell_output docutils container">
-<img alt="../_images/c4c601f15c24d3e40f0478b09017007bf2c23a539e273318478faf757d606874.png" src="../_images/c4c601f15c24d3e40f0478b09017007bf2c23a539e273318478faf757d606874.png" />
+<img alt="../_images/Chapter_math_linearalgebra_17_0.png" src="../_images/Chapter_math_linearalgebra_17_0.png" />
 </div>
 </div>
 <div class="cell tag_hide-input docutils container">
-<details class="hide above-input">
-<summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell source</span>
-<span class="expanded">Hide code cell source</span>
-</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">linalg</span>
@@ -920,27 +997,26 @@ A \approx \sum^r_{k=1} \sigma_k u_k v_k^T
 </pre></div>
 </div>
 </div>
-</details>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>full rank =&gt;  597
 rank 29 (~ 5 ％) Fnorm  4941.906716516428  # of m.e.  45849
 </pre></div>
 </div>
-<img alt="../_images/ad45bb49e7e546006d181bf7ad00ea3b1523e13056d91d3644c80b02df765c59.png" src="../_images/ad45bb49e7e546006d181bf7ad00ea3b1523e13056d91d3644c80b02df765c59.png" />
+<img alt="../_images/Chapter_math_linearalgebra_18_1.png" src="../_images/Chapter_math_linearalgebra_18_1.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>rank 59 (~ 10 ％) Fnorm  2862.789400836713  # of m.e.  93279
 </pre></div>
 </div>
-<img alt="../_images/e2e5af62844d1530df11af11d60088afbc8925dcebcfe011c61819c786417f0b.png" src="../_images/e2e5af62844d1530df11af11d60088afbc8925dcebcfe011c61819c786417f0b.png" />
+<img alt="../_images/Chapter_math_linearalgebra_18_3.png" src="../_images/Chapter_math_linearalgebra_18_3.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>rank 298 (~ 50 ％) Fnorm  290.70038480856283  # of m.e.  471138
 </pre></div>
 </div>
-<img alt="../_images/05bc5d6aad8f63dcd23ab10c697dcb95cfba5d2f49f740709be0f6dbd7a5a8a4.png" src="../_images/05bc5d6aad8f63dcd23ab10c697dcb95cfba5d2f49f740709be0f6dbd7a5a8a4.png" />
+<img alt="../_images/Chapter_math_linearalgebra_18_5.png" src="../_images/Chapter_math_linearalgebra_18_5.png" />
 </div>
 </div>
 <p>5%程度の特異値を用いても、ややぼけるが、画像に宇〜太が写っていることは人間の目には明らかである。</p>
-</section>
-<section id="id10">
-<h2><span class="section-number">2.9. </span>行列の微分<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+</div>
+<div class="section" id="id10">
+<h2><span class="section-number">2.9. </span>行列の微分<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ベクトル解析の章と重複する部分があるが、行列の微分についても簡単に触れておく。</p>
 <p>ベクトルに対する微分を拡張して、行列に対する微分を考えることができる。
 まず、ベクトル <span class="math notranslate nohighlight">\(\mathbf{a} \)</span>に対するスカラー<span class="math notranslate nohighlight">\(x\)</span>による微分を以下のように定義する:</p>
@@ -1060,9 +1136,9 @@ a_1 &amp; a_2 &amp; \cdots &amp; a_n
 \end{align*}
 \end{split}\]</div>
 <p>したがって、対数の微分を考えると目的の式が得られる。</p>
-</section>
-<section id="id11">
-<h2><span class="section-number">2.10. </span>行列の指数関数<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+</div>
+<div class="section" id="id11">
+<h2><span class="section-number">2.10. </span>行列の指数関数<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>線形常微分方程式の解法や、量子力学における時間発展など、行列の指数関数が重要な役割を果たす場合がある。</p>
 <p>行列<span class="math notranslate nohighlight">\(A\)</span>の指数関数は、テイラー展開を用いて以下のように定義される:</p>
 <div class="math notranslate nohighlight">
@@ -1084,25 +1160,25 @@ B \exp(A) B^{-1} &amp; = \exp(B A B^{-1}) \\
 <p>なお <span class="math notranslate nohighlight">\([A, B] = AB - BA\)</span> は <span class="math notranslate nohighlight">\(A\)</span> と <span class="math notranslate nohighlight">\(B\)</span> の<strong>交換子</strong>である。最後の2つの式は、<strong>ベーカー・キャンベル・ハウスドルフ(Baker-Campbell-Hausdorff)の公式</strong>と呼ばれる。
 スカラー値の場合と異なり、一般に行列の積は可換でないため、<span class="math notranslate nohighlight">\(\exp(A+B) = \exp(A)\exp(B)\)</span>は一般には成り立たないことに注意が必要である。</p>
 <p>また、行列<span class="math notranslate nohighlight">\(U\)</span>がユニタリ行列(エルミート共役が逆行列に等しい)であるとき、<span class="math notranslate nohighlight">\(U\)</span>は反エルミート行列<span class="math notranslate nohighlight">\(X\)</span>の指数関数として表現できる。</p>
-</section>
-<section id="pytorch">
-<h2><span class="section-number">2.11. </span>PyTorchにおける行列・ベクトルの表現<a class="headerlink" href="#pytorch" title="Link to this heading">#</a></h2>
+</div>
+<div class="section" id="pytorch">
+<h2><span class="section-number">2.11. </span>PyTorchにおける行列・ベクトルの表現<a class="headerlink" href="#pytorch" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>PyTorchでは<code class="docutils literal notranslate"><span class="pre">Torch.Tensor</span></code>が行列やベクトルを表現する。
 <code class="docutils literal notranslate"><span class="pre">Torch.Tensor</span></code>は、行列・ベクトルに係る演算を効率化するために最適化されている。</p>
 <p>数値の配列を表現するのに、メモリ上でのデータの連続性を保つように設計されている。
 また、特定の行・列を抽出したり、行列の形状を指定して操作する際に、無駄なメモリコピーを避ける工夫もされている。</p>
 <p>PyTorchのテンソルはGPU上での計算もサポートしており、大規模な行列演算や機械学習モデルの学習において高速な計算が可能である。
 また、ニューラルネットワークの学習で重要となる誤差逆伝播法に適した自動微分機能を備えている。</p>
-</section>
-<section id="id12">
-<h2><span class="section-number">2.12. </span>学習の振り返りのためのチェックリスト<a class="headerlink" href="#id12" title="Link to this heading">#</a></h2>
+</div>
+<div class="section" id="id12">
+<h2><span class="section-number">2.12. </span>学習の振り返りのためのチェックリスト<a class="headerlink" href="#id12" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>▢ 　行列・ベクトルの基本的な演算を説明できる<br />
 ▢ 　行列式とトレースの意味や性質を説明できる<br />
 ▢ 　逆行列の定義と可逆行列(正則行列)の条件を説明できる<br />
 ▢ 　固有値・固有ベクトルの定義と特性を説明できる<br />
 ▢ 　行列分解の代表的な手法の概要を説明できる</p>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
@@ -1116,7 +1192,7 @@ B \exp(A) B^{-1} &amp; = \exp(B A B^{-1}) \\
             mode: "python"
         },
         kernelOptions: {
-            name: "python3",
+            kernelName: "python3",
             path: "./notebooks"
         },
         predefinedOutput: true
@@ -1124,118 +1200,47 @@ B \exp(A) B^{-1} &amp; = \exp(B A B^{-1}) \\
     </script>
     <script>kernelName = 'python3'</script>
 
-                </article>
+              </div>
               
-
-              
-              
-              
-              
-                <footer class="prev-next-footer d-print-none">
-                  
-<div class="prev-next-area">
-    <a class="left-prev"
-       href="Chapter_math_vector_calculus.html"
-       title="前のページ">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">前へ</p>
-        <p class="prev-next-title"><span class="section-number">1. </span>ベクトル解析</p>
-      </div>
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="Chapter_math_vector_calculus.html" title="前へ ページ">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">前へ</p>
+            <p class="prev-next-title"><span class="section-number">1. </span>ベクトル解析</p>
+        </div>
     </a>
-    <a class="right-next"
-       href="Chapter_math_probabilitydistributions.html"
-       title="次ページ">
-      <div class="prev-next-info">
+    <a class='right-next' id="next-link" href="Chapter_math_probabilitydistributions.html" title="次へ ページ">
+    <div class="prev-next-info">
         <p class="prev-next-subtitle">次へ</p>
         <p class="prev-next-title"><span class="section-number">3. </span>確率と確率分布</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
-                </footer>
-              
-            </div>
             
-            
-              
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> 目次
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.1. 行列・ベクトルの演算/基本的性質</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2.2. 行列式とトレース</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2.3. 逆行列</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">2.3.1. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 行列の条件数</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2.4. 特徴的な行列</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2.5. 固有値・固有ベクトル</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">2.5.1. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 一般化固有値問題</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cholesky-decomposition">2.6. コレスキー分解 (Cholesky decomposition)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.7. 固有値分解</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.8. 特異値分解</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">2.9. 行列の微分</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">2.10. 行列の指数関数</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pytorch">2.11. PyTorchにおける行列・ベクトルの表現</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">2.12. 学習の振り返りのためのチェックリスト</a></li>
-</ul>
-  </nav></div>
-
-</div></div>
-              
-            
-          </div>
-          <footer class="bd-footer-content">
-            
-<div class="bd-footer-content__inner container">
-  
-  <div class="footer-item">
-    
-<p class="component-author">
-著者 Sota Yoshida
-</p>
-
-  </div>
-  
-  <div class="footer-item">
-    
-
-  </div>
-  
-  <div class="footer-item">
-    
-  </div>
-  
-  <div class="footer-item">
-    
-<div class="extra_footer">
-  © Copyright 2025〜 by 吉田 聡太 (Sota Yoshida). 本コンテンツは<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0 ライセンス</a>の下に提供されています。 <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>　ただし、資料中のコードセル部分は<a rel="license" href="https://opensource.org/licenses/MIT">MITライセンス</a>の下に提供されています。
-
-</div>
-  </div>
-  
-</div>
-          </footer>
-        
-
-      </main>
+        </div>
     </div>
-  </div>
-  
-  <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+    <footer class="footer">
+  <p>
+    
+      著者 Sota Yoshida<br/>
+    
+      <div class="extra_footer">
+        © Copyright 2025〜 by 吉田 聡太 (Sota Yoshida). 本コンテンツは<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0 ライセンス</a>の下に提供されています。 <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>　ただし、資料中のコードセル部分は<a rel="license" href="https://opensource.org/licenses/MIT">MITライセンス</a>の下に提供されています。
 
-  <footer class="bd-footer">
-  </footer>
+      </div>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
   </body>
 </html>
