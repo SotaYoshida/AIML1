@@ -493,7 +493,7 @@ f(a, b) &amp;= \frac{1}{N} \sum_{i=1}^N (y_i - (ax_i + b))^2
 \]</div>
 <div class="section" id="id3">
 <h3><span class="section-number">1.1.1. </span>テイラー展開<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<div class="hint admonition">
+<div class="note admonition">
 <p class="admonition-title">定義: テイラー級数</p>
 <p>滑らかな関数<span class="math notranslate nohighlight">\(f \in C^\infty\)</span>が点<span class="math notranslate nohighlight">\(x_0\)</span>で定義されているとき、<span class="math notranslate nohighlight">\(f\)</span>のテイラー級数は次のように定義される。</p>
 <div class="math notranslate nohighlight" id="equation-taylorseries">
@@ -524,7 +524,7 @@ T_k(x) \equiv \sum_{n=0}^k \frac{f^{(n)}(x_0)}{n!} (x - x_0)^n
 <li><p>合成関数の微分: <span class="math notranslate nohighlight">\(\frac{d}{dx}f(g(x)) = f'(g(x))\frac{dg}{dx}\)</span></p></li>
 </ul>
 <p>特に合成関数の微分は連鎖律(チェインルール)とも呼ばれ、ニューラルネットワークの逆伝播アルゴリズムにおいて重要な役割を果たす。</p>
-<div class="important admonition">
+<div class="attention admonition">
 <p class="admonition-title">問題</p>
 <p>以下の関数<span class="math notranslate nohighlight">\(f,g\)</span>で定義される合成関数<span class="math notranslate nohighlight">\(h(x) = f(g(x))\)</span>の微分を求めて、連鎖律を確認せよ。</p>
 <div class="math notranslate nohighlight">
@@ -540,7 +540,7 @@ g(x) &amp;= \exp(x)
 <div class="section" id="id5">
 <h2><span class="section-number">1.2. </span>偏微分: 多変数への拡張<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>ここまでの議論を、多変数関数に拡張しよう。</p>
-<div class="tip admonition">
+<div class="note admonition">
 <p class="admonition-title">定義: 偏微分</p>
 <p><span class="math notranslate nohighlight">\(n\)</span>個の変数<span class="math notranslate nohighlight">\(x_1, x_2, \ldots, x_n\)</span>を持つ関数<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>の偏微分は、次のように定義される。</p>
 <div class="math notranslate nohighlight">
