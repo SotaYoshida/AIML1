@@ -438,7 +438,7 @@
 \[
 y(x, \boldsymbol{w}) = w_0 + w_1 x + w_2 x^2 + \cdots + w_p x^p = \sum_{j=0}^p w_j x^j
 \]</div>
-<p>ここで、<span class="math notranslate nohighlight">\(x\)</span>は入力変数、<span class="math notranslate nohighlight">\(y\)</span>は出力変数、<span class="math notranslate nohighlight">\(w\)</span>はパラメータベクトル、<span class="math notranslate nohighlight">\(p\)</span>は多項式の次数である。</p>
+<p>ここで、<span class="math notranslate nohighlight">\(x\)</span>は入力変数、<span class="math notranslate nohighlight">\(y\)</span>は出力変数、<span class="math notranslate nohighlight">\(\boldsymbol{w}\)</span>はパラメータベクトル、<span class="math notranslate nohighlight">\(p\)</span>は多項式の次数である。</p>
 </div>
 <p>線形回帰(Linear Regression)はしばし、この多項式回帰を指すこともあるが、
 より一般には、基底関数と呼ばれる関数を用いた定義となる:</p>
@@ -737,7 +737,7 @@ L &amp; \rightarrow \beta I
 \tilde{\boldsymbol{\mu}} &amp; =  \beta \tilde{\boldsymbol{\Sigma}} \boldsymbol{\Phi}^T \boldsymbol{t}
 \end{align*}
 \end{split}\]</div>
-<p>この条件のもとで**対数事後確率(log posterior)**と呼ばれる量は、対数尤度と対数事前分布の和として、</p>
+<p>この条件のもとで <strong>対数事後確率(log posterior)</strong> と呼ばれる量は、対数尤度と対数事前分布の和として、</p>
 <div class="math notranslate nohighlight">
 \[
 \ln p({\bf w}|\boldsymbol{\mathrm{t}}) = -\frac{\beta}{2}\sum^N_{n=1} \left(t_n - {\bf w}^T \phi(x_n) \right)^2 -\frac{\alpha}{2} {\bf w}^T{\bf w} +  \text{const.}

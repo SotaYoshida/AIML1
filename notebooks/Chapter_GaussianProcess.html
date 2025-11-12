@@ -769,7 +769,11 @@ K(\mathbf{x}, \mathbf{x})^{-1} = (L^T)^{-1} L^{-1}
 \[
 EI(x) = (\mu(x) - y_\mathrm{best}) \Phi(z) + \sigma(x) \phi(z), \quad z = \frac{\mu(x) - y_\mathrm{best}}{\sigma(x)}
 \]</div>
-<p>ここで<span class="math notranslate nohighlight">\(\Phi, \phi\)</span>はそれぞれ標準正規分布の累積分布関数と確率密度関数である。</p>
+<p>ここで<span class="math notranslate nohighlight">\(\Phi, \phi\)</span>はそれぞれ標準正規分布の累積分布関数と確率密度関数である。この他にも</p>
+<ul class="simple">
+<li><p>PI（Probability of Improvement): 現状の最適値よりもさらに良くなる確率を計算して次点を選ぶ方法</p></li>
+<li><p>UCB（Upper Confidence Bound)/LCB（Lower Confidence Bound): ガウス過程の予測平均と分散を組み合わせて次点を選ぶ方法</p></li>
+</ul>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -13143,6 +13147,14 @@ yTXcqp0AAAAASUVORK5CYII=\
 </script>
 </div></div>
 </div>
+<p>今は単なる一次元の例を示したが、多次元にも拡張可能である。
+最後に、ベイズ最適化を用いた各種のアプリケーションについて例示しておく。</p>
+<ul class="simple">
+<li><p>ハイパーパラメータチューニング: 機械学習モデルのハイパーパラメータを最適化するために使用される。例えば、ニューラルネットワークの学習率や正則化パラメータの最適化など、人が手動で試行錯誤する作業を自動化できる。</p></li>
+<li><p>材料科学: 新しい材料・化合物の特性（バンドギャップ、強度、磁化率など）の探索のためのスクリーニングに利用される。実験や数値シミュレーションなどのコストが高い場合に有用となる。</p></li>
+</ul>
+<p>共通するのは、1回のデータの観測・評価・取得にコストがかかる場合であり、そのような場合に、効率的に最適解に近づくための手法としてベイズ最適化が有効であるということである。</p>
+<p>獲得関数の設計やカーネルの選択など、応用に応じた工夫が必要となる場合も多いが、比較的容易に実装できるため、試してみる価値は大いにある。</p>
 </section>
 </section>
 
