@@ -437,18 +437,18 @@ const thebe_selector_output = ".output, .cell_output"
 <h1><span class="section-number">5. </span>線形回帰<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <p>この章では、前章の単回帰を拡張した線形回帰について解説する。</p>
 <p>最も単純な線形回帰は、以下の多項式回帰である。</p>
-<div class="note admonition">
+<div class="tip admonition">
 <p class="admonition-title">定義: 多項式回帰</p>
 <p>回帰曲線を、多項式の重み付き和で表現する回帰を <strong>多項式回帰(polynomial regression)</strong> と呼ぶ。</p>
 <div class="math notranslate nohighlight">
 \[
 y(x, \boldsymbol{w}) = w_0 + w_1 x + w_2 x^2 + \cdots + w_p x^p = \sum_{j=0}^p w_j x^j
 \]</div>
-<p>ここで、<span class="math notranslate nohighlight">\(x\)</span>は入力変数、<span class="math notranslate nohighlight">\(y\)</span>は出力変数、<span class="math notranslate nohighlight">\(\boldsymbol{w}\)</span>はパラメータベクトル、<span class="math notranslate nohighlight">\(p\)</span>は多項式の次数である。</p>
+<p>ここで、<span class="math notranslate nohighlight">\(x\)</span>は入力変数、<span class="math notranslate nohighlight">\(y\)</span>は出力変数、<span class="math notranslate nohighlight">\(w\)</span>はパラメータベクトル、<span class="math notranslate nohighlight">\(p\)</span>は多項式の次数である。</p>
 </div>
 <p>線形回帰(Linear Regression)はしばし、この多項式回帰を指すこともあるが、
 より一般には、基底関数と呼ばれる関数を用いた定義となる:</p>
-<div class="note admonition">
+<div class="tip admonition">
 <p class="admonition-title">定義: 線形回帰</p>
 <div class="math notranslate nohighlight">
 \[
