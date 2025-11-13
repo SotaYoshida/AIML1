@@ -632,8 +632,8 @@ p(\mathbf{x}, \mathbf{y}) = \mathcal{N}\left(
 &amp; = \mathcal{N}\left( \mathbf{\mu}_{x}, \Sigma_{xx} \right)
 \end{align*}
 \]</div>
-<div class="math notranslate nohighlight">
-\[\begin{split}
+<p>条件付き分布は次のようになる。
+$<span class="math notranslate nohighlight">\(
 \begin{align*}
 p(\mathbf{x} | \mathbf{y}) &amp; = \mathcal{N}\left(
     \mathbf{\mu}_{x|y},
@@ -641,7 +641,7 @@ p(\mathbf{x} | \mathbf{y}) &amp; = \mathcal{N}\left(
 \mathbf{\mu}_{x|y} &amp; = \mathbf{\mu}_x + \Sigma_{xy} \Sigma_{yy}^{-1} (\mathbf{y} - \mathbf{\mu}_y) \\
 \Sigma_{x|y} &amp; = \Sigma_{xx} - \Sigma_{xy} \Sigma_{yy}^{-1} \Sigma_{yx}
 \end{align*}
-\end{split}\]</div>
+\)</span>$</p>
 <p>以下では、条件分布の式の導出を紹介しよう:</p>
 <p>ある行列<span class="math notranslate nohighlight">\(M\)</span>の逆行列が以下のように書けるとき</p>
 <div class="math notranslate nohighlight">
