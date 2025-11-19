@@ -414,7 +414,8 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">6.3. カーネルとハイパーパラメータ</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">6.4. ノイズの扱い</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">6.5. 実装</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">6.6. ベイズ最適化</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">6.6. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 正規乱数の生成について</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">6.7. ベイズ最適化</a></li>
 </ul>
             </nav>
         </div>
@@ -749,8 +750,75 @@ K(\mathbf{x}, \mathbf{x})^{-1} = (L^T)^{-1} L^{-1}
 </div>
 <p>両者がピッタリ重なっている事がわかる。ただし、<code class="docutils literal notranslate"><span class="pre">GPy</span></code>や<code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>などのライブラリでは、データの分散や予測分散を別々にカスタマイズするのがやや面倒だったりもする。</p>
 </section>
+<section id="clubsuit">
+<h2><span class="section-number">6.6. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> 正規乱数の生成について<a class="headerlink" href="#clubsuit" title="Link to this heading">#</a></h2>
+<p>余談になるが、正規分布に従う乱数の生成をどのように行えばよいだろうか？
+もちろん<code class="docutils literal notranslate"><span class="pre">numpy</span></code>や<code class="docutils literal notranslate"><span class="pre">scipy</span></code>などのライブラリを使えば簡単に生成できるが、
+どのように生成されているのか紹介しておこう。</p>
+<p>簡単のため１次元の場合を考える。標準正規分布に従う乱数<span class="math notranslate nohighlight">\(z\)</span>を生成する方法の一つに、Box-Muller法がある。</p>
+<p>Box-Muller法では、<span class="math notranslate nohighlight">\(U_1, U_2\)</span>を<span class="math notranslate nohighlight">\([0,1)\)</span>の一様分布に従う独立な乱数とするとき、以下の変換によって得られる<span class="math notranslate nohighlight">\(Z_0, Z_1\)</span>が標準正規分布に従うことを利用する。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+Z_0 &amp; = \sqrt{-2 \ln U_1} \cos(2 \pi U_2)\\
+Z_1 &amp; = \sqrt{-2 \ln U_1} \sin(2 \pi U_2)
+\end{align*}
+\end{split}\]</div>
+<p>この方法は、極座標変換を用いて、2次元の標準正規分布に従う乱数を生成し、それを1次元に分解している。
+半径部分が指数分布に、角度部分が一様分布に従うことを利用している。
+コードで確かめてみよう。</p>
+<p>一様乱数を2つ生成し、Box-Muller法で標準正規乱数を生成し、散布図とヒストグラムを描画してみた。</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">BoxMuller</span><span class="p">(</span><span class="n">u1</span><span class="p">,</span> <span class="n">u2</span><span class="p">):</span>
+    <span class="n">z0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="o">-</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">u1</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">u2</span><span class="p">)</span>
+    <span class="n">z1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="o">-</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">u1</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">u2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">z0</span><span class="p">,</span> <span class="n">z1</span>
+
+<span class="n">num_samples</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="mi">4</span>
+<span class="n">u1u2s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">num_samples</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="n">BoxMuller</span><span class="p">(</span><span class="n">u1u2s</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">u1u2s</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
+
+<span class="n">h</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">samples</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">samples</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> 
+              <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#e2c6ff&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>              
+              <span class="n">height</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">h</span><span class="o">.</span><span class="n">set_axis_labels</span><span class="p">(</span><span class="s1">&#39;z0&#39;</span><span class="p">,</span> <span class="s1">&#39;z1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/691ca8b2fb8b029ab584176033fe28ce8524db163bf67ff02d1eee27a39ffff3.png" src="../_images/691ca8b2fb8b029ab584176033fe28ce8524db163bf67ff02d1eee27a39ffff3.png" />
+</div>
+</div>
+<p>続いて、多次元正規分布に従う乱数を生成する方法についても紹介しよう。
+こちらも、<code class="docutils literal notranslate"><span class="pre">np.random.multivariate_normal</span></code>などの実装があるので、実用上はそれを使えばよいが、背後にある理論を理解しておくことは有用である。</p>
+<p>多次元正規分布の乱数生成は、共分散行列 <span class="math notranslate nohighlight">\(\Sigma\)</span> のコレスキー分解を用いればよい。</p>
+<div class="math notranslate nohighlight">
+\[
+\Sigma = LL^T
+\]</div>
+<p>このとき、標準正規分布に従う乱数ベクトル <span class="math notranslate nohighlight">\(\mathbf{z} \sim \mathcal{N}(0, I)\)</span> に対して、変換</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{y} = L \mathbf{z} + \boldsymbol{\mu}
+\]</div>
+<p>によって、<span class="math notranslate nohighlight">\(\mathbf{y} \sim \mathcal{N}(\boldsymbol{\mu}, \Sigma)\)</span> に従う乱数ベクトルを生成できる。</p>
+<p>余談ついでに昔話をすると、<code class="docutils literal notranslate"><span class="pre">Numpy</span></code>の多次元正規分布は(少なくとも筆者が大学院生の頃は)何も考えずに使うとthread-unsafe、つまりマルチスレッド環境で使うと同様の乱数が生成されてしまう仕様であった。そのことに気がついたのは、粒子フィルタ(particle filter)と呼ばれる複数のworkerでサンプリングを行う、マルコフ連鎖モンテカルロ法の逐次バージョン的なアルゴリズムを実装していたときである。
+Numpy 2.0になってからは、RNG(乱数生成器)周りでの改良が行われたが、やはり実際の乱数生成の結果を都度確認する癖はつけておいた方がよいだろう。</p>
+</section>
 <section id="id6">
-<h2><span class="section-number">6.6. </span>ベイズ最適化<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">6.7. </span>ベイズ最適化<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
 <p>ガウス過程は、ベイズ最適化の核としても広く使われる。
 関数の振る舞いをガウス過程でモデル化し、その不確実性を考慮しながら最適化を進めていく。</p>
 <p>とくに、１回の観測(や数値実験など)にコストがかかり、勾配が利用できないような関数の最適化に有効である。
@@ -13226,7 +13294,8 @@ yTXcqp0AAAAASUVORK5CYII=\
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">6.3. カーネルとハイパーパラメータ</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">6.4. ノイズの扱い</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">6.5. 実装</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">6.6. ベイズ最適化</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">6.6. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 正規乱数の生成について</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">6.7. ベイズ最適化</a></li>
 </ul>
   </nav></div>
 
