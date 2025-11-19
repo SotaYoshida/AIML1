@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -571,7 +571,8 @@ z_k^{(l)} &amp; = g(u_k^{(l)})
 \end{aligned}
 \end{split}\]</div>
 <p>それぞれの重み <span class="math notranslate nohighlight">\(W^{(l)}\)</span> は、ノードへの入力の次元(= <span class="math notranslate nohighlight">\(n_{l-1}\)</span>)×ノードからの出力の次元(= <span class="math notranslate nohighlight">\(n_{l}\)</span>)を持つ行列である。
-各ノードで行なう <span class="math notranslate nohighlight">\(Wz + b\)</span> の計算は、線形変換と平行移動に相当する演算で、より一般にはAffine変換と呼ばれる。このことから、全結合ニューラルネットワークのことをAffine Layerなどと呼ぶこともある。</p>
+各ノードで行なう <span class="math notranslate nohighlight">\(Wz + b\)</span> の計算は、線形変換と平行移動に相当する演算で、より一般にはAffine変換と呼ばれる。このことから、全結合ニューラルネットワークのことをAffine Layerなどと呼ぶこともある。
+あるいは、パーセプトロンを組み合わせたものとして、**多層パーセプトロン(Multi-Layer Perceptron, MLP)**と呼ぶこともある。</p>
 <p>2.の操作に現れた活性化関数については、後で詳しく述べるが、
 入力の重み付き和(+バイアス)に対して、非線形な関数を適用することで、
 より複雑な関数を表現することができるようになる。
@@ -648,7 +649,7 @@ f^{NN}(\boldsymbol{x}) = \boldsymbol{w_2}  \boldsymbol{w_1}  \boldsymbol{x}
 = (\boldsymbol{w_2}  \boldsymbol{w_1}) \boldsymbol{x}
 \]</div>
 <p>となり、層を繰り返すことによって得られる信号の変換は単なる行列の積となり、
-単一の行列<span class="math notranslate nohighlight">\(W=w_1 \times w_2\)</span>による線形変換になってしまう。</p>
+単一の行列<span class="math notranslate nohighlight">\(W= \boldsymbol{w_2}  \boldsymbol{w_1}\)</span>による線形変換になってしまう。</p>
 <p>つまり、隠れ層の活性化関数を恒等関数にすると、いくら隠れ層を増やしても
 線形変換による近似しかできないため、ニューラルネットワークの表現力が制限されてしまう。
 入力と出力の間の非線形な関係を表現するためには、隠れ層において非線形な活性化関数を用いる必要があることがわかる。</p>
