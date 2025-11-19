@@ -765,9 +765,8 @@ Z_1 &amp; = \sqrt{-2 \ln U_1} \sin(2 \pi U_2)
 \end{align*}
 \end{split}\]</div>
 <p>この方法は、極座標変換を用いて、2次元の標準正規分布に従う乱数を生成し、それを1次元に分解している。
-半径部分が指数分布に、角度部分が一様分布に従うことを利用している。
-コードで確かめてみよう。</p>
-<p>一様乱数を2つ生成し、Box-Muller法で標準正規乱数を生成し、散布図とヒストグラムを描画してみた。</p>
+半径部分が指数分布に、角度部分が一様分布に従うことを利用している。</p>
+<p>コードで確かめてみよう。一様乱数を2つ生成し、Box-Muller法で標準正規乱数を生成し、散布図とヒストグラムを描画してみた。</p>
 <div class="cell tag_hide-input docutils container">
 <details class="hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -802,8 +801,8 @@ Z_1 &amp; = \sqrt{-2 \ln U_1} \sin(2 \pi U_2)
 </div>
 </div>
 <p>続いて、多次元正規分布に従う乱数を生成する方法についても紹介しよう。
-こちらも、<code class="docutils literal notranslate"><span class="pre">np.random.multivariate_normal</span></code>などの実装があるので、実用上はそれを使えばよいが、背後にある理論を理解しておくことは有用である。</p>
-<p>多次元正規分布の乱数生成は、共分散行列 <span class="math notranslate nohighlight">\(\Sigma\)</span> のコレスキー分解を用いればよい。</p>
+こちらも、<code class="docutils literal notranslate"><span class="pre">np.random.multivariate_normal</span></code>などの実装があるので、実用上はそれを使えばよいが、詳細な実現方法の一例を知っておくと便利である。
+多次元正規分布の乱数生成は、共分散行列 <span class="math notranslate nohighlight">\(\Sigma\)</span> のコレスキー分解を用いればよい。</p>
 <div class="math notranslate nohighlight">
 \[
 \Sigma = LL^T
@@ -814,8 +813,8 @@ Z_1 &amp; = \sqrt{-2 \ln U_1} \sin(2 \pi U_2)
 \mathbf{y} = L \mathbf{z} + \boldsymbol{\mu}
 \]</div>
 <p>によって、<span class="math notranslate nohighlight">\(\mathbf{y} \sim \mathcal{N}(\boldsymbol{\mu}, \Sigma)\)</span> に従う乱数ベクトルを生成できる。</p>
-<p>余談ついでに昔話をすると、<code class="docutils literal notranslate"><span class="pre">Numpy</span></code>の多次元正規分布は(少なくとも筆者が大学院生の頃は)何も考えずに使うとthread-unsafe、つまりマルチスレッド環境で使うと同様の乱数が生成されてしまう仕様であった。そのことに気がついたのは、粒子フィルタ(particle filter)と呼ばれる複数のworkerでサンプリングを行う、マルコフ連鎖モンテカルロ法の逐次バージョン的なアルゴリズムを実装していたときである。
-Numpy 2.0になってからは、RNG(乱数生成器)周りでの改良が行われたが、やはり実際の乱数生成の結果を都度確認する癖はつけておいた方がよいだろう。</p>
+<p>余談ついでに昔話をすると、<code class="docutils literal notranslate"><span class="pre">Numpy</span></code>の多次元正規分布は(少なくとも筆者が大学院生の頃は)何も考えずに使うとthread-unsafe、つまりマルチスレッド環境で使うと同様の乱数が生成されてしまう仕様であった。そのことに気がついたのは、粒子フィルタ(particle filter)と呼ばれる複数のworkerでサンプリングを行う、マルコフ連鎖モンテカルロ法の逐次バージョン的なアルゴリズムを実装していたときで、独立なはずのworkerが同じ乱択を繰り返していることに気が付いた。
+Numpy 2.0になってからは、RNG(乱数生成器)周りでの改良が行われたようだが、やはり実際の乱数生成の結果を都度確認する癖はつけておいた方がよいだろう。</p>
 </section>
 <section id="id6">
 <h2><span class="section-number">6.7. </span>ベイズ最適化<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
