@@ -681,16 +681,24 @@ E = \frac{1}{m} \sum^m_{i} \mathbf{1}_{\hat{y}^{(i)} \neq y^{(i)}}
 <p>交差エントロピーは以下のように定義される。</p>
 <div class="math notranslate nohighlight">
 \[
-H(p, q) = - \sum_{i} p(x) \log (q(x))
+H(p, q) = - \sum_{x} p(x) \log (q(x))
 \]</div>
-<p>２つの確率分布の近さを測る指標である。とくに二値分類モデルで用いられる場合の対応物は、二値交差エントロピー(binary cross-entropy)と呼ばれ、以下のように定義される。</p>
+<p>２つの確率分布の近さを測る指標である。<span class="math notranslate nohighlight">\(p\)</span>が真の分布、<span class="math notranslate nohighlight">\(q\)</span>が予測された分布を表す。<span class="math notranslate nohighlight">\(p=q\)</span>のときに最小値0を取る。</p>
+<p><span class="math notranslate nohighlight">\(x\)</span>が0か1に二値を取り、1をとる確率が<span class="math notranslate nohighlight">\(p\)</span>であると0をとる確率は<span class="math notranslate nohighlight">\(1-p\)</span>になる。すると、交差エントロピーは</p>
 <div class="math notranslate nohighlight">
 \[
-E = - y \log(\tilde{y}) - (1-y) \log(1-\tilde{y})
+- p \log(q) - (1-p) \log(1-q)
 \]</div>
-<p>ここで、<span class="math notranslate nohighlight">\(y\)</span>は正しいラベル(0または1)、<span class="math notranslate nohighlight">\(\tilde{y}\)</span>は予測されたラベル(0から1の間の値)である。
-予測値が確率的に解釈できる(≒出力が0から1までの値を取る)ロジスティック回帰などのモデルを想定していることに注意しよう。</p>
+<p>これは、<strong>二値交差エントロピー(binary cross-entropy)</strong> とも呼ばれる。
+ここでは予測値 <span class="math notranslate nohighlight">\(q\)</span> が確率的に解釈できる(≒出力が0から1までの値を取る)ロジスティック回帰などのモデルを想定していることに注意しよう。</p>
+<p>交差エントロピーが最小になるのは、<span class="math notranslate nohighlight">\(p=q\)</span>のときであり、予測された確率<span class="math notranslate nohighlight">\(q\)</span>が真の確率<span class="math notranslate nohighlight">\(p\)</span>に近づくほど誤差が小さくなる。
+したがって、モデルの最適化は、交差エントロピーの最小化として定式化することができる。</p>
 <p>その他にも、ヒンジ損失(hinge loss)など、様々な誤差関数が提案され、資料では発展的な注 <span class="math notranslate nohighlight">\(\clubsuit\)</span> としたサポートベクターマシンなどで用いられる損失関数につながっていく。</p>
+<div class="attention admonition">
+<p class="admonition-title">問題</p>
+<p>離散化された確率分布 <span class="math notranslate nohighlight">\(p(x)\)</span>と<span class="math notranslate nohighlight">\(q(x)\)</span>に対して、交差エントロピーが<span class="math notranslate nohighlight">\(p=q\)</span>のときに最小になることを、ラグランジュの未定乗数法を用いて示せ。</p>
+<p>ヒント: 制約条件は<span class="math notranslate nohighlight">\( \sum_x q(x) = 1\)</span>とすればよい。</p>
+</div>
 </div>
 <div class="section" id="clubsuit">
 <h2><span class="section-number">7.4. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> サポートベクターマシン<a class="headerlink" href="#clubsuit" title="このヘッドラインへのパーマリンク">¶</a></h2>
