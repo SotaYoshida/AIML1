@@ -657,8 +657,8 @@ f(x) = \frac{1}{1 + \exp(-x)}
 </div>
 <p>これにより、<span class="math notranslate nohighlight">\(\boldsymbol{w}^T \boldsymbol{x} + b=0\)</span>からの距離を関数とした確率を表現することができ、
 <span class="math notranslate nohighlight">\(f(\boldsymbol{w}^T \boldsymbol{x} + b)=0.5\)</span>となる点の集合(<span class="math notranslate nohighlight">\(\boldsymbol{w}^T \boldsymbol{x} + b=0\)</span>)が境界面(今は二次元なので境界線)に対応している事がわかる。</p>
-<p>0.5より大きい場合は、1と判定し、0.5より小さい場合は0と判定することで、線形二値分類を実現できる。</p>
-<p>また、それだけでなく、２値分類の判定の&quot;自信&quot;のような量を表現することができる点もロジスティック回帰の利点である。</p>
+<p>0.5より大きい場合は、1と判定し、0.5より小さい場合は0と判定することで、線形二値分類を実現できる。
+また、２値分類の判定の&quot;自信&quot;のような量を表現することができる点もロジスティック回帰の利点である。</p>
 </div>
 <div class="section" id="id4">
 <h2><span class="section-number">7.3. </span>分類誤差<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
@@ -689,7 +689,8 @@ H(p, q) = - \sum_{x} p(x) \log (q(x))
 \[
 - p \log(q) - (1-p) \log(1-q)
 \]</div>
-<p>これは、<strong>二値交差エントロピー(binary cross-entropy)</strong> とも呼ばれる。
+<p>となる。ここで、<span class="math notranslate nohighlight">\(q\)</span>はモデルが1を予測する確率を表す。
+これは、<strong>二値交差エントロピー(binary cross-entropy)</strong> とも呼ばれる。
 ここでは予測値 <span class="math notranslate nohighlight">\(q\)</span> が確率的に解釈できる(≒出力が0から1までの値を取る)ロジスティック回帰などのモデルを想定していることに注意しよう。</p>
 <p>交差エントロピーが最小になるのは、<span class="math notranslate nohighlight">\(p=q\)</span>のときであり、予測された確率<span class="math notranslate nohighlight">\(q\)</span>が真の確率<span class="math notranslate nohighlight">\(p\)</span>に近づくほど誤差が小さくなる。
 したがって、モデルの最適化は、交差エントロピーの最小化として定式化することができる。</p>
@@ -697,14 +698,14 @@ H(p, q) = - \sum_{x} p(x) \log (q(x))
 <div class="attention admonition">
 <p class="admonition-title">問題</p>
 <p>離散化された確率分布 <span class="math notranslate nohighlight">\(p(x)\)</span>と<span class="math notranslate nohighlight">\(q(x)\)</span>に対して、交差エントロピーが<span class="math notranslate nohighlight">\(p=q\)</span>のときに最小になることを、ラグランジュの未定乗数法を用いて示せ。</p>
-<p>ヒント: 制約条件は<span class="math notranslate nohighlight">\( \sum_x q(x) = 1\)</span>とすればよい。</p>
+<p>ヒント: 制約条件はそれぞれの確率の和が1になるように、<span class="math notranslate nohighlight">\( \sum_x q(x) = 1\)</span>とすればよい。</p>
 </div>
 </div>
 <div class="section" id="clubsuit">
 <h2><span class="section-number">7.4. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> サポートベクターマシン<a class="headerlink" href="#clubsuit" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="margin sidebar">
 <p class="sidebar-title"></p>
-<p>編集注: 幾何的なイメージのための図を後日追加予定</p>
+<p>編集注: 幾何的なイメージのための図を後日(そう遠くない未来)追加予定</p>
 </div>
 <p><strong>サポートベクターマシン(Support Vector Machine: SVM)</strong> は、線形二値分類をはじめ、分類問題を解くための強力な手法である。<br />
 SVMの基本的な考え方は、2つのクラスを分ける境界面(超平面)を引く際に、
