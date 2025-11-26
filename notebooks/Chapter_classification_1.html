@@ -681,12 +681,12 @@ E = \frac{1}{2m} \sum_{i=1}^{m} \left| y^{(i)} - \hat{y}^{(i)} \right|
 <p>交差エントロピーは以下のように定義される。</p>
 <div class="math notranslate nohighlight">
 \[
-H(p, q) = - \sum_{i} p(x) log (q(x))
+H(p, q) = - \sum_{i} p(x) \log (q(x))
 \]</div>
 <p>２つの確率分布の近さを測る指標である。とくに二値分類モデルで用いられる場合の対応物は、二値交差エントロピー(binary cross-entropy)と呼ばれ、以下のように定義される。</p>
 <div class="math notranslate nohighlight">
 \[
-E = - y log(\hat{y}) - (1-y) log(1-\hat{y})
+E = - y \log(\hat{y}) - (1-y) \log(1-\hat{y})
 \]</div>
 <p>ここで、<span class="math notranslate nohighlight">\(y\)</span>は正しいラベル(0または1)、<span class="math notranslate nohighlight">\(\hat{y}\)</span>は予測されたラベル(0から1の間の値)である。
 予測値が確率的に解釈できるモデルを想定していることに注意しよう。</p>
