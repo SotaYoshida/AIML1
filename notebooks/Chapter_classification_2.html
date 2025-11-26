@@ -465,7 +465,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <p>これに何らかのベクトルを入力して、出力をプロットしてみよう。</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 
@@ -534,6 +534,7 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="c1"># 3. 損失関数と最適化手法</span>
 <span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span><span class="p">()</span>  <span class="c1"># Softmax + CrossEntropy</span>
 <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="c1">#optimizer = optim.Adam(model.parameters())</span>
 
 <span class="c1"># 4. 学習ループ</span>
 <span class="n">epochs</span> <span class="o">=</span> <span class="mi">10</span>
@@ -580,21 +581,26 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/10, Loss: 0.6569
-Epoch 2/10, Loss: 0.3846
-Epoch 3/10, Loss: 0.3614
-Epoch 4/10, Loss: 0.3495
-Epoch 5/10, Loss: 0.3370
-Epoch 6/10, Loss: 0.3349
-Epoch 7/10, Loss: 0.3266
-Epoch 8/10, Loss: 0.3242
-Epoch 9/10, Loss: 0.3219
-Epoch 10/10, Loss: 0.3205
-Test Accuracy: 87.94%
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/10, Loss: 0.6947
+Epoch 2/10, Loss: 0.3854
+Epoch 3/10, Loss: 0.3549
+Epoch 4/10, Loss: 0.3460
+Epoch 5/10, Loss: 0.3388
+Epoch 6/10, Loss: 0.3359
+Epoch 7/10, Loss: 0.3293
+Epoch 8/10, Loss: 0.3203
+Epoch 9/10, Loss: 0.3207
+Epoch 10/10, Loss: 0.3199
+Test Accuracy: 86.19%
 </pre></div>
 </div>
 <img alt="../_images/Chapter_classification_2_9_1.png" src="../_images/Chapter_classification_2_9_1.png" />
 </div>
+</div>
+<div class="attention admonition">
+<p class="admonition-title">問題</p>
+<p>上のコードで、optimizerをSGDからAdamに変えて学習を実行してみよう。
+※実行には、<code class="docutils literal notranslate"><span class="pre">PyTorch</span></code>が必要になるので、適宜ローカル環境でインストールを行うか、Google Colabなどのクラウド環境を利用しよう。</p>
 </div>
 <div class="section" id="clubsuit">
 <h3><span class="section-number">8.2.1. </span><strong><span class="math notranslate nohighlight">\(\clubsuit\)</span> コードでやっていることの解説</strong><a class="headerlink" href="#clubsuit" title="このヘッドラインへのパーマリンク">¶</a></h3>

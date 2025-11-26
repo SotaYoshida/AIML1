@@ -666,34 +666,30 @@ f(x) = \frac{1}{1 + \exp(-x)}
 そこで、実際の分類問題を考える際には、分類誤差を定義し、その誤差を最小化するようにパラメータ<span class="math notranslate nohighlight">\(\boldsymbol{w}, b\)</span>を調整することが重要になる。</p>
 <p>それぞれのデータ点<span class="math notranslate nohighlight">\(\boldsymbol{x}^{(i)}\)</span>に対して、正しいラベルを<span class="math notranslate nohighlight">\(y^{(i)}\)</span>、分類器によって予測されたラベルを<span class="math notranslate nohighlight">\(\hat{y}^{(i)}\)</span>とすると、
 分類誤差<span class="math notranslate nohighlight">\(E\)</span>は下記に示すような幾つかの方法で定義することができる。</p>
-<ol>
-<li><p>0-1誤差 (0-1 損失)</p>
+<p><strong>0-1誤差 (0-1 損失)</strong></p>
 <p>最も直感的なのは、予測されたラベルが正しいかどうかを単純に比較する方法である。
 正しく分類されれば誤差は0、誤って分類されれば誤差は1とすればよい。</p>
 <div class="math notranslate nohighlight">
 \[
-   E = \frac{1}{2m} \sum_{i=1}^{m} \left| y^{(i)} - \hat{y}^{(i)} \right| 
-   \]</div>
+E = \frac{1}{2m} \sum_{i=1}^{m} \left| y^{(i)} - \hat{y}^{(i)} \right| 
+\]</div>
 <p>1/2をかけることで、誤差が0または1になるようにしているが、定数倍は誤差の最小化には影響しないので、無視しても良い。
 これは、全データ点に対して誤って分類された点の割合(誤分類率)を表している。自然な定義であるが、微分不可能な関数であるため、最適化には向かない。</p>
-</li>
-<li><p>交差エントロピー</p>
+<p><strong>交差エントロピー</strong></p>
 <p>もう一つよく用いられるのは、交差エントロピー(cross-entropy)と呼ばれる誤差関数である。
 これは、確率的な分類器に対してよく用いられるもので、予測されたラベルが正しい確率が高いほど誤差が小さくなるように定義されている。</p>
 <p>交差エントロピーは以下のように定義される。</p>
 <div class="math notranslate nohighlight">
 \[
-     H(p, q) = - \sum_{i} p(x) log (q(x))
-    \]</div>
+H(p, q) = - \sum_{i} p(x) log (q(x))
+\]</div>
 <p>２つの確率分布の近さを測る指標である。とくに二値分類モデルで用いられる場合の対応物は、二値交差エントロピー(binary cross-entropy)と呼ばれ、以下のように定義される。</p>
 <div class="math notranslate nohighlight">
 \[
-     E = - y log(\hat{y}) - (1-y) log(1-\hat{y})
-    \]</div>
+E = - y log(\hat{y}) - (1-y) log(1-\hat{y})
+\]</div>
 <p>ここで、<span class="math notranslate nohighlight">\(y\)</span>は正しいラベル(0または1)、<span class="math notranslate nohighlight">\(\hat{y}\)</span>は予測されたラベル(0から1の間の値)である。
 予測値が確率的に解釈できるモデルを想定していることに注意しよう。</p>
-</li>
-</ol>
 <p>その他にも、ヒンジ損失(hinge loss)など、様々な誤差関数が提案され、資料では発展的な注 <span class="math notranslate nohighlight">\(\clubsuit\)</span> としたサポートベクターマシンなどで用いられる損失関数につながっていく。</p>
 </div>
 <div class="section" id="clubsuit">
