@@ -1,461 +1,480 @@
 
 <!DOCTYPE html>
 
-<html lang="ja">
+
+<html lang="ja" data-content_root="../" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>KAN: Kolmogorov–Arnold Networksを用いたmass model &#8212; AI・機械学習論1</title>
-    
-  <link href="../_static/css/theme.css" rel="stylesheet">
-  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    
-      
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
-    
-  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
-
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/clipboard.min.js"></script>
-    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/documentation_options.js?v=1cf7f4d9"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js"></script>
-    <script src="../_static/translations.js"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/translations.js?v=91613774"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-VHT6K3HJ64"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-VHT6K3HJ64');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-VHT6K3HJ64');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'local_files/working';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="ja">
-    
-
-    <!-- Google Analytics -->
-    
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-VHT6K3HJ64"></script>
-<script>
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){ dataLayer.push(arguments); }
-                    gtag('js', new Date());
-                    gtag('config', 'G-VHT6K3HJ64');
-                </script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="ja"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
-    <div class="container-xl">
-      <div class="row">
-          
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="../index.html">
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
       
-        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+      
+      
         
       
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../home.html">
+  
+  
+  
+  
+  
+    
+    
       
-      <img src="../_static/logo_AIML1.png" class="logo" alt="logo">
-      
-      
-      <h1 class="site-logo" id="site-title">AI・機械学習論1</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="この本を検索..." aria-label="この本を検索..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../home.html">
-   AI・機械学習論1
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  機械学習のための数学
- </span>
-</p>
+    
+    
+    <img src="../_static/logo_AIML1.png" class="logo__image only-light" alt="AI・機械学習論1 - Home"/>
+    <script>document.write(`<img src="../_static/logo_AIML1.png" class="logo__image only-dark" alt="AI・機械学習論1 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">検索</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../home.html">
+                    AI・機械学習論1
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">機械学習のための数学</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../notebooks/Chapter_math_vector_calculus.html">
-   1. ベクトル解析
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../notebooks/Chapter_math_linearalgebra.html">
-   2. 線形代数
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../notebooks/Chapter_math_probabilitydistributions.html">
-   3. 確率と確率分布
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_math_vector_calculus.html">1. ベクトル解析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_math_linearalgebra.html">2. 線形代数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_math_probabilitydistributions.html">3. 確率と確率分布</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  回帰
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">回帰</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../notebooks/Chapter_regression.html">
-   4. 回帰の概要
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../notebooks/Chapter_linear_regression.html">
-   5. 線形回帰
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../notebooks/Chapter_GaussianProcess.html">
-   6. ガウス過程（Gaussian Process）
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_regression.html">4. 回帰の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_linear_regression.html">5. 線形回帰</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_GaussianProcess.html">6. ガウス過程（Gaussian Process）</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  分類
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">分類</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../notebooks/Chapter_classification_1.html">
-   7. 分類問題の概要
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../notebooks/Chapter_classification_2.html">
-   8. 多クラス分類
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_classification_1.html">7. 分類問題の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_classification_2.html">8. 多クラス分類</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  ニューラルネットワーク
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">ニューラルネットワーク</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../notebooks/Chapter_ANN_Intro.html">
-   9. ニューラルネットワークの概要
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../notebooks/Chapter_ANN2_Backprop.html">
-   10. 誤差逆伝播法
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../notebooks/Chapter_Optimization.html">
-   11. 機械学習における最適化
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_ANN_Intro.html">9. ニューラルネットワークの概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_ANN2_Backprop.html">10. 誤差逆伝播法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_Optimization.html">11. 機械学習における最適化</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  データの表現・モデルの評価
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">データの表現・モデルの評価</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../notebooks/Data_representation.html">
-   12. 機械学習におけるデータ表現の基礎
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../notebooks/Chapter_Model_evaluation.html">
-   13. モデルの選択・評価・過学習・正則化
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Data_representation.html">12. 機械学習におけるデータ表現の基礎</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_Model_evaluation.html">13. モデルの選択・評価・過学習・正則化</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  発展的な話題
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">発展的な話題</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../notebooks/Chapter_PCA.html">
-   14. 主成分分析
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../notebooks/Chapter_GMM.html">
-   15. 混合ガウスモデル(Gaussian Mixture Model, GMM)
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../notebooks/Chapter_KAN.html">
-   16. KAN: Kolmogorov–Arnold Networks
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_PCA.html">14. 主成分分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_GMM.html">15. 混合ガウスモデル(Gaussian Mixture Model, GMM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Chapter_KAN.html">16. KAN: Kolmogorov–Arnold Networks</a></li>
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
-            
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="ナビゲーションを切り替え" aria-controls="site-navigation"
-                title="ナビゲーションを切り替え" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="このページをダウンロード"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/local_files/working.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="ソースファイルをダウンロード" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="PDFに印刷"
-                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+</nav></div>
     </div>
-</div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
 
-            <!-- Source interaction buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/SotaYoshida/AIML1"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="ソースリポジトリ"><i
-                    class="fab fa-github"></i>リポジトリ</button></a>
-        <a class="issues-button"
-            href="https://github.com/SotaYoshida/AIML1/issues/new?title=Issue%20on%20page%20%2Flocal_files/working.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="問題を開く"><i class="fas fa-lightbulb"></i>未解決の問題</button></a>
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
         
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
     </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/SotaYoshida/AIML1" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="ソースリポジトリ"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/SotaYoshida/AIML1/issues/new?title=Issue%20on%20page%20%2Flocal_files/working.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="問題を報告"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
 </div>
 
-            <!-- Full screen (wrap in <a> to have style consistency -->
 
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="全画面モード"
-        title="全画面モード"><i
-            class="fas fa-expand"></i></button></a>
 
-            <!-- Launch buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/SotaYoshida/AIML1/master?urlpath=tree/docs/local_files/working.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="発売 Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="このページをダウンロード">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/local_files/working.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="ソースファイルをダウンロード"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="PDFに印刷"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全画面モード"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
     </div>
+  
 </div>
+</div>
+              
+              
 
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>KAN: Kolmogorov–Arnold Networksを用いたmass model</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
             
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> 目次
+            <div>
+                <h2> 目次 </h2>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
+            <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#kan">
-   KANの式
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id1">
-   データの準備
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#loss-function">
-   Loss function
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id2">
-   データセットの作成
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id3">
-   モデルの構築
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id4">
-   シンボリック回帰
-  </a>
- </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kan">KANの式</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">データの準備</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loss-function">Loss function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">データセットの作成</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">モデルの構築</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">シンボリック回帰</a></li>
 </ul>
-
             </nav>
         </div>
     </div>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>KAN: Kolmogorov–Arnold Networksを用いたmass model</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> 目次 </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#kan">
-   KANの式
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id1">
-   データの準備
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#loss-function">
-   Loss function
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id2">
-   データセットの作成
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id3">
-   モデルの構築
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id4">
-   シンボリック回帰
-  </a>
- </li>
-</ul>
 
-                        </nav>
-                    </div>
-                </div>
-            </div>
-            
-              <div>
+              
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="kan-kolmogorovarnold-networksmass-model">
-<h1>KAN: Kolmogorov–Arnold Networksを用いたmass model<a class="headerlink" href="#kan-kolmogorovarnold-networksmass-model" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="kan-kolmogorovarnold-networksmass-model">
+<h1>KAN: Kolmogorov–Arnold Networksを用いたmass model<a class="headerlink" href="#kan-kolmogorovarnold-networksmass-model" title="Link to this heading">#</a></h1>
 <p>中国のグループによって、KANによる原子核のmass modelが提唱された: <a class="reference external" href="https://arxiv.org/abs/2407.20737">arXiv:2407.20737v1</a></p>
 <p>KANはその性質からシンボリック回帰が行いやすく、反応模型(光学ポテンシャルなど)とも親和性が高いと思われる。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="kan">
-<h2>KANの式<a class="headerlink" href="#kan" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<section id="kan">
+<h2>KANの式<a class="headerlink" href="#kan" title="Link to this heading">#</a></h2>
 <div class="math notranslate nohighlight">
 \[
 f(\mathbf{x}) = f(x_1, \cdots, x_d) = \sum^{2d+1}_{q=1} \Phi_q \left( \sum^d_{p=1} \phi_{q,p} (x_p) \right)
 \]</div>
-</div>
-<div class="section" id="id1">
-<h2>データの準備<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</section>
+<section id="id1">
+<h2>データの準備<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <p>データとして、上記の論文と同様、Atomic Mass Evaluation (AME)の2020版を用いる。
 AMEの野良パッケージもありそうだが、NuclearToolkit.jl内の関連する部分を流用する力技で対処する。</p>
 <p>Julia言語の自作structの辞書になっている。これを変換&amp;少し整形する。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">urllib.request</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="k">as</span> <span class="nn">patches</span>
-<span class="kn">import</span> <span class="nn">matplotlib.collections</span> <span class="k">as</span> <span class="nn">coll</span>
-<span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">Normalize</span>
-<span class="kn">import</span> <span class="nn">matplotlib.cm</span> <span class="k">as</span> <span class="nn">cm</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">urllib.request</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">patches</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.collections</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">coll</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="kn">import</span> <span class="n">Normalize</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.cm</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cm</span>
 
-<span class="k">def</span> <span class="nf">get_amedata_in_myPkg</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_amedata_in_myPkg</span><span class="p">():</span>
     <span class="c1"># BE, BEerr, BETF(False means estimatino by AME2020), Sn, Snerr, Qval, Qerr</span>
     <span class="c1"># → Nuc, Z, N, BE(MeV), BEerr(MeV), BETF, Sn(MeV), SnTF, Snerr(MeV), SnerrTF, Qval(MeV), QvalTF, Qerr(MeV), QerrTFとDataFrame化する</span>
     <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/SotaYoshida/NuclearToolkit.jl/main/src/NuclData.jl/amedata.jl&quot;</span>
@@ -505,7 +524,7 @@ AMEの野良パッケージもありそうだが、NuclearToolkit.jl内の関連
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Nuc&quot;</span><span class="p">,</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;BE(MeV)&quot;</span><span class="p">,</span> <span class="s2">&quot;BEerr(MeV)&quot;</span><span class="p">,</span> <span class="s2">&quot;BETF&quot;</span><span class="p">,</span> <span class="s2">&quot;Sn(MeV)&quot;</span><span class="p">,</span> <span class="s2">&quot;SnTF&quot;</span><span class="p">,</span> <span class="s2">&quot;Snerr(MeV)&quot;</span><span class="p">,</span> <span class="s2">&quot;SnerrTF&quot;</span><span class="p">,</span> <span class="s2">&quot;Qval(MeV)&quot;</span><span class="p">,</span> <span class="s2">&quot;QvalTF&quot;</span><span class="p">,</span> <span class="s2">&quot;Qerr(MeV)&quot;</span><span class="p">,</span> <span class="s2">&quot;QerrTF&quot;</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">df</span> 
 
-<span class="k">def</span> <span class="nf">add_more_info</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_more_info</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
     <span class="c1">#A, N-Z, A^(2/3), Z_EO, N_EO, Zm, Nm, Zshell, Nshellなどの情報を付加</span>
     <span class="n">df</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;N&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Z&quot;</span><span class="p">]</span>
     <span class="n">df</span><span class="p">[</span><span class="s2">&quot;N-Z&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;N&quot;</span><span class="p">]</span><span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Z&quot;</span><span class="p">]</span>    
@@ -859,7 +878,7 @@ AMEの野良パッケージもありそうだが、NuclearToolkit.jl内の関連
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_chart</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_chart</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
     <span class="n">z</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">item</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;N&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Z&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
@@ -870,7 +889,7 @@ AMEの野良パッケージもありそうだが、NuclearToolkit.jl内の関連
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-<span class="k">def</span> <span class="nf">plot_item_for_isotopes</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">Z</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_item_for_isotopes</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">Z</span><span class="p">):</span>
     <span class="n">subdf</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Z&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">Z</span> <span class="p">]</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">subdf</span><span class="p">[</span><span class="n">item</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">subdf</span><span class="p">[</span><span class="s2">&quot;N&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
@@ -889,12 +908,12 @@ AMEの野良パッケージもありそうだが、NuclearToolkit.jl内の関連
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/working_5_0.png" src="../_images/working_5_0.png" />
-<img alt="../_images/working_5_1.png" src="../_images/working_5_1.png" />
+<img alt="../_images/c25c229217dbae78f85ea95842604dc4e4150ee467a0263870ded036e4e3df6b.png" src="../_images/c25c229217dbae78f85ea95842604dc4e4150ee467a0263870ded036e4e3df6b.png" />
+<img alt="../_images/9f9124bc5d7586ddb014576b01f09443a054c8ee907c93e4612a80af24dea75d.png" src="../_images/9f9124bc5d7586ddb014576b01f09443a054c8ee907c93e4612a80af24dea75d.png" />
 </div>
 </div>
 <p>論文では、以下の表のように4つのモデルと特徴量を考えている:</p>
-<table class="colwidths-auto table">
+<div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Model</p></th>
 <th class="head"><p>Features</p></th>
@@ -916,8 +935,9 @@ AMEの野良パッケージもありそうだが、NuclearToolkit.jl内の関連
 </tbody>
 </table>
 </div>
-<div class="section" id="loss-function">
-<h2>Loss function<a class="headerlink" href="#loss-function" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</section>
+<section id="loss-function">
+<h2>Loss function<a class="headerlink" href="#loss-function" title="Link to this heading">#</a></h2>
 <p>論文で用いられている誤差関数は、L1正則化と交差エントロピーを有した形:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -937,9 +957,9 @@ S(\Phi) \equiv - \sum^{n_\mathrm{in}}_{i=1} \sum^{n_\mathrm{out}}_{j=1} \frac{||
 \]</div>
 <p>論文でどうしているかは書かれていないが、KANの論文には通常(特に理由がなければという意味だと思うが)<span class="math notranslate nohighlight">\(\mu_1 =\mu_2\)</span>にすると書いてある。
 また、<span class="math notranslate nohighlight">\(\lambda\)</span>についても<span class="math notranslate nohighlight">\(10^{-2}\)</span>とか<span class="math notranslate nohighlight">\(10^{-3}\)</span>と書かれてあるのでこのあたりを使ってみることにしよう。</p>
-</div>
-<div class="section" id="id2">
-<h2>データセットの作成<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</section>
+<section id="id2">
+<h2>データセットの作成<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <p>上で作ったDataFrameから、データセットを作成する。</p>
 <p>モデルごとに特徴量が異なるので、それに合わせてデータセットを作成する関数を作っておく。</p>
 <div class="cell docutils container">
@@ -949,7 +969,7 @@ S(\Phi) \equiv - \sum^{n_\mathrm{in}}_{i=1} \sum^{n_\mathrm{out}}_{j=1} \frac{||
             <span class="mi">9</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Z&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;N-Z&quot;</span><span class="p">,</span> <span class="s2">&quot;A^(2/3)&quot;</span><span class="p">,</span> <span class="s2">&quot;Z_EO&quot;</span><span class="p">,</span> <span class="s2">&quot;N_EO&quot;</span><span class="p">,</span> <span class="s2">&quot;Zm&quot;</span><span class="p">,</span> <span class="s2">&quot;Nm&quot;</span><span class="p">],</span>
             <span class="mi">11</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Z&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;N-Z&quot;</span><span class="p">,</span> <span class="s2">&quot;A^(2/3)&quot;</span><span class="p">,</span> <span class="s2">&quot;Z_EO&quot;</span><span class="p">,</span> <span class="s2">&quot;N_EO&quot;</span><span class="p">,</span> <span class="s2">&quot;Zm&quot;</span><span class="p">,</span> <span class="s2">&quot;Nm&quot;</span><span class="p">,</span> <span class="s2">&quot;Zshell&quot;</span><span class="p">,</span> <span class="s2">&quot;Nshell&quot;</span><span class="p">]}</span>
 
-<span class="k">def</span> <span class="nf">extract_data_for_model</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">model_feature</span><span class="p">,</span> <span class="n">item</span><span class="o">=</span><span class="s2">&quot;BE(MeV)&quot;</span><span class="p">,</span> <span class="n">Zmin</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">Nmin</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">Zmax</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">Nmax</span><span class="o">=</span><span class="mi">500</span><span class="p">):</span>    
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_data_for_model</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">model_feature</span><span class="p">,</span> <span class="n">item</span><span class="o">=</span><span class="s2">&quot;BE(MeV)&quot;</span><span class="p">,</span> <span class="n">Zmin</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">Nmin</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">Zmax</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">Nmax</span><span class="o">=</span><span class="mi">500</span><span class="p">):</span>    
     <span class="n">subdf</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Z&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">Zmin</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Z&quot;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">Zmax</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;N&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">Nmin</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;N&quot;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">Nmax</span><span class="p">)</span> <span class="p">][</span><span class="n">features</span><span class="p">[</span><span class="n">model_feature</span><span class="p">]</span><span class="o">+</span><span class="p">[</span><span class="n">item</span><span class="p">]]</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">subdf</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">subdf</span>
@@ -1170,7 +1190,7 @@ S(\Phi) \equiv - \sum^{n_\mathrm{in}}_{i=1} \sum^{n_\mathrm{out}}_{j=1} \frac{||
 <p>論文では、3つのデータセットに分けてcross validationを行っているが、ここでは1つのデータセットにまとめてしまう。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_batch_data</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">make_batch_data</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="n">subidxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array_split</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">k</span><span class="p">)</span>
     <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="p">[</span> <span class="p">],</span> <span class="p">[</span> <span class="p">]</span>
     <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
@@ -1182,8 +1202,8 @@ S(\Phi) \equiv - \sum^{n_\mathrm{in}}_{i=1} \sum^{n_\mathrm{out}}_{j=1} \frac{||
         <span class="n">Y</span> <span class="o">+=</span> <span class="p">[</span> <span class="n">dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">subidxs</span><span class="p">[</span><span class="n">batch</span><span class="p">],[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span> <span class="p">]</span>
     <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span>
 
-<span class="k">def</span> <span class="nf">create_dataset_AME</span><span class="p">(</span><span class="n">subdata</span><span class="p">,</span> <span class="n">rate_train</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">normalize_input</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">normalize_label</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cpu&#39;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_dataset_AME</span><span class="p">(</span><span class="n">subdata</span><span class="p">,</span> <span class="n">rate_train</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">normalize_input</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">normalize_label</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cpu&#39;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    create dataset</span>
 <span class="sd">    </span>
 <span class="sd">    Args:</span>
@@ -1228,7 +1248,7 @@ S(\Phi) \equiv - \sum^{n_\mathrm{in}}_{i=1} \sum^{n_\mathrm{out}}_{j=1} \frac{||
     <span class="n">train_label</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">subdata</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">train_idxs</span><span class="p">,[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> 
     <span class="n">test_label</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">subdata</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">test_idxs</span><span class="p">,[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
                 
-    <span class="k">def</span> <span class="nf">normalize</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">std</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">normalize</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">std</span><span class="p">):</span>
             <span class="k">return</span> <span class="p">(</span><span class="n">data</span><span class="o">-</span><span class="n">mean</span><span class="p">)</span><span class="o">/</span><span class="n">std</span>
             
     <span class="k">if</span> <span class="n">normalize_input</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
@@ -1252,7 +1272,7 @@ S(\Phi) \equiv - \sum^{n_\mathrm{in}}_{i=1} \sum^{n_\mathrm{out}}_{j=1} \frac{||
 
     <span class="k">return</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">mean_input</span><span class="p">,</span> <span class="n">std_input</span><span class="p">,</span> <span class="n">mean_label</span><span class="p">,</span> <span class="n">std_label</span>
 
-<span class="k">def</span> <span class="nf">inverse_normalize</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">std</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">inverse_normalize</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">std</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">data</span><span class="o">*</span><span class="n">std</span> <span class="o">+</span> <span class="n">mean</span>
 
 <span class="n">dataset</span><span class="p">,</span> <span class="n">mean_input</span><span class="p">,</span> <span class="n">std_input</span><span class="p">,</span> <span class="n">mean_label</span><span class="p">,</span> <span class="n">std_label</span> <span class="o">=</span> <span class="n">create_dataset_AME</span><span class="p">(</span><span class="n">subdata</span><span class="p">)</span>
@@ -1260,9 +1280,9 @@ S(\Phi) \equiv - \sum^{n_\mathrm{in}}_{i=1} \sum^{n_\mathrm{out}}_{j=1} \frac{||
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="id3">
-<h2>モデルの構築<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</section>
+<section id="id3">
+<h2>モデルの構築<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <p>KANの構築や学習は<a class="reference external" href="https://github.com/KindXiaoming/pykan">pykan</a>及び<a class="reference external" href="https://github.com/Blealtan/efficient-kan">efficient-KAN</a>に倣う。</p>
 <p>前者はKAN論文の著者によるもので、後者はPyTorchを用いたより効率的な実装である。</p>
 <div class="cell docutils container">
@@ -1274,7 +1294,7 @@ S(\Phi) \equiv - \sum^{n_\mathrm{in}}_{i=1} \sum^{n_\mathrm{out}}_{j=1} \frac{||
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">kan</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kan</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">KAN</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="p">[</span><span class="n">model_feature</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">grid</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">opt</span><span class="o">=</span><span class="s2">&quot;LBFGS&quot;</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">200</span><span class="p">);</span>
 </pre></div>
@@ -1403,7 +1423,7 @@ saving model version 0.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/working_21_0.png" src="../_images/working_21_0.png" />
+<img alt="../_images/5d1625e9756b72eae7e55fbdc9496843f05e85da38ba6162b92552702e5ec9b7.png" src="../_images/5d1625e9756b72eae7e55fbdc9496843f05e85da38ba6162b92552702e5ec9b7.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1421,9 +1441,9 @@ saving model version 0.0
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="id4">
-<h2>シンボリック回帰<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+</section>
+<section id="id4">
+<h2>シンボリック回帰<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
 <p>KANは初等関数の組み合わせで関数を表現するシンボリック回帰が可能で、それが&quot;解釈性が高い&quot;という謳い文句に繋がっている。</p>
 <p>特徴量が<span class="math notranslate nohighlight">\((Z,N)\)</span>の2つだけのモデルを作り、訓練したモデルを、シンボリック回帰で表現してみる。</p>
 <div class="cell docutils container">
@@ -1458,14 +1478,14 @@ saving model version 0.0
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">kan.utils</span> <span class="kn">import</span> <span class="n">ex_round</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kan.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">ex_round</span>
 <span class="n">ex_round</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">symbolic_formula</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="mi">4</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1479,7 +1499,7 @@ saving model version 0.0
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./local_files"
         },
         predefinedOutput: true
@@ -1487,33 +1507,87 @@ saving model version 0.0
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目次
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kan">KANの式</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">データの準備</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loss-function">Loss function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">データセットの作成</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">モデルの構築</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">シンボリック回帰</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'>
-</div>
+          </div>
+          <footer class="bd-footer-content">
             
-        </div>
-    </div>
-    <footer class="footer">
-  <p>
-    
-      著者 Sota Yoshida<br/>
-    
-      <div class="extra_footer">
-        © Copyright 2025〜 by 吉田 聡太 (Sota Yoshida). 本コンテンツは<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0 ライセンス</a>の下に提供されています。 <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>　ただし、資料中のコードセル部分は<a rel="license" href="https://opensource.org/licenses/MIT">MITライセンス</a>の下に提供されています。
-
-      </div>
-  </p>
-</footer>
-</main>
-
-
-      </div>
-    </div>
+<div class="bd-footer-content__inner container">
   
-  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <div class="footer-item">
+    
+<p class="component-author">
+著者 Sota Yoshida
+</p>
 
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  © Copyright 2025〜 by 吉田 聡太 (Sota Yoshida). 本コンテンツは<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0 ライセンス</a>の下に提供されています。 <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>　ただし、資料中のコードセル部分は<a rel="license" href="https://opensource.org/licenses/MIT">MITライセンス</a>の下に提供されています。
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>
