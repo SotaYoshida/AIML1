@@ -653,21 +653,21 @@ ReLUには、勾配の計算が自明なことによる計算量的利点と、<
 上記のようなニューラルネットワークは、以下のように表せる。</p>
 <div class="math notranslate nohighlight">
 \[
-f^{NN}(\boldsymbol{x}) = g_2(\boldsymbol{w_2}  g_1(\boldsymbol{w_1} \boldsymbol{x}))
+f^{NN}(\boldsymbol{x}) = g_2(\boldsymbol{W}_2  g_1(\boldsymbol{W}_1 \boldsymbol{x}))
 \]</div>
 <p>この場合、対象となる問題は回帰問題に分類されるため、出力層における活性化関数<span class="math notranslate nohighlight">\(g_2\)</span>は恒等関数を用いる。
 では、隠れ層における活性化関数<span class="math notranslate nohighlight">\(g_1\)</span>を上のようなTanhやReLUではなく恒等関数を用いた場合、何が起こるだろうか？</p>
 <p>この場合のニューラルネットワークの出力は</p>
 <div class="math notranslate nohighlight">
 \[
-f^{NN}(\boldsymbol{x}) = \boldsymbol{w_2}  \boldsymbol{w_1}  \boldsymbol{x}
-= (\boldsymbol{w_2}  \boldsymbol{w_1}) \boldsymbol{x}
+f^{NN}(\boldsymbol{x}) = \boldsymbol{W}_2  \boldsymbol{W}_1  \boldsymbol{x}
+= (\boldsymbol{W}_2  \boldsymbol{W}_1) \boldsymbol{x}
 \]</div>
 <p>となり、層を繰り返すことによって得られる信号の変換は単なる行列の積となり、
-単一の行列<span class="math notranslate nohighlight">\(W= \boldsymbol{w_2}  \boldsymbol{w_1}\)</span>による線形変換になってしまう。</p>
+単一の行列<span class="math notranslate nohighlight">\(\tilde{W}= \boldsymbol{W}_2  \boldsymbol{W}_1\)</span>による線形変換になってしまう。</p>
 <p>つまり、隠れ層の活性化関数を恒等関数にすると、いくら隠れ層を増やしても
 線形変換による近似しかできないため、ニューラルネットワークの表現力が制限されてしまう。
-入力と出力の間の非線形な関係を表現するためには、隠れ層において非線形な活性化関数を用いる必要があることがわかる。</p>
+入力と出力の間の非線形な関係を表現するためには、隠れ層において非線形な活性化関数を用いることが本質的である。</p>
 <div class="attention admonition">
 <p class="admonition-title">問題:</p>
 <p>以下の活性化関数と微分を計算し、グラフの全容が分かる範囲でグラフを描け:</p>
@@ -688,7 +688,8 @@ f^{NN}(\boldsymbol{x}) = \boldsymbol{w_2}  \boldsymbol{w_1}  \boldsymbol{x}
 </div>
 <div class="attention admonition">
 <p class="admonition-title">問題:</p>
-<p>上の活性関数とその微分から、多層ニューラルネットワークにおける勾配消失の問題について説明せよ。</p>
+<p>上の活性関数とその微分から、多層ニューラルネットワークにおける勾配消失の問題について説明せよ。
+とくに、多層にした際に伝播される信号(勾配)のサイズが層の数に対して典型的にどう変化するかの観点から説明せよ。</p>
 </div>
 </section>
 </section>
