@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -554,6 +554,11 @@ document.write(`
 <img alt="../_images/590164276c0a2349af0ae9d89ea2cc4d7ee468e1f095a0986eb512e88a8647db.png" src="../_images/590164276c0a2349af0ae9d89ea2cc4d7ee468e1f095a0986eb512e88a8647db.png" />
 </div>
 </div>
+<div class="attention admonition">
+<p class="admonition-title">問題:</p>
+<p><span class="math notranslate nohighlight">\(n \times n\)</span>の行列で与えられる白黒画像や、<span class="math notranslate nohighlight">\(n \times n \times 3\)</span>のテンソルで与えられるカラー(RGB)画像データを、
+<span class="math notranslate nohighlight">\(d\)</span>次元のベクトルに変換する関数と、与えられたベクトルから元の画像データに変換するPython自作関数を作ってみよう。</p>
+</div>
 </section>
 </section>
 <hr class="docutils" />
@@ -575,7 +580,7 @@ document.write(`
 <li><p>C: 00011 = 3 (10進数)</p></li>
 <li><p>Z: 11010 = 26 (10進数)</p></li>
 </ul>
-<p>右側から<span class="math notranslate nohighlight">\(n\)</span>桁目のbitが1であれば、<span class="math notranslate nohighlight">\(2^{(n-1)}\)</span>を足し合わせたものが10進数での値になる。</p>
+<p>右側から<span class="math notranslate nohighlight">\(n\)</span>桁目のbitが1であれば、<span class="math notranslate nohighlight">\(2^{n-1}\)</span>を足し合わせたものが10進数での値になる。</p>
 <p>実際には、古くから使われているASCIIコードや、より多くの文字を表現できるUnicodeなどがある。
 対応表が異なれば、同じ文字でも異なる数値になるため、文字化けの原因になることがある。
 よく、csvファイルをテキストエディタやExcelなどのソフトウェアで開いたときに、文字化けして大量の糸偏の漢字が表示されることがあるが、これは文字コードの対応表が異なるために起こる現象である。</p>
@@ -622,7 +627,7 @@ queen-appleの距離: 0.6324555320336759
 </div>
 </div>
 </div>
-<p>際の埋め込みベクトルはもっと高次元で表現・学習される。</p>
+<p>実際の埋め込みベクトルはもっと高次元で表現・学習される。</p>
 <p>こうした単語の埋め込みベクトルとして有名なものにGoogleが2013年に作成・公開した<code class="docutils literal notranslate"><span class="pre">Word2Vec</span></code>などがある。
 コーパス（大量の文章データ）を数百程度の次元のベクトルに変換し、意味的に近い単語ほどベクトル空間上で近くなるように学習する。</p>
 <p>ただし、より高度な自然言語処理には、埋め込みベクトル(決まった次元の空間でのベクトル表現)だけでは十分ではない場合がある。
@@ -637,8 +642,7 @@ queen-appleの距離: 0.6324555320336759
 </aside>
 <p>前者の「物理」は物理学の意味であり、「化学」「生物」「宇宙」などと距離が近く、「文学」などと距離が遠いかもしれない。
 一方で、後者の「物理」は物理攻撃の意味であり、「攻撃」「ダメージ」などゲーム用語と意味合いが近く、「魔法」「特殊」などと若干距離が遠いかもしれない。</p>
-<p>こうした文脈を捉えるうえでは、単語の埋め込みベクトルを文脈に応じて動的に変化させる手法が必要になり、Attention機構などが有効であることが知られている。
-その最たる例が、大規模言語モデル(LLM)である。</p>
+<p>こうした文脈を捉えるうえでは、単語の埋め込みベクトルを文脈に応じて動的に変化させる手法が必要になり、Attention機構などが有効であることが知られている。その最たる例が、大規模言語モデル(LLM)である。</p>
 </section>
 <section id="id7">
 <h2><span class="section-number">12.5. </span>データのスケーリング<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>

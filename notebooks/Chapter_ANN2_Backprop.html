@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -477,11 +477,11 @@ document.write(`
 <p>入力と出力はそれぞれ<span class="math notranslate nohighlight">\(d,m\)</span>次元の実数値、隠れ層が<span class="math notranslate nohighlight">\(L\)</span>個ある全結合の基本的な構造を持ったニューラルネットワークとする。
 第<span class="math notranslate nohighlight">\(\ell\)</span>層の第<span class="math notranslate nohighlight">\(k\)</span>ノードに着目した模式図を示そう。</p>
 <p><img alt="" src="../_images/pic_ann_uandz.png" /></p>
-<p>今注目しているノードに対する入力<span class="math notranslate nohighlight">\(u^{\ell}_k\)</span>は、</p>
+<p>今注目しているノードに対する入力<span class="math notranslate nohighlight">\(u^{(\ell)}_k\)</span>は、</p>
 <div class="math notranslate nohighlight">
 \[
 \begin{align*}
-u^{\ell}_k = &amp;
+u^{(\ell)}_k = &amp;
 w^{(\ell)}_{k1} z^{(\ell-1)}_1 
 + w^{(\ell)}_{k2} z^{(\ell-1)}_2 + \cdots 
 + w^{(\ell)}_{kn} z^{(\ell-1)}_n + b^{(\ell)}_{k} = 
@@ -503,9 +503,8 @@ L(\{ \boldsymbol{w} \}, \{ \boldsymbol{b} \}, x) = (y - \hat{y})^2
 \frac{\partial L}{\partial w^{(\ell)}_{ki}} = 0, \frac{\partial L}{\partial b^{(\ell)}_k} = 0 
 \]</div>
 <p>などの解を見つけることと言い換えられる。ここで上付きの添字は第<span class="math notranslate nohighlight">\(l\)</span>層のパラメータであること、下付きの添字は<span class="math notranslate nohighlight">\(k\)</span>番目のノードに対応する重みやバイアスであることを示すためにつけた。
-実際には、誤差関数は訓練データに対する和になるが、今は特にその点は気にしないことにする。</p>
-<p>一般に、ニューラルネットワークの層が深くなればなるほど、入力層に近いパラメータに対する依存性は非自明なものになると考えられる。
-そこで、一般に多層のニューラルネットワークに対して、パラメータの最適化を効率的に行うためのアルゴリズムが本章で解説する誤差逆伝播法(back propagation, バックプロパゲーション)である。</p>
+実際には、誤差関数は訓練データに対する和になるが、さらに添字が増えることになり煩雑になるため、今は特にその点は気にしないことにする。</p>
+<p>ニューラルネットワークの層が深くなればなるほど、入力層に近いパラメータに対する依存性は非自明なものになると考えられる。そこで、一般に多層のニューラルネットワークに対して、パラメータの最適化を効率的に行うためのアルゴリズムが本章で解説する誤差逆伝播法(back propagation, バックプロパゲーション)である。</p>
 </section>
 <section id="id3">
 <h2><span class="section-number">10.2. </span>連鎖律を用いた説明<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
@@ -513,8 +512,8 @@ L(\{ \boldsymbol{w} \}, \{ \boldsymbol{b} \}, x) = (y - \hat{y})^2
 最も下流にあるとみなせる誤差関数に対する微分を考える前に、
 まずは、局所的な勾配に着目してみよう。</p>
 <p>例えば、第<span class="math notranslate nohighlight">\(\ell\)</span>層の第<span class="math notranslate nohighlight">\(k\)</span>ノードに対応する重みパラメータ<span class="math notranslate nohighlight">\(w^{(\ell)}_{ki}\)</span>をわずかに変化させたとき、
-当該のノードに対する入力<span class="math notranslate nohighlight">\(u^{\ell}_k\)</span>がわずかに変更を受ける。
-その結果、というように、下流へ伝搬される値がわずかに変化していく。</p>
+当該のノードに対する入力<span class="math notranslate nohighlight">\(u^{(\ell)}_k\)</span>がわずかに変更を受ける。
+その結果、そのノードでの出力<span class="math notranslate nohighlight">\(z^{(\ell)}\)</span>が変更を受け...というように、下流へ伝搬される値がわずかに変化していく。</p>
 <p>誤差関数に対する<span class="math notranslate nohighlight">\(w\)</span>の微分を、<span class="math notranslate nohighlight">\(L\)</span>に対する<span class="math notranslate nohighlight">\(u\)</span>の微分と<span class="math notranslate nohighlight">\(u\)</span>に対する<span class="math notranslate nohighlight">\(w\)</span>の微分の積として表現することができる:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -526,19 +525,23 @@ L(\{ \boldsymbol{w} \}, \{ \boldsymbol{b} \}, x) = (y - \hat{y})^2
 \[
 \frac{\partial u^{(\ell)}_{k}}{\partial w^{(\ell)}_{ki}} = z^{(\ell-1)}_i
 \]</div>
-<p>となり、順伝搬の際に計算した値をそのまま使うことができる残るは1番目の項で、</p>
-<div class="math notranslate nohighlight">
-\[
+<p>となり、順伝搬の際に計算した各ノードでの出力値が保持されていればそのまま使うことができる。残る計算は1番目のfactorで、</p>
+<div class="math notranslate nohighlight" id="equation-delta">
+<span class="eqno">(10.1)<a class="headerlink" href="#equation-delta" title="Link to this equation">#</a></span>\[
+\begin{align}
 \delta^{\ell}_{k} \equiv \frac{\partial L }{\partial u^{(\ell)}_{k}} 
+\end{align}
 \]</div>
-<p>と書き直しておく。この<span class="math notranslate nohighlight">\(\delta\)</span>に対する漸化式を求めてみよう。</p>
-<div class="math notranslate nohighlight">
-\[
-\delta^{\ell}_{k} = \frac{\partial L }{\partial u^{(\ell)}_{k}}
+<p>と書き直しておく。この<span class="math notranslate nohighlight">\(\delta\)</span>に対する漸化式を求めてみよう(なぜ下層の入力に対する漸化式にしたのかは、後に分かる)。</p>
+<div class="math notranslate nohighlight" id="equation-delta2">
+<span class="eqno">(10.2)<a class="headerlink" href="#equation-delta2" title="Link to this equation">#</a></span>\[
+\begin{align}
+\delta^{\ell}_{k} \equiv \frac{\partial L }{\partial u^{(\ell)}_{k}}
 = \sum_{j=1}^{n^{(\ell+1)}} \frac{\partial L }{\partial u^{(\ell+1)}_{j}} \frac{\partial u^{(\ell+1)}_{j}}{\partial u^{(\ell)}_{k}}
 = \sum_{j=1}^{n^{(\ell+1)}} \delta^{\ell+1}_{j} \frac{\partial u^{(\ell+1)}_{j}}{\partial u^{(\ell)}_{k}}
+\end{align}
 \]</div>
-<p>ここで、<span class="math notranslate nohighlight">\(\delta\)</span>で書き直した残りの部分は、</p>
+<p>ここで、<span class="math notranslate nohighlight">\(\delta\)</span>で書き直した残りの部分は、下層への入力が注目している特定のノードの入力にどう影響を及ぼすかを表していて</p>
 <div class="math notranslate nohighlight">
 \[
 u^{(\ell+1)}_{j} = \sum_{i=1}^{n^{(\ell+1)}} w^{(\ell+1)}_{ji} f^{(\ell+1)}(u^{(\ell)}_{i}) + b^{(\ell+1)}_{j}
@@ -549,25 +552,23 @@ u^{(\ell+1)}_{j} = \sum_{i=1}^{n^{(\ell+1)}} w^{(\ell+1)}_{ji} f^{(\ell+1)}(u^{(
 \frac{ \partial u^{(\ell+1)}_{j} }{ \partial u^{(\ell)}_{k} } 
 = w^{(\ell+1)}_{jk} f^{(\ell+1)'}(u^{(\ell)}_{k})
 \]</div>
-<p>とかけるので、</p>
+<p>とかけるので、式<a class="reference internal" href="#equation-delta">(10.1)</a>ないし式<code class="xref eq docutils literal notranslate"><span class="pre">Delta_2</span></code>は</p>
 <div class="math notranslate nohighlight">
 \[
 \delta^{\ell}_{k} 
 = \sum_{j=1}^{n^{(\ell+1)}} \delta^{\ell+1}_{j} 
 w^{(\ell+1)}_{jk} f^{(\ell+1)'}(u^{(\ell)}_{k})
 \]</div>
-<p>となる。さて、ニューラルネットワークの順伝播の式(バイアス項は落とそう)を書いてみると</p>
+<p>と書き直せる。さて、ニューラルネットワークの順伝播の式(バイアス項は落とそう)を書いてみると</p>
 <div class="math notranslate nohighlight">
 \[
 u^{(\ell+1)}_j = \sum_{i=1}^{n^{(\ell)}} w^{(\ell+1)}_{ji} f(u^{(\ell)}_i)
 \]</div>
 <p>となるが、この、<span class="math notranslate nohighlight">\(u\)</span>に活性化関数をかけて重みをかけて順伝播していく式とのアナロジーで、
-<span class="math notranslate nohighlight">\(\ell+1\)</span>層から<span class="math notranslate nohighlight">\(\ell\)</span>層へ<span class="math notranslate nohighlight">\(w\)</span>と<span class="math notranslate nohighlight">\(f'\)</span>を重みとして<span class="math notranslate nohighlight">\(\delta\)</span>を(逆)伝播している式と理解できる。</p>
-<p>この式から、下流(出力に近い層)から、上流に逐次的に積と和を計算していくだけで、
-各層での入力<span class="math notranslate nohighlight">\(u\)</span>に対する誤差関数の微分が計算できることがわかる。
-また、それぞれのステップで非自明な計算は、活性化関数の微分を計算することだけである。
-仮に、活性化関数がReLUのように単純なものであれば、計算は非常に効率的に行えることもわかる。
-※ReLUの微分は、入力が0より大きいとき1、そうでないとき0になることを思い出そう。</p>
+<span class="math notranslate nohighlight">\(\ell+1\)</span>層から<span class="math notranslate nohighlight">\(\ell\)</span>層へ<span class="math notranslate nohighlight">\(w\)</span>と<span class="math notranslate nohighlight">\(f'\)</span>を重みとして<span class="math notranslate nohighlight">\(\delta\)</span>を逆伝播している式と理解できる。</p>
+<p>元々<span class="math notranslate nohighlight">\(\delta\)</span>は、最小化したい誤差関数が、注目するノードでの出力値にどう依存するかを表していた。
+この式から、下流(出力に近い層)から、上流に逐次的に積と和を計算していくだけで、各層での入力<span class="math notranslate nohighlight">\(u\)</span>に対する誤差関数の微分が計算できることがわかる。</p>
+<p>また、それぞれのステップで非自明な計算は、活性化関数の微分を計算することだけである。仮に、活性化関数がReLUのように単純なものであれば、計算は非常に効率的に行えることもわかる。※ReLUの微分は、入力が0より大きいとき1、そうでないとき0になることを思い出そう。</p>
 </section>
 <section id="id4">
 <h2><span class="section-number">10.3. </span>計算グラフを用いた説明<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
@@ -577,10 +578,10 @@ u^{(\ell+1)}_j = \sum_{i=1}^{n^{(\ell)}} w^{(\ell+1)}_{ji} f(u^{(\ell)}_i)
 <p>100円のりんごを２個買い、5円の袋と合わせて買ってくるおつかいを考えよう。
 このとき、おつかいの費用を<span class="math notranslate nohighlight">\(y\)</span>とすると、当然<span class="math notranslate nohighlight">\(y = (100 \times 2 + 10) * 1.1 \)</span>となる。</p>
 <div class="cell tag_hide-input docutils container">
-<details class="hide above-input">
+<details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell source</span>
-<span class="expanded">Hide code cell source</span>
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
@@ -593,7 +594,7 @@ u^{(\ell+1)}_j = \sum_{i=1}^{n^{(\ell)}} w^{(\ell+1)}_{ji} f(u^{(\ell)}_i)
 <span class="n">nodes_detailed</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="s1">&#39;りんご単価</span><span class="se">\n</span><span class="s1">100円&#39;</span><span class="p">,</span>
     <span class="s1">&#39;w&#39;</span><span class="p">:</span> <span class="s1">&#39;個数&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;wx&#39;</span><span class="p">:</span> <span class="s1">&#39;りんご代(税抜)</span><span class="se">\n</span><span class="s1">$w\cdot x$&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;wx&#39;</span><span class="p">:</span> <span class="s1">&#39;りんご代(税抜)</span><span class="se">\n</span><span class="s1">$w</span><span class="se">\\</span><span class="s1">cdot x$&#39;</span><span class="p">,</span>
     <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="s1">&#39;袋代</span><span class="se">\n</span><span class="s1">$5$円&#39;</span><span class="p">,</span>
     <span class="s1">&#39;sum&#39;</span><span class="p">:</span> <span class="s1">&#39;小計&#39;</span><span class="p">,</span>
     <span class="s1">&#39;activation&#39;</span><span class="p">:</span> <span class="s1">&#39;消費税</span><span class="se">\n</span><span class="s1">$f$&#39;</span><span class="p">,</span>
@@ -639,7 +640,7 @@ u^{(\ell+1)}_j = \sum_{i=1}^{n^{(\ell)}} w^{(\ell+1)}_{ji} f(u^{(\ell)}_i)
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/bb5d859c3dd4d4f835fe4f4d6267e682dd3288c6421d5c60db8400e2a20e3b43.png" src="../_images/bb5d859c3dd4d4f835fe4f4d6267e682dd3288c6421d5c60db8400e2a20e3b43.png" />
+<img alt="../_images/952f38a88475389b3e6e1f07a2c579f2911d739ea22303fdcd737896fc249def.png" src="../_images/952f38a88475389b3e6e1f07a2c579f2911d739ea22303fdcd737896fc249def.png" />
 </div>
 </div>
 <p>これは、りんご単価<span class="math notranslate nohighlight">\(x\)</span>が入力、個数が重みパラメータ<span class="math notranslate nohighlight">\(w\)</span>、袋代がバイアス<span class="math notranslate nohighlight">\(b\)</span>、消費税が活性化関数<span class="math notranslate nohighlight">\(f\)</span>のニューラルネットワークとみなすことができる。</p>
@@ -651,17 +652,19 @@ u^{(\ell+1)}_j = \sum_{i=1}^{n^{(\ell)}} w^{(\ell+1)}_{ji} f(u^{(\ell)}_i)
 <p>上の例で、合計金額に対するりんごの個数<span class="math notranslate nohighlight">\(w\)</span>や袋代<span class="math notranslate nohighlight">\(b\)</span>に対する微分を考えてみよう。</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\frac{\partial y}{\partial b} = \frac{\partial y}{\partial u} \frac{\partial u}{\partial b}
+\begin{align}
+\frac{\partial y}{\partial b} &amp; = \frac{\partial y}{\partial u} \frac{\partial u}{\partial b}
 = f'(u) \times 1 = 1.1 \\
-\frac{\partial y}{\partial w} = \frac{\partial y}{\partial u} \frac{\partial u}{\partial w}
+\frac{\partial y}{\partial w} &amp; = \frac{\partial y}{\partial u} \frac{\partial u}{\partial w}
 = f'(u) \times x = 110
+\end{align}
 \end{split}\]</div>
 <p>このように、逆伝搬では、局所的な微分を乗算していくことで、各パラメータに対する微分を求めることができる。</p>
 <div class="cell tag_hide-input docutils container">
-<details class="hide above-input">
+<details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell source</span>
-<span class="expanded">Hide code cell source</span>
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
@@ -674,7 +677,7 @@ u^{(\ell+1)}_j = \sum_{i=1}^{n^{(\ell)}} w^{(\ell+1)}_{ji} f(u^{(\ell)}_i)
 <span class="n">nodes_detailed</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="s1">&#39;りんご単価</span><span class="se">\n</span><span class="s1">100円&#39;</span><span class="p">,</span>
     <span class="s1">&#39;w&#39;</span><span class="p">:</span> <span class="s1">&#39;個数&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;wx&#39;</span><span class="p">:</span> <span class="s1">&#39;りんご代(税抜)</span><span class="se">\n</span><span class="s1">$w\cdot x$&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;wx&#39;</span><span class="p">:</span> <span class="s1">&#39;りんご代(税抜)</span><span class="se">\n</span><span class="s1">$w</span><span class="se">\\</span><span class="s1">cdot x$&#39;</span><span class="p">,</span>
     <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="s1">&#39;袋代</span><span class="se">\n</span><span class="s1">$5$円&#39;</span><span class="p">,</span>
     <span class="s1">&#39;sum&#39;</span><span class="p">:</span> <span class="s1">&#39;小計&#39;</span><span class="p">,</span>
     <span class="s1">&#39;activation&#39;</span><span class="p">:</span> <span class="s1">&#39;消費税</span><span class="se">\n</span><span class="s1">$f$&#39;</span><span class="p">,</span>
@@ -702,8 +705,8 @@ u^{(\ell+1)}_j = \sum_{i=1}^{n^{(\ell)}} w^{(\ell+1)}_{ji} f(u^{(\ell)}_i)
 
 <span class="c1"># Labels for the edges</span>
 <span class="n">edge_labels_detailed</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="p">(</span><span class="s1">&#39;wx&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">):</span> <span class="s2">&quot;$w \cdot f&#39;(u)$&quot;</span><span class="p">,</span>
-    <span class="p">(</span><span class="s1">&#39;wx&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span> <span class="p">):</span> <span class="s2">&quot;$x \cdot f&#39;(u)$&quot;</span><span class="p">,</span>
+    <span class="p">(</span><span class="s1">&#39;wx&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">):</span> <span class="s2">&quot;$w </span><span class="se">\\</span><span class="s2">cdot f&#39;(u)$&quot;</span><span class="p">,</span>
+    <span class="p">(</span><span class="s1">&#39;wx&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span> <span class="p">):</span> <span class="s2">&quot;$x </span><span class="se">\\</span><span class="s2">cdot f&#39;(u)$&quot;</span><span class="p">,</span>
     <span class="p">(</span><span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="s1">&#39;wx&#39;</span><span class="p">):</span> <span class="s2">&quot;$f&#39;(u)$&quot;</span><span class="p">,</span>
     <span class="p">(</span><span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">):</span> <span class="s2">&quot;$f&#39;(u)$&quot;</span><span class="p">,</span>
     <span class="p">(</span><span class="s1">&#39;activation&#39;</span><span class="p">,</span> <span class="s1">&#39;sum&#39;</span><span class="p">):</span> <span class="s2">&quot;$f&#39;(u)$&quot;</span><span class="p">,</span>
@@ -720,17 +723,17 @@ u^{(\ell+1)}_j = \sum_{i=1}^{n^{(\ell)}} w^{(\ell+1)}_{ji} f(u^{(\ell)}_i)
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/ea4a0b1e259c87160088f8e1e23cecbe209ee51244dfdb01b8a7946c3c898452.png" src="../_images/ea4a0b1e259c87160088f8e1e23cecbe209ee51244dfdb01b8a7946c3c898452.png" />
+<img alt="../_images/834ed181941d93bb775c0a2c52ddc7f6b2d915df62a4d647f8487bebebe8d6cb.png" src="../_images/834ed181941d93bb775c0a2c52ddc7f6b2d915df62a4d647f8487bebebe8d6cb.png" />
 </div>
 </div>
 <p>ニューラルネットワークの場合、ある(ネットワークの意味での)ノードの順伝播は以下のように書くことができるが、
 上と同様に、各計算グラフノードにおいて乗算すべき勾配を求めていくことで、
 各パラメータに対する微分を効率的に計算することができる。</p>
 <div class="cell tag_hide-input docutils container">
-<details class="hide above-input">
+<details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell source</span>
-<span class="expanded">Hide code cell source</span>
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
@@ -740,19 +743,19 @@ u^{(\ell+1)}_j = \sum_{i=1}^{n^{(\ell)}} w^{(\ell+1)}_{ji} f(u^{(\ell)}_i)
 
 <span class="c1"># Add nodes with their descriptions</span>
 <span class="n">nodes_detailed</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="s1">&#39;Input</span><span class="se">\n</span><span class="s1">$x^{\ell}$&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;w&#39;</span><span class="p">:</span> <span class="s1">&#39;Weight</span><span class="se">\n</span><span class="s1">$w^{\ell}$&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="s1">&#39;Bias</span><span class="se">\n</span><span class="s1">$b^{\ell}$&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;mul&#39;</span><span class="p">:</span> <span class="s1">&#39;Multiply</span><span class="se">\n</span><span class="s1">$w^{\ell} \cdot x^{\ell}$&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;sum&#39;</span><span class="p">:</span> <span class="s1">&#39;Add</span><span class="se">\n</span><span class="s1">$w^{\ell} \cdot x^{\ell} + b^{\ell}$&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="s1">&#39;Input</span><span class="se">\n</span><span class="s1">$x^{</span><span class="se">\\</span><span class="s1">ell}$&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;w&#39;</span><span class="p">:</span> <span class="s1">&#39;Weight</span><span class="se">\n</span><span class="s1">$w^{</span><span class="se">\\</span><span class="s1">ell}$&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="s1">&#39;Bias</span><span class="se">\n</span><span class="s1">$b^{</span><span class="se">\\</span><span class="s1">ell}$&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;mul&#39;</span><span class="p">:</span> <span class="s1">&#39;Multiply</span><span class="se">\n</span><span class="s1">$w^{</span><span class="se">\\</span><span class="s1">ell} </span><span class="se">\\</span><span class="s1">cdot x^{</span><span class="se">\\</span><span class="s1">ell}$&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;sum&#39;</span><span class="p">:</span> <span class="s1">&#39;Add</span><span class="se">\n</span><span class="s1">$w^{</span><span class="se">\\</span><span class="s1">ell} </span><span class="se">\\</span><span class="s1">cdot x^{</span><span class="se">\\</span><span class="s1">ell} + b^{</span><span class="se">\\</span><span class="s1">ell}$&#39;</span><span class="p">,</span>
     <span class="s1">&#39;activation&#39;</span><span class="p">:</span> <span class="s1">&#39;Activation</span><span class="se">\n</span><span class="s1">$f(z)$&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="s1">&#39;Output</span><span class="se">\n</span><span class="s1">$y$&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Error</span><span class="se">\n</span><span class="s1">$E$&#39;</span>
+    <span class="s1">&#39;z&#39;</span><span class="p">:</span> <span class="s1">&#39;Output</span><span class="se">\n</span><span class="s1">$z$&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Error</span><span class="se">\n</span><span class="s1">$L$&#39;</span>
 <span class="p">}</span>
 <span class="n">G_detailed</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">nodes_detailed</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 
 <span class="c1"># Add edges</span>
-<span class="n">edges_detailed</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;mul&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="s1">&#39;mul&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;mul&#39;</span><span class="p">,</span> <span class="s1">&#39;sum&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;sum&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="s1">&#39;activation&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;activation&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">)]</span>
+<span class="n">edges_detailed</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;mul&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="s1">&#39;mul&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;mul&#39;</span><span class="p">,</span> <span class="s1">&#39;sum&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;sum&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="s1">&#39;activation&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;activation&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">)]</span>
 <span class="n">G_detailed</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="n">edges_detailed</span><span class="p">)</span>
 
 <span class="c1"># Positioning for the nodes</span>
@@ -763,7 +766,7 @@ u^{(\ell+1)}_j = \sum_{i=1}^{n^{(\ell)}} w^{(\ell+1)}_{ji} f(u^{(\ell)}_i)
     <span class="s1">&#39;mul&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">),</span>
     <span class="s1">&#39;sum&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
     <span class="s1">&#39;activation&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-    <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;z&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
     <span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="p">}</span>
 
@@ -772,13 +775,13 @@ u^{(\ell+1)}_j = \sum_{i=1}^{n^{(\ell)}} w^{(\ell+1)}_{ji} f(u^{(\ell)}_i)
 
 <span class="c1"># Labels for the edges</span>
 <span class="n">edge_labels_detailed</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;mul&#39;</span><span class="p">):</span> <span class="s1">&#39;$x^{\ell}$&#39;</span><span class="p">,</span>
-    <span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="s1">&#39;mul&#39;</span><span class="p">):</span> <span class="s1">&#39;$w^{\ell}$&#39;</span><span class="p">,</span>
-    <span class="p">(</span><span class="s1">&#39;mul&#39;</span><span class="p">,</span> <span class="s1">&#39;sum&#39;</span><span class="p">):</span> <span class="s1">&#39;$w^{\ell} \cdot x^{\ell}$&#39;</span><span class="p">,</span>
+    <span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;mul&#39;</span><span class="p">):</span> <span class="s1">&#39;$x^{</span><span class="se">\\</span><span class="s1">ell}$&#39;</span><span class="p">,</span>
+    <span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="s1">&#39;mul&#39;</span><span class="p">):</span> <span class="s1">&#39;$w^{</span><span class="se">\\</span><span class="s1">ell}$&#39;</span><span class="p">,</span>
+    <span class="p">(</span><span class="s1">&#39;mul&#39;</span><span class="p">,</span> <span class="s1">&#39;sum&#39;</span><span class="p">):</span> <span class="s1">&#39;$w^{</span><span class="se">\\</span><span class="s1">ell} </span><span class="se">\\</span><span class="s1">cdot x^{</span><span class="se">\\</span><span class="s1">ell}$&#39;</span><span class="p">,</span>
     <span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;sum&#39;</span><span class="p">):</span> <span class="s1">&#39;$b$&#39;</span><span class="p">,</span>
-    <span class="p">(</span><span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="s1">&#39;activation&#39;</span><span class="p">):</span> <span class="s1">&#39;$z$&#39;</span><span class="p">,</span>
-    <span class="p">(</span><span class="s1">&#39;activation&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">):</span> <span class="s1">&#39;$f(z)$&#39;</span><span class="p">,</span>
-    <span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">):</span> <span class="s1">&#39;$y$&#39;</span>
+    <span class="p">(</span><span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="s1">&#39;activation&#39;</span><span class="p">):</span> <span class="s1">&#39;$u$&#39;</span><span class="p">,</span>
+    <span class="p">(</span><span class="s1">&#39;activation&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">):</span> <span class="s1">&#39;$f(u)$&#39;</span><span class="p">,</span>
+    <span class="p">(</span><span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">):</span> <span class="s1">&#39;$z$&#39;</span>
 <span class="p">}</span>
 
 <span class="c1"># Draw the graph</span>
@@ -791,7 +794,74 @@ u^{(\ell+1)}_j = \sum_{i=1}^{n^{(\ell)}} w^{(\ell+1)}_{ji} f(u^{(\ell)}_i)
 </div>
 </details>
 <div class="cell_output docutils container">
-<img alt="../_images/5599ccfcee3b984dfd5eb4bbbd76f4313cb5a059c8fa7f9fa40fdaf8185f6790.png" src="../_images/5599ccfcee3b984dfd5eb4bbbd76f4313cb5a059c8fa7f9fa40fdaf8185f6790.png" />
+<img alt="../_images/a5cd2c4a6e5c40c6a30aae4e5e916a6c95f3324559ef0dcf1be1eb5b1fc2fe13.png" src="../_images/a5cd2c4a6e5c40c6a30aae4e5e916a6c95f3324559ef0dcf1be1eb5b1fc2fe13.png" />
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a more detailed directed graph to include explicit operations</span>
+<span class="n">G_detailed</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+
+<span class="c1"># Add nodes with their descriptions</span>
+<span class="n">nodes_detailed</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="s1">&#39;Input</span><span class="se">\n</span><span class="s1">$x^{</span><span class="se">\\</span><span class="s1">ell}$&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;w&#39;</span><span class="p">:</span> <span class="s1">&#39;Weight</span><span class="se">\n</span><span class="s1">$w^{</span><span class="se">\\</span><span class="s1">ell}$&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="s1">&#39;Bias</span><span class="se">\n</span><span class="s1">$b^{</span><span class="se">\\</span><span class="s1">ell}$&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;mul&#39;</span><span class="p">:</span> <span class="s1">&#39;Multiply</span><span class="se">\n</span><span class="s1">$w^{</span><span class="se">\\</span><span class="s1">ell} </span><span class="se">\\</span><span class="s1">cdot x^{</span><span class="se">\\</span><span class="s1">ell}$&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;sum&#39;</span><span class="p">:</span> <span class="s1">&#39;Add</span><span class="se">\n</span><span class="s1">$w^{</span><span class="se">\\</span><span class="s1">ell} </span><span class="se">\\</span><span class="s1">cdot x^{</span><span class="se">\\</span><span class="s1">ell} + b^{</span><span class="se">\\</span><span class="s1">ell}$&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;activation&#39;</span><span class="p">:</span> <span class="s1">&#39;Activation</span><span class="se">\n</span><span class="s1">$f(z)$&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;z&#39;</span><span class="p">:</span> <span class="s1">&#39;Output</span><span class="se">\n</span><span class="s1">$z$&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Error</span><span class="se">\n</span><span class="s1">$L$&#39;</span>
+<span class="p">}</span>
+<span class="n">G_detailed</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">nodes_detailed</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+<span class="c1"># Add edges</span>
+<span class="n">edges_detailed</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;mul&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;mul&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="s1">&#39;mul&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">),</span>
+                  <span class="p">(</span><span class="s1">&#39;activation&#39;</span><span class="p">,</span> <span class="s1">&#39;sum&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;activation&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">)]</span>
+<span class="n">G_detailed</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="n">edges_detailed</span><span class="p">)</span>
+
+<span class="c1"># Positioning for the nodes</span>
+<span class="n">pos_detailed</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+    <span class="s1">&#39;w&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="s1">&#39;mul&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">),</span>
+    <span class="s1">&#39;sum&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;activation&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;z&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1"># Labels for the nodes</span>
+<span class="n">labels_detailed</span> <span class="o">=</span> <span class="p">{</span><span class="n">node</span><span class="p">:</span> <span class="n">nodes_detailed</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">G_detailed</span><span class="o">.</span><span class="n">nodes</span><span class="p">()}</span>
+
+<span class="c1"># Labels for the edges</span>
+<span class="n">edge_labels_detailed</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;mul&#39;</span><span class="p">):</span> <span class="s2">&quot;w $f&#39;(u)</span><span class="se">\\</span><span class="s2">frac{</span><span class="se">\\</span><span class="s2">partial L}{</span><span class="se">\\</span><span class="s2">partial z}$&quot;</span><span class="p">,</span>
+    <span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="s1">&#39;mul&#39;</span><span class="p">):</span> <span class="s2">&quot;x $f&#39;(u)</span><span class="se">\\</span><span class="s2">frac{</span><span class="se">\\</span><span class="s2">partial L}{</span><span class="se">\\</span><span class="s2">partial z}$&quot;</span><span class="p">,</span>
+    <span class="p">(</span><span class="s1">&#39;mul&#39;</span><span class="p">,</span> <span class="s1">&#39;sum&#39;</span><span class="p">):</span> <span class="s2">&quot;$f&#39;(u)</span><span class="se">\\</span><span class="s2">frac{</span><span class="se">\\</span><span class="s2">partial L}{</span><span class="se">\\</span><span class="s2">partial z}$&quot;</span><span class="p">,</span>
+    <span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;sum&#39;</span><span class="p">):</span> <span class="s2">&quot;$f&#39;(u)</span><span class="se">\\</span><span class="s2">frac{</span><span class="se">\\</span><span class="s2">partial L}{</span><span class="se">\\</span><span class="s2">partial z}$&quot;</span><span class="p">,</span>
+    <span class="p">(</span><span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="s1">&#39;activation&#39;</span><span class="p">):</span> <span class="s2">&quot;$f&#39;(u)</span><span class="se">\\</span><span class="s2">frac{</span><span class="se">\\</span><span class="s2">partial L}{</span><span class="se">\\</span><span class="s2">partial z}$&quot;</span><span class="p">,</span>
+    <span class="p">(</span><span class="s1">&#39;activation&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">):</span> <span class="s1">&#39;$</span><span class="se">\\</span><span class="s1">frac{</span><span class="se">\\</span><span class="s1">partial L}{</span><span class="se">\\</span><span class="s1">partial z}$&#39;</span><span class="p">,</span>
+    <span class="p">(</span><span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">):</span> <span class="s1">&#39;$</span><span class="se">\\</span><span class="s1">frac{</span><span class="se">\\</span><span class="s1">partial L}{</span><span class="se">\\</span><span class="s1">partial z}$&#39;</span>
+<span class="p">}</span>
+
+<span class="c1"># Draw the graph</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">G_detailed</span><span class="p">,</span> <span class="n">pos_detailed</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels_detailed</span><span class="p">,</span> <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">node_size</span><span class="o">=</span><span class="mi">3000</span><span class="p">,</span> <span class="n">node_color</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">,</span> <span class="n">font_size</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">font_color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">font_weight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">arrows</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">nx</span><span class="o">.</span><span class="n">draw_networkx_edge_labels</span><span class="p">(</span><span class="n">G_detailed</span><span class="p">,</span> <span class="n">pos_detailed</span><span class="p">,</span> <span class="n">edge_labels</span><span class="o">=</span><span class="n">edge_labels_detailed</span><span class="p">,</span> <span class="n">font_size</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">font_color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/f1301e797e99ea48b3a68fe2459f935d14c35264740fcc9a95e61aa0661c40a5.png" src="../_images/f1301e797e99ea48b3a68fe2459f935d14c35264740fcc9a95e61aa0661c40a5.png" />
 </div>
 </div>
 </section>
