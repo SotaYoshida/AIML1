@@ -544,20 +544,20 @@ L(\{ \boldsymbol{w} \}, \{ \boldsymbol{b} \}, x) = (y - \hat{y})^2
 <p>ここで、<span class="math notranslate nohighlight">\(\delta\)</span>で書き直した残りの部分は、下層への入力が注目している特定のノードの入力にどう影響を及ぼすかを表していて</p>
 <div class="math notranslate nohighlight">
 \[
-u^{(\ell+1)}_{j} = \sum_{i=1}^{n^{(\ell+1)}} w^{(\ell+1)}_{ji} f^{(\ell+1)}(u^{(\ell)}_{i}) + b^{(\ell+1)}_{j}
+u^{(\ell+1)}_{j} = \sum_{i=1}^{n^{(\ell+1)}} w^{(\ell+1)}_{ji} f^{(\ell)}(u^{(\ell)}_{i}) + b^{(\ell+1)}_{j}
 \]</div>
 <p>より、</p>
 <div class="math notranslate nohighlight">
 \[
 \frac{ \partial u^{(\ell+1)}_{j} }{ \partial u^{(\ell)}_{k} } 
-= w^{(\ell+1)}_{jk} f^{(\ell+1)'}(u^{(\ell)}_{k})
+= w^{(\ell+1)}_{jk} f^{(\ell)'}(u^{(\ell)}_{k})
 \]</div>
-<p>とかけるので、式<a class="reference internal" href="#equation-delta">(10.1)</a>ないし式<code class="xref eq docutils literal notranslate"><span class="pre">Delta_2</span></code>は</p>
+<p>とかけるので、式<a class="reference internal" href="#equation-delta">(10.1)</a>ないし式<a class="reference internal" href="#equation-delta2">(10.2)</a>は</p>
 <div class="math notranslate nohighlight">
 \[
 \delta^{\ell}_{k} 
 = \sum_{j=1}^{n^{(\ell+1)}} \delta^{\ell+1}_{j} 
-w^{(\ell+1)}_{jk} f^{(\ell+1)'}(u^{(\ell)}_{k})
+w^{(\ell+1)}_{jk} f^{(\ell)'}(u^{(\ell)}_{k})
 \]</div>
 <p>と書き直せる。さて、ニューラルネットワークの順伝播の式(バイアス項は落とそう)を書いてみると</p>
 <div class="math notranslate nohighlight">
