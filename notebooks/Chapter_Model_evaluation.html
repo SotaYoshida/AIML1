@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -429,7 +429,8 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">13.4. データの分割</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">13.5. 正則化</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#l2">13.5.1. L2正則化</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#l1-lasso">13.5.2. L1正則化 (Lasso)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit-weight-decayl2">13.5.2. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 勾配降下法におけるWeight decayとL2正則化の関係</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#l1-lasso">13.5.3. L1正則化 (Lasso)</a></li>
 </ul>
 </li>
 </ul>
@@ -528,10 +529,10 @@ document.write(`
 このとき、そのモデルがデータの背後にある本質的なパターンを捉えていればよいのだが、データに含まれるノイズや偶然のパターンに過剰に適合してしまうことがある。このような場合、未知のデータに対しては予測性能が乏しいモデルとなってしまう。</p>
 <p>例を示そう。以下に、1次元の入力データに対するデータ点を3点示した。</p>
 <div class="cell tag_hide-input docutils container">
-<details class="admonition hide above-input">
+<details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<p class="collapsed admonition-title">Show code cell source</p>
-<p class="expanded admonition-title">Hide code cell source</p>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -564,10 +565,10 @@ document.write(`
 <p>なんだか直線か、ゆるやかな二次関数で説明できそうなデータである。
 では二次関数だと思ってフィッティングしてみよう。</p>
 <div class="cell tag_hide-input docutils container">
-<details class="admonition hide above-input">
+<details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<p class="collapsed admonition-title">Show code cell source</p>
-<p class="expanded admonition-title">Hide code cell source</p>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coeffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">xD</span><span class="p">,</span><span class="n">yD</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
@@ -602,10 +603,10 @@ document.write(`
 <p>この二次関数に基づいて、未知のデータ点に対しても予測を行うことができる！！<br />
 とはならない。実はこのデータは、下記のように正規分布の確率密度関数(中心=5, 分散1)から選んだ3点が、たまたま直線や二次関数で説明できそうに見えるだけである。</p>
 <div class="cell tag_hide-input docutils container">
-<details class="admonition hide above-input">
+<details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<p class="collapsed admonition-title">Show code cell source</p>
-<p class="expanded admonition-title">Hide code cell source</p>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -677,16 +678,16 @@ document.write(`
 例えば、線形回帰モデルにおいては、以下のように損失関数を定義する。</p>
 <div class="math notranslate nohighlight">
 \[
-L = \frac{1}{N} \sum_{i=1}^{N} (y_i - \hat{y}_i)^2 + \lambda \sum_{j=1}^{M} w_j^2
+L = \frac{1}{N} \sum_{i=1}^{N} (y_i - \hat{y}_i)^2 + \lambda \sum_{j=1}^{M} \frac{w_j^2}{2}
 \]</div>
 <p>ここで、<span class="math notranslate nohighlight">\(y_i\)</span> は実際の出力、<span class="math notranslate nohighlight">\(\hat{y}_i\)</span> はモデルの予測出力、<span class="math notranslate nohighlight">\(w_j\)</span> はモデルのパラメータ、<span class="math notranslate nohighlight">\(\lambda\)</span> は正則化パラメータである。
 <span class="math notranslate nohighlight">\(\lambda\)</span> の値が大きいほど、パラメータの大きさに対するペナルティが強くなり、モデルの複雑さが抑えられる。</p>
 <p>適当なデータを用意して、線形回帰を用いてL2正則化の効果を見てみよう。</p>
 <div class="cell tag_hide-input docutils container">
-<details class="admonition hide above-input">
+<details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<p class="collapsed admonition-title">Show code cell source</p>
-<p class="expanded admonition-title">Hide code cell source</p>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -758,8 +759,28 @@ coeffs (L2 reg.):    0.568   -0.060    0.147    0.152   -0.126    0.025   -0.001
 <p>一般の場合においても、L2正則化は過学習を防ぐ効果があることが多いが、必ずしも万能ではないことに注意が必要である。
 線形回帰の章で進んだ注として紹介したように、ベイズ線形回帰の文脈では、L2正則化はパラメータに対するガウス事前分布を仮定することに対応する。</p>
 </section>
+<section id="clubsuit-weight-decayl2">
+<h3><span class="section-number">13.5.2. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> 勾配降下法におけるWeight decayとL2正則化の関係<a class="headerlink" href="#clubsuit-weight-decayl2" title="Link to this heading">#</a></h3>
+<p>L2正則化は、損失関数にパラメータの二乗和をペナルティ項として加える手法であるが、勾配降下法においては、<strong>Weight decay</strong>という手法が同様の効果を持つことが知られている。
+Weight decayでは、各パラメータの更新時に、パラメータを一定割合だけ減少させる操作を行う。
+具体的には、パラメータ<span class="math notranslate nohighlight">\(\theta\)</span>の更新式は以下のようになる。</p>
+<div class="math notranslate nohighlight">
+\[
+\theta_t = \theta_{t-1} - \eta \nabla_{\theta} L_t - \eta \lambda \theta_{t-1} = (1 - \eta \lambda) \theta_{t-1} - \eta \nabla_{\theta} L_t
+\]</div>
+<p>ここで、<span class="math notranslate nohighlight">\(\eta\)</span>は学習率、<span class="math notranslate nohighlight">\(\lambda\)</span>はWeight decayの強さを表すハイパーパラメータである。
+また、<span class="math notranslate nohighlight">\(L_t\)</span>は時刻<span class="math notranslate nohighlight">\(t\)</span>における損失関数であり、通常の損失関数(例えば平均二乗誤差など)を指す。</p>
+<p>上で見たL2正則化の損失関数に基づく勾配降下法の更新式は以下のようになる。</p>
+<div class="math notranslate nohighlight">
+\[
+\theta_t = \theta_{t-1} - \eta \left( \nabla_{\theta} L_t +  \lambda \theta_{t-1} \right) = (1 -  \eta \lambda) \theta_{t-1} - \eta \nabla_{\theta} L_t
+\]</div>
+<p>したがって、Weight decayとL2正則化は、勾配降下法において同じ更新式を持つことがわかる。
+ただし、Adamのような適応的学習率を用いる最適化手法においては、Weight decayとL2正則化は厳密には同じ効果を持たないことに注意が必要である。
+そこで前章で紹介したAdamWのような手法が提案されている。</p>
+</section>
 <section id="l1-lasso">
-<h3><span class="section-number">13.5.2. </span>L1正則化 (Lasso)<a class="headerlink" href="#l1-lasso" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">13.5.3. </span>L1正則化 (Lasso)<a class="headerlink" href="#l1-lasso" title="Link to this heading">#</a></h3>
 <p>L1正則化は、モデルのパラメータの絶対値の和をペナルティ項として損失関数に加える手法である。
 例えば、線形回帰モデルにおいては、以下のように損失関数を定義する。</p>
 <div class="math notranslate nohighlight">
@@ -773,10 +794,10 @@ L1正則化の特徴は、パラメータの一部をゼロにする傾向があ
 その効果をはっきりとみるために、あえて高次の多項式(9次)でフィッティングしてみた。
 L1正則化がスパースな解をもたらすのであれば、9次の多項式のうち、多くの係数がゼロになることが期待される。</p>
 <div class="cell tag_hide-input docutils container">
-<details class="admonition hide above-input">
+<details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<p class="collapsed admonition-title">Show code cell source</p>
-<p class="expanded admonition-title">Hide code cell source</p>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -933,7 +954,8 @@ coeffs (L1 reg.):    0.530   -0.000    0.352   -0.130   -0.002    0.001    0.000
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">13.4. データの分割</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">13.5. 正則化</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#l2">13.5.1. L2正則化</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#l1-lasso">13.5.2. L1正則化 (Lasso)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit-weight-decayl2">13.5.2. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 勾配降下法におけるWeight decayとL2正則化の関係</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#l1-lasso">13.5.3. L1正則化 (Lasso)</a></li>
 </ul>
 </li>
 </ul>
