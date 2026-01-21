@@ -431,9 +431,10 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">12.2.1. 例：2×2ピクセルのカラー画像</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bit">12.3. 文字データの数値表現 (bit列との対応関係)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">12.4. 文字データの数値表現（埋め込みベクトルの概要）</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">12.5. データのスケーリング</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">12.3. 画像データの処理</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bit">12.4. 文字データの数値表現 (bit列との対応関係)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">12.5. 文字データの数値表現（埋め込みベクトルの概要）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">12.6. データのスケーリング</a></li>
 </ul>
             </nav>
         </div>
@@ -561,9 +562,132 @@ document.write(`
 </div>
 </section>
 </section>
+<section id="id6">
+<h2><span class="section-number">12.3. </span>画像データの処理<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<p>以下では、Pythonの<code class="docutils literal notranslate"><span class="pre">numpy</span></code>などを使って、写真データを数値として読み込んで表示したり、特定の色を抑えるなどの処置をしてみよう。</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">io</span><span class="w"> </span><span class="kn">import</span> <span class="n">BytesIO</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<span class="n">url1</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/SotaYoshida/Lecture_DataScience/main/notebooks/pic_for_notebook/u_ta.jpeg&quot;</span>
+<span class="n">url2</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/SotaYoshida/AIML1/main/notebooks/pic/pic_Louvre.jpg&quot;</span>
+<span class="n">img1</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url1</span><span class="p">)</span><span class="o">.</span><span class="n">content</span><span class="p">))</span>
+<span class="n">img2</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url2</span><span class="p">)</span><span class="o">.</span><span class="n">content</span><span class="p">))</span>
+<span class="n">img1_</span> <span class="o">=</span> <span class="n">img1</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">img1</span><span class="o">.</span><span class="n">width</span><span class="o">*</span><span class="mf">0.3</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">img1</span><span class="o">.</span><span class="n">height</span><span class="o">*</span><span class="mf">0.3</span><span class="p">))</span> <span class="p">)</span>
+<span class="n">img2_</span> <span class="o">=</span> <span class="n">img2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">img2</span><span class="o">.</span><span class="n">width</span><span class="o">*</span><span class="mf">0.1</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">img2</span><span class="o">.</span><span class="n">height</span><span class="o">*</span><span class="mf">0.1</span><span class="p">))</span> <span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">img1_</span><span class="p">,</span> <span class="n">img2_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/ff25cc76d29a6ef82b4645ef2f68d861febd04f0b8397702e0cacb1e8a1921ab.png" src="../_images/ff25cc76d29a6ef82b4645ef2f68d861febd04f0b8397702e0cacb1e8a1921ab.png" />
+<img alt="../_images/73e12482aaca86c973d70b3298cf92a130ac2c0649546fdcc4d369935f2e11e9.png" src="../_images/73e12482aaca86c973d70b3298cf92a130ac2c0649546fdcc4d369935f2e11e9.png" />
+</div>
+</div>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>宇〜太の写真の講義資料での使用は許可を得ています。</p>
+</aside>
+<p>それぞれ宇〜太の写真と、ルーブル美術館で撮影した天井の写真である。</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img1_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img1</span><span class="p">)</span>
+<span class="n">img2_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;宇〜太の写真のデータ形状:&quot;</span><span class="p">,</span> <span class="n">img1_array</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ルーブル美術館の天井写真のデータ形状:&quot;</span><span class="p">,</span> <span class="n">img2_array</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>宇〜太の写真のデータ形状: (790, 650, 3)
+ルーブル美術館の天井写真のデータ形状: (3024, 4032, 3)
+</pre></div>
+</div>
+</div>
+</div>
+<p>画像データの形状（高さ、幅、色チャネル数）を確認し、最後の成分ごとに頻度を描いてみると、各色の分布がわかる。</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">draw_RGB</span><span class="p">(</span><span class="n">image_array</span><span class="p">):</span>
+    <span class="n">R</span> <span class="o">=</span> <span class="n">image_array</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    <span class="n">G</span> <span class="o">=</span> <span class="n">image_array</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="n">image_array</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    <span class="n">hist_R</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">))</span>
+    <span class="n">hist_G</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">))</span>
+    <span class="n">hist_B</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">hist_R</span><span class="p">,</span> <span class="n">hist_G</span><span class="p">,</span> <span class="n">hist_B</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">axs</span> <span class="o">=</span> <span class="p">[</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">),</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span> <span class="p">]</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">img_array</span><span class="p">,</span> <span class="n">title</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axs</span><span class="p">,</span> <span class="p">[</span><span class="n">img1_array</span><span class="p">,</span> <span class="n">img2_array</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;宇〜太の写真&#39;</span><span class="p">,</span> <span class="s1">&#39;ルーブル美術館の天井写真&#39;</span><span class="p">]):</span>
+    <span class="n">hist_R</span><span class="p">,</span> <span class="n">hist_G</span><span class="p">,</span> <span class="n">hist_B</span> <span class="o">=</span> <span class="n">draw_RGB</span><span class="p">(</span><span class="n">img_array</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">hist_R</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;R&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">hist_G</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;G&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">hist_B</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Pixel Value&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/9b7349bba774d5ca917a9d3d48efa307f359f867a84e25971b1eadf730e7f45f.png" src="../_images/9b7349bba774d5ca917a9d3d48efa307f359f867a84e25971b1eadf730e7f45f.png" />
+</div>
+</div>
+<p>宇〜太については、鋭いピークになっていて、特定の色が多いことがわかる。
+ルーブル美術館の天井写真については、比較的均一に分布していることが見て取れる。</p>
+<p>それぞれの画像について、緑&amp;青の抑制と、赤の抑制をしてみると...</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img1_array_modified</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img1_</span><span class="p">)</span>
+<span class="n">img1_array_modified</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)]</span> <span class="o">//=</span> <span class="mi">2</span>
+<span class="n">img2_array_modified</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img2_</span><span class="p">)</span>
+<span class="n">img2_array_modified</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">*=</span> <span class="mi">0</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">img1_array_modified</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">img2_array_modified</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/471758fb34f68cca34cbe156999500ec9ce5f635e227ecddc593579a6c328b3d.png" src="../_images/471758fb34f68cca34cbe156999500ec9ce5f635e227ecddc593579a6c328b3d.png" />
+<img alt="../_images/0bddb8e318cc23b58a0f0a3ea1c5f9d1b6680d5401b1ffb9b9eee0103c24e5c7.png" src="../_images/0bddb8e318cc23b58a0f0a3ea1c5f9d1b6680d5401b1ffb9b9eee0103c24e5c7.png" />
+</div>
+</div>
+<p>画像編集の際のフィルターはもう少し複雑な操作になるが、基本的な考え方は同じである。</p>
+</section>
 <hr class="docutils" />
 <section id="bit">
-<h2><span class="section-number">12.3. </span>文字データの数値表現 (bit列との対応関係)<a class="headerlink" href="#bit" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">12.4. </span>文字データの数値表現 (bit列との対応関係)<a class="headerlink" href="#bit" title="Link to this heading">#</a></h2>
 <p>最も単純に文字を数値で表現する方法は、各文字に一意の整数を割り当てる方法である。<br />
 例:</p>
 <ul class="simple">
@@ -585,8 +709,8 @@ document.write(`
 対応表が異なれば、同じ文字でも異なる数値になるため、文字化けの原因になることがある。
 よく、csvファイルをテキストエディタやExcelなどのソフトウェアで開いたときに、文字化けして大量の糸偏の漢字が表示されることがあるが、これは文字コードの対応表が異なるために起こる現象である。</p>
 </section>
-<section id="id6">
-<h2><span class="section-number">12.4. </span>文字データの数値表現（埋め込みベクトルの概要）<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<section id="id7">
+<h2><span class="section-number">12.5. </span>文字データの数値表現（埋め込みベクトルの概要）<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
 <p>上記のようなbit列との対応関係は、単純で分かりやすいが、より高度な自然言語処理にはビット数を増やすだけでは十分ではない。
 というのも、例えば日本語の全ての単語をデータベース化して対応する整数を割り当てたとして、
 「大学」と「大学院」が近い意味を持つことを、整数の大小関係や距離で表現することはできない。
@@ -644,8 +768,8 @@ queen-appleの距離: 0.6324555320336759
 一方で、後者の「物理」は物理攻撃の意味であり、「攻撃」「ダメージ」などゲーム用語と意味合いが近く、「魔法」「特殊」などと若干距離が遠いかもしれない。</p>
 <p>こうした文脈を捉えるうえでは、単語の埋め込みベクトルを文脈に応じて動的に変化させる手法が必要になり、Attention機構などが有効であることが知られている。その最たる例が、大規模言語モデル(LLM)である。</p>
 </section>
-<section id="id7">
-<h2><span class="section-number">12.5. </span>データのスケーリング<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<section id="id8">
+<h2><span class="section-number">12.6. </span>データのスケーリング<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
 <p>上記のように、様々なデータを数値で表現できる例は挙げたが、実際に機械学習で扱う際には、データのスケール・分布が重要になる場合が多い。
 というのも、あらかじめ決めた規則に従ってデータを数値化しても、データのスケール(≒数値の範囲や分布)が異なると、機械学習モデルの学習がうまくいかないことがあるからである。</p>
 <p>例えば上の画像データの例で、白黒画像のピクセル値は0〜255の範囲であるが、もし別のデータセットでピクセル値が限られた範囲で表現されている場合(つまり、人間には分かりにくい僅かな濃淡だけがある場合)、これらをそのまま同じモデルで学習させると、うまくいかないことがある。
@@ -728,9 +852,10 @@ queen-appleの距離: 0.6324555320336759
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">12.2.1. 例：2×2ピクセルのカラー画像</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bit">12.3. 文字データの数値表現 (bit列との対応関係)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">12.4. 文字データの数値表現（埋め込みベクトルの概要）</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">12.5. データのスケーリング</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">12.3. 画像データの処理</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bit">12.4. 文字データの数値表現 (bit列との対応関係)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">12.5. 文字データの数値表現（埋め込みベクトルの概要）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">12.6. データのスケーリング</a></li>
 </ul>
   </nav></div>
 
