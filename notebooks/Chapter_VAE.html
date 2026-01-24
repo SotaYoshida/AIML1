@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>16. 変分オートエンコーダ (VAE) &#8212; AI・機械学習論1</title>
+    <title>16. 変分オートエンコーダ (VAE) &#8212; AI・機械学習論1/機械学習論</title>
   
   
   
@@ -161,8 +161,8 @@
       
     
     
-    <img src="../_static/logo_AIML1.png" class="logo__image only-light" alt="AI・機械学習論1 - Home"/>
-    <script>document.write(`<img src="../_static/logo_AIML1.png" class="logo__image only-dark" alt="AI・機械学習論1 - Home"/>`);</script>
+    <img src="../_static/logo_AIML1.png" class="logo__image only-light" alt="AI・機械学習論1/機械学習論 - Home"/>
+    <script>document.write(`<img src="../_static/logo_AIML1.png" class="logo__image only-dark" alt="AI・機械学習論1/機械学習論 - Home"/>`);</script>
   
   
 </a></div>
@@ -183,7 +183,7 @@
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../home.html">
-                    AI・機械学習論1
+                    AI・機械学習論1/機械学習論
                 </a>
             </li>
         </ul>
@@ -467,7 +467,7 @@ VAEでは、潜在変数の分布を近似するために変分推論を使用�
 <p>VAEによるデータ生成の基本的な流れは以下の通りである。</p>
 <ol class="arabic simple">
 <li><p>潜在変数のサンプリング: 潜在変数 <span class="math notranslate nohighlight">\(z\)</span> を事前分布 <span class="math notranslate nohighlight">\(p(z)\)</span> (通常、正規分布)からサンプリングする。</p></li>
-<li><p>観測変数の生成: 潜在変数 <span class="math notranslate nohighlight">\(z\)</span> から観測変数 <span class="math notranslate nohighlight">\(x\)</span> を生成するために、条件付き分布 <span class="math notranslate nohighlight">\(p(x|z)\)</span> (例: ニューラルネットワークの出力+正規分布)を用いる。</p></li>
+<li><p>観測変数の生成: 潜在変数 <span class="math notranslate nohighlight">\(z\)</span> から観測変数 <span class="math notranslate nohighlight">\(x\)</span> を生成するために、条件付き分布 <span class="math notranslate nohighlight">\(p_\theta(x|z)\)</span> (例: ニューラルネットワークの出力+正規分布)を用いる。</p></li>
 </ol>
 <img src="https://raw.githubusercontent.com/SotaYoshida/AIML1/refs/heads/main/notebooks/pic/VAE_gen_sketch.png" width="600">
 <p>単一の潜在変数ではなく、その確率分布を考えることで、より多様なデータ生成が可能になる。
@@ -527,12 +527,12 @@ p_{\theta}(x^{(i)}) = \int p_{\theta}(x^{(i)}|z) p(z) dz
 \mathrm{ELBO}(\theta, \phi; x) &amp;= \int q_{\phi}(z|x) \log \frac{p_{\theta}(x, z)}{q_{\phi}(z|x)} dz 
 \end{align}
 \]</div>
-<p>少々くどいが、<span class="math notranslate nohighlight">\(\theta\)</span>は生成モデルのパラメータ(例: NNの重みやバイアス)、<span class="math notranslate nohighlight">\(\phi\)</span>は近似分布(例: 近似事後分布の平均や分散)のパラメータであることに注意。</p>
+<p>少々くどいが、<span class="math notranslate nohighlight">\(\theta\)</span>はEncoderのパラメータ、<span class="math notranslate nohighlight">\(\phi\)</span>はDecoderのパラメータであることを思い出しておこう。</p>
 <p>ここで、ELBOの最大化が対数尤度の下限を最大化することに繋がることもじっくりと確認しておこう。
 よくよく考えると上で出てきた確率分布 <span class="math notranslate nohighlight">\(q(z)\)</span>は、規格化された確率分布であり左辺とはなんの関係もなかったはずである。
 なので、<span class="math notranslate nohighlight">\(q(z)\)</span>のパラメータ <span class="math notranslate nohighlight">\(\phi\)</span>を変化させても、左辺の対数尤度にはなんの影響も与えないはずである。しかし、右辺のELBOは、<span class="math notranslate nohighlight">\(\phi\)</span>を変化させることで変化する。したがって、ELBOを最大化することで、対数尤度の下限を最大化しつつ、変分分布 <span class="math notranslate nohighlight">\(q_{\phi}(z)\)</span> を対数尤度を最大化するような潜在変数の分布に近づけることができる。
 左辺(２つの項の総和)は変わらないのだから、ELBOと非負のKLダイバージェンスの和が一定であることから、ELBOを最大化することは、KLダイバージェンスを最小化する(<span class="math notranslate nohighlight">\(q_{\phi}(z)\)</span>を <span class="math notranslate nohighlight">\(p_{\theta}(z|x)\)</span>に近づける)ことと同値である。</p>
-<p>計算の難しい事後分布 <span class="math notranslate nohighlight">\(p_{\theta}(z|x)\)</span> を直接扱うのではなく、変分分布 <span class="math notranslate nohighlight">\(q_{\phi}(z|x)\)</span> を導入し、ELBOを最大化することで、事後分布を近似するというのがVAEの基本的な考え方で、これは変分推論の枠組みの一種であることから、variationalという名前が付けられている。</p>
+<p>計算の難しい事後分布 <span class="math notranslate nohighlight">\(p_{\theta}(z|x)\)</span> を直接扱うのではなく、近似分布 <span class="math notranslate nohighlight">\(q_{\phi}(z|x)\)</span> を導入し、ELBOを最大化することで、事後分布を近似するというのがVAEの基本的な考え方で、これは変分推論の枠組みの一種であることから、variationalという名前が付けられている。</p>
 </section>
 <section id="id4">
 <h2><span class="section-number">16.4. </span>近似分布のパラメータの確率分布<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
@@ -544,7 +544,7 @@ p_{\theta}(x^{(i)}) = \int p_{\theta}(x^{(i)}|z) p(z) dz
 <p>これは、観測変数 <span class="math notranslate nohighlight">\(x\)</span> から潜在変数 <span class="math notranslate nohighlight">\(z\)</span> へのマッピングを学習するエンコーダ (Encoder)を導入することを意味している。
 今度はencoderのパラメータを <span class="math notranslate nohighlight">\(\phi\)</span> と表記しよう。すると、近似分布 <span class="math notranslate nohighlight">\(q(z)\)</span> は、ニューラルネットワークの出力 <span class="math notranslate nohighlight">\(\phi(x^{(i)}; \phi)\)</span> によって与えられることになる。</p>
 <p>図にすると以下のようになる。</p>
-<img src="https://raw.githubusercontent.com/SotaYoshida/AIML1/refs/heads/main/notebooks/pic/encoder_vae.png" width="600">
+<img src="https://raw.githubusercontent.com/SotaYoshida/AIML1/refs/heads/main/notebooks/pic/encoder_vae.png" width="500">
 <p>encoderによって生成される近似分布が正規分布であるとすると、<span class="math notranslate nohighlight">\(\Sigma\)</span>を生成することも考えられなくはないが、計算コストの観点から、<span class="math notranslate nohighlight">\(\Sigma\)</span>を対角行列とする(独立な各次元の分散を生成させる)のが一般的であろう。</p>
 </section>
 <section id="elbo">
@@ -583,7 +583,7 @@ D_{KL}(q_{\phi}(z|x) || p(z)) &amp; = \frac{1}{2} \sum_{j=1}^{d} \left( \sigma_{
 <section id="id5">
 <h2><span class="section-number">16.6. </span>ELBOの最大化と変数変換トリック<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
 <p>ここまでで、VAEの基本的な構成要素が出揃ってきた。</p>
-<img src="https://raw.githubusercontent.com/SotaYoshida/AIML1/refs/heads/main/notebooks/pic/VAE_sketch.png" width="600">
+<img src="https://raw.githubusercontent.com/SotaYoshida/AIML1/refs/heads/main/notebooks/pic/VAE_sketch.png" width="800">
 <p>ELBOを最大化するためには、ELBOの勾配を計算し、その勾配に基づいてEncoder/Decoderのパラメータ <span class="math notranslate nohighlight">\(\theta\)</span> と <span class="math notranslate nohighlight">\(\phi\)</span> を更新していく必要がある。</p>
 <p>しかしながら、ELBOの第１項は、近似分布 <span class="math notranslate nohighlight">\(q_{\phi}(z|x)\)</span> からサンプリングした潜在変数 <span class="math notranslate nohighlight">\(z\)</span> に依存しているため、直接的に <span class="math notranslate nohighlight">\(\phi\)</span> に関する勾配を計算することが難しい。
 そこで、<strong>変数変換トリック (Reparameterization Trick)</strong> と呼ばれる手法を用いることで、勾配の計算を可能にする。</p>
