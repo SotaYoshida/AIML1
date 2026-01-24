@@ -217,5 +217,5 @@ logo.pptx
 .DS_Store
 
 notebooks/data
-notebooks/Chapter_VAE.ipynb
+#notebooks/Chapter_VAE.ipynb
 notebooks/Chapter_DiffusionModels.ipynb

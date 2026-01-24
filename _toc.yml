@@ -41,5 +41,6 @@ parts:
   #- file: notebooks/Chapter_PyTorch
   - file: notebooks/Chapter_PCA
   - file: notebooks/Chapter_GMM
-  - file: notebooks/Chapter_SVM
+  - file: notebooks/Chapter_VAE
+  - file: notebooks/Chapter_DiffusionModels
   - file: notebooks/Chapter_KAN
