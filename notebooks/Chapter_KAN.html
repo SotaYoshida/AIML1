@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>18. KAN: Kolmogorov–Arnold Networks &#8212; AI・機械学習論1</title>
+    <title>17. KAN: Kolmogorov–Arnold Networks &#8212; AI・機械学習論1</title>
   
   
   
@@ -68,7 +68,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/Chapter_KAN';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="prev" title="17. 拡散モデル" href="Chapter_DiffusionModels.html" />
+    <link rel="prev" title="16. 変分オートエンコーダ (VAE)" href="Chapter_VAE.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="ja"/>
   </head>
@@ -219,8 +219,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Chapter_PCA.html">14. 主成分分析</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_GMM.html">15. 混合ガウスモデル(Gaussian Mixture Model, GMM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_VAE.html">16. 変分オートエンコーダ (VAE)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_DiffusionModels.html">17. 拡散モデル</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">18. KAN: Kolmogorov–Arnold Networks</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">17. KAN: Kolmogorov–Arnold Networks</a></li>
 </ul>
 
     </div>
@@ -416,10 +415,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">18.1. 概要</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kan-kolmogorov-arnold-networks">18.2. KAN: Kolmogorov-Arnold Networksの定式化</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation-details">18.3. Implementation details</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pykan">18.4. pykanを用いたチュートリアル</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">17.1. 概要</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kan-kolmogorov-arnold-networks">17.2. KAN: Kolmogorov-Arnold Networksの定式化</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation-details">17.3. Implementation details</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pykan">17.4. pykanを用いたチュートリアル</a></li>
 </ul>
             </nav>
         </div>
@@ -432,13 +431,13 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="kan-kolmogorovarnold-networks">
-<h1><span class="section-number">18. </span>KAN: Kolmogorov–Arnold Networks<a class="headerlink" href="#kan-kolmogorovarnold-networks" title="Link to this heading">#</a></h1>
+<h1><span class="section-number">17. </span>KAN: Kolmogorov–Arnold Networks<a class="headerlink" href="#kan-kolmogorovarnold-networks" title="Link to this heading">#</a></h1>
 <p>この章では、Kolmogorov-Arnold Networks (KAN)について簡単に紹介する。</p>
 <p>KANは、2024年4月に提案された新しいモデルで、ニューラルネットワーク(多層パーセプトロン, MLP)を置き換える(かもしれない)手法だとして注目を集めた。</p>
 <p>Ziming Liu, Yixuan Wang, Sachin Vaidya, Fabian Ruehle, James Halverson, Marin Soljačić, Thomas Y. Hou, Max Tegmark, <a class="reference external" href="https://arxiv.org/abs/2404.19756">arXiv:2404.19756</a></p>
 <p>筆頭著者によるGithubレポジトリ<a class="reference external" href="https://github.com/KindXiaoming/pykan">pykan</a>を参照しながら解説とチュートリアルを行う。</p>
 <section id="id1">
-<h2><span class="section-number">18.1. </span>概要<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">17.1. </span>概要<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <p>KANの根幹は、「有界な領域上の連続な多変量関数は、有界領域上の単変数関数の合成で表現できる」というKolmogorov-Arnoldの表現定理である。</p>
 <p>入力に対して予め決められた非線形関数(Affine変換→活性化関数)と学習可能な重みを持つ関数を構成するMLPと対照的に、
 KANは、ノード間を繋ぐ関数を学習することで、任意の多変量関数を表現するという特徴がある。</p>
@@ -456,7 +455,7 @@ KANは、ノード間を繋ぐ関数を学習することで、任意の多変�
 <p>一般には、2-layerで幅<span class="math notranslate nohighlight">\(2d+1\)</span>のKolmogorov-Arnold表現は連続ではないが、KANでは文字通り、これを多層に拡張する。</p>
 </section>
 <section id="kan-kolmogorov-arnold-networks">
-<h2><span class="section-number">18.2. </span>KAN: Kolmogorov-Arnold Networksの定式化<a class="headerlink" href="#kan-kolmogorov-arnold-networks" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">17.2. </span>KAN: Kolmogorov-Arnold Networksの定式化<a class="headerlink" href="#kan-kolmogorov-arnold-networks" title="Link to this heading">#</a></h2>
 <p>KANは、次のように定式化される。</p>
 <div class="math notranslate nohighlight">
 \[f(x)={\bf \Phi}_{\rm out}\circ{\bf \Phi}_{\rm in}\circ {\bf x}\]</div>
@@ -474,7 +473,7 @@ KANは、ノード間を繋ぐ関数を学習することで、任意の多変�
 <p>論文では特にこの<span class="math notranslate nohighlight">\(\phi\)</span>を、B-spline関数を用いて表現することを提案している。</p>
 </section>
 <section id="implementation-details">
-<h2><span class="section-number">18.3. </span>Implementation details<a class="headerlink" href="#implementation-details" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">17.3. </span>Implementation details<a class="headerlink" href="#implementation-details" title="Link to this heading">#</a></h2>
 <p>KANレイヤーの構造は非常にシンプルだが、著者らは3つの&quot;key tricks&quot;を提案している。</p>
 <ol class="arabic">
 <li><p>Residual activation functions:
@@ -498,7 +497,7 @@ KANは、ノード間を繋ぐ関数を学習することで、任意の多変�
 </ol>
 </section>
 <section id="pykan">
-<h2><span class="section-number">18.4. </span>pykanを用いたチュートリアル<a class="headerlink" href="#pykan" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">17.4. </span>pykanを用いたチュートリアル<a class="headerlink" href="#pykan" title="Link to this heading">#</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># python==3.9.7</span>
 <span class="n">matplotlib</span><span class="o">==</span><span class="mf">3.6.2</span>
 <span class="n">numpy</span><span class="o">==</span><span class="mf">1.24.4</span>
@@ -743,12 +742,12 @@ saving model version 0.6
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="Chapter_DiffusionModels.html"
+       href="Chapter_VAE.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">前へ</p>
-        <p class="prev-next-title"><span class="section-number">17. </span>拡散モデル</p>
+        <p class="prev-next-title"><span class="section-number">16. </span>変分オートエンコーダ (VAE)</p>
       </div>
     </a>
 </div>
@@ -767,10 +766,10 @@ saving model version 0.6
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">18.1. 概要</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kan-kolmogorov-arnold-networks">18.2. KAN: Kolmogorov-Arnold Networksの定式化</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation-details">18.3. Implementation details</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pykan">18.4. pykanを用いたチュートリアル</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">17.1. 概要</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kan-kolmogorov-arnold-networks">17.2. KAN: Kolmogorov-Arnold Networksの定式化</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation-details">17.3. Implementation details</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pykan">17.4. pykanを用いたチュートリアル</a></li>
 </ul>
   </nav></div>
 
