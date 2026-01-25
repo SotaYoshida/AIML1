@@ -721,7 +721,12 @@ document.write(`
 <p>このようなベクトル表現では、「意味が近い単語ほどベクトルの距離が近い」などの性質を持たせることができる。
 要するに、それぞれの単語を<span class="math notranslate nohighlight">\(K\)</span>次元のベクトル空間にマッピングすることで、意味的な関係を捉えやすくする訳だ。
 単に整数を割り当てる場合は、1次元の空間にマッピングしているのと同じであり、意味的な関係を表現するには不十分であるとも言える。</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 単語の埋め込みベクトル例 (あくまでかなり簡略化した例)</span>
 <span class="n">embedding</span> <span class="o">=</span> <span class="p">{</span>
@@ -736,6 +741,7 @@ document.write(`
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>king-queenの距離: 0.14142135623730956
 king-appleの距離: 0.761577310586391
