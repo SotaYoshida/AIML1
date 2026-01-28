@@ -391,9 +391,7 @@ document.write(`
   </button>
 `);
 </script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
+
 </div></div>
       
     </div>
@@ -409,14 +407,6 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> 目次 </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">数学的準備</a></li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -428,10 +418,13 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1>拡散モデル<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
-<section id="id2">
-<h2>数学的準備<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
-<p>正規分布の性質を用いて、有用な式を導出しておこう。</p>
-</section>
+<p>VAEの章では、データを再構成するよう学習したEncoder・Decoderを用いて、新しいデータを生成する方法を説明しました。
+VAEを拡張して、潜在空間を多層化することもできますが、工夫をしないと、それぞれのEncoder/Decoderを独立に作成することになり、学習が困難、あるいは非現実的になってしまいます。</p>
+<p>**拡散モデル(Diffusion Model)**は、潜在空間にノイズを加える過程と、ノイズを除去する過程を学習することで、新しいデータを生成する手法です。</p>
+<p>下に、これから考える拡散モデルのイメージ図を示します。</p>
+<p>与えられたデータに対して、徐々にノイズを加えていき、最終的に完全なノイズに変換する過程を**拡散過程(Forward Diffusion Process)**と呼びます。
+この過程は、セットアップさえ決めてしまえば、学習は必要のないステップになります。</p>
+<p>逆に、ノイズから元のデータを復元する過程を**生成過程(Reverse Generation Process)<strong>や</strong>逆</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -470,21 +463,6 @@ document.write(`
             </div>
             
             
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> 目次
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">数学的準備</a></li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>
