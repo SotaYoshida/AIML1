@@ -462,18 +462,19 @@ KLダイバージェンスは、非負であり、(P) と (Q) が同じ分布で
 <p>じゃんけんの手を出す確率がそれぞれ</p>
 <ul class="simple">
 <li><p>Aさん: グー 0.5, チョキ 0.3, パー 0.2</p></li>
-<li><p>Bさん: グー 0.2, チョキ 0.2, パー 0.7</p></li>
+<li><p>Bさん: グー 0.2, チョキ 0.1, パー 0.7</p></li>
 <li><p>Cさん: グー 0.4, チョキ 0.4, パー 0.2</p></li>
 </ul>
 <p>であるとする。</p>
 <p>このとき、ぱっと見で、AさんとCさんは似ているが、Bさんは違うな、と思う。
-KLダイバージェンスを計算してみよう。</p>
+KLダイバージェンスを計算してみよう。
+量を計算する場合は、特定の底(例えばネイピア数や2)を用いることに注意しよう。下では自然対数を用いている。</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align*}
-D_{KL}(A || B) &amp; = 0.5 \log \frac{0.5}{0.2} + 0.3 \log \frac{0.3}{0.2} + 0.2 \log \frac{0.2}{0.7} \approx 0.364\\
-D_{KL}(A || C) &amp; = 0.5 \log \frac{0.5}{0.4} + 0.3 \log \frac{0.3}{0.4} + 0.2 \log \frac{0.2}{0.2} \approx 0.085\\
-D_{KL}(B || C) &amp; = 0.2 \log \frac{0.2}{0.4} + 0.2 \log \frac{0.2}{0.4} + 0.7 \log \frac{0.7}{0.2} \approx 0.530
+D_{KL}(A || B) &amp; = 0.5 \log \frac{0.5}{0.2} + 0.3 \log \frac{0.3}{0.1} + 0.2 \log \frac{0.2}{0.7} \approx 0.537\\
+D_{KL}(A || C) &amp; = 0.5 \log \frac{0.5}{0.4} + 0.3 \log \frac{0.3}{0.4} + 0.2 \log \frac{0.2}{0.2} \approx 0.025\\
+D_{KL}(B || C) &amp; = 0.2 \log \frac{0.2}{0.4} + 0.1 \log \frac{0.1}{0.4} + 0.7 \log \frac{0.7}{0.2} \approx 0.600
 \end{align*}
 \end{split}\]</div>
 <p>AさんとCさんのKLダイバージェンスが最も小さく、Bさんは他の2人とのKLダイバージェンスが大きいことがわかる。
