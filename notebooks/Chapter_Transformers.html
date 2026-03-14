@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>17. Transformers &#8212; AI・機械学習論1/機械学習論</title>
+    <title>Transformers &#8212; AI・機械学習論1/機械学習論</title>
   
   
   
@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -76,8 +76,6 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/Chapter_Transformers';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="next" title="18. KAN: Kolmogorov–Arnold Networks" href="Chapter_KAN.html" />
-    <link rel="prev" title="16. 変分オートエンコーダ (VAE)" href="Chapter_VAE.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="ja"/>
   </head>
@@ -139,6 +137,8 @@
     <div class="bd-container__inner bd-page-width">
       
       
+      
+        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -227,12 +227,11 @@
 <li class="toctree-l1"><a class="reference internal" href="Chapter_Model_evaluation.html">13. モデルの選択・評価・過学習・正則化</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">発展的な話題</span></p>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Chapter_PCA.html">14. 主成分分析</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_GMM.html">15. 混合ガウスモデル(Gaussian Mixture Model, GMM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_VAE.html">16. 変分オートエンコーダ (VAE)</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">17. Transformers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_KAN.html">18. KAN: Kolmogorov–Arnold Networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_KAN.html">17. KAN: Kolmogorov–Arnold Networks</a></li>
 </ul>
 
     </div>
@@ -428,15 +427,15 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attention-mechanism">17.1. Attention Mechanism (注意機構)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">17.1.1. 一般的なベクトルデータへの拡張</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attention-mechanism">Attention Mechanism (注意機構)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">一般的なベクトルデータへの拡張</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">17.2. スケーリングの必要性</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">17.3. マスク</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#positional-encoding">17.4. 位置エンコーディング (Positional Encoding)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-head-attention">17.5. Multi-Head Attention</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformer">17.6. Transformerの構造</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">スケーリングの必要性</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">マスク</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#positional-encoding">位置エンコーディング (Positional Encoding)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-head-attention">Multi-Head Attention</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformer">Transformerの構造</a></li>
 </ul>
             </nav>
         </div>
@@ -449,11 +448,11 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="transformers">
-<h1><span class="section-number">17. </span>Transformers<a class="headerlink" href="#transformers" title="Link to this heading">#</a></h1>
+<h1>Transformers<a class="headerlink" href="#transformers" title="Link to this heading">#</a></h1>
 <p>この章では、現代的な自然言語処理（NLP）における重要なアーキテクチャである <strong>トランスフォーマー（Transformers）</strong> について、<strong>自己注意機構（Self-Attention Mechanism）</strong> を中心に解説する。
 解きたいタスクに応じて、様々な形で応用されているが、それらに共通する基本的な仕組みを理解することがこの章の目標となる。</p>
 <section id="attention-mechanism">
-<h2><span class="section-number">17.1. </span>Attention Mechanism (注意機構)<a class="headerlink" href="#attention-mechanism" title="Link to this heading">#</a></h2>
+<h2>Attention Mechanism (注意機構)<a class="headerlink" href="#attention-mechanism" title="Link to this heading">#</a></h2>
 <p>Transformerの中核をなすのが <strong>注意機構（Attention Mechanism）</strong> である。注意機構は、入力データの中で重要な部分に焦点を当てるための仕組みであり、特に自然言語処理においては、文脈情報を効果的に捉えるために利用される。</p>
 <p>データの表現方法の章でも少し触れたように、文章中の単語の意味は、その周囲の単語によって大きく影響を受ける。例えば、「bank」という単語は、「river」や「money」といった周囲の単語によって、その意味が「川岸」や「銀行」に変わる。</p>
 <ul class="simple">
@@ -500,7 +499,7 @@ Aさんのラーメン記録はブログにまとめられており、次に訪�
 <p>内積を計算する以上、クエリとキーは同じ次元数である必要があることを覚えておこう。
 また、上ではクエリが1つ、キーとバリューが複数ある場合を示したが、クエリが複数ある場合や、バリューが多次元の場合も同様に計算できる。</p>
 <section id="id1">
-<h3><span class="section-number">17.1.1. </span>一般的なベクトルデータへの拡張<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<h3>一般的なベクトルデータへの拡張<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
 <p>上で示したラーメン採点の例は、Attentionの計算をイメージしやすくするためのものである。実際には、自然言語処理に限らず、様々なベクトルデータに対してAttentionの計算を適応できる。そこで、もう少し一般的なベクトルデータを例にして説明しよう。</p>
 <p>それぞれのドメインのデータがどんな構造であるかはさておき、方法さえ決めてしまえば、データを数値のベクトルに変換することはいつでも可能である。例えば画像であれば、ピクセル値を並べたベクトルに変換できるし、音声であれば、時間領域の波形データをフーリエ変換して周波数領域のスペクトルに変換し、そのスペクトルをベクトルとして扱うことができる。量子系の状態に興味があるのなら、それぞれの状態に対応するベクトルを用意すればよい(ただし、量子系の場合はベクトルの要素が複素数になる場合がある点に注意)。
 テキスト処理の場合も同様で、単語や文をベクトルとして表現する方法がいくつも提案されている。</p>
@@ -535,19 +534,19 @@ V &amp;= XW^V
 </section>
 </section>
 <section id="id2">
-<h2><span class="section-number">17.2. </span>スケーリングの必要性<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<h2>スケーリングの必要性<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <p>Attentionの計算式におけるスケーリング項 <span class="math notranslate nohighlight">\(\frac{1}{\sqrt{d_k}}\)</span> は、クエリとキーの内積が大きくなりすぎることを防ぐために導入されている。内積が大きくなると、ソフトマックス関数の出力が極端になり、勾配消失問題が発生しやすくなる。この問題を軽減するために、内積をキーの次元数の平方根で割ることで、内積の値を適切な範囲に抑える(スケールする)ことができる。</p>
 <p>ニューラルネットワークにしばし、正規化レイヤーが用いられるが、これは入力の値を適切な範囲に抑えることで、学習の安定性を向上させることにある。スケーリングも同様の目的で導入されていると考えることができる。</p>
 </section>
 <section id="id3">
-<h2><span class="section-number">17.3. </span>マスク<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<h2>マスク<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <p>言語モデルなどのタスクでは、入力の一部をマスクする必要がある場合がある。例えば、次の単語を予測するタスクでは、未来の単語を見てはいけない(見ることができない)。そうした文章中の依存関係(いわば、時間的な順序)を考慮するために、Attentionの計算にマスクを適応する。</p>
 <p>マスクは、Attentionの計算において、特定の位置の類似度を無限小にすることで、ソフトマックス関数の出力が0になるようにする。これにより、マスクされた位置の情報がAttentionの出力に影響を与えないようにすることができる。
 例えば、次の単語を予測するタスクでは、未来の単語を見てはいけないため、未来の単語に対応するキーとの類似度を無限小にするマスクを適応する。
 実装上は、Softmax関数を適応する前に<span class="math notranslate nohighlight">\(-\infty\)</span>を加えることでmaskを実現することができる。</p>
 </section>
 <section id="positional-encoding">
-<h2><span class="section-number">17.4. </span>位置エンコーディング (Positional Encoding)<a class="headerlink" href="#positional-encoding" title="Link to this heading">#</a></h2>
+<h2>位置エンコーディング (Positional Encoding)<a class="headerlink" href="#positional-encoding" title="Link to this heading">#</a></h2>
 <p>上のマスクとは別に、入力の位置情報(テキストであれば、単語の順序)をモデルに提供するために、位置エンコーディングが用いられる。
 ここまでの説明では、入力の位置情報を明示的に考慮してこなかったが、Transformerは入力の位置情報を考慮するために、位置エンコーディングを用いている。</p>
 <aside class="margin sidebar">
@@ -577,7 +576,7 @@ PE_{(pos, 2i+1)} &amp;= \cos\left(\frac{pos}{10000^{2i/d_{model}}}\right)
 </ul>
 </section>
 <section id="multi-head-attention">
-<h2><span class="section-number">17.5. </span>Multi-Head Attention<a class="headerlink" href="#multi-head-attention" title="Link to this heading">#</a></h2>
+<h2>Multi-Head Attention<a class="headerlink" href="#multi-head-attention" title="Link to this heading">#</a></h2>
 <p>件の<a class="reference external" href="https://arxiv.org/abs/1706.03762">論文</a>でも提案されているように、Attentionの計算を並列化することで、モデルが効果的に複数の異なる視点から入力データを捉えることができるようになる。これが <strong>Multi-Head Attention</strong> と呼ばれるものである。</p>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
@@ -596,7 +595,7 @@ PE_{(pos, 2i+1)} &amp;= \cos\left(\frac{pos}{10000^{2i/d_{model}}}\right)
 <p>上では、<span class="math notranslate nohighlight">\(h\)</span>はヘッドの数を表し、<span class="math notranslate nohighlight">\(W_i^Q, W_i^K, W_i^V\)</span>はそれぞれのヘッドに対応するクエリ、キー、バリューを生成するための重み行列である。各ヘッドで計算されたAttentionの出力を連結して、それにさらに重み行列<span class="math notranslate nohighlight">\(W^O\)</span>をかけることで、最終的なMulti-Head Attentionの出力が得られる。</p>
 </section>
 <section id="transformer">
-<h2><span class="section-number">17.6. </span>Transformerの構造<a class="headerlink" href="#transformer" title="Link to this heading">#</a></h2>
+<h2>Transformerの構造<a class="headerlink" href="#transformer" title="Link to this heading">#</a></h2>
 <p>ここまでで、Transformerの中核をなすAttention機構と必要な演算についてその概要を説明してきた。
 以下では、Transformerの基本的な構造について説明する。
 Transformerは、エンコーダーとデコーダーの2つの主要なコンポーネントから構成されている。</p>
@@ -635,24 +634,6 @@ Transformerは、エンコーダーとデコーダーの2つの主要なコン�
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="Chapter_VAE.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">前へ</p>
-        <p class="prev-next-title"><span class="section-number">16. </span>変分オートエンコーダ (VAE)</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="Chapter_KAN.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">次へ</p>
-        <p class="prev-next-title"><span class="section-number">18. </span>KAN: Kolmogorov–Arnold Networks</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
@@ -669,15 +650,15 @@ Transformerは、エンコーダーとデコーダーの2つの主要なコン�
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attention-mechanism">17.1. Attention Mechanism (注意機構)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">17.1.1. 一般的なベクトルデータへの拡張</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attention-mechanism">Attention Mechanism (注意機構)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">一般的なベクトルデータへの拡張</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">17.2. スケーリングの必要性</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">17.3. マスク</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#positional-encoding">17.4. 位置エンコーディング (Positional Encoding)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-head-attention">17.5. Multi-Head Attention</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformer">17.6. Transformerの構造</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">スケーリングの必要性</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">マスク</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#positional-encoding">位置エンコーディング (Positional Encoding)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-head-attention">Multi-Head Attention</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformer">Transformerの構造</a></li>
 </ul>
   </nav></div>
 
