@@ -217,5 +217,6 @@ logo.pptx
 .DS_Store
 
 notebooks/data
-#notebooks/Chapter_VAE.ipynb
+notebooks/Chapter_PMM_Intro.ipynb
 notebooks/Chapter_DiffusionModels.ipynb
+notebooks/Chapter_Transformers.ipynb

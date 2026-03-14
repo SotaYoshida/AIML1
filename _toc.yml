@@ -11,6 +11,10 @@ parts:
   - file: notebooks/Chapter_math_vector_calculus
   - file: notebooks/Chapter_math_linearalgebra
   - file: notebooks/Chapter_math_probabilitydistributions
+- caption: データの表現
+  numbered: true
+  chapters:
+  - file: notebooks/Data_representation
 - caption: 回帰
   numbered: true
   chapters:
@@ -28,12 +32,9 @@ parts:
   - file: notebooks/Chapter_ANN_Intro
   - file: notebooks/Chapter_ANN2_Backprop
   - file: notebooks/Chapter_Optimization
-  #- file: notebooks/Chapter_ANN_regression
-  - file: notebooks/
-- caption: データの表現・モデルの評価
+- caption: モデルの評価
   numbered: true
   chapters:
-  - file: notebooks/Data_representation
   - file: notebooks/Chapter_Model_evaluation
 - caption: 発展的な話題
   numbered: true
@@ -42,4 +43,5 @@ parts:
   - file: notebooks/Chapter_GMM
   - file: notebooks/Chapter_VAE
   #- file: notebooks/Chapter_DiffusionModels
+  - file: notebooks/Chapter_Transformers
   - file: notebooks/Chapter_KAN
