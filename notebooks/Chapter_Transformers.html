@@ -1,0 +1,732 @@
+
+<!DOCTYPE html>
+
+
+<html lang="ja" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>17. Transformers &#8212; AI・機械学習論1/機械学習論</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=1cf7f4d9"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/translations.js?v=91613774"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-VHT6K3HJ64"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-VHT6K3HJ64');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-VHT6K3HJ64');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/Chapter_Transformers';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="18. KAN: Kolmogorov–Arnold Networks" href="Chapter_KAN.html" />
+    <link rel="prev" title="16. 変分オートエンコーダ (VAE)" href="Chapter_VAE.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="ja"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../home.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo_AIML1.png" class="logo__image only-light" alt="AI・機械学習論1/機械学習論 - Home"/>
+    <script>document.write(`<img src="../_static/logo_AIML1.png" class="logo__image only-dark" alt="AI・機械学習論1/機械学習論 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">検索</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../home.html">
+                    AI・機械学習論1/機械学習論
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">機械学習のための数学</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter_math_vector_calculus.html">1. ベクトル解析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_math_linearalgebra.html">2. 線形代数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_math_probabilitydistributions.html">3. 確率と確率分布</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">データの表現</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Data_representation.html">4. 機械学習におけるデータ表現の基礎</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">回帰</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter_regression.html">5. 回帰の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_linear_regression.html">6. 線形回帰</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_GaussianProcess.html">7. ガウス過程（Gaussian Process）</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">分類</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_1.html">8. 分類問題の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_2.html">9. 多クラス分類</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">ニューラルネットワーク</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN_Intro.html">10. ニューラルネットワークの概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN2_Backprop.html">11. 誤差逆伝播法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_Optimization.html">12. 機械学習における最適化</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">モデルの評価</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter_Model_evaluation.html">13. モデルの選択・評価・過学習・正則化</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">発展的な話題</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter_PCA.html">14. 主成分分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_GMM.html">15. 混合ガウスモデル(Gaussian Mixture Model, GMM)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_VAE.html">16. 変分オートエンコーダ (VAE)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">17. Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_KAN.html">18. KAN: Kolmogorov–Arnold Networks</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/SotaYoshida/AIML1" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="ソースリポジトリ"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/SotaYoshida/AIML1/issues/new?title=Issue%20on%20page%20%2Fnotebooks/Chapter_Transformers.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="問題を報告"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="このページをダウンロード">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/notebooks/Chapter_Transformers.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="ソースファイルをダウンロード"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="PDFに印刷"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全画面モード"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Transformers</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目次 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attention-mechanism">17.1. Attention Mechanism (注意機構)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">17.1.1. 一般的なベクトルデータへの拡張</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">17.2. スケーリングの必要性</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">17.3. マスク</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#positional-encoding">17.4. 位置エンコーディング (Positional Encoding)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-head-attention">17.5. Multi-Head Attention</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformer">17.6. Transformerの構造</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="transformers">
+<h1><span class="section-number">17. </span>Transformers<a class="headerlink" href="#transformers" title="Link to this heading">#</a></h1>
+<p>この章では、現代的な自然言語処理（NLP）における重要なアーキテクチャである <strong>トランスフォーマー（Transformers）</strong> について、<strong>自己注意機構（Self-Attention Mechanism）</strong> を中心に解説する。
+解きたいタスクに応じて、様々な形で応用されているが、それらに共通する基本的な仕組みを理解することがこの章の目標となる。</p>
+<section id="attention-mechanism">
+<h2><span class="section-number">17.1. </span>Attention Mechanism (注意機構)<a class="headerlink" href="#attention-mechanism" title="Link to this heading">#</a></h2>
+<p>Transformerの中核をなすのが <strong>注意機構（Attention Mechanism）</strong> である。注意機構は、入力データの中で重要な部分に焦点を当てるための仕組みであり、特に自然言語処理においては、文脈情報を効果的に捉えるために利用される。</p>
+<p>データの表現方法の章でも少し触れたように、文章中の単語の意味は、その周囲の単語によって大きく影響を受ける。例えば、「bank」という単語は、「river」や「money」といった周囲の単語によって、その意味が「川岸」や「銀行」に変わる。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">I</span> <span class="pre">sat</span> <span class="pre">by</span> <span class="pre">the</span> <span class="pre">bank</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">river.</span></code>（私は川の岸辺に座った。）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">I</span> <span class="pre">went</span> <span class="pre">to</span> <span class="pre">the</span> <span class="pre">bank</span> <span class="pre">to</span> <span class="pre">deposit</span> <span class="pre">some</span> <span class="pre">money.</span></code>（私はお金を預けるために銀行に行った。）</p></li>
+</ul>
+<p>このような文脈依存性を捉えるために、注意機構は各単語が他の単語に対してどれだけ重要であるかを計算し、その情報を基に重み付けを行う。
+ある意味で、単語の意味というのは<strong>動的 (dynamic)<strong>であって、必ずしも</strong>静的(static)</strong> なものではないとも言える。</p>
+<p>アテンション機構は、以下の3つの主要なコンポーネントから構成される。</p>
+<ol class="arabic simple">
+<li><p><strong>クエリ (Query)</strong>: 注目したい要素を表すベクトル。</p></li>
+<li><p><strong>キー (Key)</strong>: 各要素の特徴を表すベクトル。</p></li>
+<li><p><strong>バリュー (Value)</strong>: 実際の情報を含むベクトル。</p></li>
+</ol>
+<p>ネットワークの中でも用いられるAttentionレイヤーは、これらのクエリ、キー、バリューを用いて、各要素が他の要素に対してどれだけ注意を払うべきかを計算する。</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+\]</div>
+<p>この式は、有名な<a class="reference external" href="https://arxiv.org/abs/1706.03762">Attention is All You Need 論文</a>で登場する最初の式で、Scaled Dot-Product Attentionと呼ばれるものである。
+なお、<span class="math notranslate nohighlight">\(d_k\)</span>はキーの次元数であり、スケーリングにより勾配消失問題を軽減する役割を果たす。</p>
+<p>まずは、この式の意味するところを順を追って説明しよう。
+元々が自然言語処理の文脈で提案されたものであるため、多くの論文・書籍なども文章を例にして説明している。
+筆者のように、自然言語処理のバックグラウンドを持たない人にとっては、トークンなどの用語が出てきて面食らってしまうことも多いように思う。そこで、ここではあえて「ラーメン愛好家のラーメン採点」という例を用いて説明することにする。その後、抽象的なベクトルデータを例にしてより一般的な説明を行う。</p>
+<div class="tip admonition">
+<p class="admonition-title">ラーメン愛好家のラーメン採点</p>
+<p>Aさんはラーメン愛好家であり、様々なラーメン店を訪れては、その味を日々採点している。Aさんは、ラーメンを幾つかの項目で数値化して記録している。
+例えば、<code class="docutils literal notranslate"><span class="pre">スープの系統(醤油、味噌、塩、豚骨など)</span></code>, <code class="docutils literal notranslate"><span class="pre">価格</span></code>, <code class="docutils literal notranslate"><span class="pre">麺の量</span></code>, <code class="docutils literal notranslate"><span class="pre">提供スピード</span></code>, <code class="docutils literal notranslate"><span class="pre">麺の太さ</span></code>, <code class="docutils literal notranslate"><span class="pre">トッピングの豊富さ</span></code>, <code class="docutils literal notranslate"><span class="pre">店の雰囲気</span></code>などである。ただし、Aさんは自分自身が、ラーメンの評価、いわば <strong>総得点</strong> を、それらの項目の単純な和ではなく、もっと複合的に評価していることに気づいた。以来、ラーメン以外の要素、例えば<code class="docutils literal notranslate"><span class="pre">その日の天気</span></code>や<code class="docutils literal notranslate"><span class="pre">昼に行った運動の有無</span></code>、<code class="docutils literal notranslate"><span class="pre">前日の睡眠時間</span></code>なども、つぶさに記録を残すようにした。</p>
+<p>このことから、ラーメンの総得点は、各項目の評価点の単純な総和ではなく、Aさん自身も言語化できない複雑な基準に基づいて決定されていることになる。
+Aさんのラーメン記録はブログにまとめられており、次に訪れる予定のラーメン店のリストも公開されている。このブログを偶然訪問したBさんは、Aさんの過去のラーメン記録を分析し、次にAさんがブログを更新した際、記事の途中にある項目の評価点から、総得点を予測する遊びを考えた。Bさんは、以下のようにモデルを構築・訓練していく。</p>
+<ol class="arabic simple">
+<li><p>これまでのラーメン記録に基づいて、各項目の評価点をベクトルとして表現する。</p></li>
+<li><p>Aさんが今後更新するブログに記載される新たなラーメン店の(総得点以外の)項目を <strong>クエリ/query (Q)</strong> として使用する。</p></li>
+<li><p>これまでのラーメン記録の各項目の評価点を <strong>キー/key (K)</strong> として使用し、総得点を <strong>バリュー/value (V)</strong> として使用する。</p></li>
+<li><p>新たなラーメンのクエリに対して、過去のラーメン記録のキーとの <strong>類似度</strong> を計算し、その類似度に基づいてバリューを重み付けして総得点を予測する。その際、類似度の計算にはドット積(内積)を用い、重み付けにはソフトマックス関数を用いて重みの正規化を行う。</p></li>
+</ol>
+</div>
+<p>上で示したクエリ・キー・バリューを用いた計算がまさにAttentionの計算式である。
+簡単のために、<span class="math notranslate nohighlight">\(\sqrt{d_k}\)</span>によるスケーリングは無視するとして図示してみよう。</p>
+<a class="reference internal image-reference" href="../_images/attention.png"><img alt="../_images/attention.png" src="../_images/attention.png" style="width: 600px;" />
+</a>
+<p>繰り返しになるが、必要な操作は、クエリとキーの内積を計算しソフトマックス関数で正規化し、その重みをバリューにかけることである。
+<span class="math notranslate nohighlight">\(\cdot, \times, +\)</span> はそれぞれ内積、積、和という操作を適応することを表している。</p>
+<p>内積を計算する以上、クエリとキーは同じ次元数である必要があることを覚えておこう。
+また、上ではクエリが1つ、キーとバリューが複数ある場合を示したが、クエリが複数ある場合や、バリューが多次元の場合も同様に計算できる。</p>
+<section id="id1">
+<h3><span class="section-number">17.1.1. </span>一般的なベクトルデータへの拡張<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>上で示したラーメン採点の例は、Attentionの計算をイメージしやすくするためのものである。実際には、自然言語処理に限らず、様々なベクトルデータに対してAttentionの計算を適応できる。そこで、もう少し一般的なベクトルデータを例にして説明しよう。</p>
+<p>それぞれのドメインのデータがどんな構造であるかはさておき、方法さえ決めてしまえば、データを数値のベクトルに変換することはいつでも可能である。例えば画像であれば、ピクセル値を並べたベクトルに変換できるし、音声であれば、時間領域の波形データをフーリエ変換して周波数領域のスペクトルに変換し、そのスペクトルをベクトルとして扱うことができる。量子系の状態に興味があるのなら、それぞれの状態に対応するベクトルを用意すればよい(ただし、量子系の場合はベクトルの要素が複素数になる場合がある点に注意)。
+テキスト処理の場合も同様で、単語や文をベクトルとして表現する方法がいくつも提案されている。</p>
+<p>このように、データをベクトルとして表現できると仮定して、これから実現したいことは、
+「入力データの中で、特に重要な要素に焦点を当てること」 あるいは成分間の「関連性を捉えること」である。</p>
+<p>画像であれば、隣あうピクセル同士の関連性が高いことが多いし、音声であれば、時間的に近いサンプル同士の関連性が高いことが多い。量子系の状態であれば、エネルギー準位が近い状態同士の関連性が高いことが多いかもしれない。</p>
+<p>クエリ、キー、バリューをそれぞれ以下のように定義する。</p>
+<div class="math notranslate nohighlight">
+\[
+Q \in \mathbb{R}^{m \times d_k}, \quad K \in \mathbb{R}^{n \times d_k}, \quad V \in \mathbb{R}^{n \times d_v}
+\]</div>
+<p>ここで、<span class="math notranslate nohighlight">\(m\)</span>はクエリの数、<span class="math notranslate nohighlight">\(n\)</span>はキーとバリューの数、<span class="math notranslate nohighlight">\(d_k\)</span>はキーとクエリの次元数、<span class="math notranslate nohighlight">\(d_v\)</span>はバリューの次元数を表す。
+上で見たラーメンの例では、<span class="math notranslate nohighlight">\(m=1\)</span>, <span class="math notranslate nohighlight">\(n\)</span>は過去のラーメン記録の数、 <span class="math notranslate nohighlight">\(d_k\)</span>は記録の項目の数、<span class="math notranslate nohighlight">\(d_v=1\)</span> (総得点) であった。</p>
+<p>Attentionの計算を再掲すると</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+\]</div>
+<p>Softmax関数は行ごとに適応されるため、<span class="math notranslate nohighlight">\(QK^T\)</span>の各行はそれぞれのクエリに対応するキーとの類似度を表していることになる。
+最終的な出力は、各クエリに対して、キーとの類似度に基づいて重み付けされたバリューの和となり、その形状は <span class="math notranslate nohighlight">\((m, d_v)\)</span> となる。
+上では、クエリが入力、キーとバリューは過去の記録であったが、クエリ、キー、バリューは同じデータから生成されることも多い。例えば、自然言語処理においては、入力された文章の単語をベクトル化して、それをクエリ、キー、バリューのそれぞれに線形変換して生成することが一般的である。
+このようにクエリ、キー、バリューを同じ入力から生成する場合は、<strong>自己注意機構 (Self-Attention Mechanism)</strong> と呼ばれる。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+Q &amp;= XW^Q \\
+K &amp;= XW^K \\
+V &amp;= XW^V
+\end{align}
+\end{split}\]</div>
+<p>ここで、<span class="math notranslate nohighlight">\(X\)</span>は入力データのベクトル表現、<span class="math notranslate nohighlight">\(W^Q, W^K, W^V\)</span>はそれぞれクエリ、キー、バリューを生成するための重み行列である。この重み行列を、学習可能なパラメータとして、モデルの訓練を通じて最適化していくことを考えると、ニューラルネットワークとしてのAttentionレイヤーの構造が見えてくるだろう。</p>
+</section>
+</section>
+<section id="id2">
+<h2><span class="section-number">17.2. </span>スケーリングの必要性<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>Attentionの計算式におけるスケーリング項 <span class="math notranslate nohighlight">\(\frac{1}{\sqrt{d_k}}\)</span> は、クエリとキーの内積が大きくなりすぎることを防ぐために導入されている。内積が大きくなると、ソフトマックス関数の出力が極端になり、勾配消失問題が発生しやすくなる。この問題を軽減するために、内積をキーの次元数の平方根で割ることで、内積の値を適切な範囲に抑える(スケールする)ことができる。</p>
+<p>ニューラルネットワークにしばし、正規化レイヤーが用いられるが、これは入力の値を適切な範囲に抑えることで、学習の安定性を向上させることにある。スケーリングも同様の目的で導入されていると考えることができる。</p>
+</section>
+<section id="id3">
+<h2><span class="section-number">17.3. </span>マスク<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>言語モデルなどのタスクでは、入力の一部をマスクする必要がある場合がある。例えば、次の単語を予測するタスクでは、未来の単語を見てはいけない(見ることができない)。そうした文章中の依存関係(いわば、時間的な順序)を考慮するために、Attentionの計算にマスクを適応する。</p>
+<p>マスクは、Attentionの計算において、特定の位置の類似度を無限小にすることで、ソフトマックス関数の出力が0になるようにする。これにより、マスクされた位置の情報がAttentionの出力に影響を与えないようにすることができる。
+例えば、次の単語を予測するタスクでは、未来の単語を見てはいけないため、未来の単語に対応するキーとの類似度を無限小にするマスクを適応する。
+実装上は、Softmax関数を適応する前に<span class="math notranslate nohighlight">\(-\infty\)</span>を加えることでmaskを実現することができる。</p>
+</section>
+<section id="positional-encoding">
+<h2><span class="section-number">17.4. </span>位置エンコーディング (Positional Encoding)<a class="headerlink" href="#positional-encoding" title="Link to this heading">#</a></h2>
+<p>上のマスクとは別に、入力の位置情報(テキストであれば、単語の順序)をモデルに提供するために、位置エンコーディングが用いられる。
+ここまでの説明では、入力の位置情報を明示的に考慮してこなかったが、Transformerは入力の位置情報を考慮するために、位置エンコーディングを用いている。</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>願わくば２つの文章ともに真であってほしいが</p>
+</aside>
+<p>そうしなければ例えば以下の2つの文は、単語の順序が異なるだけで同じ意味を持つとモデルが誤認してしまう可能性がある。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">John</span> <span class="pre">loves</span> <span class="pre">Mary.</span></code>（ジョンはメアリーを愛している。）</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Mary</span> <span class="pre">loves</span> <span class="pre">John.</span></code>（メアリーはジョンを愛している。）</p></li>
+</ul>
+<p>位置エンコーディングに対しては様々な方法が提案されているが、Transformerの元論文では、以下のような正弦波と余弦波を用いた位置エンコーディングが採用されている。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+PE_{(pos, 2i)} &amp;= \sin\left(\frac{pos}{10000^{2i/d_{model}}}\right) \\
+PE_{(pos, 2i+1)} &amp;= \cos\left(\frac{pos}{10000^{2i/d_{model}}}\right)
+\end{align}
+\end{split}\]</div>
+<p>ここで、<span class="math notranslate nohighlight">\(pos\)</span>は位置を表す整数、<span class="math notranslate nohighlight">\(i\)</span>は(embedding)ベクトルのインデックス、<span class="math notranslate nohighlight">\(d_{model}\)</span>はモデルの次元数(埋め込みベクトルの次元数)を表す。
+10000という数は、位置エンコーディングの周期を調整するためのものであり、モデルの次元数に応じて適切な値が選ばれている。</p>
+<p><span class="math notranslate nohighlight">\(\sin, \cos\)</span>を用いることで</p>
+<ul class="simple">
+<li><p>出力が (-1, 1) の範囲に収まる: これは、モデルの学習を安定させるために重要である。</p></li>
+<li><p>異なる位置 <span class="math notranslate nohighlight">\(pos\)</span> に対して異なるエンコーディングを生成する: モデルが位置情報を区別できる。</p></li>
+<li><p>位置<span class="math notranslate nohighlight">\(n\)</span>と位置<span class="math notranslate nohighlight">\(n+k\)</span>のエンコーディングの類似度が、<span class="math notranslate nohighlight">\(k\)</span>に依存する: これにより、モデルが相対的な位置関係を学習できる。</p></li>
+</ul>
+</section>
+<section id="multi-head-attention">
+<h2><span class="section-number">17.5. </span>Multi-Head Attention<a class="headerlink" href="#multi-head-attention" title="Link to this heading">#</a></h2>
+<p>件の<a class="reference external" href="https://arxiv.org/abs/1706.03762">論文</a>でも提案されているように、Attentionの計算を並列化することで、モデルが効果的に複数の異なる視点から入力データを捉えることができるようになる。これが <strong>Multi-Head Attention</strong> と呼ばれるものである。</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>簡単のため、maskは省略した。</p>
+</aside>
+<p>Multi-Head Attentionでは、クエリ、キー、バリューを複数のヘッドに分割して、それぞれのヘッドで独立してAttentionの計算を行う。これまでの式に基づいて、Multi-Head Attentionの計算を表すと以下のようになる。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+\text{MultiHead}(x)
+&amp; = \text{Concat}(\text{head}_1, \text{head}_2, \ldots, \text{head}_h)W^O \\
+\text{where} \quad \text{head}_i
+&amp; = \text{Attention}(xW_i^Q, xW_i^K, xW_i^V)
+\end{align} 
+\end{split}\]</div>
+<p>上では、<span class="math notranslate nohighlight">\(h\)</span>はヘッドの数を表し、<span class="math notranslate nohighlight">\(W_i^Q, W_i^K, W_i^V\)</span>はそれぞれのヘッドに対応するクエリ、キー、バリューを生成するための重み行列である。各ヘッドで計算されたAttentionの出力を連結して、それにさらに重み行列<span class="math notranslate nohighlight">\(W^O\)</span>をかけることで、最終的なMulti-Head Attentionの出力が得られる。</p>
+</section>
+<section id="transformer">
+<h2><span class="section-number">17.6. </span>Transformerの構造<a class="headerlink" href="#transformer" title="Link to this heading">#</a></h2>
+<p>ここまでで、Transformerの中核をなすAttention機構と必要な演算についてその概要を説明してきた。
+以下では、Transformerの基本的な構造について説明する。
+Transformerは、エンコーダーとデコーダーの2つの主要なコンポーネントから構成されている。</p>
+<p>対象とするデータは、例えば自然言語処理における単語列や文章列などが想定されるが、ここでは、テキストをベクトルに変換する方法の詳細には立ち入らず、ベクトルデータが与えられたと仮定して説明を進める。
+まずは、Transformerの全体のアーキテクチャを示す。</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Chapter_VAE.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">前へ</p>
+        <p class="prev-next-title"><span class="section-number">16. </span>変分オートエンコーダ (VAE)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Chapter_KAN.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">次へ</p>
+        <p class="prev-next-title"><span class="section-number">18. </span>KAN: Kolmogorov–Arnold Networks</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目次
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attention-mechanism">17.1. Attention Mechanism (注意機構)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">17.1.1. 一般的なベクトルデータへの拡張</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">17.2. スケーリングの必要性</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">17.3. マスク</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#positional-encoding">17.4. 位置エンコーディング (Positional Encoding)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-head-attention">17.5. Multi-Head Attention</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformer">17.6. Transformerの構造</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+著者 Sota Yoshida
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  © Copyright 2025〜 by 吉田 聡太 (Sota Yoshida). 本コンテンツは<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0 ライセンス</a>の下に提供されています。 <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>　ただし、資料中のコードセル部分は<a rel="license" href="https://opensource.org/licenses/MIT">MITライセンス</a>の下に提供されています。
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

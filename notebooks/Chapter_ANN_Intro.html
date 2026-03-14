@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>9. ニューラルネットワークの概要 &#8212; AI・機械学習論1/機械学習論</title>
+    <title>10. ニューラルネットワークの概要 &#8212; AI・機械学習論1/機械学習論</title>
   
   
   
@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -42,7 +42,7 @@
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="../_static/documentation_options.js?v=1cf7f4d9"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
@@ -51,7 +51,7 @@
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
-    <script src="../_static/translations.js?v=4755f45a"></script>
+    <script src="../_static/translations.js?v=91613774"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-VHT6K3HJ64"></script>
@@ -63,13 +63,21 @@
             </script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-VHT6K3HJ64');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/Chapter_ANN_Intro';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="next" title="10. 誤差逆伝播法" href="Chapter_ANN2_Backprop.html" />
-    <link rel="prev" title="8. 多クラス分類" href="Chapter_classification_2.html" />
+    <link rel="next" title="11. 誤差逆伝播法" href="Chapter_ANN2_Backprop.html" />
+    <link rel="prev" title="9. 多クラス分類" href="Chapter_classification_2.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="ja"/>
   </head>
@@ -193,26 +201,29 @@
 <li class="toctree-l1"><a class="reference internal" href="Chapter_math_linearalgebra.html">2. 線形代数</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_math_probabilitydistributions.html">3. 確率と確率分布</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">データの表現</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Data_representation.html">4. 機械学習におけるデータ表現の基礎</a></li>
+</ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">回帰</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Chapter_regression.html">4. 回帰の概要</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_linear_regression.html">5. 線形回帰</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_GaussianProcess.html">6. ガウス過程（Gaussian Process）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_regression.html">5. 回帰の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_linear_regression.html">6. 線形回帰</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_GaussianProcess.html">7. ガウス過程（Gaussian Process）</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">分類</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_1.html">7. 分類問題の概要</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_2.html">8. 多クラス分類</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_1.html">8. 分類問題の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_2.html">9. 多クラス分類</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">ニューラルネットワーク</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">9. ニューラルネットワークの概要</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN2_Backprop.html">10. 誤差逆伝播法</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_Optimization.html">11. 機械学習における最適化</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">10. ニューラルネットワークの概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN2_Backprop.html">11. 誤差逆伝播法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_Optimization.html">12. 機械学習における最適化</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">データの表現・モデルの評価</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">モデルの評価</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Data_representation.html">12. 機械学習におけるデータ表現の基礎</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_Model_evaluation.html">13. モデルの選択・評価・過学習・正則化</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">発展的な話題</span></p>
@@ -220,7 +231,8 @@
 <li class="toctree-l1"><a class="reference internal" href="Chapter_PCA.html">14. 主成分分析</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_GMM.html">15. 混合ガウスモデル(Gaussian Mixture Model, GMM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_VAE.html">16. 変分オートエンコーダ (VAE)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_KAN.html">17. KAN: Kolmogorov–Arnold Networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_Transformers.html">17. Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_KAN.html">18. KAN: Kolmogorov–Arnold Networks</a></li>
 </ul>
 
     </div>
@@ -416,13 +428,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">9.1. パーセプトロン</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">9.2. ニューラルネットワーク: 全結合</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">9.3. 活性化関数</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">9.3.1. 活性化関数の役割</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">10.1. パーセプトロン</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">10.2. ニューラルネットワーク: 全結合</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">10.3. 活性化関数</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">10.3.1. 活性化関数の役割</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">9.4. <span class="math notranslate nohighlight">\(\clubsuit\)</span> ニューラルネットワークを用いた手書き数字データの分類</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">10.4. <span class="math notranslate nohighlight">\(\clubsuit\)</span> ニューラルネットワークを用いた手書き数字データの分類</a></li>
 </ul>
             </nav>
         </div>
@@ -435,7 +447,7 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">9. </span>ニューラルネットワークの概要<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<h1><span class="section-number">10. </span>ニューラルネットワークの概要<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
 <p>AI・機械学習などと称されるデータ分析手法・アルゴリズムの多くは
 「入力データと出力データ間の非自明な関係を人工ニューラルネットワーク(Artificial Neural Networkm, ANN)と呼ばれる、ネットワーク構造を持つ関数によって模倣する」点が本質的である。</p>
 <p>生物の神経回路網を模倣したANNの歴史は古く、遡ると1940年代頃から研究されている一方、
@@ -463,7 +475,7 @@ ANN及びそれを拡張したモデルが高い性能を発揮することが�
 主に3層(入力層・隠れ層・出力層)からなる最も単純な構造を持ったニューラルネットワークを題材として説明を行う。
 単純なモデルに注目して理解しておくことは、皆さんが機械学習分野の基礎(理論)あるいは応用に際してより複雑なアーキテクチャを仕様・理解する上での基礎となるはずだ。</p>
 <section id="id2">
-<h2><span class="section-number">9.1. </span>パーセプトロン<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">10.1. </span>パーセプトロン<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <p>まず、ニューラルネットワークの基本的な要素となるパーセプトロン(Perceptron)を紹介する。
 パーセプトロンは1957年に考案された模型で、ニューラルネットワークの一種(特殊な場合)とみなせる。</p>
 <p>下図のように、あるノード(節)に注目した際、そのノードに<span class="math notranslate nohighlight">\(n\)</span>個の入力信号があり、一つの値を出力するケースを考える。</p>
@@ -485,10 +497,10 @@ z = \begin{cases}
 「自身への入力信号の重み付き和がある値を超えた場合にのみ、次のノードに信号を伝達する」という働きをする。</p>
 <p>適当に<span class="math notranslate nohighlight">\(\theta=2.0\)</span>として、コードでプロットしてみよう</p>
 <div class="cell tag_hide-input docutils container">
-<details class="admonition hide above-input">
+<details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<p class="collapsed admonition-title">Show code cell source</p>
-<p class="expanded admonition-title">Hide code cell source</p>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
@@ -532,7 +544,7 @@ z = \begin{cases}
 上記のようなパーセプトロンでは、各ピクセルの画素値の重み付き和しか見ていないからである。</p>
 </section>
 <section id="id3">
-<h2><span class="section-number">9.2. </span>ニューラルネットワーク: 全結合<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">10.2. </span>ニューラルネットワーク: 全結合<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <p>次にニューラルネットワークの最も単純な例として、全結合のニューラルネットワークを紹介する。
 全結合のニューラルネットワークは、パーセプトロンのノードを層状に並べたもので、
 隣り合う層のノード間には全て結合があるというものである。
@@ -595,7 +607,7 @@ z_k^{(l)} &amp; = g(u_k^{(l)})
 各ノードの重みやバイアスを調整(≒最適化)することと言い換えられる。</p>
 </section>
 <section id="id4">
-<h2><span class="section-number">9.3. </span>活性化関数<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">10.3. </span>活性化関数<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
 <p>次に、活性化関数について説明する。
 ニューラルネットワークのノードにおいて、重み付き和(+バイアス)に対して適用する関数を活性化関数と呼ぶ。
 パーセプトロンの場合は、活性化関数はステップ関数であったが、
@@ -638,7 +650,7 @@ z_k^{(l)} &amp; = g(u_k^{(l)})
 ReLUには、勾配の計算が自明なことによる計算量的利点と、<strong>勾配消失</strong>の問題を低減する効果があるため、
 画像認識などネットワークの構造が&quot;深い&quot;ニューラルネットワークで効率的に学習をすすめるために採用されることが多い。</p>
 <section id="id5">
-<h3><span class="section-number">9.3.1. </span>活性化関数の役割<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">10.3.1. </span>活性化関数の役割<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
 <p>活性化関数の役割について1つ注を添えておこう。
 例えば、3層のニューラルネットワークを用いて、単純な回帰問題を解く、つまり
 <span class="math notranslate nohighlight">\(\boldsymbol{y}=f(\boldsymbol{x})\)</span>という&quot;真の関数&quot;をニューラルネットワークの出力<span class="math notranslate nohighlight">\(f^{NN}(\boldsymbol{x})\)</span>を用いて近似することを考える。
@@ -687,14 +699,14 @@ f^{NN}(\boldsymbol{x}) = \boldsymbol{W}_2  \boldsymbol{W}_1  \boldsymbol{x}
 </section>
 </section>
 <section id="clubsuit">
-<h2><span class="section-number">9.4. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> ニューラルネットワークを用いた手書き数字データの分類<a class="headerlink" href="#clubsuit" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">10.4. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> ニューラルネットワークを用いた手書き数字データの分類<a class="headerlink" href="#clubsuit" title="Link to this heading">#</a></h2>
 <p>多クラス分類の章で扱ったMNIST(手書き数字)データの分類に対して、線形分類の部分を多層パーセプトロン(ニューラルネットワーク)に置き換えたモデルを構築し、分類精度がどうなるかを確認してみよう。</p>
 <p>以下では、隠れ層が2層の多層パーセプトロンと、畳み込みニューラルネットワーク(CNN)の2つのモデルを構築してみた。</p>
 <div class="cell tag_hide-input docutils container">
-<details class="admonition hide above-input">
+<details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<p class="collapsed admonition-title">Show code cell source</p>
-<p class="expanded admonition-title">Hide code cell source</p>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
@@ -801,10 +813,10 @@ Test Accuracy: 96.92%
 </div>
 </div>
 <div class="cell tag_hide-input docutils container">
-<details class="admonition hide above-input">
+<details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<p class="collapsed admonition-title">Show code cell source</p>
-<p class="expanded admonition-title">Hide code cell source</p>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 畳み込みニューラルネットワーク (CNN)</span>
@@ -948,7 +960,7 @@ CNN Test Accuracy: 98.68%
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">前へ</p>
-        <p class="prev-next-title"><span class="section-number">8. </span>多クラス分類</p>
+        <p class="prev-next-title"><span class="section-number">9. </span>多クラス分類</p>
       </div>
     </a>
     <a class="right-next"
@@ -956,7 +968,7 @@ CNN Test Accuracy: 98.68%
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">次へ</p>
-        <p class="prev-next-title"><span class="section-number">10. </span>誤差逆伝播法</p>
+        <p class="prev-next-title"><span class="section-number">11. </span>誤差逆伝播法</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -976,13 +988,13 @@ CNN Test Accuracy: 98.68%
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">9.1. パーセプトロン</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">9.2. ニューラルネットワーク: 全結合</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">9.3. 活性化関数</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">9.3.1. 活性化関数の役割</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">10.1. パーセプトロン</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">10.2. ニューラルネットワーク: 全結合</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">10.3. 活性化関数</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">10.3.1. 活性化関数の役割</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">9.4. <span class="math notranslate nohighlight">\(\clubsuit\)</span> ニューラルネットワークを用いた手書き数字データの分類</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">10.4. <span class="math notranslate nohighlight">\(\clubsuit\)</span> ニューラルネットワークを用いた手書き数字データの分類</a></li>
 </ul>
   </nav></div>
 

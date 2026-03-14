@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -42,7 +42,7 @@
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="../_static/documentation_options.js?v=1cf7f4d9"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
@@ -51,7 +51,7 @@
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
-    <script src="../_static/translations.js?v=4755f45a"></script>
+    <script src="../_static/translations.js?v=91613774"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-VHT6K3HJ64"></script>
@@ -63,6 +63,14 @@
             </script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-VHT6K3HJ64');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/Chapter_GMM';</script>
@@ -193,26 +201,29 @@
 <li class="toctree-l1"><a class="reference internal" href="Chapter_math_linearalgebra.html">2. 線形代数</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_math_probabilitydistributions.html">3. 確率と確率分布</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">データの表現</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Data_representation.html">4. 機械学習におけるデータ表現の基礎</a></li>
+</ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">回帰</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Chapter_regression.html">4. 回帰の概要</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_linear_regression.html">5. 線形回帰</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_GaussianProcess.html">6. ガウス過程（Gaussian Process）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_regression.html">5. 回帰の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_linear_regression.html">6. 線形回帰</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_GaussianProcess.html">7. ガウス過程（Gaussian Process）</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">分類</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_1.html">7. 分類問題の概要</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_2.html">8. 多クラス分類</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_1.html">8. 分類問題の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_2.html">9. 多クラス分類</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">ニューラルネットワーク</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN_Intro.html">9. ニューラルネットワークの概要</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN2_Backprop.html">10. 誤差逆伝播法</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_Optimization.html">11. 機械学習における最適化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN_Intro.html">10. ニューラルネットワークの概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN2_Backprop.html">11. 誤差逆伝播法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_Optimization.html">12. 機械学習における最適化</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">データの表現・モデルの評価</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">モデルの評価</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Data_representation.html">12. 機械学習におけるデータ表現の基礎</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_Model_evaluation.html">13. モデルの選択・評価・過学習・正則化</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">発展的な話題</span></p>
@@ -220,7 +231,8 @@
 <li class="toctree-l1"><a class="reference internal" href="Chapter_PCA.html">14. 主成分分析</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">15. 混合ガウスモデル(Gaussian Mixture Model, GMM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_VAE.html">16. 変分オートエンコーダ (VAE)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_KAN.html">17. KAN: Kolmogorov–Arnold Networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_Transformers.html">17. Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_KAN.html">18. KAN: Kolmogorov–Arnold Networks</a></li>
 </ul>
 
     </div>
@@ -599,10 +611,10 @@ EMアルゴリズムは、以下の2つのステップを交互に繰り返す�
 \mathcal{L}(\boldsymbol{\theta}) = \sum_n \log \left( \sum_k \pi_k \mathcal{N}(\boldsymbol{x}_n | \boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k) \right)
 \]</div>
 <div class="cell tag_hide-input docutils container">
-<details class="admonition hide above-input">
+<details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<p class="collapsed admonition-title">Show code cell source</p>
-<p class="expanded admonition-title">Hide code cell source</p>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>

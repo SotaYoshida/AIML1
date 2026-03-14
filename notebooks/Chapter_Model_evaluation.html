@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -42,7 +42,7 @@
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="../_static/documentation_options.js?v=1cf7f4d9"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
@@ -51,7 +51,7 @@
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
-    <script src="../_static/translations.js?v=4755f45a"></script>
+    <script src="../_static/translations.js?v=91613774"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-VHT6K3HJ64"></script>
@@ -63,13 +63,21 @@
             </script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-VHT6K3HJ64');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/Chapter_Model_evaluation';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="next" title="14. 主成分分析" href="Chapter_PCA.html" />
-    <link rel="prev" title="12. 機械学習におけるデータ表現の基礎" href="Data_representation.html" />
+    <link rel="prev" title="12. 機械学習における最適化" href="Chapter_Optimization.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="ja"/>
   </head>
@@ -193,26 +201,29 @@
 <li class="toctree-l1"><a class="reference internal" href="Chapter_math_linearalgebra.html">2. 線形代数</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_math_probabilitydistributions.html">3. 確率と確率分布</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">データの表現</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Data_representation.html">4. 機械学習におけるデータ表現の基礎</a></li>
+</ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">回帰</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Chapter_regression.html">4. 回帰の概要</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_linear_regression.html">5. 線形回帰</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_GaussianProcess.html">6. ガウス過程（Gaussian Process）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_regression.html">5. 回帰の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_linear_regression.html">6. 線形回帰</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_GaussianProcess.html">7. ガウス過程（Gaussian Process）</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">分類</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_1.html">7. 分類問題の概要</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_2.html">8. 多クラス分類</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_1.html">8. 分類問題の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_2.html">9. 多クラス分類</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">ニューラルネットワーク</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN_Intro.html">9. ニューラルネットワークの概要</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN2_Backprop.html">10. 誤差逆伝播法</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_Optimization.html">11. 機械学習における最適化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN_Intro.html">10. ニューラルネットワークの概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN2_Backprop.html">11. 誤差逆伝播法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_Optimization.html">12. 機械学習における最適化</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">データの表現・モデルの評価</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">モデルの評価</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Data_representation.html">12. 機械学習におけるデータ表現の基礎</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">13. モデルの選択・評価・過学習・正則化</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">発展的な話題</span></p>
@@ -220,7 +231,8 @@
 <li class="toctree-l1"><a class="reference internal" href="Chapter_PCA.html">14. 主成分分析</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_GMM.html">15. 混合ガウスモデル(Gaussian Mixture Model, GMM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_VAE.html">16. 変分オートエンコーダ (VAE)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_KAN.html">17. KAN: Kolmogorov–Arnold Networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_Transformers.html">17. Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_KAN.html">18. KAN: Kolmogorov–Arnold Networks</a></li>
 </ul>
 
     </div>
@@ -522,10 +534,10 @@ document.write(`
 このとき、そのモデルがデータの背後にある本質的なパターンを捉えていればよいのだが、データに含まれるノイズや偶然のパターンに過剰に適合してしまうことがある。このような場合、未知のデータに対しては予測性能が乏しいモデルとなってしまう。</p>
 <p>例を示そう。以下に、1次元の入力データに対するデータ点を3点示した。</p>
 <div class="cell tag_hide-input docutils container">
-<details class="admonition hide above-input">
+<details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<p class="collapsed admonition-title">Show code cell source</p>
-<p class="expanded admonition-title">Hide code cell source</p>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -558,10 +570,10 @@ document.write(`
 <p>なんだか直線か、ゆるやかな二次関数で説明できそうなデータである。
 では二次関数だと思ってフィッティングしてみよう。</p>
 <div class="cell tag_hide-input docutils container">
-<details class="admonition hide above-input">
+<details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<p class="collapsed admonition-title">Show code cell source</p>
-<p class="expanded admonition-title">Hide code cell source</p>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coeffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">xD</span><span class="p">,</span><span class="n">yD</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
@@ -596,10 +608,10 @@ document.write(`
 <p>この二次関数に基づいて、未知のデータ点に対しても予測を行うことができる！！<br />
 とはならない。実はこのデータは、下記のように正規分布の確率密度関数(中心=5, 分散1)から選んだ3点が、たまたま直線や二次関数で説明できそうに見えるだけである。</p>
 <div class="cell tag_hide-input docutils container">
-<details class="admonition hide above-input">
+<details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<p class="collapsed admonition-title">Show code cell source</p>
-<p class="expanded admonition-title">Hide code cell source</p>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -677,10 +689,10 @@ L = \frac{1}{N} \sum_{i=1}^{N} (y_i - \hat{y}_i)^2 + \lambda \sum_{j=1}^{M} \fra
 <span class="math notranslate nohighlight">\(\lambda\)</span> の値が大きいほど、パラメータの大きさに対するペナルティが強くなり、モデルの複雑さが抑えられる。</p>
 <p>適当なデータを用意して、線形回帰を用いてL2正則化の効果を見てみよう。</p>
 <div class="cell tag_hide-input docutils container">
-<details class="admonition hide above-input">
+<details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<p class="collapsed admonition-title">Show code cell source</p>
-<p class="expanded admonition-title">Hide code cell source</p>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -787,10 +799,10 @@ L1正則化の特徴は、パラメータの一部をゼロにする傾向があ
 その効果をはっきりとみるために、あえて高次の多項式(9次)でフィッティングしてみた。
 L1正則化がスパースな解をもたらすのであれば、9次の多項式のうち、多くの係数がゼロになることが期待される。</p>
 <div class="cell tag_hide-input docutils container">
-<details class="admonition hide above-input">
+<details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<p class="collapsed admonition-title">Show code cell source</p>
-<p class="expanded admonition-title">Hide code cell source</p>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -908,12 +920,12 @@ coeffs (L1 reg.):    0.530   -0.000    0.352   -0.130   -0.002    0.001    0.000
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="Data_representation.html"
+       href="Chapter_Optimization.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">前へ</p>
-        <p class="prev-next-title"><span class="section-number">12. </span>機械学習におけるデータ表現の基礎</p>
+        <p class="prev-next-title"><span class="section-number">12. </span>機械学習における最適化</p>
       </div>
     </a>
     <a class="right-next"

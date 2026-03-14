@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>7. 分類問題の概要 &#8212; AI・機械学習論1/機械学習論</title>
+    <title>8. 分類問題の概要 &#8212; AI・機械学習論1/機械学習論</title>
   
   
   
@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -42,7 +42,7 @@
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="../_static/documentation_options.js?v=1cf7f4d9"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
@@ -51,7 +51,7 @@
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
-    <script src="../_static/translations.js?v=4755f45a"></script>
+    <script src="../_static/translations.js?v=91613774"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-VHT6K3HJ64"></script>
@@ -63,13 +63,21 @@
             </script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-VHT6K3HJ64');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/Chapter_classification_1';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="next" title="8. 多クラス分類" href="Chapter_classification_2.html" />
-    <link rel="prev" title="6. ガウス過程（Gaussian Process）" href="Chapter_GaussianProcess.html" />
+    <link rel="next" title="9. 多クラス分類" href="Chapter_classification_2.html" />
+    <link rel="prev" title="7. ガウス過程（Gaussian Process）" href="Chapter_GaussianProcess.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="ja"/>
   </head>
@@ -193,26 +201,29 @@
 <li class="toctree-l1"><a class="reference internal" href="Chapter_math_linearalgebra.html">2. 線形代数</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_math_probabilitydistributions.html">3. 確率と確率分布</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">データの表現</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Data_representation.html">4. 機械学習におけるデータ表現の基礎</a></li>
+</ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">回帰</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Chapter_regression.html">4. 回帰の概要</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_linear_regression.html">5. 線形回帰</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_GaussianProcess.html">6. ガウス過程（Gaussian Process）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_regression.html">5. 回帰の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_linear_regression.html">6. 線形回帰</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_GaussianProcess.html">7. ガウス過程（Gaussian Process）</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">分類</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">7. 分類問題の概要</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_2.html">8. 多クラス分類</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">8. 分類問題の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_2.html">9. 多クラス分類</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">ニューラルネットワーク</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN_Intro.html">9. ニューラルネットワークの概要</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN2_Backprop.html">10. 誤差逆伝播法</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_Optimization.html">11. 機械学習における最適化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN_Intro.html">10. ニューラルネットワークの概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN2_Backprop.html">11. 誤差逆伝播法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_Optimization.html">12. 機械学習における最適化</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">データの表現・モデルの評価</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">モデルの評価</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Data_representation.html">12. 機械学習におけるデータ表現の基礎</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_Model_evaluation.html">13. モデルの選択・評価・過学習・正則化</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">発展的な話題</span></p>
@@ -220,7 +231,8 @@
 <li class="toctree-l1"><a class="reference internal" href="Chapter_PCA.html">14. 主成分分析</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_GMM.html">15. 混合ガウスモデル(Gaussian Mixture Model, GMM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_VAE.html">16. 変分オートエンコーダ (VAE)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_KAN.html">17. KAN: Kolmogorov–Arnold Networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_Transformers.html">17. Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_KAN.html">18. KAN: Kolmogorov–Arnold Networks</a></li>
 </ul>
 
     </div>
@@ -416,10 +428,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">7.1. 線形二値分類</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">7.2. ロジスティック回帰: 線形二値分類の学習の観点から</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">7.3. 分類誤差</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">7.4. <span class="math notranslate nohighlight">\(\clubsuit\)</span> サポートベクターマシン</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">8.1. 線形二値分類</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">8.2. ロジスティック回帰: 線形二値分類の学習の観点から</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">8.3. 分類誤差</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">8.4. <span class="math notranslate nohighlight">\(\clubsuit\)</span> サポートベクターマシン</a></li>
 </ul>
             </nav>
         </div>
@@ -432,7 +444,7 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">7. </span>分類問題の概要<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<h1><span class="section-number">8. </span>分類問題の概要<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
 <p>この章では、分類問題についての概要と、線形二値分類、ロジスティック回帰などについて説明する。<br />
 分類とはその名の通り、データから真偽値(2値)を判定したり、何らかのカテゴリに分類したりすることを指す。
 例えば、動物の写真を与えて犬かどうかを判定する場合や、
@@ -441,7 +453,7 @@ document.write(`
 それをコンピュータを用いて機械的に判定するためにはどうすればよいか。<br />
 その基礎づけを与えることが、この章の主眼である。</p>
 <section id="id2">
-<h2><span class="section-number">7.1. </span>線形二値分類<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">8.1. </span>線形二値分類<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <p>まずは、最も単純な分類問題である、二値分類を考える。
 二値分類とは、データが2つのカテゴリのどちらかに属するかを判定する問題である。<br />
 分類の際、注目したいラベルやカテゴリが２値を取る場合というのは、真偽値を判定する問題と等価である。
@@ -449,10 +461,10 @@ document.write(`
 <p>以下では例として、身長と体重という2つの特徴量を持つ疑似データを考え、
 それらの特徴量から、その人が成人か未成年かを判定してみよう。</p>
 <div class="cell tag_hide-input docutils container">
-<details class="admonition hide above-input">
+<details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<p class="collapsed admonition-title">Show code cell source</p>
-<p class="expanded admonition-title">Hide code cell source</p>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -510,10 +522,10 @@ document.write(`
 <p>今の場合、データは明らかに2つの集団(クラスター)に分かれており、境界線の引き方には幾つかの自由度がある。<br />
 適当に3本ほど引いてみよう。</p>
 <div class="cell tag_hide-input docutils container">
-<details class="admonition hide above-input">
+<details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<p class="collapsed admonition-title">Show code cell source</p>
-<p class="expanded admonition-title">Hide code cell source</p>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_line</span><span class="p">(</span><span class="n">data_o20</span><span class="p">,</span><span class="n">data_u20</span><span class="p">):</span>
@@ -552,7 +564,7 @@ document.write(`
 <p class="admonition-title">線形二値分類の式</p>
 <p>線形二値分類は、以下のように表される。</p>
 <div class="math notranslate nohighlight" id="equation-eq-binary-classification">
-<span class="eqno">(7.1)<a class="headerlink" href="#equation-eq-binary-classification" title="Link to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(8.1)<a class="headerlink" href="#equation-eq-binary-classification" title="Link to this equation">#</a></span>\[\begin{split}
 \bar{y} = \begin{cases}
 1 &amp; (\boldsymbol{w}^T \boldsymbol{x} + b \geq 0) \\
 0 &amp; (\boldsymbol{w}^T \boldsymbol{x} + b &lt; 0)
@@ -578,10 +590,10 @@ document.write(`
 <p>(b) <span class="math notranslate nohighlight">\(w_1 (x_1-x_2) + w_2 (y_1-y_2) = 0 \)</span>から<span class="math notranslate nohighlight">\(w_2 = \frac{w_1 (x_2-x_1)}{y_1-y_2}\)</span>という関係が得られる。
 これを<span class="math notranslate nohighlight">\(w_2\)</span>に代入すると<span class="math notranslate nohighlight">\(w_1 x_1 + \frac{w_1 (x_2-x_1)}{y_1-y_2} (y_1) + 1 = 0\)</span>となるので、<span class="math notranslate nohighlight">\(w_1=-1/(x_1 + (x_2-x_1)y_1/(y_1-y_2))\)</span>と求めることができる。</p>
 <div class="cell tag_hide-input docutils container">
-<details class="admonition hide above-input">
+<details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<p class="collapsed admonition-title">Show code cell source</p>
-<p class="expanded admonition-title">Hide code cell source</p>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">return_yplot</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
@@ -649,8 +661,8 @@ document.write(`
 </div>
 </section>
 <section id="id3">
-<h2><span class="section-number">7.2. </span>ロジスティック回帰: 線形二値分類の学習の観点から<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
-<p>上の式<a class="reference internal" href="#equation-eq-binary-classification">(7.1)</a>は、線形結合<span class="math notranslate nohighlight">\(\boldsymbol{w}^T \boldsymbol{x} + b\)</span>の値が0より大きいか小さいかで、
+<h2><span class="section-number">8.2. </span>ロジスティック回帰: 線形二値分類の学習の観点から<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>上の式<a class="reference internal" href="#equation-eq-binary-classification">(8.1)</a>は、線形結合<span class="math notranslate nohighlight">\(\boldsymbol{w}^T \boldsymbol{x} + b\)</span>の値が0より大きいか小さいかで、
 ラベル<span class="math notranslate nohighlight">\(y\)</span>を0か1か(今の場合は、20歳以上/未満)に分類する方針を与えている。
 しかし、実際の二値分類では、0か1かのどちらかの値を与えるのではなく、
 0から1の間の値(≒確率)を与える方が都合が良いことが多い。</p>
@@ -658,20 +670,20 @@ document.write(`
 そこで、分類直線からの距離を表す量<span class="math notranslate nohighlight">\(\boldsymbol{w}^T \boldsymbol{x} + b\)</span>を、
 0から1の間の値に変換する関数<span class="math notranslate nohighlight">\(f\)</span>を用いて、以下のように変換した量を考えてみよう。</p>
 <div class="math notranslate nohighlight" id="equation-eq-binary-classification-probability">
-<span class="eqno">(7.2)<a class="headerlink" href="#equation-eq-binary-classification-probability" title="Link to this equation">#</a></span>\[
+<span class="eqno">(8.2)<a class="headerlink" href="#equation-eq-binary-classification-probability" title="Link to this equation">#</a></span>\[
 f(\boldsymbol{w}^T \boldsymbol{x} + b)
 \]</div>
 <p>この<span class="math notranslate nohighlight">\(f\)</span>として、以下のシグモイド(sigmoid)関数(またはロジスティック関数)と呼ばれる関数を用いる。</p>
 <div class="math notranslate nohighlight" id="equation-eq-sigmoid">
-<span class="eqno">(7.3)<a class="headerlink" href="#equation-eq-sigmoid" title="Link to this equation">#</a></span>\[
+<span class="eqno">(8.3)<a class="headerlink" href="#equation-eq-sigmoid" title="Link to this equation">#</a></span>\[
 f(x) = \frac{1}{1 + \exp(-x)}
 \]</div>
 <p>この関数は、<span class="math notranslate nohighlight">\(x\)</span>が大きいほど1に近づき、<span class="math notranslate nohighlight">\(x\)</span>が小さいほど0に近づく。実際に図示してみよう。</p>
 <div class="cell tag_hide-input docutils container">
-<details class="admonition hide above-input">
+<details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<p class="collapsed admonition-title">Show code cell source</p>
-<p class="expanded admonition-title">Hide code cell source</p>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
@@ -706,7 +718,7 @@ f(x) = \frac{1}{1 + \exp(-x)}
 また、２値分類の判定の&quot;自信&quot;のような量を表現することができる点もロジスティック回帰の利点である。</p>
 </section>
 <section id="id4">
-<h2><span class="section-number">7.3. </span>分類誤差<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">8.3. </span>分類誤差<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
 <p>より一般のデータセットに対して線形二値分類を適用した場合、全てのデータを正しく分類できるとは限らず、上でみたように図を見て分類の可否を判断することが難しくなる。
 そこで、実際の分類問題を考える際には、分類誤差を定義し、その誤差を最小化するようにパラメータ<span class="math notranslate nohighlight">\(\boldsymbol{w}, b\)</span>を調整することが重要になる。</p>
 <p>それぞれのデータ点<span class="math notranslate nohighlight">\(\boldsymbol{x}^{(i)}\)</span>に対して、正しいラベルを<span class="math notranslate nohighlight">\(y^{(i)}\)</span>、分類器によって予測されたラベルを<span class="math notranslate nohighlight">\(\hat{y}^{(i)}\)</span>とすると、
@@ -747,7 +759,7 @@ H(p, q) = - \sum_{x} p(x) \log (q(x))
 </div>
 </section>
 <section id="clubsuit">
-<h2><span class="section-number">7.4. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> サポートベクターマシン<a class="headerlink" href="#clubsuit" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">8.4. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> サポートベクターマシン<a class="headerlink" href="#clubsuit" title="Link to this heading">#</a></h2>
 <aside class="margin sidebar">
 <p class="sidebar-title"></p>
 <p>編集注: 幾何的なイメージのための図を後日(そう遠くない未来)追加予定</p>
@@ -819,7 +831,7 @@ SVMの基本的な考え方は、2つのクラスを分ける境界面(超平面
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">前へ</p>
-        <p class="prev-next-title"><span class="section-number">6. </span>ガウス過程（Gaussian Process）</p>
+        <p class="prev-next-title"><span class="section-number">7. </span>ガウス過程（Gaussian Process）</p>
       </div>
     </a>
     <a class="right-next"
@@ -827,7 +839,7 @@ SVMの基本的な考え方は、2つのクラスを分ける境界面(超平面
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">次へ</p>
-        <p class="prev-next-title"><span class="section-number">8. </span>多クラス分類</p>
+        <p class="prev-next-title"><span class="section-number">9. </span>多クラス分類</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -847,10 +859,10 @@ SVMの基本的な考え方は、2つのクラスを分ける境界面(超平面
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">7.1. 線形二値分類</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">7.2. ロジスティック回帰: 線形二値分類の学習の観点から</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">7.3. 分類誤差</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">7.4. <span class="math notranslate nohighlight">\(\clubsuit\)</span> サポートベクターマシン</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">8.1. 線形二値分類</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">8.2. ロジスティック回帰: 線形二値分類の学習の観点から</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">8.3. 分類誤差</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">8.4. <span class="math notranslate nohighlight">\(\clubsuit\)</span> サポートベクターマシン</a></li>
 </ul>
   </nav></div>
 

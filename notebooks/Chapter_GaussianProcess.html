@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>6. ガウス過程（Gaussian Process） &#8212; AI・機械学習論1/機械学習論</title>
+    <title>7. ガウス過程（Gaussian Process） &#8212; AI・機械学習論1/機械学習論</title>
   
   
   
@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -42,7 +42,7 @@
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="../_static/documentation_options.js?v=1cf7f4d9"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
@@ -51,7 +51,7 @@
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
-    <script src="../_static/translations.js?v=4755f45a"></script>
+    <script src="../_static/translations.js?v=91613774"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-VHT6K3HJ64"></script>
@@ -63,13 +63,21 @@
             </script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-VHT6K3HJ64');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/Chapter_GaussianProcess';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="next" title="7. 分類問題の概要" href="Chapter_classification_1.html" />
-    <link rel="prev" title="5. 線形回帰" href="Chapter_linear_regression.html" />
+    <link rel="next" title="8. 分類問題の概要" href="Chapter_classification_1.html" />
+    <link rel="prev" title="6. 線形回帰" href="Chapter_linear_regression.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="ja"/>
   </head>
@@ -193,26 +201,29 @@
 <li class="toctree-l1"><a class="reference internal" href="Chapter_math_linearalgebra.html">2. 線形代数</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_math_probabilitydistributions.html">3. 確率と確率分布</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">データの表現</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Data_representation.html">4. 機械学習におけるデータ表現の基礎</a></li>
+</ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">回帰</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Chapter_regression.html">4. 回帰の概要</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_linear_regression.html">5. 線形回帰</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">6. ガウス過程（Gaussian Process）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_regression.html">5. 回帰の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_linear_regression.html">6. 線形回帰</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">7. ガウス過程（Gaussian Process）</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">分類</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_1.html">7. 分類問題の概要</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_2.html">8. 多クラス分類</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_1.html">8. 分類問題の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_2.html">9. 多クラス分類</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">ニューラルネットワーク</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN_Intro.html">9. ニューラルネットワークの概要</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN2_Backprop.html">10. 誤差逆伝播法</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_Optimization.html">11. 機械学習における最適化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN_Intro.html">10. ニューラルネットワークの概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN2_Backprop.html">11. 誤差逆伝播法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_Optimization.html">12. 機械学習における最適化</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">データの表現・モデルの評価</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">モデルの評価</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Data_representation.html">12. 機械学習におけるデータ表現の基礎</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_Model_evaluation.html">13. モデルの選択・評価・過学習・正則化</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">発展的な話題</span></p>
@@ -220,7 +231,8 @@
 <li class="toctree-l1"><a class="reference internal" href="Chapter_PCA.html">14. 主成分分析</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_GMM.html">15. 混合ガウスモデル(Gaussian Mixture Model, GMM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_VAE.html">16. 変分オートエンコーダ (VAE)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_KAN.html">17. KAN: Kolmogorov–Arnold Networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_Transformers.html">17. Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_KAN.html">18. KAN: Kolmogorov–Arnold Networks</a></li>
 </ul>
 
     </div>
@@ -416,13 +428,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">6.1. 概要</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">6.2. ガウス過程の定義</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">6.3. カーネルとハイパーパラメータ</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">6.4. ノイズの扱い</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">6.5. 実装</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">6.6. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 正規乱数の生成について</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">6.7. ベイズ最適化</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">7.1. 概要</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">7.2. ガウス過程の定義</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">7.3. カーネルとハイパーパラメータ</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">7.4. ノイズの扱い</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">7.5. 実装</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">7.6. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 正規乱数の生成について</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">7.7. ベイズ最適化</a></li>
 </ul>
             </nav>
         </div>
@@ -435,18 +447,18 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="gaussian-process">
-<h1><span class="section-number">6. </span>ガウス過程（Gaussian Process）<a class="headerlink" href="#gaussian-process" title="Link to this heading">#</a></h1>
+<h1><span class="section-number">7. </span>ガウス過程（Gaussian Process）<a class="headerlink" href="#gaussian-process" title="Link to this heading">#</a></h1>
 <p>ガウス過程（Gaussian Process, GP）は、関数の分布を扱うベイズ的なモデルである。主に回帰、ベイズ最適化などで利用される。</p>
 <p>特に以下では、関数の回帰を行う関数の分布を推定・生成する方法としての観点から解説する。</p>
 <p>理論的な詳細等については下記のガウス過程の名著(通称: GPML)を参照されたい。著者のページから無償でPDFが入手可能である:<br />
 <a class="reference external" href="https://gaussianprocess.org/gpml/">&quot;Gaussian Processes for Machine Learning&quot; by Carl Edward Rasmussen and Christopher K. I. Williams</a></p>
 <section id="id1">
-<h2><span class="section-number">6.1. </span>概要<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">7.1. </span>概要<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <div class="cell tag_hide-input docutils container">
-<details class="admonition hide above-input">
+<details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<p class="collapsed admonition-title">Show code cell source</p>
-<p class="expanded admonition-title">Hide code cell source</p>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -482,7 +494,7 @@ document.write(`
 <p>とくに最後の点がガウス過程の名前の由来であると理解してもらってよい。</p>
 </section>
 <section id="id2">
-<h2><span class="section-number">6.2. </span>ガウス過程の定義<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">7.2. </span>ガウス過程の定義<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <p>観測データが <span class="math notranslate nohighlight">\(\mathcal{D} = \{(x_i, y_i)\}_{i=1}^{n}\)</span> で与えられるとする。ここで、<span class="math notranslate nohighlight">\(x_i \in \mathbb{R}\)</span> は説明変数、<span class="math notranslate nohighlight">\(y_i \in \mathbb{R}\)</span> は目的変数である。
 説明変数・関数値とも、多次元でも構わないが、ここでは単純化のために1次元としよう。</p>
 <p>自分の興味のある<span class="math notranslate nohighlight">\(m\)</span>個の点 <span class="math notranslate nohighlight">\(\mathbf{x}^* \)</span> に対して、関数値 <span class="math notranslate nohighlight">\(\mathbf{y}^*\)</span> を予測したいとする。
@@ -521,7 +533,7 @@ p(\mathbf{y}^*|\mathbf{y})
 それぞれの予測点での関数値が分布に従うため、予測点での関数値の不確実性を考慮することができる。</p>
 </section>
 <section id="id3">
-<h2><span class="section-number">6.3. </span>カーネルとハイパーパラメータ<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">7.3. </span>カーネルとハイパーパラメータ<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <p>カーネル関数 <span class="math notranslate nohighlight">\(k(x, x')\)</span> は、関数の滑らかさや周期性などの事前知識を反映する。代表的なカーネルは以下の通りである：</p>
 <ul>
 <li><p>RBF（ガウス）カーネル:</p>
@@ -564,7 +576,7 @@ RBFカーネルは無限回微分可能で非常に滑らかであるのに対�
 </div>
 </section>
 <section id="id4">
-<h2><span class="section-number">6.4. </span>ノイズの扱い<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">7.4. </span>ノイズの扱い<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
 <p>ガウス過程では、観測データのノイズを自然に扱うことができる。</p>
 <div class="math notranslate nohighlight">
 \[
@@ -585,15 +597,15 @@ K(\mathbf{x}, \mathbf{x}) + \sigma_n^2 I
 <p>実装の背後にある理論や、データのドメイン知識が必要となる好例である。</p>
 </section>
 <section id="id5">
-<h2><span class="section-number">6.5. </span>実装<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">7.5. </span>実装<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
 <p>Pythonでは、<code class="docutils literal notranslate"><span class="pre">GPy</span></code>や<code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>などのライブラリがガウス過程の実装を提供している。
 以下では、自前でMatérnカーネル(<span class="math notranslate nohighlight">\(\nu=5/2\)</span>)を用いたガウス過程を実装してみる。</p>
 <p>とりあえず、ハイパーパラメータを固定して、予測点での関数値の分布を計算してみよう。</p>
 <div class="cell tag_hide-input docutils container">
-<details class="admonition hide above-input">
+<details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<p class="collapsed admonition-title">Show code cell source</p>
-<p class="expanded admonition-title">Hide code cell source</p>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -696,10 +708,10 @@ K(\mathbf{x}, \mathbf{x})^{-1} = (L^T)^{-1} L^{-1}
 \]</div>
 <p>念の為、同じハイパーパラメータで、<code class="docutils literal notranslate"><span class="pre">GPy</span></code>のガウス過程の実装と比較してみよう。</p>
 <div class="cell tag_hide-input docutils container">
-<details class="admonition hide above-input">
+<details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<p class="collapsed admonition-title">Show code cell source</p>
-<p class="expanded admonition-title">Hide code cell source</p>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -758,7 +770,7 @@ K(\mathbf{x}, \mathbf{x})^{-1} = (L^T)^{-1} L^{-1}
 <p>両者がピッタリ重なっている事がわかる。ただし、<code class="docutils literal notranslate"><span class="pre">GPy</span></code>や<code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>などのライブラリでは、データの分散や予測分散を別々にカスタマイズするのがやや面倒だったりもする。</p>
 </section>
 <section id="clubsuit">
-<h2><span class="section-number">6.6. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> 正規乱数の生成について<a class="headerlink" href="#clubsuit" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">7.6. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> 正規乱数の生成について<a class="headerlink" href="#clubsuit" title="Link to this heading">#</a></h2>
 <p>余談になるが、正規分布に従う乱数の生成をどのように行えばよいだろうか？
 もちろん<code class="docutils literal notranslate"><span class="pre">numpy</span></code>や<code class="docutils literal notranslate"><span class="pre">scipy</span></code>などのライブラリを使えば簡単に生成できるが、
 どのように生成されているのか紹介しておこう。</p>
@@ -775,10 +787,10 @@ Z_1 &amp; = \sqrt{-2 \ln U_1} \sin(2 \pi U_2)
 半径部分が指数分布に、角度部分が一様分布に従うことを利用している。</p>
 <p>コードで確かめてみよう。一様乱数を2つ生成し、Box-Muller法で標準正規乱数を生成し、散布図とヒストグラムを描画してみた。</p>
 <div class="cell tag_hide-input docutils container">
-<details class="admonition hide above-input">
+<details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<p class="collapsed admonition-title">Show code cell source</p>
-<p class="expanded admonition-title">Hide code cell source</p>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -824,7 +836,7 @@ Z_1 &amp; = \sqrt{-2 \ln U_1} \sin(2 \pi U_2)
 Numpy 2.0になってからは、RNG(乱数生成器)周りでの改良が行われたようだが、やはり実際の乱数生成の結果を都度確認する癖はつけておいた方がよいだろう。</p>
 </section>
 <section id="id6">
-<h2><span class="section-number">6.7. </span>ベイズ最適化<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">7.7. </span>ベイズ最適化<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
 <p>ガウス過程は、ベイズ最適化の核としても広く使われる。
 関数の振る舞いをガウス過程でモデル化し、その不確実性を考慮しながら最適化を進めていく。</p>
 <p>とくに、１回の観測(や数値実験など)にコストがかかり、勾配が利用できないような関数の最適化に有効である。
@@ -847,10 +859,10 @@ EI(x) = (\mu(x) - y_\mathrm{best}) \Phi(z) + \sigma(x) \phi(z), \quad z = \frac{
 <li><p>UCB（Upper Confidence Bound)/LCB（Lower Confidence Bound): ガウス過程の予測平均と分散を組み合わせて次点を選ぶ方法</p></li>
 </ul>
 <div class="cell tag_hide-input docutils container">
-<details class="admonition hide above-input">
+<details class="hide above-input">
 <summary aria-label="Toggle hidden content">
-<p class="collapsed admonition-title">Show code cell source</p>
-<p class="expanded admonition-title">Hide code cell source</p>
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#使うライブラリのインポート</span>
@@ -13266,7 +13278,7 @@ yTXcqp0AAAAASUVORK5CYII=\
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">前へ</p>
-        <p class="prev-next-title"><span class="section-number">5. </span>線形回帰</p>
+        <p class="prev-next-title"><span class="section-number">6. </span>線形回帰</p>
       </div>
     </a>
     <a class="right-next"
@@ -13274,7 +13286,7 @@ yTXcqp0AAAAASUVORK5CYII=\
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">次へ</p>
-        <p class="prev-next-title"><span class="section-number">7. </span>分類問題の概要</p>
+        <p class="prev-next-title"><span class="section-number">8. </span>分類問題の概要</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -13294,13 +13306,13 @@ yTXcqp0AAAAASUVORK5CYII=\
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">6.1. 概要</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">6.2. ガウス過程の定義</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">6.3. カーネルとハイパーパラメータ</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">6.4. ノイズの扱い</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">6.5. 実装</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">6.6. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 正規乱数の生成について</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">6.7. ベイズ最適化</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">7.1. 概要</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">7.2. ガウス過程の定義</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">7.3. カーネルとハイパーパラメータ</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">7.4. ノイズの扱い</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">7.5. 実装</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">7.6. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 正規乱数の生成について</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">7.7. ベイズ最適化</a></li>
 </ul>
   </nav></div>
 

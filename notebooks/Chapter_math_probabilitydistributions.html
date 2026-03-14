@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -42,7 +42,7 @@
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="../_static/documentation_options.js?v=1cf7f4d9"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
@@ -51,7 +51,7 @@
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
-    <script src="../_static/translations.js?v=4755f45a"></script>
+    <script src="../_static/translations.js?v=91613774"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-VHT6K3HJ64"></script>
@@ -63,12 +63,20 @@
             </script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-VHT6K3HJ64');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/Chapter_math_probabilitydistributions';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="next" title="4. 回帰の概要" href="Chapter_regression.html" />
+    <link rel="next" title="4. 機械学習におけるデータ表現の基礎" href="Data_representation.html" />
     <link rel="prev" title="2. 線形代数" href="Chapter_math_linearalgebra.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="ja"/>
@@ -193,26 +201,29 @@
 <li class="toctree-l1"><a class="reference internal" href="Chapter_math_linearalgebra.html">2. 線形代数</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">3. 確率と確率分布</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">データの表現</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Data_representation.html">4. 機械学習におけるデータ表現の基礎</a></li>
+</ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">回帰</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Chapter_regression.html">4. 回帰の概要</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_linear_regression.html">5. 線形回帰</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_GaussianProcess.html">6. ガウス過程（Gaussian Process）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_regression.html">5. 回帰の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_linear_regression.html">6. 線形回帰</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_GaussianProcess.html">7. ガウス過程（Gaussian Process）</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">分類</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_1.html">7. 分類問題の概要</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_2.html">8. 多クラス分類</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_1.html">8. 分類問題の概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_classification_2.html">9. 多クラス分類</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">ニューラルネットワーク</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN_Intro.html">9. ニューラルネットワークの概要</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN2_Backprop.html">10. 誤差逆伝播法</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_Optimization.html">11. 機械学習における最適化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN_Intro.html">10. ニューラルネットワークの概要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_ANN2_Backprop.html">11. 誤差逆伝播法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_Optimization.html">12. 機械学習における最適化</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">データの表現・モデルの評価</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">モデルの評価</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="Data_representation.html">12. 機械学習におけるデータ表現の基礎</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_Model_evaluation.html">13. モデルの選択・評価・過学習・正則化</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">発展的な話題</span></p>
@@ -220,7 +231,8 @@
 <li class="toctree-l1"><a class="reference internal" href="Chapter_PCA.html">14. 主成分分析</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_GMM.html">15. 混合ガウスモデル(Gaussian Mixture Model, GMM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_VAE.html">16. 変分オートエンコーダ (VAE)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_KAN.html">17. KAN: Kolmogorov–Arnold Networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_Transformers.html">17. Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_KAN.html">18. KAN: Kolmogorov–Arnold Networks</a></li>
 </ul>
 
     </div>
@@ -420,16 +432,14 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3.1.1. ベイズの定理</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3.2. 確率密度関数</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">3.3. ガウス分布</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3.4. ガウス分布と機械学習の関係</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.5. 確率分布のベイズ推定</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">3.5.1. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 事後分布からのサンプリング</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">3.6. 多次元ガウス分布の最尤推定</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">3.7. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 多次元正規分布に関するベイズの定理</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">3.8. 学習の振り返りのためのチェックリスト</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3.2. 視覚的なイメージ</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">3.3. 確率密度関数</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3.4. ガウス分布</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.5. ガウス分布と機械学習の関係</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">3.6. 確率分布のベイズ推定</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">3.7. 多次元ガウス分布の最尤推定</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">3.8. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 多次元正規分布に関するベイズの定理</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">3.9. 学習の振り返りのためのチェックリスト</a></li>
 </ul>
             </nav>
         </div>
@@ -498,7 +508,97 @@ P(A|B) = \frac{P(B|A) P(A)}{P(B)} = \frac{0.9 \times 0.01}{0.9 \times 0.01 + 0.0
 </section>
 </section>
 <section id="id4">
-<h2><span class="section-number">3.2. </span>確率密度関数<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">3.2. </span>視覚的なイメージ<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>あるデータが２つの変数によって特徴づけられるとき、一方のデータが決まると、もう一方のデータもある程度決まることがある。</p>
+<div class="math notranslate nohighlight">
+\[
+y(x_1, x_2) = sin(2\pi x_1) sin(2\pi x_2)
+\]</div>
+<p>という関数のyの値を適当なメッシュ点で計算してみると次のような図が得られる。</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.mplot3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes3D</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">y</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x2</span><span class="p">)</span>
+
+<span class="n">xymesh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+<span class="n">zmesh</span> <span class="o">=</span> <span class="n">y</span><span class="p">(</span><span class="n">xymesh</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xymesh</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="c1"># 3D plot</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">xymesh</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xymesh</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">zmesh</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;magma&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x1&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;x2&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span> 
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/b83bdda78c64ebb6206398e3a5b79043235219753eca517509bcbec923d9c391.png" src="../_images/b83bdda78c64ebb6206398e3a5b79043235219753eca517509bcbec923d9c391.png" />
+</div>
+</div>
+<p>このとき、<span class="math notranslate nohighlight">\(x_1 \in [0, 1]\)</span>と<span class="math notranslate nohighlight">\(x_2 \in [0, 1]\)</span>の範囲で適当な点を50点ほどサンプルして、対応する<span class="math notranslate nohighlight">\(y\)</span>の値に僅かなノイズ(観測/測定の誤差だと考えてよい)を加えてプロットしてみると...</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_samples</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">x1_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">num_samples</span><span class="p">)</span>
+<span class="n">x2_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">num_samples</span><span class="p">)</span>
+<span class="n">y_samples</span> <span class="o">=</span> <span class="n">y</span><span class="p">(</span><span class="n">x1_samples</span><span class="p">,</span> <span class="n">x2_samples</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x1_samples</span><span class="p">,</span> <span class="n">y_samples</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/8b8513616d8d2a3618407556daf28fa3d5183e04c9dc100942dbea9846cbebb2.png" src="../_images/8b8513616d8d2a3618407556daf28fa3d5183e04c9dc100942dbea9846cbebb2.png" />
+</div>
+</div>
+<p>正解を知っていればうっすらとその関数の形が見えるが、判然としない。</p>
+<p>一方で、<span class="math notranslate nohighlight">\(x_2\)</span>が特定の値、例えば<span class="math notranslate nohighlight">\(x_2 = 0.5\)</span>のとき、また<span class="math notranslate nohighlight">\(x_1\)</span>を無作為にサンプルして、<span class="math notranslate nohighlight">\(y\)</span>の値をプロットしてみると、データの背後にある関数の形がはっきりと見える事がわかる。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_samples</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">x1_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">num_samples</span><span class="p">)</span>
+<span class="n">y_samples</span> <span class="o">=</span> <span class="n">y</span><span class="p">(</span><span class="n">x1_samples</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x1_samples</span><span class="p">,</span> <span class="n">y_samples</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x1 (x2=$</span><span class="se">\\</span><span class="s2">pi$/4)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/d88612532da6283551a52fd24e3227594af641f5f6c38257514fbb8e0525b863.png" src="../_images/d88612532da6283551a52fd24e3227594af641f5f6c38257514fbb8e0525b863.png" />
+</div>
+</div>
+</section>
+<section id="id5">
+<h2><span class="section-number">3.3. </span>確率密度関数<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
 <p>上では、事象が離散的に起こる場合を考えた。
 以下では、実数値を取る連続型確率変数(continuous random variable)について考えることにする。</p>
 <p>関数<span class="math notranslate nohighlight">\(f: \mathbb{R}^D \to \mathbb{R}\)</span>が確率密度関数(probability density function; pdf)であるとは、次を満たすことをいう。</p>
@@ -534,8 +634,8 @@ E[X] = \int_{-\infty}^{\infty} x f(x) \, dx
 \]</div>
 <p>確率密度関数を明示する <span class="math notranslate nohighlight">\(E_f[X]\)</span>といった表記もあるが、ここでは単に<span class="math notranslate nohighlight">\(E[X]\)</span>と書くことにした。</p>
 </section>
-<section id="id5">
-<h2><span class="section-number">3.3. </span>ガウス分布<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<section id="id6">
+<h2><span class="section-number">3.4. </span>ガウス分布<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
 <p>ガウス分布(Gaussian distribution)は、確率密度関数が次の形を持つ確率分布である。
 単変量の場合と多変量の場合をそれぞれ定義しておく:</p>
 <div class="note admonition">
@@ -703,8 +803,8 @@ S &amp; -S B D^{-1} \\
 <p>があるとき、<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>と<span class="math notranslate nohighlight">\(\mathbf{y}\)</span>の和<span class="math notranslate nohighlight">\(\mathbf{z} = \mathbf{x} + \mathbf{y}\)</span>が正規分布に従うことを示し、その平均ベクトル・共分散行列を、元の分布のパラメータを用いて表せ。</p>
 </div>
 </section>
-<section id="id6">
-<h2><span class="section-number">3.4. </span>ガウス分布と機械学習の関係<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<section id="id7">
+<h2><span class="section-number">3.5. </span>ガウス分布と機械学習の関係<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
 <p>機械学習分野において、ガウス分布は非常に重要な役割を果たす。
 全てを列挙することはできないが、幾つか代表的な例を挙げておく。</p>
 <ul class="simple">
@@ -716,8 +816,8 @@ S &amp; -S B D^{-1} \\
 </ul>
 <p>上記のうちのいくつかは、この資料でも説明してあるので適宜参照のこと。</p>
 </section>
-<section id="id7">
-<h2><span class="section-number">3.5. </span>確率分布のベイズ推定<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<section id="id8">
+<h2><span class="section-number">3.6. </span>確率分布のベイズ推定<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
 <p>2つの確率変数の同時分布を <span class="math notranslate nohighlight">\(p(\mathbf{x}, \mathbf{y})\)</span>、
 <span class="math notranslate nohighlight">\(p(\mathbf{x}), p(\mathbf{y})\)</span> はそれぞれの確率変数の周辺分布と呼ぶ。</p>
 <p>確率の和の規則により、</p>
@@ -763,30 +863,36 @@ p(D | \mathbf{\theta}) =C \exp\left(-\frac{1}{2\sigma^2} \sum_{i=1}^N ||\mathbf{
 \]</div>
 <p><span class="math notranslate nohighlight">\(C\)</span>は正規化定数である。</p>
 <p>また、上ではあえて比例関係<span class="math notranslate nohighlight">\(\propto\)</span>を用いたが、分母にあたる<span class="math notranslate nohighlight">\(p(D)\)</span>はデータ<span class="math notranslate nohighlight">\(D\)</span>に関する正規化定数であり、パラメータ<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>に依存しないため、事後分布を計算する際には無視できる(というより、計算が非常に難しいことが多い)ことによる。</p>
-<section id="clubsuit">
-<h3><span class="section-number">3.5.1. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> 事後分布からのサンプリング<a class="headerlink" href="#clubsuit" title="Link to this heading">#</a></h3>
-<p>事後分布に従うサンプルを生成するための方法としては、大別すると、近似推論(≒事後分布を性質の良い分布で近似する)と、MCMC(Markov Chain Monte Carlo; マルコフ連鎖モンテカルロ法)がある。
-事前分布及び尤度を性質の良い(共役分布; conjugate distribution)で選ぶと、事後分布も特定の分布族に属することが保証され、解析的に計算できる場合がある。
-近似推論では、こうした仮定を積極的に用いて、事後分布を計算しやすい分布で近似する。</p>
-<p>一方で、MCMCは、事後分布からのサンプルを生成するための確率的なアルゴリズムであり、事後分布の形状に関する仮定を必要としない。
-十分に多くのサンプルを&quot;きちんと&quot;生成できれば、事後分布を反映したサンプルを得ることができるが、実際にはサンプルの自己相関や収束性などに注意が必要であり、適切なアルゴリズムの選択とパラメータ設定が重要である。
-とくに多次元の分布からサンプルを生成する場合は、サンプルの自己相関が高くなりやすく、効率的なサンプリングが難しいことが多い。
-代表的なMCMCアルゴリズムには以下のようなものがある:</p>
-<ul class="simple">
-<li><p>ギブスサンプリング(Gibbs sampling): 各変数を順番に更新する方法。条件付き分布が計算しやすい場合に有効。</p></li>
-<li><p>メトロポリス・ヘイスティングス法(Metropolis-Hastings): 提案分布から新しいサンプルを生成し、受け入れるかどうかを確率的に決定する方法。提案分布の選択が重要。</p></li>
-<li><p>ハミルトニアンモンテカルロ(Hamiltonian Monte Carlo; HMC): 物理学のハミルトン力学に基づく方法で、効率的に高次元空間を探索できる。勾配情報を利用するため、計算コストが高い場合がある。</p></li>
-<li><p>レプリカ交換法(Replica Exchange MCMC; REMC) あるいはparallel tempering: 複数のマルコフ連鎖を異なるスケール因子(温度とも呼ばれる)で滑らかにしながら、レプリカ間でサンプルを交換する方法。多峰性分布のサンプリングに有効。</p></li>
-<li><p>Affine Invariant MCMC: 複数のサンプルを同時に更新する方法で、アフィン変換に対して不変な性質を持つ。高次元空間でのサンプリングに適している。特に並列性が優れているほか、職人芸による提案分布の調整が不要であることが利点である。
-最初に提案されたのは Goodman &amp; Weare (2010) で、天文学の分野で広く用いられているemcee (Foreman-Mackey et al., 2013) はこのアルゴリズムを実装したPythonライブラリである。</p></li>
-</ul>
-<p>筆者自身も、大学院生の頃〜大学教員になりたての頃に、物理学の文脈で近似推論/MCMCを用いた事後分布推定の研究を行っていた。
-その頃の経験則にはなるが、効率的なサンプリングを実現するにはデータの特性をよく理解し、適切なアルゴリズムとパラメータ設定を選ぶことが重要であり、試行錯誤や、適応的にパラメータを調整する手法が有効であると感じている。
-また、次元(≒パラメータ数)の小さい領域では、HMCが比較的安定して収束したサンプリングを与えることが多いが、勾配の計算が高コストになる状況ではあまり適さず、複数のworkerで並列に動作する方法、とくにAffine Invariant MCMCが有効であることが多い印象を持っている。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### $\clubsuit$ 事後分布からのサンプリング</span>
+
+<span class="n">事後分布に従うサンプルを生成するための方法としては</span><span class="err">、</span><span class="n">大別すると</span><span class="err">、</span><span class="n">近似推論</span><span class="p">(</span><span class="err">≒</span><span class="n">事後分布を性質の良い分布で近似する</span><span class="p">)</span><span class="n">と</span><span class="err">、</span><span class="n">MCMC</span><span class="p">(</span><span class="n">Markov</span> <span class="n">Chain</span> <span class="n">Monte</span> <span class="n">Carlo</span><span class="p">;</span> <span class="n">マルコフ連鎖モンテカルロ法</span><span class="p">)</span><span class="n">がある</span><span class="err">。</span>
+<span class="n">事前分布及び尤度を性質の良い</span><span class="p">(</span><span class="n">共役分布</span><span class="p">;</span> <span class="n">conjugate</span> <span class="n">distribution</span><span class="p">)</span><span class="n">で選ぶと</span><span class="err">、</span><span class="n">事後分布も特定の分布族に属することが保証され</span><span class="err">、</span><span class="n">解析的に計算できる場合がある</span><span class="err">。</span>
+<span class="n">近似推論では</span><span class="err">、</span><span class="n">こうした仮定を積極的に用いて</span><span class="err">、</span><span class="n">事後分布を計算しやすい分布で近似する</span><span class="err">。</span>
+
+<span class="n">一方で</span><span class="err">、</span><span class="n">MCMCは</span><span class="err">、</span><span class="n">事後分布からのサンプルを生成するための確率的なアルゴリズムであり</span><span class="err">、</span><span class="n">事後分布の形状に関する仮定を必要としない</span><span class="err">。</span>
+<span class="n">十分に多くのサンプルを</span><span class="s2">&quot;きちんと&quot;</span><span class="n">生成できれば</span><span class="err">、</span><span class="n">事後分布を反映したサンプルを得ることができるが</span><span class="err">、</span><span class="n">実際にはサンプルの自己相関や収束性などに注意が必要であり</span><span class="err">、</span><span class="n">適切なアルゴリズムの選択とパラメータ設定が重要である</span><span class="err">。</span>
+<span class="n">とくに多次元の分布からサンプルを生成する場合は</span><span class="err">、</span><span class="n">サンプルの自己相関が高くなりやすく</span><span class="err">、</span><span class="n">効率的なサンプリングが難しいことが多い</span><span class="err">。</span>
+<span class="n">代表的なMCMCアルゴリズムには以下のようなものがある</span><span class="p">:</span>
+
+<span class="o">-</span> <span class="n">ギブスサンプリング</span><span class="p">(</span><span class="n">Gibbs</span> <span class="n">sampling</span><span class="p">):</span> <span class="n">各変数を順番に更新する方法</span><span class="err">。</span><span class="n">条件付き分布が計算しやすい場合に有効</span><span class="err">。</span>
+<span class="o">-</span> <span class="n">メトロポリス</span><span class="err">・</span><span class="n">ヘイスティングス法</span><span class="p">(</span><span class="n">Metropolis</span><span class="o">-</span><span class="n">Hastings</span><span class="p">):</span> <span class="n">提案分布から新しいサンプルを生成し</span><span class="err">、</span><span class="n">受け入れるかどうかを確率的に決定する方法</span><span class="err">。</span><span class="n">提案分布の選択が重要</span><span class="err">。</span>
+<span class="o">-</span> <span class="n">ハミルトニアンモンテカルロ</span><span class="p">(</span><span class="n">Hamiltonian</span> <span class="n">Monte</span> <span class="n">Carlo</span><span class="p">;</span> <span class="n">HMC</span><span class="p">):</span> <span class="n">物理学のハミルトン力学に基づく方法で</span><span class="err">、</span><span class="n">効率的に高次元空間を探索できる</span><span class="err">。</span><span class="n">勾配情報を利用するため</span><span class="err">、</span><span class="n">計算コストが高い場合がある</span><span class="err">。</span>
+<span class="o">-</span> <span class="n">レプリカ交換法</span><span class="p">(</span><span class="n">Replica</span> <span class="n">Exchange</span> <span class="n">MCMC</span><span class="p">;</span> <span class="n">REMC</span><span class="p">)</span> <span class="n">あるいはparallel</span> <span class="n">tempering</span><span class="p">:</span> <span class="n">複数のマルコフ連鎖を異なるスケール因子</span><span class="p">(</span><span class="n">温度とも呼ばれる</span><span class="p">)</span><span class="n">で滑らかにしながら</span><span class="err">、</span><span class="n">レプリカ間でサンプルを交換する方法</span><span class="err">。</span><span class="n">多峰性分布のサンプリングに有効</span><span class="err">。</span>
+<span class="o">-</span> <span class="n">Affine</span> <span class="n">Invariant</span> <span class="n">MCMC</span><span class="p">:</span> <span class="n">複数のサンプルを同時に更新する方法で</span><span class="err">、</span><span class="n">アフィン変換に対して不変な性質を持つ</span><span class="err">。</span><span class="n">高次元空間でのサンプリングに適している</span><span class="err">。</span><span class="n">特に並列性が優れているほか</span><span class="err">、</span><span class="n">職人芸による提案分布の調整が不要であることが利点である</span><span class="err">。</span>
+<span class="n">最初に提案されたのは</span> <span class="n">Goodman</span> <span class="o">&amp;</span> <span class="n">Weare</span> <span class="p">(</span><span class="mi">2010</span><span class="p">)</span> <span class="n">で</span><span class="err">、</span><span class="n">天文学の分野で広く用いられているemcee</span> <span class="p">(</span><span class="n">Foreman</span><span class="o">-</span><span class="n">Mackey</span> <span class="n">et</span> <span class="n">al</span><span class="o">.</span><span class="p">,</span> <span class="mi">2013</span><span class="p">)</span> <span class="n">はこのアルゴリズムを実装したPythonライブラリである</span><span class="err">。</span>
+
+<span class="n">筆者自身も</span><span class="err">、</span><span class="n">大学院生の頃</span><span class="err">〜</span><span class="n">大学教員になりたての頃に</span><span class="err">、</span><span class="n">物理学の文脈で近似推論</span><span class="o">/</span><span class="n">MCMCを用いた事後分布推定の研究を行っていた</span><span class="err">。</span>
+<span class="n">その頃の経験則にはなるが</span><span class="err">、</span><span class="n">効率的なサンプリングを実現するにはデータの特性をよく理解し</span><span class="err">、</span><span class="n">適切なアルゴリズムとパラメータ設定を選ぶことが重要であり</span><span class="err">、</span><span class="n">試行錯誤や</span><span class="err">、</span><span class="n">適応的にパラメータを調整する手法が有効であると感じている</span><span class="err">。</span>
+<span class="n">また</span><span class="err">、</span><span class="n">次元</span><span class="p">(</span><span class="err">≒</span><span class="n">パラメータ数</span><span class="p">)</span><span class="n">の小さい領域では</span><span class="err">、</span><span class="n">HMCが比較的安定して収束したサンプリングを与えることが多いが</span><span class="err">、</span><span class="n">勾配の計算が高コストになる状況ではあまり適さず</span><span class="err">、</span><span class="n">複数のworkerで並列に動作する方法</span><span class="err">、</span><span class="n">とくにAffine</span> <span class="n">Invariant</span> <span class="n">MCMCが有効であることが多い印象を持っている</span><span class="err">。</span>
+</pre></div>
+</div>
+</div>
+</div>
 </section>
-</section>
-<section id="id8">
-<h2><span class="section-number">3.6. </span>多次元ガウス分布の最尤推定<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<section id="id9">
+<h2><span class="section-number">3.7. </span>多次元ガウス分布の最尤推定<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
 <div class="math notranslate nohighlight">
 \[
 \mathcal{N}(\mathbf{x}; \boldsymbol{\mu}, \boldsymbol{\Sigma}) 
@@ -865,8 +971,8 @@ L(\boldsymbol{\mu}, \boldsymbol{\Sigma})
 \]</div>
 <p>から、上の式が従う。</p>
 </section>
-<section id="id9">
-<h2><span class="section-number">3.7. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> 多次元正規分布に関するベイズの定理<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<section id="clubsuit">
+<h2><span class="section-number">3.8. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> 多次元正規分布に関するベイズの定理<a class="headerlink" href="#clubsuit" title="Link to this heading">#</a></h2>
 <p>多次元正規分布に従う確率変数に関するベイズの定理で度々登場する例を紹介しておく。
 ある変数<span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^D\)</span>が、平均ベクトル<span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span>、共分散行列<span class="math notranslate nohighlight">\(\Sigma\)</span> (あるいは精度行列<span class="math notranslate nohighlight">\(\Lambda = \Sigma^{-1}\)</span>)を持つ多次元正規分布に従うとする:</p>
 <div class="math notranslate nohighlight">
@@ -892,7 +998,7 @@ p(\mathbf{x} | \mathbf{y}) &amp; = \mathcal{N}(\mathbf{x}| \boldsymbol{\Sigma} \
 <p>これは、多次元正規分布に従う確率変数の線形変換もまた多次元正規分布に従うことを表している。</p>
 </section>
 <section id="id10">
-<h2><span class="section-number">3.8. </span>学習の振り返りのためのチェックリスト<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">3.9. </span>学習の振り返りのためのチェックリスト<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
 <p>▢ 　条件付き確率とベイズの定理を説明できる<br />
 ▢ 　確率密度関数の定義と性質を説明できる<br />
 ▢ 　正規分布の性質(1次元・多次元)を説明できる<br />
@@ -941,11 +1047,11 @@ p(\mathbf{x} | \mathbf{y}) &amp; = \mathcal{N}(\mathbf{x}| \boldsymbol{\Sigma} \
       </div>
     </a>
     <a class="right-next"
-       href="Chapter_regression.html"
+       href="Data_representation.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">次へ</p>
-        <p class="prev-next-title"><span class="section-number">4. </span>回帰の概要</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>機械学習におけるデータ表現の基礎</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -969,16 +1075,14 @@ p(\mathbf{x} | \mathbf{y}) &amp; = \mathcal{N}(\mathbf{x}| \boldsymbol{\Sigma} \
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3.1.1. ベイズの定理</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3.2. 確率密度関数</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">3.3. ガウス分布</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3.4. ガウス分布と機械学習の関係</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.5. 確率分布のベイズ推定</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">3.5.1. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 事後分布からのサンプリング</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">3.6. 多次元ガウス分布の最尤推定</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">3.7. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 多次元正規分布に関するベイズの定理</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">3.8. 学習の振り返りのためのチェックリスト</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3.2. 視覚的なイメージ</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">3.3. 確率密度関数</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3.4. ガウス分布</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.5. ガウス分布と機械学習の関係</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">3.6. 確率分布のベイズ推定</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">3.7. 多次元ガウス分布の最尤推定</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">3.8. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 多次元正規分布に関するベイズの定理</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">3.9. 学習の振り返りのためのチェックリスト</a></li>
 </ul>
   </nav></div>
 
