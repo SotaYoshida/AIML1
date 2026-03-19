@@ -436,6 +436,11 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#positional-encoding">位置エンコーディング (Positional Encoding)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-head-attention">Multi-Head Attention</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformer">Transformerの構造</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">その他の話題</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenization">Tokenization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Transformerの利点と応用先</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -501,11 +506,16 @@ Aさんのラーメン記録はブログにまとめられており、次に訪�
 <section id="id1">
 <h3>一般的なベクトルデータへの拡張<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
 <p>上で示したラーメン採点の例は、Attentionの計算をイメージしやすくするためのものである。実際には、自然言語処理に限らず、様々なベクトルデータに対してAttentionの計算を適応できる。そこで、もう少し一般的なベクトルデータを例にして説明しよう。</p>
-<p>それぞれのドメインのデータがどんな構造であるかはさておき、方法さえ決めてしまえば、データを数値のベクトルに変換することはいつでも可能である。例えば画像であれば、ピクセル値を並べたベクトルに変換できるし、音声であれば、時間領域の波形データをフーリエ変換して周波数領域のスペクトルに変換し、そのスペクトルをベクトルとして扱うことができる。量子系の状態に興味があるのなら、それぞれの状態に対応するベクトルを用意すればよい(ただし、量子系の場合はベクトルの要素が複素数になる場合がある点に注意)。
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>ただし、量子系の場合はベクトルの要素が複素数になる場合がある。
+そうした場合は、実部と虚部を分けて2倍の次元数の実数ベクトルにするなどの方法が考えられる。</p>
+</aside>
+<p>それぞれのドメインのデータがどんな構造であるかはさておき、方法さえ決めてしまえば、データを数値のベクトルに変換することはいつでも可能である。例えば画像であれば、ピクセル値を並べたベクトルに変換できるし、音声であれば、時間領域の波形データをフーリエ変換して周波数領域のスペクトルに変換し、そのスペクトルをベクトルとして扱うことができる。量子系の状態に興味があるのなら、それぞれの状態に対応するベクトルを用意すればよい。
 テキスト処理の場合も同様で、単語や文をベクトルとして表現する方法がいくつも提案されている。</p>
 <p>このように、データをベクトルとして表現できると仮定して、これから実現したいことは、
 「入力データの中で、特に重要な要素に焦点を当てること」 あるいは成分間の「関連性を捉えること」である。</p>
-<p>画像であれば、隣あうピクセル同士の関連性が高いことが多いし、音声であれば、時間的に近いサンプル同士の関連性が高いことが多い。量子系の状態であれば、エネルギー準位が近い状態同士の関連性が高いことが多いかもしれない。</p>
+<p>画像であれば、隣あうピクセル同士の関連性が高いことが多いし、音声であれば、時間的に近いサンプル同士の関連性が高いことが多い。量子系の状態であれば、特定の成分間に相関や対称性があることが多い。テキスト処理であれば、文脈的に近い単語同士の関連性が高いことが多い。</p>
 <p>クエリ、キー、バリューをそれぞれ以下のように定義する。</p>
 <div class="math notranslate nohighlight">
 \[
@@ -602,6 +612,29 @@ Transformerは、エンコーダーとデコーダーの2つの主要なコン�
 <p>対象とするデータは、例えば自然言語処理における単語列や文章列などが想定されるが、ここでは、テキストをベクトルに変換する方法の詳細には立ち入らず、ベクトルデータが与えられたと仮定して説明を進める。
 まずは、Transformerの全体のアーキテクチャを示す。</p>
 </section>
+<section id="id4">
+<h2>その他の話題<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<section id="tokenization">
+<h3>Tokenization<a class="headerlink" href="#tokenization" title="Link to this heading">#</a></h3>
+<p>自然言語処理を行う際のデータ単位として、最も適切なものはなんだろうか？</p>
+<p>まず考えつくのが、文章を単語に分割するというものだ。
+ただし、用意に考えると分かるように日本語のような言語は単語への分割が容易ではない。というのも英語の文章のように明確に単語単位に分かれておらず、文脈がないと単語の分割にambiguityが生じてしまうケースがあるからだ。
+「くるまでまっているね」と書かれていても
+「車で待っているね」なのか「来るまで待っているね」なのかは前後の文脈を見るまでわからない。</p>
+<p>では、対極的な方法として、文字を単位にすることを考えてみる。
+これもおそらくあまり有効ではないだろう。
+というのも、それぞれの文章が持つ構造や文法などの意味に注目した単位になっていないからだ。
+また、単語や文字の埋め込みベクトルを同じ次元で考えるとすると、単語を単位として考えるのに比べて、文字単位での情報処理は明らかに保持すべき情報のサイズが大きくなり非効率になる。</p>
+<p>そこで、トークン (token)と呼ばれる概念が登場し、自然言語をトークンに変換することをTokenizationと呼ぶ。
+単語レベルで扱う場合、文字レベルで扱う場合のそれぞれの利点を活かしつつ、もう少し柔軟な数値表現の単位(unit)を構成しよう、というのが基本的なアイデアである。</p>
+<p>この章の説明では、transformerの内部で処理されるデータはベクトルデータである、という以外の説明をしていない。
+実際の自然言語処理の文脈においては、単語レベルの埋め込みベクトルではなく、トークンに対応するベクトルを操作している。</p>
+</section>
+<section id="id5">
+<h3>Transformerの利点と応用先<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<p>Transformerの利点はなんだろうか？</p>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -659,6 +692,11 @@ Transformerは、エンコーダーとデコーダーの2つの主要なコン�
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#positional-encoding">位置エンコーディング (Positional Encoding)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-head-attention">Multi-Head Attention</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformer">Transformerの構造</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">その他の話題</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenization">Tokenization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Transformerの利点と応用先</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

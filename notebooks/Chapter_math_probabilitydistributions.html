@@ -575,8 +575,13 @@ y(x_1, x_2) = sin(2\pi x_1) sin(2\pi x_2)
 </div>
 </div>
 <p>正解を知っていればうっすらとその関数の形が見えるが、判然としない。</p>
-<p>一方で、<span class="math notranslate nohighlight">\(x_2\)</span>が特定の値、例えば<span class="math notranslate nohighlight">\(x_2 = 0.5\)</span>のとき、また<span class="math notranslate nohighlight">\(x_1\)</span>を無作為にサンプルして、<span class="math notranslate nohighlight">\(y\)</span>の値をプロットしてみると、データの背後にある関数の形がはっきりと見える事がわかる。</p>
-<div class="cell docutils container">
+<p>一方で、<span class="math notranslate nohighlight">\(x_2\)</span>が特定の値、例えば<span class="math notranslate nohighlight">\(x_2 = \pi/4\)</span>のとき、また<span class="math notranslate nohighlight">\(x_1\)</span>を無作為にサンプルして、<span class="math notranslate nohighlight">\(y\)</span>の値をプロットしてみると、データの背後にある関数の形がはっきりと見える事がわかる。</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_samples</span> <span class="o">=</span> <span class="mi">50</span>
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -591,14 +596,17 @@ y(x_1, x_2) = sin(2\pi x_1) sin(2\pi x_2)
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <img alt="../_images/d88612532da6283551a52fd24e3227594af641f5f6c38257514fbb8e0525b863.png" src="../_images/d88612532da6283551a52fd24e3227594af641f5f6c38257514fbb8e0525b863.png" />
 </div>
 </div>
+<p>このように、<span class="math notranslate nohighlight">\(x2\)</span>が決まらないと、<span class="math notranslate nohighlight">\(y\)</span>の値もばらついてしまうが、<span class="math notranslate nohighlight">\(x2\)</span>が特定の値に固定されると、<span class="math notranslate nohighlight">\(y\)</span>の値もある程度決まることがわかる。
+このような関係を、条件付き確率の概念を用いて表現することができる。</p>
 </section>
 <section id="id5">
 <h2><span class="section-number">3.3. </span>確率密度関数<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
-<p>上では、事象が離散的に起こる場合を考えた。
+<p>上の確率の導入では事象が離散的に起こる場合を考えた。
 以下では、実数値を取る連続型確率変数(continuous random variable)について考えることにする。</p>
 <p>関数<span class="math notranslate nohighlight">\(f: \mathbb{R}^D \to \mathbb{R}\)</span>が確率密度関数(probability density function; pdf)であるとは、次を満たすことをいう。</p>
 <ol class="arabic simple">

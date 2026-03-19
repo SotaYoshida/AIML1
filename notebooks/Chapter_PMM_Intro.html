@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Parametric Matrix Models（PMM）入門（講義ノート雛形） &#8212; AI・機械学習論1/機械学習論</title>
+    <title>Parametric Matrix Models &#8212; AI・機械学習論1/機械学習論</title>
   
   
   
@@ -417,7 +417,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Parametric Matrix Models（PMM）入門（講義ノート雛形）</h1>
+    <h1>Parametric Matrix Models</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -427,23 +427,22 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">1. 学習目標</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pmm">2. 導入: ニューラルネットとPMMの違い（直感）</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3. PMMの基本形（概要）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">3. PMMの基本形（概要）</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ae-pmm-ao-pmm-2">4. AE-PMM と AO-PMM（2種類の基本形）</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ae-pmm-affine-eigenvalue-pmm">4.1 AE-PMM（Affine Eigenvalue PMM）</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ao-pmm-affine-observable-pmm">4.2 AO-PMM（Affine Observable PMM）</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">5. 一般タスク（回帰・分類）への適用</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">5.1 回帰</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">5.2 分類</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">5. 一般タスク（回帰・分類）への適用</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">5.1 回帰</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">5.2 分類</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">6. なぜ情報系にも有効か（要点）</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">7. ミニ例題（講義内デモの構成案）</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">8. まとめ</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">参考文献</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">6. なぜ情報系にも有効か（要点）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">7. ミニ例題（講義内デモの構成案）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">8. まとめ</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">参考文献</a></li>
 </ul>
             </nav>
         </div>
@@ -455,10 +454,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="parametric-matrix-models-pmm">
-<h1>Parametric Matrix Models（PMM）入門（講義ノート雛形）<a class="headerlink" href="#parametric-matrix-models-pmm" title="Link to this heading">#</a></h1>
-<p>対象: 情報系学部（データ・AI系科目）
-テーマ: PMMの考え方と一般タスク（分類・回帰）への応用</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="parametric-matrix-models">
+<h1>Parametric Matrix Models<a class="headerlink" href="#parametric-matrix-models" title="Link to this heading">#</a></h1>
 <p><strong>参考</strong>: Parametric Matrix Models, arXiv:2401.11694v6</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://arxiv.org/html/2401.11694v6">https://arxiv.org/html/2401.11694v6</a></p></li>
@@ -467,15 +464,6 @@ document.write(`
 <ul class="simple">
 <li><p><a class="reference external" href="https://codeocean.com/capsule/5052239/tree/v2">https://codeocean.com/capsule/5052239/tree/v2</a></p></li>
 </ul>
-<section id="id1">
-<h2>1. 学習目標<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p>PMMの基本アイデア（行列方程式で関数を表す）を説明できる</p></li>
-<li><p>AE-PMM / AO-PMMの違いを直感的に説明できる</p></li>
-<li><p>分類・回帰タスクにPMMを使う際の利点と限界を言える</p></li>
-<li><p>行列サイズや固有ベクトル数がモデル容量に与える影響を説明できる</p></li>
-</ul>
-</section>
 <section id="pmm">
 <h2>2. 導入: ニューラルネットとPMMの違い（直感）<a class="headerlink" href="#pmm" title="Link to this heading">#</a></h2>
 <ul class="simple">
@@ -485,8 +473,8 @@ document.write(`
 <li><p>一般タスクにも使える（普遍近似性が理論的に示される）</p></li>
 </ul>
 </section>
-<section id="id2">
-<h2>3. PMMの基本形（概要）<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<section id="id1">
+<h2>3. PMMの基本形（概要）<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <p>PMMは<strong>主行列</strong>と<strong>副行列</strong>から出力を作る。</p>
 <ul class="simple">
 <li><p>主行列: <span class="math notranslate nohighlight">\(P_j(
@@ -524,10 +512,10 @@ M(c)=nderline{M_0}+um_{l=1}^p c_lnderline{M_l}
 回帰・分類に便利（softmaxと組み合わせ可能）。</p>
 </section>
 </section>
+<section id="id2">
+<h2>5. 一般タスク（回帰・分類）への適用<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <section id="id3">
-<h2>5. 一般タスク（回帰・分類）への適用<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
-<section id="id4">
-<h3>5.1 回帰<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<h3>5.1 回帰<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(
 {
@@ -536,8 +524,8 @@ M(c)=nderline{M_0}+um_{l=1}^p c_lnderline{M_l}
 <li><p>少ないパラメータで高精度になりやすい（論文報告）</p></li>
 </ul>
 </section>
-<section id="id5">
-<h3>5.2 分類<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<section id="id4">
+<h3>5.2 分類<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(
 {
@@ -547,8 +535,8 @@ M(c)=nderline{M_0}+um_{l=1}^p c_lnderline{M_l}
 </ul>
 </section>
 </section>
-<section id="id6">
-<h2>6. なぜ情報系にも有効か（要点）<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<section id="id5">
+<h2>6. なぜ情報系にも有効か（要点）<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p><strong>少パラメータ</strong>で競争力のある性能</p></li>
 <li><p><strong>解釈性</strong>: 行列要素や固有値の変化を追える</p></li>
@@ -556,8 +544,8 @@ M(c)=nderline{M_0}+um_{l=1}^p c_lnderline{M_l}
 <li><p>NNの代替ではなく、<strong>構造的バイアスを入れる手法</strong></p></li>
 </ul>
 </section>
-<section id="id7">
-<h2>7. ミニ例題（講義内デモの構成案）<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<section id="id6">
+<h2>7. ミニ例題（講義内デモの構成案）<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p>XOR分類（2次元データ）</p></li>
 <li><p>1次元回帰（sinや折れ線関数）</p></li>
@@ -589,8 +577,8 @@ M(c)=nderline{M_0}+um_{l=1}^p c_lnderline{M_l}
 </div>
 </div>
 </section>
-<section id="id8">
-<h2>8. まとめ<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<section id="id7">
+<h2>8. まとめ<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>PMMは<strong>行列方程式ベース</strong>の汎用モデル</p></li>
 <li><p>物理由来の発想だが、回帰・分類にも有効</p></li>
@@ -599,8 +587,8 @@ M(c)=nderline{M_0}+um_{l=1}^p c_lnderline{M_l}
 </ul>
 <p>次回: PMMの具体的な学習（勾配計算と最適化の流れ）</p>
 </section>
-<section id="id9">
-<h2>参考文献<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<section id="id8">
+<h2>参考文献<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Cook, P. et al., <em>Parametric Matrix Models</em>, arXiv:2401.11694v6 (2025)</p></li>
 <li><p>CodeOcean Capsule: Parametric Matrix Models (2025)</p></li>
@@ -655,23 +643,22 @@ M(c)=nderline{M_0}+um_{l=1}^p c_lnderline{M_l}
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">1. 学習目標</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pmm">2. 導入: ニューラルネットとPMMの違い（直感）</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3. PMMの基本形（概要）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">3. PMMの基本形（概要）</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ae-pmm-ao-pmm-2">4. AE-PMM と AO-PMM（2種類の基本形）</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ae-pmm-affine-eigenvalue-pmm">4.1 AE-PMM（Affine Eigenvalue PMM）</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ao-pmm-affine-observable-pmm">4.2 AO-PMM（Affine Observable PMM）</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">5. 一般タスク（回帰・分類）への適用</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">5.1 回帰</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">5.2 分類</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">5. 一般タスク（回帰・分類）への適用</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">5.1 回帰</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">5.2 分類</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">6. なぜ情報系にも有効か（要点）</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">7. ミニ例題（講義内デモの構成案）</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">8. まとめ</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">参考文献</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">6. なぜ情報系にも有効か（要点）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">7. ミニ例題（講義内デモの構成案）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">8. まとめ</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">参考文献</a></li>
 </ul>
   </nav></div>
 
