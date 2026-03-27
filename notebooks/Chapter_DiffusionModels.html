@@ -71,6 +71,8 @@
                 gtag('config', 'G-VHT6K3HJ64');
             </script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/Chapter_DiffusionModels';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
@@ -402,7 +404,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -418,6 +422,21 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> 目次 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">拡散過程</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">逆過程</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-z-t-1-z-t-x"><span class="math notranslate nohighlight">\(q(z_{t-1} | z_t, x)\)</span>の導出</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">デノイズ過程の学習</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">ノイズの予測</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mnist">MNISTを用いた実装例</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -429,13 +448,638 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1>拡散モデル<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
-<p>VAEの章では、データを再構成するよう学習したEncoder・Decoderを用いて、新しいデータを生成する方法を説明しました。
-VAEを拡張して、潜在空間を多層化することもできますが、工夫をしないと、それぞれのEncoder/Decoderを独立に作成することになり、学習が困難、あるいは非現実的になってしまいます。</p>
-<p>**拡散モデル(Diffusion Model)**は、潜在空間にノイズを加える過程と、ノイズを除去する過程を学習することで、新しいデータを生成する手法です。</p>
-<p>下に、これから考える拡散モデルのイメージ図を示します。</p>
-<p>与えられたデータに対して、徐々にノイズを加えていき、最終的に完全なノイズに変換する過程を**拡散過程(Forward Diffusion Process)**と呼びます。
-この過程は、セットアップさえ決めてしまえば、学習は必要のないステップになります。</p>
-<p>逆に、ノイズから元のデータを復元する過程を**生成過程(Reverse Generation Process)<strong>や</strong>逆</p>
+<p>VAEの章では、データを再構成するよう学習したEncoder・Decoderを用いて、新しいデータを生成する方法を説明した。
+VAEを拡張して、潜在空間を多層化することもできるが、工夫をしないと、それぞれのEncoder/Decoderを各ステップで独立に作成することになり、学習が困難あるいは非現実的になってしまう。</p>
+<p><strong>拡散モデル(Diffusion Model)</strong> は、潜在空間にノイズを加える過程に対して、ノイズを除去する過程を学習することで、新しいデータを生成する手法である。</p>
+<p>与えられたデータに対して、徐々にノイズを加えていき、最終的に完全なノイズに変換する過程を <strong>拡散過程</strong> と呼ぶ。逆に、ノイズから元のデータを復元する過程を <strong>生成過程</strong> あるいは <strong>逆拡散過程</strong> と呼ぶことにしよう。</p>
+<p>拡散モデルの定式化は、以下で示すような、離散時間ステップに対する尤度の最大化問題として表現されるものに加えて、連続時間に対する微分方程式 (とくに確率微分方程式) を用いて表現されるものもある。この章では、離散時間ステップに対する定式化を中心に説明する。</p>
+<p>参考になる文献は下記の通り(前者が、この章で説明する方法である):</p>
+<ul class="simple">
+<li><p>J. Ho et al.: &quot;Denoising Diffusion Probabilistic Models&quot;, <a class="reference external" href="https://arxiv.org/abs/2006.11239">arXiv:2006.11239 (NeurIPS 2020)</a>.</p></li>
+<li><p>Y. Song et al.: &quot;Score-Based Generative Modeling through Stochastic Differential Equations&quot;, <a class="reference external" href="https://arxiv.org/abs/2011.13456">arXiv:2011.13456 (ICLR 2021)</a>.</p></li>
+</ul>
+<p>他の章とも同様、未知の確率分布を<span class="math notranslate nohighlight">\(p\)</span>、モデルの確率分布を<span class="math notranslate nohighlight">\(q\)</span>と表すことにする。</p>
+<section id="id2">
+<h2>拡散過程<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>拡散過程は、セットアップさえ決めてしまえば、学習は必要のないステップになる。
+画像データなどのベクトルデータに対して、ノイズを加える過程は、以下のように定式化される。</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+z_t = \sqrt{1 - \beta_t} z_{t-1} + \sqrt{\beta_t} \epsilon
+\end{align}
+\]</div>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>ノイズを加えるだけなら<span class="math notranslate nohighlight">\(\sqrt{1 - \beta_t}\)</span>をかける必要はないのでは？と思うかもしれないが、このスケーリングがないとデータの分散が大きくなってしまう。</p>
+</aside>
+<p>ここで、<span class="math notranslate nohighlight">\(z_0 \equiv x\)</span>は元のデータを表すベクトル、<span class="math notranslate nohighlight">\(z_t\)</span>は<span class="math notranslate nohighlight">\(t\)</span>ステップ目のノイズが加えられたデータを表すベクトル、<span class="math notranslate nohighlight">\(\beta_t\)</span>は<span class="math notranslate nohighlight">\(t\)</span>ステップ目のノイズの強さを表すスカラー値、<span class="math notranslate nohighlight">\(\epsilon\)</span>は平均0、分散1のガウスノイズを表すベクトルである。</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>VAEの章で変数変換トリックを導入したときと反対の形である。</p>
+</aside>
+<p>上のノイズを加える過程は、条件付き確率分布として表現することも出来る。</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+q(z_t| z_{t-1}) = \mathcal{N}(z_t| \sqrt{1 - \beta_t} z_{t-1}, \beta_t I)
+\end{align}
+\]</div>
+<p>画像データに対してこの過程を適用すると、徐々に画像がぼやけていき、最終的には完全なノイズに変換される様子が観察される。
+<span class="math notranslate nohighlight">\(\beta_t\)</span>は<span class="math notranslate nohighlight">\(t\)</span>に対して線形に大きくするような設定にして、実際にコードで試してみよう。</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">io</span><span class="w"> </span><span class="kn">import</span> <span class="n">BytesIO</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">load_image</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">))</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;RGB&#39;</span><span class="p">)</span>
+    <span class="n">size</span> <span class="o">=</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">width</span><span class="o">*</span><span class="mf">0.3</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">height</span><span class="o">*</span><span class="mf">0.3</span><span class="p">))</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.0</span> 
+
+<span class="k">def</span><span class="w"> </span><span class="nf">forward_diffusion</span><span class="p">(</span><span class="n">x_0</span><span class="p">,</span> <span class="n">timesteps</span><span class="p">,</span> <span class="n">beta_start</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">beta_end</span><span class="o">=</span><span class="mf">0.02</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    画像を段階的にノイズ化する</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># 線形のノイズスケジュール（beta）を作成</span>
+    <span class="n">betas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">beta_start</span><span class="p">,</span> <span class="n">beta_end</span><span class="p">,</span> <span class="n">timesteps</span><span class="p">)</span>
+    <span class="n">alphas</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">betas</span>
+    <span class="n">alphas_cumprod</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumprod</span><span class="p">(</span><span class="n">alphas</span><span class="p">)</span>  <span class="c1"># 累積積（アルファバー）</span>
+    
+    <span class="n">noisy_images</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c1"># 特定のステップの画像を抽出してリストに保存</span>
+    <span class="n">display_steps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">timesteps</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">timesteps</span><span class="p">):</span>
+        <span class="c1"># ガウスノイズを生成</span>
+        <span class="n">noise</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">x_0</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        
+        <span class="c1"># 式: x_t = sqrt(alpha_bar) * x_0 + sqrt(1 - alpha_bar) * noise</span>
+        <span class="n">sqrt_alpha_cumprod</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">alphas_cumprod</span><span class="p">[</span><span class="n">t</span><span class="p">])</span>
+        <span class="n">sqrt_one_minus_alpha_cumprod</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">alphas_cumprod</span><span class="p">[</span><span class="n">t</span><span class="p">])</span>
+        
+        <span class="n">x_t</span> <span class="o">=</span> <span class="n">sqrt_alpha_cumprod</span> <span class="o">*</span> <span class="n">x_0</span> <span class="o">+</span> <span class="n">sqrt_one_minus_alpha_cumprod</span> <span class="o">*</span> <span class="n">noise</span>
+        <span class="n">x_t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">x_t</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># 値を0-1の範囲に収める</span>
+        
+        <span class="k">if</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">display_steps</span><span class="p">:</span>
+            <span class="n">noisy_images</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">t</span><span class="p">,</span> <span class="n">x_t</span><span class="p">))</span>
+            
+    <span class="k">return</span> <span class="n">noisy_images</span>
+
+<span class="c1"># 1. 画像の読み込み（サンプルとしてネット上の画像を使用）</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/SotaYoshida/Lecture_DataScience/main/notebooks/pic_for_notebook/u_ta.jpeg&quot;</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">load_image</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+<span class="c1"># 2. 拡散プロセスの実行</span>
+<span class="n">steps</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">forward_diffusion</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">timesteps</span><span class="o">=</span><span class="n">steps</span><span class="p">)</span>
+
+<span class="c1"># 3. 結果の表示</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">results</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Step </span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/8cbe0df48cdef7452589932cac87fa4b806ea6da254ea828c3633d77159dc1d9.png" src="../_images/8cbe0df48cdef7452589932cac87fa4b806ea6da254ea828c3633d77159dc1d9.png" />
+</div>
+</div>
+<p>このように、現実の写真から完全なノイズに変換される様子を観察することができる。</p>
+<p>それぞれのステップは、いわゆるマルコフ過程であるため、<span class="math notranslate nohighlight">\(z_t\)</span>は<span class="math notranslate nohighlight">\(t-1\)</span>ステップの状態<span class="math notranslate nohighlight">\(z_{t-1}\)</span>にのみ依存する。
+したがって、潜在変数の系列の確率分布は、以下のように表現される。</p>
+<div class="math notranslate nohighlight">
+\[
+q(z_{1:T} | z_0) = q(z_1 | x) \prod_{t=2}^T q(z_t | z_{t-1})
+\]</div>
+<p><span class="math notranslate nohighlight">\(t\)</span>ステップ後の状態は、実はひとまとめに書き直すことが出来て</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+q(z_t | z_0) &amp;= \mathcal{N}(z_t | \sqrt{\bar{\alpha}_t} z_0, (1 - \bar{\alpha}_t) I) \\
+\text{where} \quad \bar{\alpha}_t &amp;= \prod_{s=1}^t (1 - \beta_s)
+\end{align*}
+\end{split}\]</div>
+<p>と書ける。
+<span class="math notranslate nohighlight">\(T \to \infty\)</span>のとき、<span class="math notranslate nohighlight">\(\bar{\alpha}_t \to 0\)</span>となるため、十分なステップ数後、<span class="math notranslate nohighlight">\(z_t\)</span>は平均0、分散1のガウスノイズに変換されることがわかる。</p>
+<p>ここでのポイントは、元のデータ <span class="math notranslate nohighlight">\(x \equiv z_0\)</span> と、<span class="math notranslate nohighlight">\(\beta_t\)</span>のスケジュールが決まっていれば、複数の時間ステップ後の状態を直接サンプリングできることにある。</p>
+<div class="attention admonition">
+<p class="admonition-title">問題</p>
+<p>上の <span class="math notranslate nohighlight">\(q(z_t | z_0)\)</span> の式を導出せよ。</p>
+<p>ヒント: 独立に生成された2つの正規乱数の和もまた正規乱数になることを利用すると良い。</p>
+</div>
+</section>
+<section id="id3">
+<h2>逆過程<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>我々の目標は、ノイズから元のデータを復元する過程、あるいは以下の確率分布を学習することである。</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+p(z_{t-1} | z_t)
+\end{align}
+\]</div>
+<p>まず形式的に、上の拡散過程のステップを逆にした確率分布を書いてみよう。</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+q(z_{t-1} | z_t) = \frac{q(z_t | z_{t-1}) q(z_{t-1}) }{q(z_t)}
+\end{align}
+\]</div>
+<p>これはベイズの定理で書き直しただけである。
+分子に注目すると、<span class="math notranslate nohighlight">\(q(z_t | z_{t-1})\)</span>は上で考えたノイズを加える過程の確率分布である。すると、残る<span class="math notranslate nohighlight">\(q(z_{t-1})\)</span>が知りたくなる。<span class="math notranslate nohighlight">\(z_{t-1}\)</span>の周辺分布を書いてみると</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+q(z_{t-1}) = \int q(z_{t-1} | x) p(x) dx
+\end{align}
+\]</div>
+<p>となる。当然ながら<span class="math notranslate nohighlight">\(p(x)\)</span>はサンプル(例: 画像データ)が従う未知の分布なので、この積分は評価しようがないように思える。データからサンプリングしてきてモンテカルロ法で評価もできるが、効率的な方法ではない。</p>
+<p>そこで、次に(一見遠回りなように見えるが)、<span class="math notranslate nohighlight">\(z_{t}\)</span>と<span class="math notranslate nohighlight">\(x_0\)</span>に条件付けられる<span class="math notranslate nohighlight">\(q(z_{t-1} | z_t, x)\)</span>を考えてみることにする。
+後で示すように、この分布は解析的に書き下せる。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+q(z_{t-1} | z_t, x) &amp; = \mathcal{N}(z_{t-1} | m_t(z_t, x), \sigma_t^2 I) \\
+m_t(z_t, x) &amp; = \frac{\sqrt{\alpha_t}(1-\bar{\alpha}_{t-1})z_t + \sqrt{\bar{\alpha}_{t-1}}(1-\alpha_t)x}{1-\bar{\alpha}_t}
+\\ 
+\sigma_t^2 &amp; = \frac{ (1-\bar{\alpha}_{t-1})\beta_t}{1-\bar{\alpha}_t}\\
+\alpha_t &amp; = 1 - \beta_t
+\end{align}
+\end{split}\]</div>
+<p>この式は重要である。というのも、もし元のデータ<span class="math notranslate nohighlight">\(x\)</span>が分かっていれば、<span class="math notranslate nohighlight">\(z_t\)</span>から1ステップ前の<span class="math notranslate nohighlight">\(z_{t-1}\)</span>を復元する分布を厳密に書けるからである。</p>
+<p>しかし生成時には<span class="math notranslate nohighlight">\(x\)</span>は未知である。したがって実際の拡散モデルでは、この事後分布を直接使う代わりに、</p>
+<div class="math notranslate nohighlight">
+\[
+p(z_{t-1} \mid z_t, w)
+\]</div>
+<p>というパラメトリックな分布をニューラルネットワークに基づいて定義し、これを学習することになる。
+ここで、ニューラルネットワークの重みやバイアスをまとめて<span class="math notranslate nohighlight">\(w\)</span>と書いた。</p>
+<p>つまり、順伝播ではデータに少しずつノイズを加え、逆向きではそのノイズを少しずつ取り除くような分布を学習する。この逆向きの分布をうまく学習できれば、最終的なガウスノイズ<span class="math notranslate nohighlight">\(z_T \sim \mathcal{N}(0, I)\)</span>から出発して、データに似たサンプルを生成できるようになる。</p>
+<p>ニューラルネットワークによるデノイズ過程を与える確率分布を</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+p( z_{t-1} | z_t, w) = \mathcal{N}(z_{t-1} | \hat{m}_t(z_t, w), \sigma_t^2 I)
+\end{align}
+\]</div>
+<p>と定義する。ここで、<span class="math notranslate nohighlight">\(\hat{m}_t(z_t, w)\)</span>は、<span class="math notranslate nohighlight">\(z_t\)</span>と<span class="math notranslate nohighlight">\(t\)</span>を入力として受け取り、<span class="math notranslate nohighlight">\(z_{t-1}\)</span>の平均を出力するニューラルネットワークによる推定値(ベクトル)である。
+<span class="math notranslate nohighlight">\(t\)</span>を入力に与えることで、時間ステップごとに別々のニューラルネットワークを用意する必要がなくなり、単一のネットワークで全てのステップに対応できるようにすることが狙いである。
+分散の値は、<span class="math notranslate nohighlight">\(q(z_{t-1} | z_t, x)\)</span>の分散<span class="math notranslate nohighlight">\(\sigma_t^2\)</span>と同じ値に固定することが多い。</p>
+<section id="q-z-t-1-z-t-x">
+<h3><span class="math notranslate nohighlight">\(q(z_{t-1} | z_t, x)\)</span>の導出<a class="headerlink" href="#q-z-t-1-z-t-x" title="Link to this heading">#</a></h3>
+<p>求めたい条件付き分布は下記のようなものだった(マルコフ性を仮定しているため、<span class="math notranslate nohighlight">\(q(z_t | z_{t-1}, x) = q(z_t | z_{t-1})\)</span>であることに注意)。</p>
+<div class="math notranslate nohighlight" id="equation-eq-qzpost">
+<span class="eqno">()<a class="headerlink" href="#equation-eq-qzpost" title="Link to this equation">#</a></span>\[
+\begin{align}
+q(z_{t-1} | z_t, x) = \frac{q(z_t | z_{t-1}) q(z_{t-1} | x) }{q(z_t | x)}
+\end{align}
+\]</div>
+<p>また、これまで上で出てきた拡散過程に関する式をまとめておこう</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+q(z_t | z_{t-1}) &amp; = \mathcal{N}(z_t| \sqrt{1 - \beta_t} z_{t-1}, \beta_t I) \\
+q(z_t | x) &amp; = \mathcal{N}(z_t | \sqrt{\bar{\alpha}_t} x, (1 - \bar{\alpha}_t) I)
+\end{align}
+\end{split}\]</div>
+<p>これを用いると、上の式<a class="reference internal" href="#equation-eq-qzpost">()</a>は正規分布の積の形になる。</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+q(z_{t-1} | z_t, x) &amp; = \frac{\mathcal{N}(z_t| \sqrt{1 - \beta_t} z_{t-1}, \beta_t I) \mathcal{N}(z_{t-1} | \sqrt{\bar{\alpha}_{t-1}} x, (1 - \bar{\alpha}_{t-1}) I)}{\mathcal{N}(z_t | \sqrt{\bar{\alpha}_t} x, (1 - \bar{\alpha}_t) I)}
+\end{align}
+\]</div>
+<p>正規分布が指数関数の形で表されることを思い出すと、右辺も一つの正規分布の形で表されることが分かる。</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+\log q(z_{t-1} | z_t, x) &amp; \propto -\frac{1}{2} \left(
+\frac{||z_t - \sqrt{1 - \beta_t} z_{t-1}||^2}{\beta_t} 
++ \frac{||z_{t-1} - \sqrt{\bar{\alpha}_{t-1}} x||^2}{1 - \bar{\alpha}_{t-1}} 
+- \frac{||z_t - \sqrt{\bar{\alpha}_t} x||^2}{1 - \bar{\alpha}_t}
+\right)
+\end{align}
+\]</div>
+<p>あとは、二次形式を平方完成することで、平均と分散を求めることができる。</p>
+<div class="attention admonition">
+<p class="admonition-title">問題</p>
+<p>上の式を平方完成して、平均と分散が、上で与えた<span class="math notranslate nohighlight">\(m_t(z_t, x)\)</span>と<span class="math notranslate nohighlight">\(\sigma_t^2\)</span>の式になることを示せ。</p>
+</div>
+</section>
+</section>
+<section id="id4">
+<h2>デノイズ過程の学習<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>デノイズ過程の最適化のために、誤差関数を定義しなくてはならない。
+最も愚直な選択は、デノイズ過程の尤度を最大化することである。</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+p(x | w) = \int p(x, z_{1:T} | w) dz_{1:T}
+\end{align}
+\]</div>
+<p>しかし、<span class="math notranslate nohighlight">\(\{z_t \}\)</span>の軌跡(各ステップでの潜在変数の値)を数え上げて積分することは非現実的である。
+そこで、GMMやVAEと同様、変分推論の枠組みを用いて、ELBOの最大化を考える。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+\log p(x | w) &amp; = \mathcal{L}(w) + KL(q(z_{1:T} | x) || p(z_{1:T} | x, w)) \geq \mathcal{L}(w)\\
+\mathcal{L}(w) &amp; = \int q(z_{1:T} | x) \log \frac{p(x, z_{1:T} | w)}{q(z_{1:T} | x)} dz_{1:T} \\
+KL(q(z_{1:T} | x) || p(z_{1:T} | x, w)) &amp; = \int q(z_{1:T} | x) \log \frac{q(z_{1:T} | x)}{p(z_{1:T} | x, w)} dz_{1:T}
+\end{align}
+\end{split}\]</div>
+<p>ELBOを書き直して</p>
+<div class="math notranslate nohighlight" id="equation-eq-elbo-diffusion">
+<span class="eqno">()<a class="headerlink" href="#equation-eq-elbo-diffusion" title="Link to this equation">#</a></span>\[\begin{split}
+\begin{align}
+\mathcal{L}(w) &amp; = \mathbb{E}_q \left[ \ln \frac{p(z_t) (\prod_{t=1}^T p(z_{t-1} | z_t, w))}{q(z_1 | x) (\prod_{t=2}^T q(z_t | z_{t-1}, x))} \right] \nonumber \\
+&amp; = \mathbb{E}_q \left[ \ln p(z_T) + \sum_{t=2}^T \ln \frac{p(z_{t-1} | z_t, w)}{q(z_{t} | z_{t-1}, x)} - \ln q(z_1 | x) + \ln p(x|z_1, w) \right] 
+\end{align}
+\end{split}\]</div>
+<p>ここで、<span class="math notranslate nohighlight">\(q\)</span>に対する期待値は</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+\mathbb{E}_q[\cdot] = \int q(z_{1:T} | x) \cdot dz_{1:T}
+\end{align}
+\]</div>
+<p>で与えられている。式<a class="reference internal" href="#equation-eq-elbo-diffusion">()</a>の第1,3項は、<span class="math notranslate nohighlight">\(w\)</span>に依存しないので、ELBOの最大化の文脈では無視できる。
+末尾の項は、<span class="math notranslate nohighlight">\(z_1\)</span>から<span class="math notranslate nohighlight">\(x\)</span>を復元するための尤度であるが、これはデノイズによる再構成誤差を計算してやればよい。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+\mathbb{E}_q[\ln p(x|z_1, w)] &amp; \approx 
+\sum^L_{l=1} \ln p(x | z_1^{(l)}, w) \\
+z_1^{(l)} &amp; \sim \mathcal{N}(z_1 | \sqrt{1-\beta_1}x, \beta_1 I)
+\end{align}
+\end{split}\]</div>
+<p>しかし、このままでは2項目の評価が厳しそうである。
+そこで、もう少し式変形を考える。</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+q(z_{t-1} | z_t, x) &amp; = \frac{q(z_{t-1} | z_t, q) q(z_t | x)}{q(z_{t-1} | x)} 
+\end{align}
+\]</div>
+<p>これは、ベイズの定理で書き直しただけである。これを用いて式<a class="reference internal" href="#equation-eq-elbo-diffusion">()</a>の第2項を変形してみる。</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+\ln \frac{p(z_{t-1} | z_t, w)}{q(z_{t} | z_{t-1}, x)} &amp; = \ln \frac{p(z_{t-1} | z_t, w)}{q(z_{t-1} | z_t, x)} + \ln \frac{q(z_{t-1} | x)}{q(z_t | x)} 
+\end{align}
+\]</div>
+<p>後半の部分は<span class="math notranslate nohighlight">\(w\)</span>に依存しないので、再び無視できる。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+\mathcal{L}(w) &amp;=
+\mathbb{E}_q \left[ \sum_{t=2}^T \ln \frac{p(z_{t-1} | z_t, w)}{q(z_{t-1} | z_t, x)} + \ln p(x|z_1, w) \right] \\
+&amp; = \int q(z_1|x) \ln p(x|z_1, w) dz_1 - \sum_{t=2}^T \int q(z_t | x) KL(q(z_{t-1} | z_t, x) || p(z_{t-1} | z_t, w)) dz_t 
+\end{align}
+\end{split}\]</div>
+<p>第1項は、<span class="math notranslate nohighlight">\(z_1\)</span>から<span class="math notranslate nohighlight">\(x\)</span>を復元するための尤度であるが、これはデノイズによる再構成誤差、第2項は、<span class="math notranslate nohighlight">\(q(z_{t-1} | z_t, x)\)</span>と<span class="math notranslate nohighlight">\(p(z_{t-1} | z_t, w)\)</span>のKL-divergenceである。
+前者の <span class="math notranslate nohighlight">\(q(z_{t-1} | z_t, x)\)</span> は解析的に評価できたことを思い出そう。すると、ELBOの最大化は、デノイズによる再構成誤差を最小化することと、<span class="math notranslate nohighlight">\(q(z_{t-1} | z_t, x)\)</span>と<span class="math notranslate nohighlight">\(p(z_{t-1} | z_t, w)\)</span>のKL-divergenceを最小化することの両方を同時に行うことになる。</p>
+<p>単一の<span class="math notranslate nohighlight">\(t\)</span>の項に対するKL-divergenceをみてやると、両方とも正規分布であるため、KL-divergenceは平均と分散の差を用いて解析的に評価できることがわかる。</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align}
+KL(q(z_{t-1} | z_t, x) || p(z_{t-1} | z_t, w)) &amp; = \frac{1}{2\beta_t} ||m_t(z_t, x) - \hat{m}_t(z_t, w)||^2 + \text{const}
+\end{align}
+\]</div>
+</section>
+<section id="id5">
+<h2>ノイズの予測<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p>Hoらの論文では、画像データそのものの再構成ではなく、逆過程で必要なノイズを学習するようにモデルを訓練することで、精度が向上することが報告されている他、誤差関数の頭につく係数を落とすことで精度が向上することも報告されている。</p>
+</section>
+<section id="mnist">
+<h2>MNISTを用いた実装例<a class="headerlink" href="#mnist" title="Link to this heading">#</a></h2>
+<p>最後に、U-Netと呼ばれる構造のニューラルネットワークを用いて、MNISTデータセットに対する拡散モデルの実装例を示す。</p>
+<p>なお、GPUが無いと学習に非常に時間がかかるため、GPUがある環境で実行することを推奨する。
+以下では、コードと学習の過程・結果だけを貼る。</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The following code is from https://github.com/oreilly-japan/deep-learning-from-scratch-5 under MIT license.</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torchvision</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torchvision</span><span class="w"> </span><span class="kn">import</span> <span class="n">transforms</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataLoader</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.optim</span><span class="w"> </span><span class="kn">import</span> <span class="n">Adam</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn.functional</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">F</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+
+
+<span class="n">img_size</span> <span class="o">=</span> <span class="mi">28</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">128</span>
+<span class="n">num_timesteps</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">epochs</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="mf">1e-3</span>
+<span class="n">device</span> <span class="o">=</span> <span class="s1">&#39;cuda&#39;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s1">&#39;cpu&#39;</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">show_images</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">rows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span> <span class="n">rows</span><span class="p">))</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols</span><span class="p">):</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">images</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_pos_encoding</span><span class="p">(</span><span class="n">time_idx</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cpu&#39;</span><span class="p">):</span>
+    <span class="n">t</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">time_idx</span><span class="p">,</span> <span class="n">output_dim</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+
+    <span class="n">i</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">div_term</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">i</span> <span class="o">/</span> <span class="n">D</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">10000</span><span class="p">))</span>
+
+    <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">t</span> <span class="o">/</span> <span class="n">div_term</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">t</span> <span class="o">/</span> <span class="n">div_term</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">v</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">pos_encoding</span><span class="p">(</span><span class="n">timesteps</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cpu&#39;</span><span class="p">):</span>
+    <span class="n">batch_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">timesteps</span><span class="p">)</span>
+    <span class="n">device</span> <span class="o">=</span> <span class="n">timesteps</span><span class="o">.</span><span class="n">device</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">batch_size</span><span class="p">):</span>
+        <span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">_pos_encoding</span><span class="p">(</span><span class="n">timesteps</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">output_dim</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">v</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ConvBlock</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_ch</span><span class="p">,</span> <span class="n">out_ch</span><span class="p">,</span> <span class="n">time_embed_dim</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">convs</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_ch</span><span class="p">,</span> <span class="n">out_ch</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="n">out_ch</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">out_ch</span><span class="p">,</span> <span class="n">out_ch</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="n">out_ch</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mlp</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">time_embed_dim</span><span class="p">,</span> <span class="n">in_ch</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">in_ch</span><span class="p">,</span> <span class="n">in_ch</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="n">N</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mlp</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convs</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">v</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">y</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">UNet</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_ch</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">time_embed_dim</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_embed_dim</span> <span class="o">=</span> <span class="n">time_embed_dim</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">down1</span> <span class="o">=</span> <span class="n">ConvBlock</span><span class="p">(</span><span class="n">in_ch</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="n">time_embed_dim</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">down2</span> <span class="o">=</span> <span class="n">ConvBlock</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="n">time_embed_dim</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bot1</span> <span class="o">=</span> <span class="n">ConvBlock</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">time_embed_dim</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">up2</span> <span class="o">=</span> <span class="n">ConvBlock</span><span class="p">(</span><span class="mi">128</span> <span class="o">+</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="n">time_embed_dim</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">up1</span> <span class="o">=</span> <span class="n">ConvBlock</span><span class="p">(</span><span class="mi">128</span> <span class="o">+</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="n">time_embed_dim</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">in_ch</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxpool</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upsample</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Upsample</span><span class="p">(</span><span class="n">scale_factor</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;bilinear&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">timesteps</span><span class="p">):</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">pos_encoding</span><span class="p">(</span><span class="n">timesteps</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_embed_dim</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
+        <span class="n">x1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">down1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxpool</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
+        <span class="n">x2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">down2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxpool</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bot1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">upsample</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">x2</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">up2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">upsample</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">x1</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">up1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Diffuser</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_timesteps</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">beta_start</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">,</span> <span class="n">beta_end</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cpu&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_timesteps</span> <span class="o">=</span> <span class="n">num_timesteps</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">betas</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">beta_start</span><span class="p">,</span> <span class="n">beta_end</span><span class="p">,</span> <span class="n">num_timesteps</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alphas</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">betas</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alpha_bars</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cumprod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alphas</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_noise</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="n">T</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_timesteps</span>
+        <span class="k">assert</span> <span class="p">(</span><span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span> <span class="ow">and</span> <span class="p">(</span><span class="n">t</span> <span class="o">&lt;=</span> <span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+        <span class="n">t_idx</span> <span class="o">=</span> <span class="n">t</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># alpha_bars[0] is for t=1</span>
+        <span class="n">alpha_bar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha_bars</span><span class="p">[</span><span class="n">t_idx</span><span class="p">]</span>  <span class="c1"># (N,)</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="n">alpha_bar</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">alpha_bar</span> <span class="o">=</span> <span class="n">alpha_bar</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># (N, 1, 1, 1)</span>
+
+        <span class="n">noise</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn_like</span><span class="p">(</span><span class="n">x_0</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">x_t</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">alpha_bar</span><span class="p">)</span> <span class="o">*</span> <span class="n">x_0</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha_bar</span><span class="p">)</span> <span class="o">*</span> <span class="n">noise</span>
+        <span class="k">return</span> <span class="n">x_t</span><span class="p">,</span> <span class="n">noise</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">denoise</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+        <span class="n">T</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_timesteps</span>
+        <span class="k">assert</span> <span class="p">(</span><span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span> <span class="ow">and</span> <span class="p">(</span><span class="n">t</span> <span class="o">&lt;=</span> <span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+        <span class="n">t_idx</span> <span class="o">=</span> <span class="n">t</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># alphas[0] is for t=1</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alphas</span><span class="p">[</span><span class="n">t_idx</span><span class="p">]</span>
+        <span class="n">alpha_bar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha_bars</span><span class="p">[</span><span class="n">t_idx</span><span class="p">]</span>
+        <span class="n">alpha_bar_prev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha_bars</span><span class="p">[</span><span class="n">t_idx</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">N</span> <span class="o">=</span> <span class="n">alpha</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">alpha_bar</span> <span class="o">=</span> <span class="n">alpha_bar</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">alpha_bar_prev</span> <span class="o">=</span> <span class="n">alpha_bar_prev</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+            <span class="n">eps</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+
+        <span class="n">noise</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn_like</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">noise</span><span class="p">[</span><span class="n">t</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># no noise at t=1</span>
+
+        <span class="n">mu</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span> <span class="o">/</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha_bar</span><span class="p">))</span> <span class="o">*</span> <span class="n">eps</span><span class="p">)</span> <span class="o">/</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
+        <span class="n">std</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha_bar_prev</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha_bar</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">mu</span> <span class="o">+</span> <span class="n">noise</span> <span class="o">*</span> <span class="n">std</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">reverse_to_img</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">255</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
+        <span class="n">to_pil</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">ToPILImage</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">to_pil</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">x_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)):</span>
+        <span class="n">batch_size</span> <span class="o">=</span> <span class="n">x_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">x_shape</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_timesteps</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)):</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">denoise</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+
+        <span class="n">images</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">reverse_to_img</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="n">images</span>
+
+
+<span class="n">preprocess</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">preprocess</span><span class="p">)</span>
+<span class="n">dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">diffuser</span> <span class="o">=</span> <span class="n">Diffuser</span><span class="p">(</span><span class="n">num_timesteps</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">UNet</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">)</span>
+
+<span class="n">losses</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+    <span class="n">loss_sum</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># generate samples every epoch ===================</span>
+    <span class="c1"># images = diffuser.sample(model)</span>
+    <span class="c1"># show_images(images)</span>
+    <span class="c1"># ================================================</span>
+
+    <span class="k">for</span> <span class="n">images</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">dataloader</span><span class="p">):</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">images</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_timesteps</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),),</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+
+        <span class="n">x_noisy</span><span class="p">,</span> <span class="n">noise</span> <span class="o">=</span> <span class="n">diffuser</span><span class="o">.</span><span class="n">add_noise</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+        <span class="n">noise_pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x_noisy</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">mse_loss</span><span class="p">(</span><span class="n">noise</span><span class="p">,</span> <span class="n">noise_pred</span><span class="p">)</span>
+
+        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+        <span class="n">loss_sum</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+        <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">loss_avg</span> <span class="o">=</span> <span class="n">loss_sum</span> <span class="o">/</span> <span class="n">cnt</span>
+    <span class="n">losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss_avg</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">}</span><span class="s1"> | Loss: </span><span class="si">{</span><span class="n">loss_avg</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># plot losses</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">losses</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Epoch&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Loss&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># generate samples</span>
+<span class="n">images</span> <span class="o">=</span> <span class="n">diffuser</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">show_images</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 469/469 [25:41&lt;00:00,  3.29s/it]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 0 | Loss: 0.046869012000940756
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 469/469 [25:33&lt;00:00,  3.27s/it]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1 | Loss: 0.027036836072961406
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 469/469 [25:22&lt;00:00,  3.25s/it]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 2 | Loss: 0.02409779304253267
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 469/469 [25:13&lt;00:00,  3.23s/it]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 3 | Loss: 0.022137694763762355
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 469/469 [25:19&lt;00:00,  3.24s/it]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 4 | Loss: 0.021399060788471053
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 469/469 [16:19&lt;00:00,  2.09s/it]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 5 | Loss: 0.02006010810481206
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 469/469 [08:22&lt;00:00,  1.07s/it]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 6 | Loss: 0.01952929627587165
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 469/469 [08:01&lt;00:00,  1.03s/it]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 7 | Loss: 0.019445420812759826
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 469/469 [08:01&lt;00:00,  1.03s/it]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 8 | Loss: 0.01858507048910551
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 469/469 [08:01&lt;00:00,  1.03s/it]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 9 | Loss: 0.018320921242538927
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<img alt="../_images/0caae243ade9dc5c5fc492ddba45e65ada1a536212c40bba8da070a23d0fda55.png" src="../_images/0caae243ade9dc5c5fc492ddba45e65ada1a536212c40bba8da070a23d0fda55.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 1000/1000 [01:25&lt;00:00, 11.63it/s]
+</pre></div>
+</div>
+<img alt="../_images/bf1732e9316a0267e3cab788b22feee2eca525a2e7c728a29bb8cfc1fa688709.png" src="../_images/bf1732e9316a0267e3cab788b22feee2eca525a2e7c728a29bb8cfc1fa688709.png" />
+</div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -474,6 +1118,28 @@ VAEを拡張して、潜在空間を多層化することもできますが、�
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目次
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">拡散過程</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">逆過程</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-z-t-1-z-t-x"><span class="math notranslate nohighlight">\(q(z_{t-1} | z_t, x)\)</span>の導出</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">デノイズ過程の学習</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">ノイズの予測</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mnist">MNISTを用いた実装例</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

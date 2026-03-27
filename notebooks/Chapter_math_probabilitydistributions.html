@@ -435,10 +435,13 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">3.3. 確率密度関数</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3.4. ガウス分布</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.5. ガウス分布と機械学習の関係</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">3.6. 確率分布のベイズ推定</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">3.6. 確率分布のベイズ推定</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">3.6.1. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 事後分布からのサンプリング</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">3.7. 多次元ガウス分布の最尤推定</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">3.8. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 多次元正規分布に関するベイズの定理</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">3.9. 学習の振り返りのためのチェックリスト</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">3.8. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 多次元正規分布に関するベイズの定理</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">3.9. 学習の振り返りのためのチェックリスト</a></li>
 </ul>
             </nav>
         </div>
@@ -870,33 +873,27 @@ p(D | \mathbf{\theta}) =C \exp\left(-\frac{1}{2\sigma^2} \sum_{i=1}^N ||\mathbf{
 \]</div>
 <p><span class="math notranslate nohighlight">\(C\)</span>は正規化定数である。</p>
 <p>また、上ではあえて比例関係<span class="math notranslate nohighlight">\(\propto\)</span>を用いたが、分母にあたる<span class="math notranslate nohighlight">\(p(D)\)</span>はデータ<span class="math notranslate nohighlight">\(D\)</span>に関する正規化定数であり、パラメータ<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>に依存しないため、事後分布を計算する際には無視できる(というより、計算が非常に難しいことが多い)ことによる。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### $\clubsuit$ 事後分布からのサンプリング</span>
-
-<span class="n">事後分布に従うサンプルを生成するための方法としては</span><span class="err">、</span><span class="n">大別すると</span><span class="err">、</span><span class="n">近似推論</span><span class="p">(</span><span class="err">≒</span><span class="n">事後分布を性質の良い分布で近似する</span><span class="p">)</span><span class="n">と</span><span class="err">、</span><span class="n">MCMC</span><span class="p">(</span><span class="n">Markov</span> <span class="n">Chain</span> <span class="n">Monte</span> <span class="n">Carlo</span><span class="p">;</span> <span class="n">マルコフ連鎖モンテカルロ法</span><span class="p">)</span><span class="n">がある</span><span class="err">。</span>
-<span class="n">事前分布及び尤度を性質の良い</span><span class="p">(</span><span class="n">共役分布</span><span class="p">;</span> <span class="n">conjugate</span> <span class="n">distribution</span><span class="p">)</span><span class="n">で選ぶと</span><span class="err">、</span><span class="n">事後分布も特定の分布族に属することが保証され</span><span class="err">、</span><span class="n">解析的に計算できる場合がある</span><span class="err">。</span>
-<span class="n">近似推論では</span><span class="err">、</span><span class="n">こうした仮定を積極的に用いて</span><span class="err">、</span><span class="n">事後分布を計算しやすい分布で近似する</span><span class="err">。</span>
-
-<span class="n">一方で</span><span class="err">、</span><span class="n">MCMCは</span><span class="err">、</span><span class="n">事後分布からのサンプルを生成するための確率的なアルゴリズムであり</span><span class="err">、</span><span class="n">事後分布の形状に関する仮定を必要としない</span><span class="err">。</span>
-<span class="n">十分に多くのサンプルを</span><span class="s2">&quot;きちんと&quot;</span><span class="n">生成できれば</span><span class="err">、</span><span class="n">事後分布を反映したサンプルを得ることができるが</span><span class="err">、</span><span class="n">実際にはサンプルの自己相関や収束性などに注意が必要であり</span><span class="err">、</span><span class="n">適切なアルゴリズムの選択とパラメータ設定が重要である</span><span class="err">。</span>
-<span class="n">とくに多次元の分布からサンプルを生成する場合は</span><span class="err">、</span><span class="n">サンプルの自己相関が高くなりやすく</span><span class="err">、</span><span class="n">効率的なサンプリングが難しいことが多い</span><span class="err">。</span>
-<span class="n">代表的なMCMCアルゴリズムには以下のようなものがある</span><span class="p">:</span>
-
-<span class="o">-</span> <span class="n">ギブスサンプリング</span><span class="p">(</span><span class="n">Gibbs</span> <span class="n">sampling</span><span class="p">):</span> <span class="n">各変数を順番に更新する方法</span><span class="err">。</span><span class="n">条件付き分布が計算しやすい場合に有効</span><span class="err">。</span>
-<span class="o">-</span> <span class="n">メトロポリス</span><span class="err">・</span><span class="n">ヘイスティングス法</span><span class="p">(</span><span class="n">Metropolis</span><span class="o">-</span><span class="n">Hastings</span><span class="p">):</span> <span class="n">提案分布から新しいサンプルを生成し</span><span class="err">、</span><span class="n">受け入れるかどうかを確率的に決定する方法</span><span class="err">。</span><span class="n">提案分布の選択が重要</span><span class="err">。</span>
-<span class="o">-</span> <span class="n">ハミルトニアンモンテカルロ</span><span class="p">(</span><span class="n">Hamiltonian</span> <span class="n">Monte</span> <span class="n">Carlo</span><span class="p">;</span> <span class="n">HMC</span><span class="p">):</span> <span class="n">物理学のハミルトン力学に基づく方法で</span><span class="err">、</span><span class="n">効率的に高次元空間を探索できる</span><span class="err">。</span><span class="n">勾配情報を利用するため</span><span class="err">、</span><span class="n">計算コストが高い場合がある</span><span class="err">。</span>
-<span class="o">-</span> <span class="n">レプリカ交換法</span><span class="p">(</span><span class="n">Replica</span> <span class="n">Exchange</span> <span class="n">MCMC</span><span class="p">;</span> <span class="n">REMC</span><span class="p">)</span> <span class="n">あるいはparallel</span> <span class="n">tempering</span><span class="p">:</span> <span class="n">複数のマルコフ連鎖を異なるスケール因子</span><span class="p">(</span><span class="n">温度とも呼ばれる</span><span class="p">)</span><span class="n">で滑らかにしながら</span><span class="err">、</span><span class="n">レプリカ間でサンプルを交換する方法</span><span class="err">。</span><span class="n">多峰性分布のサンプリングに有効</span><span class="err">。</span>
-<span class="o">-</span> <span class="n">Affine</span> <span class="n">Invariant</span> <span class="n">MCMC</span><span class="p">:</span> <span class="n">複数のサンプルを同時に更新する方法で</span><span class="err">、</span><span class="n">アフィン変換に対して不変な性質を持つ</span><span class="err">。</span><span class="n">高次元空間でのサンプリングに適している</span><span class="err">。</span><span class="n">特に並列性が優れているほか</span><span class="err">、</span><span class="n">職人芸による提案分布の調整が不要であることが利点である</span><span class="err">。</span>
-<span class="n">最初に提案されたのは</span> <span class="n">Goodman</span> <span class="o">&amp;</span> <span class="n">Weare</span> <span class="p">(</span><span class="mi">2010</span><span class="p">)</span> <span class="n">で</span><span class="err">、</span><span class="n">天文学の分野で広く用いられているemcee</span> <span class="p">(</span><span class="n">Foreman</span><span class="o">-</span><span class="n">Mackey</span> <span class="n">et</span> <span class="n">al</span><span class="o">.</span><span class="p">,</span> <span class="mi">2013</span><span class="p">)</span> <span class="n">はこのアルゴリズムを実装したPythonライブラリである</span><span class="err">。</span>
-
-<span class="n">筆者自身も</span><span class="err">、</span><span class="n">大学院生の頃</span><span class="err">〜</span><span class="n">大学教員になりたての頃に</span><span class="err">、</span><span class="n">物理学の文脈で近似推論</span><span class="o">/</span><span class="n">MCMCを用いた事後分布推定の研究を行っていた</span><span class="err">。</span>
-<span class="n">その頃の経験則にはなるが</span><span class="err">、</span><span class="n">効率的なサンプリングを実現するにはデータの特性をよく理解し</span><span class="err">、</span><span class="n">適切なアルゴリズムとパラメータ設定を選ぶことが重要であり</span><span class="err">、</span><span class="n">試行錯誤や</span><span class="err">、</span><span class="n">適応的にパラメータを調整する手法が有効であると感じている</span><span class="err">。</span>
-<span class="n">また</span><span class="err">、</span><span class="n">次元</span><span class="p">(</span><span class="err">≒</span><span class="n">パラメータ数</span><span class="p">)</span><span class="n">の小さい領域では</span><span class="err">、</span><span class="n">HMCが比較的安定して収束したサンプリングを与えることが多いが</span><span class="err">、</span><span class="n">勾配の計算が高コストになる状況ではあまり適さず</span><span class="err">、</span><span class="n">複数のworkerで並列に動作する方法</span><span class="err">、</span><span class="n">とくにAffine</span> <span class="n">Invariant</span> <span class="n">MCMCが有効であることが多い印象を持っている</span><span class="err">。</span>
-</pre></div>
-</div>
-</div>
-</div>
+<section id="clubsuit">
+<h3><span class="section-number">3.6.1. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> 事後分布からのサンプリング<a class="headerlink" href="#clubsuit" title="Link to this heading">#</a></h3>
+<p>事後分布に従うサンプルを生成するための方法としては、大別すると、近似推論(≒事後分布を性質の良い分布で近似する)と、MCMC(Markov Chain Monte Carlo; マルコフ連鎖モンテカルロ法)がある。
+事前分布及び尤度を性質の良い(共役分布; conjugate distribution)で選ぶと、事後分布も特定の分布族に属することが保証され、解析的に計算できる場合がある。
+近似推論では、こうした仮定を積極的に用いて、事後分布を計算しやすい分布で近似する。</p>
+<p>一方で、MCMCは、事後分布からのサンプルを生成するための確率的なアルゴリズムであり、事後分布の形状に関する仮定を必要としない。
+十分に多くのサンプルを&quot;きちんと&quot;生成できれば、事後分布を反映したサンプルを得ることができるが、実際にはサンプルの自己相関や収束性などに注意が必要であり、適切なアルゴリズムの選択とパラメータ設定が重要である。
+とくに多次元の分布からサンプルを生成する場合は、サンプルの自己相関が高くなりやすく、効率的なサンプリングが難しいことが多い。
+代表的なMCMCアルゴリズムには以下のようなものがある:</p>
+<ul class="simple">
+<li><p>ギブスサンプリング(Gibbs sampling): 各変数を順番に更新する方法。条件付き分布が計算しやすい場合に有効。</p></li>
+<li><p>メトロポリス・ヘイスティングス法(Metropolis-Hastings): 提案分布から新しいサンプルを生成し、受け入れるかどうかを確率的に決定する方法。提案分布の選択が重要。</p></li>
+<li><p>ハミルトニアンモンテカルロ(Hamiltonian Monte Carlo; HMC): 物理学のハミルトン力学に基づく方法で、効率的に高次元空間を探索できる。勾配情報を利用するため、計算コストが高い場合がある。</p></li>
+<li><p>レプリカ交換法(Replica Exchange MCMC; REMC) あるいはparallel tempering: 複数のマルコフ連鎖を異なるスケール因子(温度とも呼ばれる)で滑らかにしながら、レプリカ間でサンプルを交換する方法。多峰性分布のサンプリングに有効。</p></li>
+<li><p>Affine Invariant MCMC: 複数のサンプルを同時に更新する方法で、アフィン変換に対して不変な性質を持つ。高次元空間でのサンプリングに適している。特に並列性が優れているほか、職人芸による提案分布の調整が不要であることが利点である。
+最初に提案されたのは Goodman &amp; Weare (2010) で、天文学の分野で広く用いられているemcee (Foreman-Mackey et al., 2013) はこのアルゴリズムを実装したPythonライブラリである。</p></li>
+</ul>
+<p>筆者自身も、大学院生の頃〜大学教員になりたての頃に、物理学の文脈で近似推論/MCMCを用いた事後分布推定の研究を行っていた。
+その頃の経験則にはなるが、効率的なサンプリングを実現するにはデータの特性をよく理解し、適切なアルゴリズムとパラメータ設定を選ぶことが重要であり、試行錯誤や、適応的にパラメータを調整する手法が有効であると感じている。
+また、次元(≒パラメータ数)の小さい領域では、HMCが比較的安定して収束したサンプリングを与えることが多いが、勾配の計算が高コストになる状況ではあまり適さず、複数のworkerで並列に動作する方法、とくにAffine Invariant MCMCが有効であることが多い印象を持っている。</p>
+</section>
 </section>
 <section id="id9">
 <h2><span class="section-number">3.7. </span>多次元ガウス分布の最尤推定<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
@@ -978,8 +975,8 @@ L(\boldsymbol{\mu}, \boldsymbol{\Sigma})
 \]</div>
 <p>から、上の式が従う。</p>
 </section>
-<section id="clubsuit">
-<h2><span class="section-number">3.8. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> 多次元正規分布に関するベイズの定理<a class="headerlink" href="#clubsuit" title="Link to this heading">#</a></h2>
+<section id="id10">
+<h2><span class="section-number">3.8. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> 多次元正規分布に関するベイズの定理<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
 <p>多次元正規分布に従う確率変数に関するベイズの定理で度々登場する例を紹介しておく。
 ある変数<span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^D\)</span>が、平均ベクトル<span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span>、共分散行列<span class="math notranslate nohighlight">\(\Sigma\)</span> (あるいは精度行列<span class="math notranslate nohighlight">\(\Lambda = \Sigma^{-1}\)</span>)を持つ多次元正規分布に従うとする:</p>
 <div class="math notranslate nohighlight">
@@ -1004,8 +1001,8 @@ p(\mathbf{x} | \mathbf{y}) &amp; = \mathcal{N}(\mathbf{x}| \boldsymbol{\Sigma} \
 \end{split}\]</div>
 <p>これは、多次元正規分布に従う確率変数の線形変換もまた多次元正規分布に従うことを表している。</p>
 </section>
-<section id="id10">
-<h2><span class="section-number">3.9. </span>学習の振り返りのためのチェックリスト<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<section id="id11">
+<h2><span class="section-number">3.9. </span>学習の振り返りのためのチェックリスト<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
 <p>▢ 　条件付き確率とベイズの定理を説明できる<br />
 ▢ 　確率密度関数の定義と性質を説明できる<br />
 ▢ 　正規分布の性質(1次元・多次元)を説明できる<br />
@@ -1086,10 +1083,13 @@ p(\mathbf{x} | \mathbf{y}) &amp; = \mathcal{N}(\mathbf{x}| \boldsymbol{\Sigma} \
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">3.3. 確率密度関数</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3.4. ガウス分布</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.5. ガウス分布と機械学習の関係</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">3.6. 確率分布のベイズ推定</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">3.6. 確率分布のベイズ推定</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">3.6.1. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 事後分布からのサンプリング</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">3.7. 多次元ガウス分布の最尤推定</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">3.8. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 多次元正規分布に関するベイズの定理</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">3.9. 学習の振り返りのためのチェックリスト</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">3.8. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 多次元正規分布に関するベイズの定理</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">3.9. 学習の振り返りのためのチェックリスト</a></li>
 </ul>
   </nav></div>
 

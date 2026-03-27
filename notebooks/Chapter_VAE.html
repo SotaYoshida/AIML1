@@ -448,22 +448,24 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="vae">
 <h1><span class="section-number">16. </span>変分オートエンコーダ (VAE)<a class="headerlink" href="#vae" title="Link to this heading">#</a></h1>
 <p>この章では、変分オートエンコーダ（VAE: Variational Autoencoder）について説明する。
-VAEは、データの潜在的な表現を学習するために提案されたモデルであるが、近年では生成モデルの文脈でも非常に重要な役割を果たしている。
-混合ガウスモデルの章で導入したKLダイバージェンスやELBOの概念はVAEの理解にも不可欠であるため、重複する部分もあるが、改めて説明を行う。</p>
-<p>多数の要素が絡み合うため、VAEの理解には時間がかかるかもしれないが、焦らず一歩一歩進めていこう。</p>
+VAEは、現代的な生成モデルを理解する上でも重要なモデルである。</p>
+<p>混合ガウスモデルの章で導入したKLダイバージェンスやELBOの概念はVAEの理解にも不可欠であるため、重複する部分もあるが重要なポイントを押さえながら説明していく。</p>
 <section id="id1">
 <h2><span class="section-number">16.1. </span>生成モデルの考え方<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <p>何らかのデータを生成するモデルのことをざっくりと <strong>生成モデル (Generative Model)</strong> と呼ぶことにしよう。</p>
+<p>我々が普段目にする画像や音声、テキストなどのデータは、現実世界の様々な要素が複雑に絡み合って生成されている。
+その背景には確率分布(生成分布)を持っていて、その分布からサンプリングされたデータが我々の目に入っていると考えることができる。
+もちろん、そうした生成分布を直接観測することはできないが、生成モデルはその生成分布を学習し、そこから新たなデータを生成することを目指している。</p>
 <p>以下では、そんな生成モデルで実現したいタスクが「様々な犬の写真を生成する」であると仮定して説明を進める。</p>
 <p>現実世界での犬の写真データは、非常に多様であり犬種や背景、個体ごとの違いなどがある。
 しかし、犬の写真データをピクセル値として扱うと、それらは非常に高次元の空間で好き勝手バラバラに向いている訳ではない。
 なぜなら、砂嵐のような画像は完全なランダム値であり、ピクセル値の空間では等方的に分布するだろうし、ラーメンの写真を大量に集めるとそれらはやはり、犬の写真が持つピクセル値の分布とは異なっているであろう。</p>
 <p>ここで、もし、犬の写真データがもつ共通の特徴を捉えた低次元空間での潜在変数が存在すると仮定する。
 もとのピクセル値が <span class="math notranslate nohighlight">\(D\)</span> 次元のベクトルによって表されるとすると、その潜在変数は <span class="math notranslate nohighlight">\(d\)</span> 次元 (<span class="math notranslate nohighlight">\(d \ll D\)</span>) のベクトルで表されるとする。</p>
-<p>加えて、その潜在変数を&quot;種&quot;に、犬の写真データを生成してくれるモデル(例えばニューラルネットワーク)があるとする。</p>
-<p>すると、その潜在空間の中で <span class="math notranslate nohighlight">\(z_1, z_2, \ldots\)</span> といった潜在変数をサンプリングし、それらの種をニューラルネットワークに入力することで、様々な犬の写真データ <span class="math notranslate nohighlight">\(x_1, x_2, \ldots\)</span> を生成できることになる。</p>
-<p>犬の部分を、より広い集合である「画像データ」に置き換えれば、生成モデルの役割は、「現実世界に存在するような画像データを生成すること」にすることもできる。これが潜在変数を用いた生成モデルの基本的な考え方である。</p>
-<p>実際にどのようにそのような潜在空間を見つけていくのか、また、生成モデルをどのように学習していくのかが肝になるが、まずは、VAEでのデータ生成の流れを説明しよう。</p>
+<p>加えて、その潜在変数を&quot;種&quot;に、犬の写真データを生成してくれるモデル(例えばニューラルネットワーク)があるとする。
+その潜在空間の中で <span class="math notranslate nohighlight">\(z_1, z_2, \ldots\)</span> といった潜在変数をサンプリングし、それらの種をニューラルネットワークに入力することで、様々な犬の写真データ <span class="math notranslate nohighlight">\(x_1, x_2, \ldots\)</span> を生成できることになる。</p>
+<p>犬の部分を、より広い集合である「画像データ」に置き換えれば、生成モデルの役割は「現実世界に存在するような画像データを生成すること」にすることもできる。これが潜在変数を用いた生成モデルの基本的な考え方である。</p>
+<p>実際にどのようにそのような潜在空間を見つけていくのか、また、生成モデルをどのように学習していくのかが肝になるが、この章ではVAEに注目してデータ生成の流れを説明しよう。</p>
 </section>
 <section id="id2">
 <h2><span class="section-number">16.2. </span>VAEによるデータ生成の流れ<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
@@ -480,7 +482,8 @@ VAEでは、潜在変数の分布を近似するために変分推論を使用�
 <li><p>潜在変数のサンプリング: 潜在変数 <span class="math notranslate nohighlight">\(z\)</span> を事前分布 <span class="math notranslate nohighlight">\(p(z)\)</span> (通常、正規分布)からサンプリングする。</p></li>
 <li><p>観測変数の生成: 潜在変数 <span class="math notranslate nohighlight">\(z\)</span> から観測変数 <span class="math notranslate nohighlight">\(x\)</span> を生成するために、条件付き分布 <span class="math notranslate nohighlight">\(p_\theta(x|z)\)</span> (例: ニューラルネットワークの出力+正規分布)を用いる。</p></li>
 </ol>
-<img src="https://raw.githubusercontent.com/SotaYoshida/AIML1/refs/heads/main/notebooks/pic/VAE_gen_sketch.png" width="600">
+<a class="reference internal image-reference" href="../_images/VAE_gen_sketch.png"><img alt="../_images/VAE_gen_sketch.png" class="align-center" src="../_images/VAE_gen_sketch.png" style="width: 500px;" />
+</a>
 <p>単一の潜在変数ではなく、その確率分布を考えることで、より多様なデータ生成が可能になる。
 また、ニューラルネットワークの出力値は入力値に対して確定的な値であるが、VAEではニューラルネットワークの出力を平均値とし、分散を持たせることで、同じ潜在変数からでも異なる観測変数が生成されるようにしているとも理解できる。</p>
 <div class="math notranslate nohighlight">
@@ -497,7 +500,8 @@ p_{\theta}(x|z) = \mathcal{N}\left(x; \hat{x}(z; \theta), I\right)
 <p>VAEでは、観測変数 <span class="math notranslate nohighlight">\(x\)</span> のモデル分布 <span class="math notranslate nohighlight">\(p_{\theta}(x)\)</span> を与えられたデータセット <span class="math notranslate nohighlight">\(\{x^{(i)}\}_{i=1}^{N}\)</span>に対して、モデルを特徴づけるパラメータ <span class="math notranslate nohighlight">\(\theta\)</span> を調整することで、データセットの分布をよく表現するようにしてやる。
 (モデルが単なる正規分布であれば、<span class="math notranslate nohighlight">\(\theta\)</span>は平均や分散だし、ニューラルネットワークであれば、<span class="math notranslate nohighlight">\(\theta\)</span>はその重みやバイアスになる。)
 下に、模式図を示す。</p>
-<img src="https://raw.githubusercontent.com/SotaYoshida/AIML1/refs/heads/main/notebooks/pic/likelihood.png" width="600">
+<a class="reference internal image-reference" href="../_images/likelihood.png"><img alt="../_images/likelihood.png" class="align-center" src="../_images/likelihood.png" style="width: 500px;" />
+</a>
 <p>これは、以下の対数尤度を最大化することと同値である。</p>
 <div class="math notranslate nohighlight" id="equation-eq-vae-loglikelihood">
 <span class="eqno">(16.1)<a class="headerlink" href="#equation-eq-vae-loglikelihood" title="Link to this equation">#</a></span>\[\begin{split}
@@ -552,10 +556,11 @@ p_{\theta}(x^{(i)}) = \int p_{\theta}(x^{(i)}|z) p(z) dz
 <p>しかしながら、大きなデータセットに対しては、各データ点ごとに異なるパラメータを持つのは非効率・非現実的である。
 そこで、近似分布のパラメータ <span class="math notranslate nohighlight">\(\phi\)</span> 自体もニューラルネットワークを用いて入力データ <span class="math notranslate nohighlight">\(x^{(i)}\)</span> から計算するようにする。</p>
 <p>これは、観測変数 <span class="math notranslate nohighlight">\(x\)</span> から潜在変数 <span class="math notranslate nohighlight">\(z\)</span> へのマッピングを学習するエンコーダ (Encoder)を導入することを意味している。
-今度はencoderのパラメータを <span class="math notranslate nohighlight">\(\phi\)</span> と表記しよう。すると、近似分布 <span class="math notranslate nohighlight">\(q(z)\)</span> は、ニューラルネットワークの出力 <span class="math notranslate nohighlight">\(\phi(x^{(i)}; \phi)\)</span> によって与えられることになる。</p>
-<p>図にすると以下のようになる。</p>
-<img src="https://raw.githubusercontent.com/SotaYoshida/AIML1/refs/heads/main/notebooks/pic/encoder_vae.png" width="500">
-<p>encoderによって生成される近似分布が正規分布であるとすると、<span class="math notranslate nohighlight">\(\Sigma\)</span>を生成することも考えられなくはないが、計算コストの観点から、<span class="math notranslate nohighlight">\(\Sigma\)</span>を対角行列とする(独立な各次元の分散を生成させる)のが一般的であろう。</p>
+今度はencoderのパラメータを <span class="math notranslate nohighlight">\(\phi\)</span> と表記しよう。すると、近似分布 <span class="math notranslate nohighlight">\(q(z)\)</span> は、ニューラルネットワークの出力 <span class="math notranslate nohighlight">\(\phi(x^{(i)}; \phi)\)</span> によって与えられることになる。
+図にすると以下のようになる。</p>
+<a class="reference internal image-reference" href="../_images/encoder_vae.png"><img alt="../_images/encoder_vae.png" class="align-center" src="../_images/encoder_vae.png" style="width: 500px;" />
+</a>
+<p>encoderによって生成される近似分布が正規分布であるとすると、非対角成分を持つ分散行列 <span class="math notranslate nohighlight">\(\Sigma\)</span> を生成することも考えられなくはないが、計算コストの観点から、<span class="math notranslate nohighlight">\(\Sigma\)</span>を対角行列とする(独立な各次元の分散を生成させる)のが一般的と思われる。</p>
 </section>
 <section id="elbo">
 <h2><span class="section-number">16.5. </span>ELBOの計算<a class="headerlink" href="#elbo" title="Link to this heading">#</a></h2>
@@ -593,7 +598,8 @@ D_{KL}(q_{\phi}(z|x) || p(z)) &amp; = \frac{1}{2} \sum_{j=1}^{d} \left( \sigma_{
 <section id="id5">
 <h2><span class="section-number">16.6. </span>ELBOの最大化と変数変換トリック<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
 <p>ここまでで、VAEの基本的な構成要素が出揃ってきた。</p>
-<img src="https://raw.githubusercontent.com/SotaYoshida/AIML1/refs/heads/main/notebooks/pic/VAE_sketch.png" width="800">
+<a class="reference internal image-reference" href="../_images/VAE_sketch.png"><img alt="../_images/VAE_sketch.png" class="align-center" src="../_images/VAE_sketch.png" style="width: 750px;" />
+</a>
 <p>ELBOを最大化するためには、ELBOの勾配を計算し、その勾配に基づいてEncoder/Decoderのパラメータ <span class="math notranslate nohighlight">\(\theta\)</span> と <span class="math notranslate nohighlight">\(\phi\)</span> を更新していく必要がある。</p>
 <p>しかしながら、ELBOの第１項は、近似分布 <span class="math notranslate nohighlight">\(q_{\phi}(z|x)\)</span> からサンプリングした潜在変数 <span class="math notranslate nohighlight">\(z\)</span> に依存しているため、直接的に <span class="math notranslate nohighlight">\(\phi\)</span> に関する勾配を計算することが難しい。
 そこで、<strong>変数変換トリック (Reparameterization Trick)</strong> と呼ばれる手法を用いることで、勾配の計算を可能にする。</p>
@@ -617,9 +623,7 @@ z = \mu_{\phi}(x) + \sigma_{\phi}(x) \odot \epsilon \quad \mathrm{where} \quad \
 <span class="expanded">Hide code cell source</span>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#MNISTデータに対するVAEの実装例</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch.optim</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">optim</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">torchvision</span><span class="w"> </span><span class="kn">import</span> <span class="n">datasets</span><span class="p">,</span> <span class="n">transforms</span>

@@ -504,7 +504,7 @@ Q &amp; : \mathcal{N}(x | \mu', \sigma'^2)
 </section>
 <section id="em">
 <h2><span class="section-number">15.2. </span>EMアルゴリズム<a class="headerlink" href="#em" title="Link to this heading">#</a></h2>
-<p>EMアルゴリズムは、EステップとMステップを交互に繰り返すことで、隠れ変数を含む確率モデルのパラメータを推定する手法である。
+<p>EMアルゴリズムは、EステップとMステップと呼ばれる操作を交互に繰り返すことで、隠れ変数を含む確率モデルのパラメータを推定する手法である。
 混合ガウスモデルだけでなく、<strong>潜在変数(latent variable)</strong> を含む様々な確率モデルに適用できる。</p>
 <p>まずは一般論からスタートして、徐々に混合ガウスモデルに話を戻す流れで説明する。</p>
 <section id="id1">
@@ -587,7 +587,7 @@ EMアルゴリズムは、以下の2つのステップを交互に繰り返す�
 <h2><span class="section-number">15.4. </span>EMアルゴリズムを用いた混合ガウスモデルのパラメータ推定<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <p>初めに、各ガウス分布のパラメータを <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k\)</span> (平均)、<span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}_k\)</span> (共分散行列)、および混合係数 <span class="math notranslate nohighlight">\(\pi_k\)</span> (各ガウス分布の寄与度) とする。</p>
 <ul>
-<li><p><strong>Eステップ</strong>: 現在のパラメータを用いて、各データ点<span class="math notranslate nohighlight">\(n\)</span>がどのガウス分布<span class="math notranslate nohighlight">\(k\)</span>に属するかの確率を計算する。</p>
+<li><p><strong>Eステップ (Expectation Step)</strong>: 現在のパラメータを用いて、各データ点<span class="math notranslate nohighlight">\(n\)</span>がどのガウス分布<span class="math notranslate nohighlight">\(k\)</span>に属するかの確率を計算する。</p>
 <div class="math notranslate nohighlight">
 \[
     r_{nk} = \frac{\pi_k \mathcal{N}(\boldsymbol{x}_n | \boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k)}{
@@ -595,7 +595,7 @@ EMアルゴリズムは、以下の2つのステップを交互に繰り返す�
     }
     \]</div>
 </li>
-<li><p><strong>Mステップ</strong>: Eステップで得られた確率<span class="math notranslate nohighlight">\(r\)</span>を用いて、ガウス分布のパラメータ <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k, \pi_k\)</span> を更新する。</p>
+<li><p><strong>Mステップ (Maximization Step)</strong>: Eステップで得られた確率<span class="math notranslate nohighlight">\(r\)</span>を用いて、ガウス分布のパラメータ <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k, \pi_k\)</span> を更新する。</p>
 <div class="math notranslate nohighlight">
 \[
     \boldsymbol{\mu}_k = \frac{1}{N_k} \sum_n r_{nk} \boldsymbol{x}_n, \quad
