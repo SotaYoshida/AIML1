@@ -460,9 +460,14 @@ VAEは、現代的な生成モデルを理解する上でも重要なモデル�
 <p>現実世界での犬の写真データは、非常に多様であり犬種や背景、個体ごとの違いなどがある。
 しかし、犬の写真データをピクセル値として扱うと、それらは非常に高次元の空間で好き勝手バラバラに向いている訳ではない。
 なぜなら、砂嵐のような画像は完全なランダム値であり、ピクセル値の空間では等方的に分布するだろうし、ラーメンの写真を大量に集めるとそれらはやはり、犬の写真が持つピクセル値の分布とは異なっているであろう。</p>
-<p>ここで、もし、犬の写真データがもつ共通の特徴を捉えた低次元空間での潜在変数が存在すると仮定する。
-もとのピクセル値が <span class="math notranslate nohighlight">\(D\)</span> 次元のベクトルによって表されるとすると、その潜在変数は <span class="math notranslate nohighlight">\(d\)</span> 次元 (<span class="math notranslate nohighlight">\(d \ll D\)</span>) のベクトルで表されるとする。</p>
-<p>加えて、その潜在変数を&quot;種&quot;に、犬の写真データを生成してくれるモデル(例えばニューラルネットワーク)があるとする。
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p><span class="math notranslate nohighlight">\(d \ll D\)</span>とするのは直感的には自然である。というのも特に高次元データ(例えば画像データ)では直接データ分布をモデル化して構造を捉えるのが難しい。
+そこで、低次元の潜在変数を導入することで、データの構造を捉えやすくすることができると期待される。</p>
+</aside>
+<p>ここで、もし、犬の写真データがもつ共通の特徴を捉えた低次元空間での潜在変数<span class="math notranslate nohighlight">\(z\)</span>が存在すると仮定する。
+もとのピクセル値が <span class="math notranslate nohighlight">\(D\)</span> 次元のベクトルによって表されるとすると、その潜在変数は <span class="math notranslate nohighlight">\(d\)</span> 次元 (<span class="math notranslate nohighlight">\(d \ll D\)</span>) のベクトルで表されるとする。
+加えて、その潜在変数を&quot;種&quot;に、犬の写真データを生成してくれるモデル(例えばニューラルネットワーク)があるとする。
 その潜在空間の中で <span class="math notranslate nohighlight">\(z_1, z_2, \ldots\)</span> といった潜在変数をサンプリングし、それらの種をニューラルネットワークに入力することで、様々な犬の写真データ <span class="math notranslate nohighlight">\(x_1, x_2, \ldots\)</span> を生成できることになる。</p>
 <p>犬の部分を、より広い集合である「画像データ」に置き換えれば、生成モデルの役割は「現実世界に存在するような画像データを生成すること」にすることもできる。これが潜在変数を用いた生成モデルの基本的な考え方である。</p>
 <p>実際にどのようにそのような潜在空間を見つけていくのか、また、生成モデルをどのように学習していくのかが肝になるが、この章ではVAEに注目してデータ生成の流れを説明しよう。</p>
