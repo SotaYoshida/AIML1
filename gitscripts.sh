@@ -6,5 +6,5 @@ git push -f origin main
 
 jb build --all .
 git checkout main
-#ghp-import -n -p -f _build/html
-#rm -r _build
+ghp-import -n -p -f _build/html
+rm -r _build
