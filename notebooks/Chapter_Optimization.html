@@ -440,6 +440,11 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">12.4. 二階微分を用いる方法</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">12.5. 二次元損失関数の最適化</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">12.6. 勾配消失を避けるための種々の工夫</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">12.6.1. 正規化</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">12.6.2. 残差接続</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -772,6 +777,65 @@ f(x, y) &amp; = \frac{1}{2}
 </div>
 </div>
 </section>
+<section id="id6">
+<h2><span class="section-number">12.6. </span>勾配消失を避けるための種々の工夫<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<p>2010年代〜2020年代における深層学習の発展に伴い、勾配消失問題を避けるための様々な工夫が提案されてきた。
+その中には、前述のような最適化手法の改良や活性化関数の提案も含まれるが、以下では、より現代的なアーキテクチャで採用されている方法をかいつまんで紹介する。</p>
+<section id="id7">
+<h3><span class="section-number">12.6.1. </span>正規化<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<p>機械学習における <strong>正規化 (Normalization)</strong> は、複数の文脈で用いられる用語で、</p>
+<ul class="simple">
+<li><p>データの前処理としての正規化: 特徴量を特定のスケールに変換すること(例えば、平均0、分散1にするなど)。</p></li>
+<li><p>バッチ正規化 (Batch Normalization): ネットワークの中間層の出力を正規化する手法。</p></li>
+<li><p>レイヤー正規化 (Layer Normalization): バッチ正規化の代わりに、各サンプルの特徴量を正規化する手法。</p></li>
+</ul>
+<p>などがある。</p>
+<p>バッチ正規化は、2015年にIoffeとSzegedyによって提案された手法で、ネットワークの中間層の出力をミニバッチ単位で正規化する方法である。学習を安定化させ、勾配消失問題を緩和する効果があることが実用的にわかっている。</p>
+<p>ただし、バッチ正規化はミニバッチのサイズに依存するため、特に小さなバッチサイズでの学習では効果が減少することがある。そこで、各データごとに、層ごとに正規化するレイヤー正規化が提案され、Transformerなどのアーキテクチャで広く採用されている。</p>
+</section>
+<section id="id8">
+<h3><span class="section-number">12.6.2. </span>残差接続<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>より広いクラスとして、<strong>スキップ接続(Skip Connection)</strong> や skip-layer connection などとも呼ばれることがある。</p>
+</aside>
+<p>勾配消失問題を緩和するための工夫としてよく用いられるのが、<strong>残差接続(Residual Connection)</strong> と呼ばれる手法である。He et al.によって2015年に提案されたResNet(Residual Network)の中で導入されたもので、深いネットワークの訓練を可能にするための重要な技術である。<a class="reference external" href="https://arxiv.org/abs/1512.03385">arXiv:1512.03385</a></p>
+<p>その基本的なアイデアは、ある層の出力に、入力を直接加えることである。<br />
+と、言われてもイメージが湧きにくいと思うので、図で説明しよう。</p>
+<p>...図の作成中</p>
+<p>ある層が入力<span class="math notranslate nohighlight">\(x^{(t)}\)</span>を受け取り、通常のネットワークではこの入力に対して何らかの変換を行い、出力<span class="math notranslate nohighlight">\(F(x^{(t)}, w^{(t)})\)</span>を生成する。
+残差接続を用いる場合、出力は<span class="math notranslate nohighlight">\(F(x^{(t)}, w^{(t)}) + x^{(t)}\)</span>となる。
+このようにすることで、ネットワークは、もし<span class="math notranslate nohighlight">\(F(x^{(t)}, w^{(t)})\)</span>がゼロに近い値を出力する場合でも、入力<span class="math notranslate nohighlight">\(x^{(t)}\)</span>が直接出力に伝わるため、勾配が消失することを防ぐことができる。</p>
+<p>もう少し具体的に言うと、与えられたデータの持つ構造に対して、仮に層が冗長であったとしても、その層に恒等写像としての役割を持たせることができるため、ネットワーク全体の表現力を損なうことなく、深いネットワークの訓練が可能になる。</p>
+<p>ややいい加減な説明だが、関数の振る舞いを予測する際、その出力値そのものを予測するのではなく、入力(例えば初期値)からの変化量を予測するようなイメージである。例えば、このようなケースは、常微分方程式の数値解法を用いて関数の振る舞いを予測する際などに類似している。
+一例として、常微分方程式の数値解法の一つであるオイラー法を考えてみよう。
+オイラー法では、ある関数<span class="math notranslate nohighlight">\(f(x(t))\)</span>の微分方程式</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{dx}{dt} = f(x(t))
+\]</div>
+<p>を数値的に解くために、次のような更新式を用いる。</p>
+<div class="math notranslate nohighlight">
+\[
+x_{t+1} = x_t + f(x_t) \Delta t
+\]</div>
+<p>この更新式は、現在の状態<span class="math notranslate nohighlight">\(x_t\)</span>に対して、関数<span class="math notranslate nohighlight">\(f(x_t)\)</span>が示す変化量を加える形になっている。
+残差接続の場合に、ある層の入力が<span class="math notranslate nohighlight">\(x_t\)</span>で、その層が出力する変化量が<span class="math notranslate nohighlight">\(F(x_t)\)</span>であるとすると、次の層への出力は<span class="math notranslate nohighlight">\(x_{t+1} = x_t + F(x_t)\)</span>となる。</p>
+<p>このように、関数の振る舞いを予測する際に、入力からの変化量を予測するアプローチは、残差接続の考え方と類似していると言える。</p>
+<p>層の数を無限大に、ステップ幅を無限小に近づけると、ネットワークによる関数の表現は常微分方程式の形になる。
+このことを利用したアーキテクチャとして、<strong>Neural ODE(Ordinary Differential Equation)</strong> と呼ばれるアイデアが提案されている。<a class="reference external" href="https://arxiv.org/abs/1806.07366">arXiv:1806.07366</a></p>
+<div class="math notranslate nohighlight">
+\[
+\frac{dx(t)}{dt} = f(x(t), t, \theta)
+\]</div>
+<p>を解いて、ある時刻<span class="math notranslate nohighlight">\(T\)</span>における状態<span class="math notranslate nohighlight">\(x(T)\)</span>を予測する問題に帰着させる。</p>
+<div class="math notranslate nohighlight">
+\[
+x(T) = x(0) + \int_0^T f(x(t), t, \theta) dt
+\]</div>
+<p>Neural ODEは、メモリ効率が高く、連続的な時間表現を可能にする(時間間隔が不規則な時系列データとの親和性)などの利点がある一方で、常微分方程式のstiffnessの問題や学習の安定性の問題などが見られるケースもある。</p>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -851,6 +915,11 @@ f(x, y) &amp; = \frac{1}{2}
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">12.4. 二階微分を用いる方法</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">12.5. 二次元損失関数の最適化</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">12.6. 勾配消失を避けるための種々の工夫</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">12.6.1. 正規化</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">12.6.2. 残差接続</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
