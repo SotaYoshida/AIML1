@@ -42,6 +42,6 @@ parts:
   - file: notebooks/Chapter_PCA
   - file: notebooks/Chapter_GMM
   - file: notebooks/Chapter_VAE
-  #- file: notebooks/Chapter_DiffusionModels
-  #- file: notebooks/Chapter_Transformers
+  - file: notebooks/Chapter_DiffusionModels
+  - file: notebooks/Chapter_Transformers
   - file: notebooks/Chapter_KAN
