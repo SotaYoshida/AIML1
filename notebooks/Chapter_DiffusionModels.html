@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>拡散モデル &#8212; AI・機械学習論1/機械学習論</title>
+    <title>17. 拡散モデル &#8212; AI・機械学習論1/機械学習論</title>
   
   
   
@@ -68,6 +68,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/Chapter_DiffusionModels';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="18. Transformers" href="Chapter_Transformers.html" />
+    <link rel="prev" title="16. 変分オートエンコーダ (VAE)" href="Chapter_VAE.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="ja"/>
   </head>
@@ -129,8 +131,6 @@
     <div class="bd-container__inner bd-page-width">
       
       
-      
-        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -219,11 +219,13 @@
 <li class="toctree-l1"><a class="reference internal" href="Chapter_Model_evaluation.html">13. モデルの選択・評価・過学習・正則化</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">発展的な話題</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Chapter_PCA.html">14. 主成分分析</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_GMM.html">15. 混合ガウスモデル(Gaussian Mixture Model, GMM)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Chapter_VAE.html">16. 変分オートエンコーダ (VAE)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Chapter_KAN.html">17. KAN: Kolmogorov–Arnold Networks</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">17. 拡散モデル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_Transformers.html">18. Transformers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter_KAN.html">19. KAN: Kolmogorov–Arnold Networks</a></li>
 </ul>
 
     </div>
@@ -419,14 +421,14 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">拡散過程</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">逆過程</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-z-t-1-z-t-x"><span class="math notranslate nohighlight">\(q(z_{t-1} | z_t, x)\)</span>の導出</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">17.1. 拡散過程</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">17.2. 逆過程</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-z-t-1-z-t-x">17.2.1. <span class="math notranslate nohighlight">\(q(z_{t-1} | z_t, x)\)</span>の導出</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">デノイズ過程の学習</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">ノイズの予測</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mnist">MNISTを用いた実装例</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">17.3. デノイズ過程の学習</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">17.4. ノイズの予測</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mnist">17.5. MNISTを用いた実装例</a></li>
 </ul>
             </nav>
         </div>
@@ -439,7 +441,7 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1>拡散モデル<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<h1><span class="section-number">17. </span>拡散モデル<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
 <p>VAEの章では、データを再構成するよう学習したEncoder・Decoderを用いて、新しいデータを生成する方法を説明した。
 VAEを拡張して、潜在空間を多層化することもできるが、工夫をしないと、それぞれのEncoder/Decoderを各ステップで独立に作成することになり、学習が困難あるいは非現実的になってしまう。</p>
 <p><strong>拡散モデル(Diffusion Model)</strong> は、潜在空間にノイズを加える過程に対して、ノイズを除去する過程を学習することで、新しいデータを生成する手法である。</p>
@@ -452,7 +454,7 @@ VAEを拡張して、潜在空間を多層化することもできるが、工�
 </ul>
 <p>他の章とも同様、未知の確率分布を<span class="math notranslate nohighlight">\(p\)</span>、モデルの確率分布を<span class="math notranslate nohighlight">\(q\)</span>と表すことにする。</p>
 <section id="id2">
-<h2>拡散過程<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">17.1. </span>拡散過程<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <p>拡散過程は、セットアップさえ決めてしまえば、学習は必要のないステップになる。
 画像データなどのベクトルデータに対して、ノイズを加える過程は、以下のように定式化される。</p>
 <div class="math notranslate nohighlight">
@@ -580,7 +582,7 @@ q(z_t | z_0) &amp;= \mathcal{N}(z_t | \sqrt{\bar{\alpha}_t} z_0, (1 - \bar{\alph
 </div>
 </section>
 <section id="id3">
-<h2>逆過程<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">17.2. </span>逆過程<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <p>我々の目標は、ノイズから元のデータを復元する過程、あるいは以下の確率分布を学習することである。</p>
 <div class="math notranslate nohighlight">
 \[
@@ -636,10 +638,10 @@ p( z_{t-1} | z_t, w) = \mathcal{N}(z_{t-1} | \hat{m}_t(z_t, w), \sigma_t^2 I)
 <span class="math notranslate nohighlight">\(t\)</span>を入力に与えることで、時間ステップごとに別々のニューラルネットワークを用意する必要がなくなり、単一のネットワークで全てのステップに対応できるようにすることが狙いである。
 分散の値は、<span class="math notranslate nohighlight">\(q(z_{t-1} | z_t, x)\)</span>の分散<span class="math notranslate nohighlight">\(\sigma_t^2\)</span>と同じ値に固定することが多い。</p>
 <section id="q-z-t-1-z-t-x">
-<h3><span class="math notranslate nohighlight">\(q(z_{t-1} | z_t, x)\)</span>の導出<a class="headerlink" href="#q-z-t-1-z-t-x" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">17.2.1. </span><span class="math notranslate nohighlight">\(q(z_{t-1} | z_t, x)\)</span>の導出<a class="headerlink" href="#q-z-t-1-z-t-x" title="Link to this heading">#</a></h3>
 <p>求めたい条件付き分布は下記のようなものだった(マルコフ性を仮定しているため、<span class="math notranslate nohighlight">\(q(z_t | z_{t-1}, x) = q(z_t | z_{t-1})\)</span>であることに注意)。</p>
 <div class="math notranslate nohighlight" id="equation-eq-qzpost">
-<span class="eqno">()<a class="headerlink" href="#equation-eq-qzpost" title="Link to this equation">#</a></span>\[
+<span class="eqno">(17.1)<a class="headerlink" href="#equation-eq-qzpost" title="Link to this equation">#</a></span>\[
 \begin{align}
 q(z_{t-1} | z_t, x) = \frac{q(z_t | z_{t-1}) q(z_{t-1} | x) }{q(z_t | x)}
 \end{align}
@@ -652,7 +654,7 @@ q(z_t | z_{t-1}) &amp; = \mathcal{N}(z_t| \sqrt{1 - \beta_t} z_{t-1}, \beta_t I)
 q(z_t | x) &amp; = \mathcal{N}(z_t | \sqrt{\bar{\alpha}_t} x, (1 - \bar{\alpha}_t) I)
 \end{align}
 \end{split}\]</div>
-<p>これを用いると、上の式<a class="reference internal" href="#equation-eq-qzpost">()</a>は正規分布の積の形になる。</p>
+<p>これを用いると、上の式<a class="reference internal" href="#equation-eq-qzpost">(17.1)</a>は正規分布の積の形になる。</p>
 <div class="math notranslate nohighlight">
 \[
 \begin{align}
@@ -678,7 +680,7 @@ q(z_{t-1} | z_t, x) &amp; = \frac{\mathcal{N}(z_t| \sqrt{1 - \beta_t} z_{t-1}, \
 </section>
 </section>
 <section id="id4">
-<h2>デノイズ過程の学習<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">17.3. </span>デノイズ過程の学習<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
 <p>デノイズ過程の最適化のために、誤差関数を定義しなくてはならない。
 最も愚直な選択は、デノイズ過程の尤度を最大化することである。</p>
 <div class="math notranslate nohighlight">
@@ -699,7 +701,7 @@ KL(q(z_{1:T} | x) || p(z_{1:T} | x, w)) &amp; = \int q(z_{1:T} | x) \log \frac{q
 \end{split}\]</div>
 <p>ELBOを書き直して</p>
 <div class="math notranslate nohighlight" id="equation-eq-elbo-diffusion">
-<span class="eqno">()<a class="headerlink" href="#equation-eq-elbo-diffusion" title="Link to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(17.2)<a class="headerlink" href="#equation-eq-elbo-diffusion" title="Link to this equation">#</a></span>\[\begin{split}
 \begin{align}
 \mathcal{L}(w) &amp; = \mathbb{E}_q \left[ \ln \frac{p(z_t) (\prod_{t=1}^T p(z_{t-1} | z_t, w))}{q(z_1 | x) (\prod_{t=2}^T q(z_t | z_{t-1}, x))} \right] \nonumber \\
 &amp; = \mathbb{E}_q \left[ \ln p(z_T) + \sum_{t=2}^T \ln \frac{p(z_{t-1} | z_t, w)}{q(z_{t} | z_{t-1}, x)} - \ln q(z_1 | x) + \ln p(x|z_1, w) \right] 
@@ -712,7 +714,7 @@ KL(q(z_{1:T} | x) || p(z_{1:T} | x, w)) &amp; = \int q(z_{1:T} | x) \log \frac{q
 \mathbb{E}_q[\cdot] = \int q(z_{1:T} | x) \cdot dz_{1:T}
 \end{align}
 \]</div>
-<p>で与えられている。式<a class="reference internal" href="#equation-eq-elbo-diffusion">()</a>の第1,3項は、<span class="math notranslate nohighlight">\(w\)</span>に依存しないので、ELBOの最大化の文脈では無視できる。
+<p>で与えられている。式<a class="reference internal" href="#equation-eq-elbo-diffusion">(17.2)</a>の第1,3項は、<span class="math notranslate nohighlight">\(w\)</span>に依存しないので、ELBOの最大化の文脈では無視できる。
 末尾の項は、<span class="math notranslate nohighlight">\(z_1\)</span>から<span class="math notranslate nohighlight">\(x\)</span>を復元するための尤度であるが、これはデノイズによる再構成誤差を計算してやればよい。</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -727,10 +729,10 @@ z_1^{(l)} &amp; \sim \mathcal{N}(z_1 | \sqrt{1-\beta_1}x, \beta_1 I)
 <div class="math notranslate nohighlight">
 \[
 \begin{align}
-q(z_{t-1} | z_t, x) &amp; = \frac{q(z_{t-1} | z_t, q) q(z_t | x)}{q(z_{t-1} | x)} 
+q(z_{t} | (z_{t-1}, x) &amp; = \frac{q(z_{t-1} | z_t, w) q(z_t | x)}{q(z_{t-1} | x)} 
 \end{align}
 \]</div>
-<p>これは、ベイズの定理で書き直しただけである。これを用いて式<a class="reference internal" href="#equation-eq-elbo-diffusion">()</a>の第2項を変形してみる。</p>
+<p>これは、ベイズの定理で書き直しただけである。これを用いて式<a class="reference internal" href="#equation-eq-elbo-diffusion">(17.2)</a>の第2項を変形してみる。</p>
 <div class="math notranslate nohighlight">
 \[
 \begin{align}
@@ -757,11 +759,11 @@ KL(q(z_{t-1} | z_t, x) || p(z_{t-1} | z_t, w)) &amp; = \frac{1}{2\beta_t} ||m_t(
 \]</div>
 </section>
 <section id="id5">
-<h2>ノイズの予測<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">17.4. </span>ノイズの予測<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
 <p>Hoらの論文では、画像データそのものの再構成ではなく、逆過程で必要なノイズを学習するようにモデルを訓練することで、精度が向上することが報告されている他、誤差関数の頭につく係数を落とすことで精度が向上することも報告されている。</p>
 </section>
 <section id="mnist">
-<h2>MNISTを用いた実装例<a class="headerlink" href="#mnist" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">17.5. </span>MNISTを用いた実装例<a class="headerlink" href="#mnist" title="Link to this heading">#</a></h2>
 <p>最後に、U-Netと呼ばれる構造のニューラルネットワークを用いて、MNISTデータセットに対する拡散モデルの実装例を示す。</p>
 <p>なお、GPUが無いと学習に非常に時間がかかるため、GPUがある環境で実行することを推奨する。
 以下では、コードと学習の過程・結果だけを貼る。</p>
@@ -1073,6 +1075,24 @@ KL(q(z_{t-1} | z_t, x) || p(z_{t-1} | z_t, w)) &amp; = \frac{1}{2\beta_t} ||m_t(
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="Chapter_VAE.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">前へ</p>
+        <p class="prev-next-title"><span class="section-number">16. </span>変分オートエンコーダ (VAE)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Chapter_Transformers.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">次へ</p>
+        <p class="prev-next-title"><span class="section-number">18. </span>Transformers</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -1089,14 +1109,14 @@ KL(q(z_{t-1} | z_t, x) || p(z_{t-1} | z_t, w)) &amp; = \frac{1}{2\beta_t} ||m_t(
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">拡散過程</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">逆過程</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-z-t-1-z-t-x"><span class="math notranslate nohighlight">\(q(z_{t-1} | z_t, x)\)</span>の導出</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">17.1. 拡散過程</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">17.2. 逆過程</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-z-t-1-z-t-x">17.2.1. <span class="math notranslate nohighlight">\(q(z_{t-1} | z_t, x)\)</span>の導出</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">デノイズ過程の学習</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">ノイズの予測</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mnist">MNISTを用いた実装例</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">17.3. デノイズ過程の学習</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">17.4. ノイズの予測</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mnist">17.5. MNISTを用いた実装例</a></li>
 </ul>
   </nav></div>
 
