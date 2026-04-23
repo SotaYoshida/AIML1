@@ -668,29 +668,8 @@ I &amp; = \sqrt{\frac{\pi}{\alpha}}
 \end{split}\]</div>
 <p><span class="math notranslate nohighlight">\(x=r \cos \theta, y=r \sin \theta\)</span>と置換して、極座標に変換した。Jacobianは<span class="math notranslate nohighlight">\(r\)</span>である。
 <span class="math notranslate nohighlight">\(\alpha=1/(2\sigma^2)\)</span>と置換すると、ガウス分布の正規化定数が得られる。</p>
-<p>変数を２つに分けて、それらの <strong>同時分布(joint distribution)</strong> がガウス分布であるとみなすこともできる。</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-p(\mathbf{x}, \mathbf{y}) = \mathcal{N}\left(
-    \begin{bmatrix}
-        \mathbf{\mu}_x \\
-        \mathbf{\mu}_y
-    \end{bmatrix},
-    \begin{bmatrix}
-        \Sigma_{xx} &amp; \Sigma_{xy} \\
-        \Sigma_{yx} &amp; \Sigma_{yy}
-    \end{bmatrix}
-\right) 
-\end{split}\]</div>
-<p>このとき<strong>周辺分布(marginal distribution)</strong>(特定の変数の積分を取ることで得られる分布)と条件付き分布もまたガウス分布になる性質がある。<span class="math notranslate nohighlight">\(\mathbf{y}\)</span>について周辺化した分布は、</p>
-<div class="math notranslate nohighlight">
-\[
-\begin{align*}
-\int d\mathbf{y} p(\mathbf{x}, \mathbf{y}) 
-&amp; = \mathcal{N}\left( \mathbf{\mu}_{x}, \Sigma_{xx} \right)
-\end{align*}
-\]</div>
-<p>時折、具体例として2次元の正規分布を考えるので、絵を作っておこう。</p>
+<p>以下では、多次元正規分布(ガウス分布)の数学的に優れた性質について説明する。
+時折、具体例として2次元の正規分布を考えるので、ここで絵を作っておこう。</p>
 <div class="cell tag_hide-input docutils container">
 <details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -698,9 +677,7 @@ p(\mathbf{x}, \mathbf{y}) = \mathcal{N}\left(
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 2次元正規分布の可視化（左: ヒートマップ、右: 3Dサーフェス）</span>
-<span class="c1"># パラメータ設定</span>
-
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 2次元正規分布の可視化</span>
 <span class="n">mu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
 <span class="n">Sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">],</span>
                   <span class="p">[</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">]])</span>
@@ -731,7 +708,7 @@ p(\mathbf{x}, \mathbf{y}) = \mathcal{N}\left(
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">hm</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;density&#39;</span><span class="p">)</span>
 
-<span class="c1"># 3Dサーフェス</span>
+<span class="c1"># 3D</span>
 <span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
 <span class="n">surf</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greens&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">antialiased</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;2D Gaussian (3D Surface)&#39;</span><span class="p">)</span>
@@ -750,6 +727,28 @@ p(\mathbf{x}, \mathbf{y}) = \mathcal{N}\left(
 <img alt="../_images/2869c6d9fedcff48b8ecce50c5abf41fc548b35ddcef1703d8b155340a2c6571.png" src="../_images/2869c6d9fedcff48b8ecce50c5abf41fc548b35ddcef1703d8b155340a2c6571.png" />
 </div>
 </div>
+<p>変数を２つに分けて、それらの <strong>同時分布(joint distribution)</strong> がガウス分布であるとみなすこともできる。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+p(\mathbf{x}, \mathbf{y}) = \mathcal{N}\left(
+    \begin{bmatrix}
+        \mathbf{\mu}_x \\
+        \mathbf{\mu}_y
+    \end{bmatrix},
+    \begin{bmatrix}
+        \Sigma_{xx} &amp; \Sigma_{xy} \\
+        \Sigma_{yx} &amp; \Sigma_{yy}
+    \end{bmatrix}
+\right) 
+\end{split}\]</div>
+<p>このとき<strong>周辺分布(marginal distribution)</strong>(特定の変数の積分を取ることで得られる分布)と条件付き分布もまたガウス分布になる性質がある。<span class="math notranslate nohighlight">\(\mathbf{y}\)</span>について周辺化した分布は、</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{align*}
+\int d\mathbf{y} p(\mathbf{x}, \mathbf{y}) 
+&amp; = \mathcal{N}\left( \mathbf{\mu}_{x}, \Sigma_{xx} \right)
+\end{align*}
+\]</div>
 <p>条件付き分布は次のようになる。</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
