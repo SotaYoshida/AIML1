@@ -561,7 +561,9 @@ q(z_t| z_{t-1}) = \mathcal{N}(z_t| \sqrt{1 - \beta_t} z_{t-1}, \beta_t I)
 したがって、潜在変数の系列の確率分布は、以下のように表現される。</p>
 <div class="math notranslate nohighlight">
 \[
+\begin{align}
 q(z_{1:T} | z_0) = q(z_1 | x) \prod_{t=2}^T q(z_t | z_{t-1})
+\end{align}
 \]</div>
 <p><span class="math notranslate nohighlight">\(t\)</span>ステップ後の状態は、実はひとまとめに書き直すことが出来て</p>
 <div class="math notranslate nohighlight">

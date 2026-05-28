@@ -467,9 +467,11 @@ document.write(`
 <li><p><strong>バリュー (Value)</strong>: 実際の情報を含むベクトル。</p></li>
 </ol>
 <p>モデルのbuilding blockであるAttentionレイヤーは、これらのクエリ、キー、バリューを用いて、各要素が他の要素に対してどれだけ注意を払うべきか(どれだけ重要であるか)を計算する。</p>
-<div class="math notranslate nohighlight">
-\[
+<div class="math notranslate nohighlight" id="equation-eq-attention">
+<span class="eqno">(18.1)<a class="headerlink" href="#equation-eq-attention" title="Link to this equation">#</a></span>\[
+\begin{align}
 \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+\end{align}
 \]</div>
 <p>この式は、有名な<a class="reference external" href="https://arxiv.org/abs/1706.03762">Attention is All You Need 論文</a>で登場する最初の式で、Scaled Dot-Product Attentionと呼ばれるものである。
 なお、<span class="math notranslate nohighlight">\(d_k\)</span>はキーの次元数であり、スケーリングにより勾配消失問題を軽減する役割を果たす。</p>
