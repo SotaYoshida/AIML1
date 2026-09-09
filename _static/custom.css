@@ -1,0 +1,12 @@
+:root { --pst-color-primary: #146b78; --pst-color-link: #146b78; }
+.bd-article-container { max-width: 55rem; }
+.bd-article { line-height: 1.85; }
+.bd-article p { margin-bottom: 1.15rem; }
+.bd-article h1 { line-height: 1.5; letter-spacing: .025em; }
+.bd-article h2 { border-bottom: 2px solid #b7d9dc; padding-bottom: .4rem; margin-top: 2.4rem; }
+.bd-article .admonition { margin: 1.5rem 0; }
+.bd-article table { font-size: .94rem; }
+.bd-article pre { line-height: 1.5; }
+.hero { padding: 2rem; background: linear-gradient(125deg, #edf7f6, #f2f4fc); border-left: 5px solid #146b78; border-radius: .3rem; color: #183943; margin: 1.5rem 0; }
+.hero strong { font-size: 1.2rem; }
+@media print { .bd-article-container { max-width: 100%; } }
