@@ -220,3 +220,4 @@ notebooks/data
 notebooks/Chapter_PMM_Intro.ipynb
 notebooks/Chapter_DiffusionModels.ipynb
 notebooks/Chapter_Transformers.ipynb
+build_local.sh
