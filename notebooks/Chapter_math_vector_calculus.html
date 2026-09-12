@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=8c577342" />
@@ -483,48 +483,69 @@ g(x) &amp;= \exp(x)
 \frac{\partial f}{\partial x_i} &amp;= \lim_{h \to 0} \frac{f(x_1, \ldots, x_i + h, \ldots, x_n) - f(x_1, \ldots, x_i, \ldots, x_n)}{h}
 \end{align}
 \]</div>
-<p>これらの偏微分をまとめた行ベクトルを勾配(gradient)と呼ぶ。</p>
+<p>本講義ノートでは、変数ベクトル<span class="math notranslate nohighlight">\(\mathbf{x} = (x_1, \ldots, x_n)^T\)</span>と同じ向きに、これらの偏微分をまとめた<strong>列ベクトル</strong>を勾配(gradient)と呼ぶ。</p>
 <div class="math notranslate nohighlight">
-\[
+\[\begin{split}
 \begin{align}
 \nabla_{\mathbf{x}} f \equiv \mathrm{grad} f &amp;= \begin{bmatrix}
-\frac{\partial f}{\partial x_1} &amp; \frac{\partial f}{\partial x_2} &amp; \cdots &amp; \frac{\partial f}{\partial x_n}
-\end{bmatrix} \in \mathbb{R}^{1 \times n}
-\end{align}
-\]</div>
-<p>※文献によっては、勾配を列ベクトルとして定義することもある。</p>
-</div>
-<p>多変数の場合のチェインルールを整理しておこう。</p>
-<p>二変数関数<span class="math notranslate nohighlight">\(f: \mathbb{R}^2 \to \mathbb{R}\)</span>が<span class="math notranslate nohighlight">\(t\)</span>に依存する変数<span class="math notranslate nohighlight">\(x_1(t), x_2(t)\)</span>を持つとき、<span class="math notranslate nohighlight">\(f\)</span>の<span class="math notranslate nohighlight">\(t\)</span>に関する微分は次のように定義される。</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{align}
-\frac{d}{dt} f(x_1(t), x_2(t)) &amp;= 
-\begin{bmatrix}
-\frac{\partial f}{\partial x_1} &amp; \frac{\partial f}{\partial x_2}
-\end{bmatrix}
-\begin{bmatrix}
-\frac{\partial x_1}{\partial t} \\
-\frac{\partial x_2}{\partial t}
-\end{bmatrix}
-= \frac{\partial f}{\partial x_1} \frac{\partial x_1(t)}{\partial t} 
-+ \frac{\partial f}{\partial x_2} \frac{\partial x_2(t)}{\partial t}
+\frac{\partial f}{\partial x_1} \\
+\frac{\partial f}{\partial x_2} \\
+\vdots \\
+\frac{\partial f}{\partial x_n}
+\end{bmatrix} \in \mathbb{R}^{n \times 1}
 \end{align}
 \end{split}\]</div>
-<p>あるいは、<span class="math notranslate nohighlight">\(x_1, x_2\)</span>が<span class="math notranslate nohighlight">\(s, t\)</span>に依存する変数であるとき、次のように書くこともできる。</p>
+<p>スカラー関数の<span class="math notranslate nohighlight">\(\frac{\partial f}{\partial \mathbf{x}}\)</span>も、この列ベクトル<span class="math notranslate nohighlight">\(\nabla_{\mathbf{x}} f\)</span>を表すものとする。文献によっては行ベクトルで表す規約もあるため、転置の有無に注意する。</p>
+</div>
+<p>多変数の場合のチェインルールを整理しておこう。</p>
+<p>微分可能な二変数関数<span class="math notranslate nohighlight">\(f: \mathbb{R}^2 \to \mathbb{R}\)</span>と、<span class="math notranslate nohighlight">\(t\)</span>に依存する変数<span class="math notranslate nohighlight">\(\mathbf{x}(t) = (x_1(t), x_2(t))^T\)</span>に対して、合成関数の微分は勾配と<span class="math notranslate nohighlight">\(\frac{d\mathbf{x}}{dt}\)</span>の内積で表される。</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align}
-\frac{df}{d (s,t)} &amp; = \frac{df}{d \mathbf{x}} \frac{d \mathbf{x}}{d (s,t)} 
-= \begin{bmatrix}
+\frac{d}{dt} f(\mathbf{x}(t))
+&amp;= \bigl(\nabla_{\mathbf{x}} f(\mathbf{x}(t))\bigr)^T \frac{d\mathbf{x}}{dt} \\
+&amp;= \begin{bmatrix}
 \frac{\partial f}{\partial x_1} &amp; \frac{\partial f}{\partial x_2}
 \end{bmatrix}
 \begin{bmatrix}
+\frac{d x_1}{dt} \\
+\frac{d x_2}{dt}
+\end{bmatrix}
+= \frac{\partial f}{\partial x_1} \frac{d x_1}{dt}
++ \frac{\partial f}{\partial x_2} \frac{d x_2}{dt}
+\end{align}
+\end{split}\]</div>
+<p>ここで、<span class="math notranslate nohighlight">\(f\)</span>の偏微分は<span class="math notranslate nohighlight">\(\mathbf{x}(t)\)</span>で評価する。勾配そのものは列ベクトルであり、内積を取るために転置している。</p>
+<p>あるいは、<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>が<span class="math notranslate nohighlight">\(\mathbf{u} = (s,t)^T\)</span>に依存するとき、次節で定義するヤコビ行列を用いて</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{J}_{\mathbf{x}} = \frac{d\mathbf{x}}{d\mathbf{u}}
+= \begin{bmatrix}
 \frac{\partial x_1}{\partial s} &amp; \frac{\partial x_1}{\partial t} \\
 \frac{\partial x_2}{\partial s} &amp; \frac{\partial x_2}{\partial t}
 \end{bmatrix}
+\end{split}\]</div>
+<p>と書くと、合成関数<span class="math notranslate nohighlight">\(h(\mathbf{u}) = f(\mathbf{x}(\mathbf{u}))\)</span>の勾配は次の列ベクトルになる。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+\nabla_{\mathbf{u}} h
+&amp;= \mathbf{J}_{\mathbf{x}}^T \nabla_{\mathbf{x}} f \\
+&amp;= \begin{bmatrix}
+\frac{\partial x_1}{\partial s} &amp; \frac{\partial x_2}{\partial s} \\
+\frac{\partial x_1}{\partial t} &amp; \frac{\partial x_2}{\partial t}
+\end{bmatrix}
+\begin{bmatrix}
+\frac{\partial f}{\partial x_1} \\
+\frac{\partial f}{\partial x_2}
+\end{bmatrix}
+= \begin{bmatrix}
+\frac{\partial h}{\partial s} \\
+\frac{\partial h}{\partial t}
+\end{bmatrix}
 \end{align}
 \end{split}\]</div>
+<p>右辺の<span class="math notranslate nohighlight">\(\nabla_{\mathbf{x}} f\)</span>は<span class="math notranslate nohighlight">\(\mathbf{x}(\mathbf{u})\)</span>で評価する。一般に<span class="math notranslate nohighlight">\(\mathbf{u}\in\mathbb{R}^k\)</span>、<span class="math notranslate nohighlight">\(\mathbf{x}\in\mathbb{R}^n\)</span>なら、<span class="math notranslate nohighlight">\(\mathbf{J}_{\mathbf{x}}\in\mathbb{R}^{n\times k}\)</span>なので、<span class="math notranslate nohighlight">\(\mathbf{J}_{\mathbf{x}}^T\nabla_{\mathbf{x}}f\in\mathbb{R}^{k\times 1}\)</span>となる。</p>
 </section>
 <section id="id6">
 <h2><span class="section-number">1.3. </span>ベクトル値関数の微分<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
@@ -554,7 +575,7 @@ f_m(\mathbf{x})
 \end{bmatrix}
 \end{align}
 \end{split}\]</div>
-<p>上で実数値関数の場合に、勾配を各変数で偏微分した行ベクトルで定義したのに対し、ベクトル値関数の場合は各変数で偏微分した列ベクトルで定義していることに注意しよう。したがって、ベクトル値関数の勾配は次のように定義される。</p>
+<p>各入力変数<span class="math notranslate nohighlight">\(x_i\)</span>について得られる<span class="math notranslate nohighlight">\(m\)</span>次元の列ベクトルを横に並べたものを、ヤコビ行列と呼ぶ。出力成分を行、入力成分を列に対応させる。</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align}
@@ -567,11 +588,11 @@ f_m(\mathbf{x})
 \in \mathbb{R}^{m \times n}
 \end{align}
 \end{split}\]</div>
-<p>これはまさに、ベクトル値関数<span class="math notranslate nohighlight">\(\mathbf{f}: \mathbb{R}^n \to \mathbb{R}^m\)</span>のヤコビ行列の定義を与えている:</p>
+<p>ベクトル値関数<span class="math notranslate nohighlight">\(\mathbf{f}: \mathbb{R}^n \to \mathbb{R}^m\)</span>のヤコビ行列を<span class="math notranslate nohighlight">\(\mathbf{J}_{\mathbf{f}}\)</span>と書く:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align}
-\mathbf{J} = \nabla_{\mathbf{x}} \mathbf{f} = \frac{d\mathbf{f}(\mathbf{x})}{d \mathbf{x}}
+\mathbf{J}_{\mathbf{f}} = \frac{d\mathbf{f}(\mathbf{x})}{d \mathbf{x}}
 &amp;= \begin{bmatrix}
 \frac{\partial \mathbf{f}}{\partial x_1} &amp; \frac{\partial \mathbf{f}}{\partial x_2} &amp; \cdots &amp; \frac{\partial \mathbf{f}}{\partial x_n}
 \end{bmatrix}
@@ -583,6 +604,17 @@ f_m(\mathbf{x})
 \in \mathbb{R}^{m \times n}
 \end{align}
 \end{split}\]</div>
+<p>各行は、スカラー関数<span class="math notranslate nohighlight">\(f_i\)</span>の列勾配を転置したものである。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{J}_{\mathbf{f}}
+= \begin{bmatrix}
+(\nabla_{\mathbf{x}} f_1)^T \\
+\vdots \\
+(\nabla_{\mathbf{x}} f_m)^T
+\end{bmatrix}.
+\end{split}\]</div>
+<p>とくに、スカラー関数<span class="math notranslate nohighlight">\(f\)</span>のヤコビ行列は<span class="math notranslate nohighlight">\(\mathbf{J}_f = (\nabla_{\mathbf{x}} f)^T \in \mathbb{R}^{1\times n}\)</span>であり、列ベクトルである勾配とは区別する。</p>
 <p>Jacobi行列(Jacobian)は、変数変換によるスケール変化を表す行列でもあり、確率密度分布や再パラメータ化などの文脈でも重要な役割を果たす。</p>
 <p>とくに、変数変換を伴う重積分では、ヤコビ行列の行列式が重要な役割を果たす。
 ヤコビ行列の行列式は、変数変換による体積の変化を表す。

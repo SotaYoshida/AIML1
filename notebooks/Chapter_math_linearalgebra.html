@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=8c577342" />
@@ -900,7 +900,7 @@ rank 29 (~ 5 ％) Fnorm  4941.906716516428  # of m.e.  45849
 <h2><span class="section-number">2.9. </span>行列の微分<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
 <p>ベクトル解析の章と重複する部分があるが、行列の微分についても簡単に触れておく。</p>
 <p>ベクトルに対する微分を拡張して、行列に対する微分を考えることができる。
-まず、ベクトル <span class="math notranslate nohighlight">\(\mathbf{a} \)</span>に対するスカラー<span class="math notranslate nohighlight">\(x\)</span>による微分を以下のように定義する:</p>
+まず、列ベクトル<span class="math notranslate nohighlight">\(\mathbf{a}(x)\)</span>のスカラー<span class="math notranslate nohighlight">\(x\)</span>に関する微分を以下のように定義する:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align*}
@@ -912,20 +912,20 @@ rank 29 (~ 5 ％) Fnorm  4941.906716516428  # of m.e.  45849
 \end{bmatrix}^T
 \end{align*}
 \end{split}\]</div>
-<p>同様に、行列 <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> に対するスカラー <span class="math notranslate nohighlight">\(x\)</span> による微分は次のように定義される:</p>
+<p>同様に、行列<span class="math notranslate nohighlight">\(\mathbf{A}(x)\)</span>のスカラー<span class="math notranslate nohighlight">\(x\)</span>に関する微分は次のように定義される:</p>
 <div class="math notranslate nohighlight">
 \[
 \begin{align*}
 \left( \frac{\partial \mathbf{A}}{\partial x} \right)_{ij} &amp;= \frac{\partial A_{ij}}{\partial x}
 \end{align*}
 \]</div>
-<p>また、スカラー値<span class="math notranslate nohighlight">\(x\)</span>に対するベクトル<span class="math notranslate nohighlight">\(\mathbf{a}\)</span>の微分は次のように定義される:</p>
+<p>また、スカラー関数<span class="math notranslate nohighlight">\(x(\mathbf{a})\)</span>のベクトル<span class="math notranslate nohighlight">\(\mathbf{a}\)</span>に関する微分は、ベクトル解析の章と同じく、列ベクトルの勾配として定義する:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align*}
 \left( \frac{\partial x}{\partial \mathbf{a}} \right)_i &amp;= \frac{\partial x}{\partial a_i} \\
 \Leftrightarrow
-\frac{\partial x}{\partial \mathbf{a}} &amp;= \begin{bmatrix}
+\frac{\partial x}{\partial \mathbf{a}} = \nabla_{\mathbf{a}} x &amp;= \begin{bmatrix}
 \frac{\partial x}{\partial a_1} &amp; \frac{\partial x}{\partial a_2} &amp; \cdots &amp; \frac{\partial x}{\partial a_n}
 \end{bmatrix}^T
 \end{align*}
@@ -948,12 +948,12 @@ a_1 &amp; a_2 &amp; \cdots &amp; a_n
 &amp;= \mathbf{a}
 \end{align*}
 \end{split}\]</div>
-<p>さらにこれを拡張すると、行列<span class="math notranslate nohighlight">\(\mathbf{A}, \mathbf{B}\)</span>に対して次のように計算できる:</p>
+<p>行列<span class="math notranslate nohighlight">\(\mathbf{A}, \mathbf{B}\)</span>がベクトル<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>に依存し、積<span class="math notranslate nohighlight">\(\mathbf{A}\mathbf{B}\)</span>が定義できるとき、各成分<span class="math notranslate nohighlight">\(x_i\)</span>に関する積の微分は次のように計算できる:</p>
 <div class="math notranslate nohighlight">
 \[
 \begin{align*}
-\frac{\partial}{\partial \mathbf{x}} ( \mathbf{A} \mathbf{B} )
-&amp; = \frac{\partial \mathbf{A}}{\partial \mathbf{x}} \mathbf{B} + \mathbf{A} \frac{\partial \mathbf{B}}{\partial \mathbf{x}}
+\frac{\partial}{\partial x_i} ( \mathbf{A} \mathbf{B} )
+&amp; = \frac{\partial \mathbf{A}}{\partial x_i} \mathbf{B} + \mathbf{A} \frac{\partial \mathbf{B}}{\partial x_i}
 \end{align*}
 \]</div>
 <div class="tip admonition">

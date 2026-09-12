@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=8c577342" />
@@ -952,22 +952,28 @@ L(\boldsymbol{\mu}, \boldsymbol{\Sigma})
 \end{split}\]</div>
 <p>となる。</p>
 <p><strong><span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}\)</span>の最尤推定</strong></p>
+<p>スカラー関数<span class="math notranslate nohighlight">\(L\)</span>の行列<span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}\)</span>に関する勾配は、<span class="math notranslate nohighlight">\((\partial L/\partial\boldsymbol{\Sigma})_{jk} = \partial L/\partial\Sigma_{jk}\)</span>と、元の行列と同じ形に並べる。共分散行列<span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}\)</span>は対称正定値なので、以下では<span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}^{-T} = \boldsymbol{\Sigma}^{-1}\)</span>を用いる。</p>
 <p>以下の2式を用いればよい:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align*}
 \frac{\partial}{\partial \boldsymbol{\Sigma}} \log |\boldsymbol{\Sigma}| &amp; = \left(  \boldsymbol{\Sigma}^{-1} \right)^T \\
 \frac{\partial}{\partial \boldsymbol{\Sigma}} \left( \sum^N_{i=1} (\mathbf{x}_i - \boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1} (\mathbf{x}_i - \boldsymbol{\mu}) \right)
-&amp; = - \left(\boldsymbol{\Sigma}^{-1}  \sum^N_{i=1} (\mathbf{x}_i - \boldsymbol{\mu})^T  (\mathbf{x}_i - \boldsymbol{\mu}) \boldsymbol{\Sigma}^{-1} \right)
+&amp; = - \boldsymbol{\Sigma}^{-1} \left( \sum^N_{i=1} (\mathbf{x}_i - \boldsymbol{\mu})(\mathbf{x}_i - \boldsymbol{\mu})^T \right) \boldsymbol{\Sigma}^{-1}
 \end{align*}
 \end{split}\]</div>
-<p>ここから、</p>
+<p>各<span class="math notranslate nohighlight">\(\mathbf{x}_i - \boldsymbol{\mu}\)</span>は列ベクトルなので、上の和の中身は<span class="math notranslate nohighlight">\(D\times D\)</span>の外積である。ここから、</p>
 <div class="math notranslate nohighlight">
 \[
 \frac{\partial L}{\partial \boldsymbol{\Sigma}}
-= \frac{N}{2} \left( \boldsymbol{\Sigma}^{-1} \right)^T + \frac{1}{2} \left(\boldsymbol{\Sigma}^{-1} \sum^N_{i=1} (\mathbf{x}_i - \boldsymbol{\mu})^T  (\mathbf{x}_i - \boldsymbol{\mu})  \boldsymbol{\Sigma}^{-1} \right)^T = 0
+= -\frac{N}{2} \boldsymbol{\Sigma}^{-1} + \frac{1}{2} \boldsymbol{\Sigma}^{-1} \left( \sum^N_{i=1} (\mathbf{x}_i - \boldsymbol{\mu})(\mathbf{x}_i - \boldsymbol{\mu})^T \right) \boldsymbol{\Sigma}^{-1} = 0
 \]</div>
-<p>から、上の式が従う。</p>
+<p>を得る。両側から<span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}\)</span>を掛けると、</p>
+<div class="math notranslate nohighlight">
+\[
+-N\boldsymbol{\Sigma} + \sum^N_{i=1}(\mathbf{x}_i - \boldsymbol{\mu})(\mathbf{x}_i - \boldsymbol{\mu})^T = 0
+\]</div>
+<p>となり、<span class="math notranslate nohighlight">\(\boldsymbol{\mu} = \hat{\boldsymbol{\mu}}\)</span>を代入すると、上の共分散行列の最尤推定量が得られる。</p>
 </section>
 <section id="id10">
 <h2><span class="section-number">3.8. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> 多次元正規分布に関するベイズの定理<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
