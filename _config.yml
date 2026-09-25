@@ -46,6 +46,7 @@ sphinx:
     html_theme_options:
       show_navbar_depth: 2
       show_toc_level: 2
+      dusable_searcgh: true
 
 # 目次にないバックアップや作業用資料をビルドしない。
 only_build_toc_files: true
