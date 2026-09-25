@@ -16,42 +16,45 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-
-  
-  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=8c577342" />
   
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
 
     <script src="../_static/documentation_options.js?v=1cf7f4d9"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
-    <script>let toggleHintShow = 'Click to show';</script>
-    <script>let toggleHintHide = 'Click to hide';</script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'クリックして表示';</script>
+    <script>let toggleHintHide = 'クリックして非表示';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
     <script src="../_static/translations.js?v=91613774"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
@@ -62,40 +65,37 @@
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/Chapter_math_vector_calculus';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
     <link rel="next" title="2. 線形代数" href="Chapter_math_linearalgebra.html" />
     <link rel="prev" title="AI・機械学習論1/機械学習論" href="../home.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="ja"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
   </head>
+  <body data-default-mode="">
   
   
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">本文へスキップ</a></div>
 
-  
-  
-  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
-
+    <i class="fa-solid fa-arrow-up"></i>トップに戻る</button>
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../search.html"
       method="get">
@@ -103,7 +103,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search..."
          aria-label="Search..."
          autocomplete="off"
@@ -111,15 +110,59 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
-  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="バージョン警告"></aside>
 </div>
 
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="サイトナビゲーション">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">検索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">検索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="このページでは">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
     </header>
   
 
@@ -128,7 +171,8 @@
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -158,21 +202,17 @@
     
     
     <img src="../_static/logo_AIML1.png" class="logo__image only-light" alt="AI・機械学習論1/機械学習論 - Home"/>
-    <script>document.write(`<img src="../_static/logo_AIML1.png" class="logo__image only-dark" alt="AI・機械学習論1/機械学習論 - Home"/>`);</script>
+    <img src="../_static/logo_AIML1.png" class="logo__image only-dark pst-js-only" alt="AI・機械学習論1/機械学習論 - Home"/>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">検索</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">検索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">機械学習のための数学</span></p>
@@ -222,9 +262,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -307,7 +352,7 @@
 
 
 <button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
   title="全画面モード"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
@@ -321,25 +366,17 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="ライト"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="ダーク"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
 </div></div>
@@ -361,19 +398,36 @@ document.write(`
                 <h2> 目次 </h2>
             </div>
             <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.1. 一変数の微分</a><ul class="visible nav section-nav flex-column">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.1. 一変数の微分</a><ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">1.1.1. テイラー展開</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1.1.2. 微分の基本的性質</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">1.2. 偏微分: 多変数への拡張</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">1.3. ベクトル値関数の微分</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hessian">1.3.1. Hessian</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">1.2. 偏微分: 多変数への拡張</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">1.2.1. 全微分と一次近似</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">1.2.2. 方向微分と勾配の向き</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">1.2.3. 多変数関数の連鎖律</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">1.4. 条件つき最適化</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">1.5. 学習の振り返りのためのチェックリスト</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">1.3. ベクトル値関数の微分</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">1.3.1. ヤコビ行列による局所線形近似</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">1.3.2. ベクトル値関数どうしの連鎖律</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">1.3.3. 変数変換と面積・体積の変化</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">1.4. ヘッセ行列と二次近似</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">1.4.1. 多変数関数のテイラー展開</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">1.4.2. 停留点と極値の判定</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">1.5. 計算例: 線形回帰の勾配とヘッセ行列</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">1.5.1. 解が一意に決まる条件</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">1.5.2. 中心差分による勾配の検算</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">1.6. 条件つき最適化</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">1.7. 学習の振り返りのためのチェックリスト</a></li>
 </ul>
             </nav>
         </div>
@@ -388,13 +442,15 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1><span class="section-number">1. </span>ベクトル解析<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
 <p>機械学習アルゴリズムの多くは、目的関数と呼ばれる関数の最小化に基づいている。例えば:</p>
-<ul class="simple">
+<blockquote>
+<div><ul class="simple">
 <li><p>線形回帰(≒曲線のフィッティング)では、尤度が最大となるように重みパラメータを調整する。</p></li>
 <li><p>ニューラルネットワークでは、損失関数が最小となるように重みやバイアスと呼ばれるパラメータを調整する。</p></li>
 <li><p>クラスタリングでは、クラスタの中心がデータ点から最も近いように調整する。</p></li>
 <li><p>オートエンコーダでは、入力データと復元されたデータの差が最小となるようにパラメータを調整する。</p></li>
 <li><p>混合ガウスモデル(GMM)では、各ガウス分布の平均・分散を調整して尤度が最大となるようにする。</p></li>
 </ul>
+</div></blockquote>
 <p>これらの問題は、勾配に基づく最適化アルゴリズムを用いて解くことが多い。</p>
 <p>こうした目的関数を最小化するためには、一般に多変数の関数の微分を計算する必要がある。</p>
 <div class="math notranslate nohighlight">
@@ -429,7 +485,7 @@ f(a, b) &amp;= \frac{1}{N} \sum_{i=1}^N (y_i - (ax_i + b))^2
 <h3><span class="section-number">1.1.1. </span>テイラー展開<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <div class="note admonition">
 <p class="admonition-title">定義: テイラー級数</p>
-<p>滑らかな関数<span class="math notranslate nohighlight">\(f \in C^\infty\)</span>が点<span class="math notranslate nohighlight">\(x_0\)</span>で定義されているとき、<span class="math notranslate nohighlight">\(f\)</span>のテイラー級数は次のように定義される。</p>
+<p>関数<span class="math notranslate nohighlight">\(f\)</span>が点<span class="math notranslate nohighlight">\(x_0\)</span>の近傍で無限回連続微分可能（<span class="math notranslate nohighlight">\(f \in C^\infty\)</span>）であるとき、<span class="math notranslate nohighlight">\(f\)</span>のテイラー級数は次のように定義される。</p>
 <div class="math notranslate nohighlight" id="equation-taylorseries">
 <span class="eqno">(1.1)<a class="headerlink" href="#equation-taylorseries" title="Link to this equation">#</a></span>\[
 \begin{align}
@@ -437,7 +493,7 @@ T_\infty(x) &amp;= \sum_{n=0}^\infty \frac{f^{(n)}(x_0)}{n!} (x - x_0)^n
 \end{align}
 \]</div>
 <p>特に<span class="math notranslate nohighlight">\(x_0 = 0\)</span>のとき、テイラー級数はマクローリン級数と呼ばれる。</p>
-<p>また、<span class="math notranslate nohighlight">\(f(x) = T_\infty(x)\)</span>が成り立つとき、<span class="math notranslate nohighlight">\(f\)</span>は<span class="math notranslate nohighlight">\(x_0\)</span>でテイラー展開可能であるという。</p>
+<p>また、<span class="math notranslate nohighlight">\(x_0\)</span>のある近傍で級数が収束して<span class="math notranslate nohighlight">\(f(x) = T_\infty(x)\)</span>が成り立つとき、<span class="math notranslate nohighlight">\(f\)</span>は<span class="math notranslate nohighlight">\(x_0\)</span>でテイラー展開可能であるという。無限回微分可能であるだけでは、この一致は保証されない。</p>
 </div>
 <div class="attention admonition">
 <p class="admonition-title">問題</p>
@@ -446,7 +502,7 @@ T_\infty(x) &amp;= \sum_{n=0}^\infty \frac{f^{(n)}(x_0)}{n!} (x - x_0)^n
 \[
 T_k(x) \equiv \sum_{n=0}^k \frac{f^{(n)}(x_0)}{n!} (x - x_0)^n
 \]</div>
-<p>の次数<span class="math notranslate nohighlight">\(k\)</span>に応じた展開を求め、テイラー級数がもとの関数<span class="math notranslate nohighlight">\(f\)</span>と一致することを確認せよ。<span class="math notranslate nohighlight">\(T^4\)</span>以降が0であることは用いて良い。</p>
+<p>の次数<span class="math notranslate nohighlight">\(k\)</span>に応じた展開を求め、テイラー級数がもとの関数<span class="math notranslate nohighlight">\(f\)</span>と一致することを確認せよ。4階以上の導関数<span class="math notranslate nohighlight">\(f^{(n)}(x)\)</span>（<span class="math notranslate nohighlight">\(n\geq4\)</span>）が0であることは用いて良い。</p>
 </div>
 </section>
 <section id="id4">
@@ -454,7 +510,7 @@ T_k(x) \equiv \sum_{n=0}^k \frac{f^{(n)}(x_0)}{n!} (x - x_0)^n
 <ul class="simple">
 <li><p>線形性: <span class="math notranslate nohighlight">\(\frac{d}{dx}(af(x) + bg(x)) = a\frac{df}{dx} + b\frac{dg}{dx}\)</span></p></li>
 <li><p>積の微分: <span class="math notranslate nohighlight">\(\frac{d}{dx}(f(x)g(x)) = f(x)\frac{dg}{dx} + g(x)\frac{df}{dx}\)</span></p></li>
-<li><p>商の微分: <span class="math notranslate nohighlight">\(\frac{d}{dx}\left(\frac{f(x)}{g(x)}\right) = \frac{f(x)\frac{dg}{dx} - g(x)\frac{df}{dx}}{g(x)^2}\)</span></p></li>
+<li><p>商の微分: <span class="math notranslate nohighlight">\(\frac{d}{dx}\left(\frac{f(x)}{g(x)}\right) = \frac{g(x)\frac{df}{dx} - f(x)\frac{dg}{dx}}{g(x)^2}\)</span>（<span class="math notranslate nohighlight">\(g(x)\ne0\)</span>）</p></li>
 <li><p>合成関数の微分: <span class="math notranslate nohighlight">\(\frac{d}{dx}f(g(x)) = f'(g(x))\frac{dg}{dx}\)</span></p></li>
 </ul>
 <p>特に合成関数の微分は連鎖律(チェインルール)とも呼ばれ、ニューラルネットワークの逆伝播アルゴリズムにおいて重要な役割を果たす。</p>
@@ -497,6 +553,130 @@ g(x) &amp;= \exp(x)
 \end{split}\]</div>
 <p>スカラー関数の<span class="math notranslate nohighlight">\(\frac{\partial f}{\partial \mathbf{x}}\)</span>も、この列ベクトル<span class="math notranslate nohighlight">\(\nabla_{\mathbf{x}} f\)</span>を表すものとする。文献によっては行ベクトルで表す規約もあるため、転置の有無に注意する。</p>
 </div>
+<section id="id6">
+<h3><span class="section-number">1.2.1. </span>全微分と一次近似<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<p>勾配は、入力を少し変えたときの関数値の変化を表す。
+点<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>の近傍で定義された関数<span class="math notranslate nohighlight">\(f\)</span>について、</p>
+<div class="math notranslate nohighlight">
+\[
+f(\mathbf{x}+\Delta\mathbf{x})
+=f(\mathbf{x})+\nabla f(\mathbf{x})^T\Delta\mathbf{x}
++o(\|\Delta\mathbf{x}\|)
+\]</div>
+<p>と書けるとき、<span class="math notranslate nohighlight">\(f\)</span>は<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>で<strong>全微分可能</strong>であるという。
+ここで<span class="math notranslate nohighlight">\(\|\cdot\|\)</span>はユークリッドノルムであり、<span class="math notranslate nohighlight">\(o(\|\Delta\mathbf{x}\|)\)</span>は、
+<span class="math notranslate nohighlight">\(\Delta\mathbf{x}\to\mathbf0\)</span>のときに<span class="math notranslate nohighlight">\(\|\Delta\mathbf{x}\|\)</span>で割った値が0に近づく誤差を表す。
+一次の項</p>
+<div class="math notranslate nohighlight">
+\[
+df=\nabla f(\mathbf{x})^T d\mathbf{x}
+=\sum_{i=1}^n\frac{\partial f}{\partial x_i}dx_i
+\]</div>
+<p>を<strong>全微分</strong>と呼ぶ。つまり、十分小さな変位なら、各変数による一次の変化を足すことで関数値の変化を近似できる。</p>
+<p>偏微分は座標軸に沿った変化を調べるのに対して、全微分可能性は任意の方向からの変位を一つの線形写像で近似できることを要求する。
+したがって、すべての偏微分が存在するだけでは全微分可能とは限らない。
+十分条件として、すべての偏導関数がその点の近傍で存在し、連続ならば全微分可能である。
+以後、この章で多変数関数を「微分可能」と呼ぶときは全微分可能を意味する。</p>
+</section>
+<section id="id7">
+<h3><span class="section-number">1.2.2. </span>方向微分と勾配の向き<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<p>微分可能な<span class="math notranslate nohighlight">\(f\)</span>に対して、単位ベクトル<span class="math notranslate nohighlight">\(\mathbf{v}\)</span>（<span class="math notranslate nohighlight">\(\|\mathbf{v}\|=1\)</span>）の方向に進んだときの変化率を<strong>方向微分</strong>と呼ぶ。</p>
+<div class="math notranslate nohighlight">
+\[
+D_{\mathbf{v}}f(\mathbf{x})
+=\left.\frac{d}{dt}f(\mathbf{x}+t\mathbf{v})\right|_{t=0}
+=\nabla f(\mathbf{x})^T\mathbf{v}.
+\]</div>
+<p><span class="math notranslate nohighlight">\(\nabla f(\mathbf{x})\ne\mathbf0\)</span>のとき、勾配と<span class="math notranslate nohighlight">\(\mathbf{v}\)</span>のなす角を<span class="math notranslate nohighlight">\(\theta\)</span>とすると、
+この内積は<span class="math notranslate nohighlight">\(\|\nabla f(\mathbf{x})\|\cos\theta\)</span>となる。
+したがって、単位長さあたりの増加率が最大となるのは勾配の向き、最小となるのは負の勾配の向きである。
+これはユークリッドノルムで移動距離を測った場合の性質である。</p>
+<p>例えば、<span class="math notranslate nohighlight">\(\Delta\mathbf{x}=-\eta\nabla f(\mathbf{x})\)</span>とおくと、勾配がゼロでない点では</p>
+<div class="math notranslate nohighlight">
+\[
+f(\mathbf{x}-\eta\nabla f(\mathbf{x}))-f(\mathbf{x})
+=-\eta\|\nabla f(\mathbf{x})\|^2+o(\eta)&lt;0
+\]</div>
+<p>が十分小さな<span class="math notranslate nohighlight">\(\eta&gt;0\)</span>について成り立つ。これが勾配降下法の根拠である。
+移動幅<span class="math notranslate nohighlight">\(\eta\)</span>が大きすぎると、この減少は保証されない。
+具体的な更新方法は<a class="reference internal" href="Chapter_Optimization.html"><span class="std std-doc">最適化の章</span></a>で扱う。</p>
+<p>また、等高線<span class="math notranslate nohighlight">\(f(\mathbf{x})=c\)</span>に沿う滑らかな曲線<span class="math notranslate nohighlight">\(\mathbf{x}(t)\)</span>を考えると、関数値が変わらないため、</p>
+<div class="math notranslate nohighlight">
+\[
+0=\frac{d}{dt}f(\mathbf{x}(t))
+=\nabla f(\mathbf{x}(t))^T\frac{d\mathbf{x}}{dt}
+\]</div>
+<p>となる。勾配がゼロでない点では、勾配は等高線の接線に直交する。
+次の図では<span class="math notranslate nohighlight">\(f(x,y)=x^2+2y^2\)</span>の値を背景の色で表し、半透明のグレーの等高線と、勾配<span class="math notranslate nohighlight">\((2x,4y)^T\)</span>を重ねる。
+赤い矢印は勾配の向きを表し、長さは見やすいように揃えている。
+白い点と矢印は、点<span class="math notranslate nohighlight">\((2,1.25)\)</span>を出発点として、移動幅<span class="math notranslate nohighlight">\(\eta=0.15\)</span>で勾配降下法を5ステップ適用した経路を表す。白い丸が出発点、小さな白い点が途中の各ステップ、白い×印が5ステップ後の位置である。</p>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">x_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">3.4</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">,</span> <span class="mi">361</span><span class="p">)</span>
+<span class="n">y_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">1.8</span><span class="p">,</span> <span class="mf">1.8</span><span class="p">,</span> <span class="mi">241</span><span class="p">)</span>
+<span class="n">gx</span><span class="p">,</span> <span class="n">gy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">y_values</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mf">4.8</span><span class="p">))</span>
+<span class="n">values</span> <span class="o">=</span> <span class="n">gx</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">gy</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">contours</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">gx</span><span class="p">,</span> <span class="n">gy</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span>
+                       <span class="n">levels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">values</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">101</span><span class="p">),</span>
+                       <span class="n">cmap</span><span class="o">=</span><span class="s2">"coolwarm"</span><span class="p">,</span> <span class="n">antialiased</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">gx</span><span class="p">,</span> <span class="n">gy</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">16</span><span class="p">],</span>
+           <span class="n">colors</span><span class="o">=</span><span class="s2">"0.4"</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contours</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"f(x, y)"</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.02</span><span class="p">)</span>
+
+<span class="n">qx</span><span class="p">,</span> <span class="n">qy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">grad_x</span><span class="p">,</span> <span class="n">grad_y</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">qx</span><span class="p">,</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">qy</span>
+<span class="n">grad_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hypot</span><span class="p">(</span><span class="n">grad_x</span><span class="p">,</span> <span class="n">grad_y</span><span class="p">)</span>
+<span class="n">nonzero</span> <span class="o">=</span> <span class="n">grad_norm</span> <span class="o">&gt;</span> <span class="mi">0</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">qx</span><span class="p">[</span><span class="n">nonzero</span><span class="p">],</span> <span class="n">qy</span><span class="p">[</span><span class="n">nonzero</span><span class="p">],</span>
+          <span class="n">grad_x</span><span class="p">[</span><span class="n">nonzero</span><span class="p">]</span> <span class="o">/</span> <span class="n">grad_norm</span><span class="p">[</span><span class="n">nonzero</span><span class="p">],</span>
+          <span class="n">grad_y</span><span class="p">[</span><span class="n">nonzero</span><span class="p">]</span> <span class="o">/</span> <span class="n">grad_norm</span><span class="p">[</span><span class="n">nonzero</span><span class="p">],</span>
+          <span class="n">angles</span><span class="o">=</span><span class="s2">"xy"</span><span class="p">,</span> <span class="n">scale_units</span><span class="o">=</span><span class="s2">"xy"</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">3.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"tab:red"</span><span class="p">)</span>
+
+<span class="c1"># 移動の各段階が見えるように、原点から少し離れた点を出発点とする。</span>
+<span class="n">point</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.25</span><span class="p">])</span>
+<span class="n">eta</span> <span class="o">=</span> <span class="mf">0.15</span>
+<span class="n">n_steps</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">trajectory</span> <span class="o">=</span> <span class="p">[</span><span class="n">point</span><span class="o">.</span><span class="n">copy</span><span class="p">()]</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_steps</span><span class="p">):</span>
+    <span class="n">current</span> <span class="o">=</span> <span class="n">trajectory</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">gradient</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span> <span class="o">*</span> <span class="n">current</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">current</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+    <span class="n">trajectory</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current</span> <span class="o">-</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">gradient</span><span class="p">)</span>
+<span class="n">trajectory</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">trajectory</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">current</span><span class="p">,</span> <span class="n">following</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">trajectory</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">trajectory</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">""</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="n">following</span><span class="p">,</span> <span class="n">xytext</span><span class="o">=</span><span class="n">current</span><span class="p">,</span>
+                <span class="n">arrowprops</span><span class="o">=</span><span class="p">{</span><span class="s2">"arrowstyle"</span><span class="p">:</span> <span class="s2">"-&gt;"</span><span class="p">,</span> <span class="s2">"color"</span><span class="p">:</span> <span class="s2">"white"</span><span class="p">,</span> <span class="s2">"lw"</span><span class="p">:</span> <span class="mf">1.8</span><span class="p">,</span>
+                            <span class="s2">"shrinkA"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">"shrinkB"</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="o">*</span><span class="n">trajectory</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">"white"</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Start"</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">trajectory</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">trajectory</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">"white"</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="o">*</span><span class="n">trajectory</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">"white"</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">"x"</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">1.8</span><span class="p">,</span>
+           <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">"After </span><span class="si">{</span><span class="n">n_steps</span><span class="si">}</span><span class="s2"> steps"</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"x"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"y"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Contours and gradient directions: x² + 2y²"</span><span class="p">,</span>
+       <span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">3.4</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1.8</span><span class="p">,</span> <span class="mf">1.8</span><span class="p">),</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">"equal"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s2">"0.2"</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">"none"</span><span class="p">,</span>
+          <span class="n">framealpha</span><span class="o">=</span><span class="mf">0.65</span><span class="p">,</span> <span class="n">labelcolor</span><span class="o">=</span><span class="s2">"white"</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/1f8156d0cf6dec70fb793c1a2ff7d814d23877ce9a5df5a3313b352a17a0f26d.png" src="../_images/1f8156d0cf6dec70fb793c1a2ff7d814d23877ce9a5df5a3313b352a17a0f26d.png" />
+</div>
+</div>
+</section>
+<section id="id8">
+<h3><span class="section-number">1.2.3. </span>多変数関数の連鎖律<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
 <p>多変数の場合のチェインルールを整理しておこう。</p>
 <p>微分可能な二変数関数<span class="math notranslate nohighlight">\(f: \mathbb{R}^2 \to \mathbb{R}\)</span>と、<span class="math notranslate nohighlight">\(t\)</span>に依存する変数<span class="math notranslate nohighlight">\(\mathbf{x}(t) = (x_1(t), x_2(t))^T\)</span>に対して、合成関数の微分は勾配と<span class="math notranslate nohighlight">\(\frac{d\mathbf{x}}{dt}\)</span>の内積で表される。</p>
 <div class="math notranslate nohighlight">
@@ -547,8 +727,9 @@ g(x) &amp;= \exp(x)
 \end{split}\]</div>
 <p>右辺の<span class="math notranslate nohighlight">\(\nabla_{\mathbf{x}} f\)</span>は<span class="math notranslate nohighlight">\(\mathbf{x}(\mathbf{u})\)</span>で評価する。一般に<span class="math notranslate nohighlight">\(\mathbf{u}\in\mathbb{R}^k\)</span>、<span class="math notranslate nohighlight">\(\mathbf{x}\in\mathbb{R}^n\)</span>なら、<span class="math notranslate nohighlight">\(\mathbf{J}_{\mathbf{x}}\in\mathbb{R}^{n\times k}\)</span>なので、<span class="math notranslate nohighlight">\(\mathbf{J}_{\mathbf{x}}^T\nabla_{\mathbf{x}}f\in\mathbb{R}^{k\times 1}\)</span>となる。</p>
 </section>
-<section id="id6">
-<h2><span class="section-number">1.3. </span>ベクトル値関数の微分<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+</section>
+<section id="id9">
+<h2><span class="section-number">1.3. </span>ベクトル値関数の微分<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
 <p>実数値関数<span class="math notranslate nohighlight">\(f: \mathbb{R}^n \to \mathbb{R}\)</span>に対する偏微分と勾配を、より一般のベクトル値関数<span class="math notranslate nohighlight">\(\mathbf{f}: \mathbb{R}^n \to \mathbb{R}^m\)</span>に拡張する。</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -615,31 +796,156 @@ f_m(\mathbf{x})
 \end{bmatrix}.
 \end{split}\]</div>
 <p>とくに、スカラー関数<span class="math notranslate nohighlight">\(f\)</span>のヤコビ行列は<span class="math notranslate nohighlight">\(\mathbf{J}_f = (\nabla_{\mathbf{x}} f)^T \in \mathbb{R}^{1\times n}\)</span>であり、列ベクトルである勾配とは区別する。</p>
-<p>Jacobi行列(Jacobian)は、変数変換によるスケール変化を表す行列でもあり、確率密度分布や再パラメータ化などの文脈でも重要な役割を果たす。</p>
-<p>とくに、変数変換を伴う重積分では、ヤコビ行列の行列式が重要な役割を果たす。
-ヤコビ行列の行列式は、変数変換による体積の変化を表す。
-例えば、2次元の変数変換<span class="math notranslate nohighlight">\((x, y) \to (u, v)\)</span>において、ヤコビ行列は次のように定義される。</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{align}
-\mathbf{J} &amp;= \begin{bmatrix}
-\frac{\partial u}{\partial x} &amp; \frac{\partial u}{\partial y} \\
-\frac{\partial v}{\partial x} &amp; \frac{\partial v}{\partial y}
-\end{bmatrix}
-\end{align}
-\end{split}\]</div>
-<p>このとき、</p>
+<section id="id10">
+<h3><span class="section-number">1.3.1. </span>ヤコビ行列による局所線形近似<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<p>微分可能なベクトル値関数<span class="math notranslate nohighlight">\(\mathbf{f}:\mathbb{R}^n\to\mathbb{R}^m\)</span>では、
+スカラー関数の一次近似が次のように拡張される。</p>
 <div class="math notranslate nohighlight">
 \[
-\begin{align}
-\int_A f(x, y) dxdy &amp;= \int_B g(u, v) |\det(J)| dudv
-\end{align}
+\mathbf{f}(\mathbf{x}+\Delta\mathbf{x})
+=\mathbf{f}(\mathbf{x})+\mathbf{J}_{\mathbf{f}}(\mathbf{x})\Delta\mathbf{x}
++o(\|\Delta\mathbf{x}\|).
 \]</div>
-<p>となる。ここで、<span class="math notranslate nohighlight">\(A\)</span>は<span class="math notranslate nohighlight">\((x, y)\)</span>平面上の領域、<span class="math notranslate nohighlight">\(B\)</span>は<span class="math notranslate nohighlight">\((u, v)\)</span>平面上の領域、<span class="math notranslate nohighlight">\(g(u, v)\)</span>は変数変換後の関数である。
-ヤコビ行列の行列式(Jacobian)の絶対値が積分に現れている。</p>
-<section id="hessian">
-<h3><span class="section-number">1.3.1. </span>Hessian<a class="headerlink" href="#hessian" title="Link to this heading">#</a></h3>
-<p>２階微分可能な実数値関数<span class="math notranslate nohighlight">\(f: \mathbb{R}^n \to \mathbb{R}\)</span>に対して、各変数で２回偏微分した行列をヘッセ行列(Hessian matrix)と呼ぶ。</p>
+<p>ここで誤差は<span class="math notranslate nohighlight">\(m\)</span>次元ベクトルであり、そのノルムを<span class="math notranslate nohighlight">\(\|\Delta\mathbf{x}\|\)</span>で割ると0に近づく。
+ヤコビ行列は、<strong>入力の小さな変化を出力の変化へ写す線形写像</strong>である。
+<span class="math notranslate nohighlight">\(\mathbf{J}_{\mathbf{f}}\in\mathbb{R}^{m\times n}\)</span>に<span class="math notranslate nohighlight">\(\Delta\mathbf{x}\in\mathbb{R}^{n\times1}\)</span>を掛けるので、
+出力の変化は<span class="math notranslate nohighlight">\(m\times1\)</span>の列ベクトルになる。</p>
+<p>例えば、<span class="math notranslate nohighlight">\(\mathbf{f}(x,y)=(x^2+y,xy)^T\)</span>では、</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{J}_{\mathbf{f}}(x,y)=\begin{pmatrix}2x&amp;1\\y&amp;x\end{pmatrix},\qquad
+\mathbf{J}_{\mathbf{f}}(1,2)=\begin{pmatrix}2&amp;1\\2&amp;1\end{pmatrix}.
+\end{split}\]</div>
+<p>点<span class="math notranslate nohighlight">\((1,2)\)</span>から<span class="math notranslate nohighlight">\(\Delta\mathbf{x}=(h,k)^T\)</span>だけ動くと、一次近似による出力の変化は<span class="math notranslate nohighlight">\((2h+k,2h+k)^T\)</span>となる。
+したがって、1次の変化はJacobi行列で表現できる。
+実際の変化は<span class="math notranslate nohighlight">\((2h+k+h^2,2h+k+hk)^T\)</span>なので、その差は二次の項<span class="math notranslate nohighlight">\((h^2,hk)^T\)</span>である。</p>
+</section>
+<section id="id11">
+<h3><span class="section-number">1.3.2. </span>ベクトル値関数どうしの連鎖律<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<p>微分可能な<span class="math notranslate nohighlight">\(\mathbf{f}:\mathbb{R}^n\to\mathbb{R}^m\)</span>と<span class="math notranslate nohighlight">\(\mathbf{g}:\mathbb{R}^m\to\mathbb{R}^p\)</span>を合成する。
+途中の変数を<span class="math notranslate nohighlight">\(\mathbf{z}=\mathbf{f}(\mathbf{x})\)</span>、合成関数を<span class="math notranslate nohighlight">\(\mathbf{h}=\mathbf{g}\circ\mathbf{f}\)</span>と書くと、計算の流れは</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{x}\in\mathbb{R}^n
+\ \xrightarrow{\ \mathbf{f}\ }\ 
+\mathbf{z}\in\mathbb{R}^m
+\ \xrightarrow{\ \mathbf{g}\ }\ 
+\mathbf{h}(\mathbf{x})\in\mathbb{R}^p
+\]</div>
+<p>となる。<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>を少し変えると、まず<span class="math notranslate nohighlight">\(\mathbf{z}\)</span>が変わり、その変化を通じて出力<span class="math notranslate nohighlight">\(\mathbf{h}\)</span>が変わる。
+先ほどの局所線形近似を、一次の変化を表す全微分で書けば、</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+d\mathbf{z}&amp;=\mathbf{J}_{\mathbf{f}}(\mathbf{x})\,d\mathbf{x},\\
+d\mathbf{h}&amp;=\mathbf{J}_{\mathbf{g}}(\mathbf{z})\,d\mathbf{z}
+\end{aligned}
+\end{split}\]</div>
+<p>である。2行目の<span class="math notranslate nohighlight">\(d\mathbf{z}\)</span>に1行目を代入すると、</p>
+<div class="math notranslate nohighlight">
+\[
+d\mathbf{h}
+=\mathbf{J}_{\mathbf{g}}(\mathbf{f}(\mathbf{x}))
+\mathbf{J}_{\mathbf{f}}(\mathbf{x})\,d\mathbf{x}
+\]</div>
+<p>となる。一方、合成関数を直接微分すれば<span class="math notranslate nohighlight">\(d\mathbf{h}=\mathbf{J}_{\mathbf{h}}(\mathbf{x})\,d\mathbf{x}\)</span>である。
+任意の<span class="math notranslate nohighlight">\(d\mathbf{x}\)</span>に対して両者が一致するため、次の連鎖律を得る。</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{J}_{\mathbf{g}\circ\mathbf{f}}(\mathbf{x})
+=\mathbf{J}_{\mathbf{g}}(\mathbf{f}(\mathbf{x}))\mathbf{J}_{\mathbf{f}}(\mathbf{x})
+\in\mathbb{R}^{p\times n}.
+\]</div>
+<p>行列は右から作用するので、先に適用する<span class="math notranslate nohighlight">\(\mathbf{f}\)</span>のヤコビ行列が右側に来る。
+また、<span class="math notranslate nohighlight">\(\mathbf{g}\)</span>への入力は<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>ではなく<span class="math notranslate nohighlight">\(\mathbf{z}=\mathbf{f}(\mathbf{x})\)</span>なので、
+<span class="math notranslate nohighlight">\(\mathbf{J}_{\mathbf{g}}\)</span>もその点で評価する。
+行列のサイズは<span class="math notranslate nohighlight">\((p\times m)(m\times n)=p\times n\)</span>となり、入力<span class="math notranslate nohighlight">\(n\)</span>成分の変化を出力<span class="math notranslate nohighlight">\(p\)</span>成分の変化に写している。</p>
+<p><strong>成分ごとに確認する。</strong>
+出力の第<span class="math notranslate nohighlight">\(k\)</span>成分は<span class="math notranslate nohighlight">\(h_k(\mathbf{x})=g_k(f_1(\mathbf{x}),\ldots,f_m(\mathbf{x}))\)</span>である。
+入力<span class="math notranslate nohighlight">\(x_i\)</span>を変えると、中間変数<span class="math notranslate nohighlight">\(z_1,\ldots,z_m\)</span>のそれぞれを通じて<span class="math notranslate nohighlight">\(h_k\)</span>が変わる。
+多変数の連鎖律では、それらの寄与をすべて足すので、</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial h_k}{\partial x_i}(\mathbf{x})
+=\sum_{j=1}^m
+\frac{\partial g_k}{\partial z_j}(\mathbf{f}(\mathbf{x}))
+\frac{\partial f_j}{\partial x_i}(\mathbf{x})
+\qquad (k=1,\ldots,p,\ i=1,\ldots,n)
+\]</div>
+<p>となる。ここで<span class="math notranslate nohighlight">\(\partial g_k/\partial z_j\)</span>は<span class="math notranslate nohighlight">\(\mathbf{J}_{\mathbf{g}}\)</span>の<span class="math notranslate nohighlight">\((k,j)\)</span>成分、
+<span class="math notranslate nohighlight">\(\partial f_j/\partial x_i\)</span>は<span class="math notranslate nohighlight">\(\mathbf{J}_{\mathbf{f}}\)</span>の<span class="math notranslate nohighlight">\((j,i)\)</span>成分である。
+したがって、右辺は行列積の定義そのものであり、</p>
+<div class="math notranslate nohighlight">
+\[
+(\mathbf{J}_{\mathbf{h}})_{ki}
+=\sum_{j=1}^m(\mathbf{J}_{\mathbf{g}})_{kj}(\mathbf{J}_{\mathbf{f}})_{ji}
+=(\mathbf{J}_{\mathbf{g}}\mathbf{J}_{\mathbf{f}})_{ki}
+\]</div>
+<p>とまとめられる。行列積で中間の添字<span class="math notranslate nohighlight">\(j\)</span>について和を取ることは、すべての中間変数を通る変化を足し合わせることに対応する。</p>
+<p><strong>出力がスカラーの場合は、列勾配の式に直す。</strong>
+<span class="math notranslate nohighlight">\(\mathbf{g}\)</span>の代わりに損失関数<span class="math notranslate nohighlight">\(L:\mathbb{R}^m\to\mathbb{R}\)</span>を考えると、<span class="math notranslate nohighlight">\(p=1\)</span>であり、
+<span class="math notranslate nohighlight">\(\mathbf{J}_L=(\nabla_{\mathbf{z}}L)^T\)</span>は<span class="math notranslate nohighlight">\(1\times m\)</span>の行ベクトルである。
+同様に、<span class="math notranslate nohighlight">\(\mathbf{J}_{L\circ\mathbf{f}}=(\nabla_{\mathbf{x}}(L\circ\mathbf{f}))^T\)</span>なので、連鎖律は</p>
+<div class="math notranslate nohighlight">
+\[
+\bigl(\nabla_{\mathbf{x}}(L\circ\mathbf{f})(\mathbf{x})\bigr)^T
+=\bigl(\nabla_{\mathbf{z}}L(\mathbf{z})\bigr)^T\mathbf{J}_{\mathbf{f}}(\mathbf{x}),
+\qquad \mathbf{z}=\mathbf{f}(\mathbf{x})
+\]</div>
+<p>となる。両辺を転置し、積の転置では順序が逆になる<span class="math notranslate nohighlight">\((AB)^T=B^TA^T\)</span>を使うと、</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\nabla_{\mathbf{x}}(L\circ\mathbf{f})(\mathbf{x})
+&amp;=\left[\bigl(\nabla_{\mathbf{z}}L(\mathbf{z})\bigr)^T\mathbf{J}_{\mathbf{f}}(\mathbf{x})\right]^T\\
+&amp;=\mathbf{J}_{\mathbf{f}}(\mathbf{x})^T\nabla_{\mathbf{z}}L(\mathbf{z}),
+\qquad \mathbf{z}=\mathbf{f}(\mathbf{x})
+\end{aligned}
+\end{split}\]</div>
+<p>が得られる。右辺のサイズは<span class="math notranslate nohighlight">\((n\times m)(m\times1)=n\times1\)</span>で、入力<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>に関する列勾配になっている。
+入力の変化を出力へ伝えるときは<span class="math notranslate nohighlight">\(\mathbf{J}_{\mathbf{f}}\)</span>を使い、出力側の損失の勾配から入力側の勾配を求めるときは<span class="math notranslate nohighlight">\(\mathbf{J}_{\mathbf{f}}^T\)</span>を使う。
+この式が、<a class="reference internal" href="Chapter_ANN2_Backprop.html"><span class="std std-doc">誤差逆伝播法の章</span></a>で用いる基本式である。</p>
+</section>
+<section id="id12">
+<h3><span class="section-number">1.3.3. </span>変数変換と面積・体積の変化<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
+<p>入力と出力の次元が等しいとき、ヤコビ行列の行列式の絶対値は<strong>局所的な体積の拡大率</strong>を表す。
+これは重積分の変数変換や確率密度の変換に現れる。</p>
+<p>2次元では、領域<span class="math notranslate nohighlight">\(A\)</span>から領域<span class="math notranslate nohighlight">\(B\)</span>への一対一の変数変換<span class="math notranslate nohighlight">\(T:(x,y)\mapsto(u,v)\)</span>を考える。
+<span class="math notranslate nohighlight">\(T\)</span>とその逆変換は連続微分可能であり、<span class="math notranslate nohighlight">\(\det\mathbf{J}\ne0\)</span>とする。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{J}(x,y)=\frac{\partial(u,v)}{\partial(x,y)}
+=\begin{pmatrix}
+\frac{\partial u}{\partial x}&amp;\frac{\partial u}{\partial y}\\
+\frac{\partial v}{\partial x}&amp;\frac{\partial v}{\partial y}
+\end{pmatrix}.
+\end{split}\]</div>
+<p>この<span class="math notranslate nohighlight">\(\mathbf{J}\)</span>は<span class="math notranslate nohighlight">\((x,y)\)</span>から<span class="math notranslate nohighlight">\((u,v)\)</span>への変換なので、面積要素の関係は</p>
+<div class="math notranslate nohighlight">
+\[
+du\,dv=|\det\mathbf{J}(x,y)|\,dx\,dy
+\]</div>
+<p>である。逆変換を<span class="math notranslate nohighlight">\((x,y)=(x(u,v),y(u,v))\)</span>と書くと、積分可能な関数<span class="math notranslate nohighlight">\(f\)</span>に対して</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\int_A f(x,y)\,dx\,dy
+&amp;=\int_B f(x(u,v),y(u,v))
+\left|\det\frac{\partial(x,y)}{\partial(u,v)}\right|\,du\,dv\\
+&amp;=\int_B f(x(u,v),y(u,v))
+\frac{1}{|\det\mathbf{J}(x(u,v),y(u,v))|}\,du\,dv
+\end{aligned}
+\end{split}\]</div>
+<p>となる。<strong>どちら向きの変換のヤコビ行列か</strong>を確認することが大切である。</p>
+<p>例えば<span class="math notranslate nohighlight">\(u=2x,\ v=3y\)</span>なら<span class="math notranslate nohighlight">\(\mathbf{J}=\operatorname{diag}(2,3)\)</span>であり、
+<span class="math notranslate nohighlight">\(du\,dv=6\,dx\,dy\)</span>、したがって<span class="math notranslate nohighlight">\(dx\,dy=\frac16du\,dv\)</span>である。
+単位正方形<span class="math notranslate nohighlight">\(A\)</span>の像<span class="math notranslate nohighlight">\(B\)</span>は面積6の長方形になるが、積分では<span class="math notranslate nohighlight">\(\frac16\)</span>を掛けるため、
+<span class="math notranslate nohighlight">\(\int_A1\,dx\,dy=\int_B\frac16\,du\,dv=1\)</span>と確認できる。</p>
+</section>
+</section>
+<section id="id13">
+<h2><span class="section-number">1.4. </span>ヘッセ行列と二次近似<a class="headerlink" href="#id13" title="Link to this heading">#</a></h2>
+<p>２階連続微分可能な実数値関数<span class="math notranslate nohighlight">\(f: \mathbb{R}^n \to \mathbb{R}\)</span>に対して、各変数で２回偏微分した行列をヘッセ行列(Hessian matrix)と呼ぶ。</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align*}
@@ -647,21 +953,276 @@ f_m(\mathbf{x})
 &amp; = 
 \frac{\partial^2 f}{\partial \boldsymbol{x}^2} = \nabla^2 f
 = \begin{pmatrix}
-\frac{\partial^2 f}{\partial x^2_1} &amp; \cdots &amp; \frac{\partial^2 f}{\partial x_1 x_n} \\
+\frac{\partial^2 f}{\partial x_1^2} &amp; \cdots &amp; \frac{\partial^2 f}{\partial x_1\partial x_n} \\
 \vdots &amp; \ddots &amp; \vdots \\
-\frac{\partial^2 f}{\partial x_n x_1} &amp; \cdots &amp; \frac{\partial^2 f}{\partial x^2_n}
+\frac{\partial^2 f}{\partial x_n\partial x_1} &amp; \cdots &amp; \frac{\partial^2 f}{\partial x_n^2}
 \end{pmatrix}
 \end{align*}
 \end{split}\]</div>
-<p>微分が可換である(すなわち、<span class="math notranslate nohighlight">\(f\)</span>が２階連続微分可能である)ならば、ヘッセ行列は対称行列になる。
+<p><span class="math notranslate nohighlight">\(f\)</span>が２階連続微分可能ならば、偏微分の順序を入れ替えても結果は変わらない。このため、ヘッセ行列は対称行列になる。
 ヘッセ行列は、関数<span class="math notranslate nohighlight">\(f\)</span>の２次微分に関する情報を提供し、最適化問題において重要な役割を果たす。</p>
+<section id="id14">
+<h3><span class="section-number">1.4.1. </span>多変数関数のテイラー展開<a class="headerlink" href="#id14" title="Link to this heading">#</a></h3>
+<p><span class="math notranslate nohighlight">\(f\)</span>が<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>の近傍で２階連続微分可能なら、一変数のテイラー展開は次のように拡張される。</p>
+<div class="math notranslate nohighlight">
+\[
+f(\mathbf{x}+\Delta\mathbf{x})
+=f(\mathbf{x})+\nabla f(\mathbf{x})^T\Delta\mathbf{x}
++\frac12\Delta\mathbf{x}^T\boldsymbol{H}_f(\mathbf{x})\Delta\mathbf{x}
++o(\|\Delta\mathbf{x}\|^2).
+\]</div>
+<p>誤差<span class="math notranslate nohighlight">\(o(\|\Delta\mathbf{x}\|^2)\)</span>は、<span class="math notranslate nohighlight">\(\|\Delta\mathbf{x}\|^2\)</span>で割ると0に近づく項である。
+勾配が一次の変化を、ヘッセ行列が二次の変化を表す。
+二変数では二次の項は</p>
+<div class="math notranslate nohighlight">
+\[
+\frac12\left(
+\frac{\partial^2 f}{\partial x^2}(\Delta x)^2
++2\frac{\partial^2 f}{\partial x\partial y}\Delta x\Delta y
++\frac{\partial^2 f}{\partial y^2}(\Delta y)^2
+\right)
+\]</div>
+<p>となる。混合偏微分の項も含まれることに注意する。</p>
+<p>単位ベクトル<span class="math notranslate nohighlight">\(\mathbf{v}\)</span>に沿う一変数関数<span class="math notranslate nohighlight">\(\phi(t)=f(\mathbf{x}+t\mathbf{v})\)</span>を考えると、</p>
+<div class="math notranslate nohighlight">
+\[
+\phi'(0)=\nabla f(\mathbf{x})^T\mathbf{v},\qquad
+\phi''(0)=\mathbf{v}^T\boldsymbol{H}_f(\mathbf{x})\mathbf{v}.
+\]</div>
+<p>したがって、<span class="math notranslate nohighlight">\(\mathbf{v}^T\boldsymbol{H}_f\mathbf{v}\)</span>は、その方向に沿った二階微分である。
+<span class="math notranslate nohighlight">\(\mathbf{v}\)</span>がヘッセ行列の単位固有ベクトルで、対応する固有値が<span class="math notranslate nohighlight">\(\lambda\)</span>なら、<span class="math notranslate nohighlight">\(\phi''(0)=\lambda\)</span>となる。
+この意味で、固有値は各固有ベクトル方向の曲がり方を表す。</p>
+</section>
+<section id="id15">
+<h3><span class="section-number">1.4.2. </span>停留点と極値の判定<a class="headerlink" href="#id15" title="Link to this heading">#</a></h3>
 <p>視覚的には、ヘッセ行列は関数<span class="math notranslate nohighlight">\(f\)</span>の曲率を表し、関数の極値(最小値・最大値)の性質を理解するのに役立つ。</p>
-<p>パラメータが２次元の誤差関数をイメージしてみるとよい。
-ヘッセ行列の固有値が正であれば、その点は局所的な最小値であり、負であれば局所的な最大値である。固有値が混在している場合、その点は鞍点(saddle point)である。</p>
+<p>定義域の内部にある微分可能な関数の局所最小点・局所最大点では<span class="math notranslate nohighlight">\(\nabla f=\mathbf0\)</span>となる。
+この条件を満たす点を<strong>停留点</strong>と呼ぶが、停留点が極値を与えるとは限らない。
+停留点では多変数テイラー展開の一次の項が消えるため、二次の項の符号が重要になる。</p>
+<p>２階連続微分可能な関数の停留点において、ヘッセ行列の固有値がすべて正なら狭義の局所最小点、すべて負なら狭義の局所最大点である。正と負が混在していれば鞍点(saddle point)である。
+停留点でない点では、ヘッセ行列の符号だけで極値を判定することはできない。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>関数</p></th>
+<th class="head"><p>原点でのヘッセ行列</p></th>
+<th class="head"><p>固有値</p></th>
+<th class="head"><p>原点の性質</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(x^2+y^2\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\operatorname{diag}(2,2)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(2,2\)</span></p></td>
+<td><p>狭義の最小点</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(-x^2-y^2\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\operatorname{diag}(-2,-2)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(-2,-2\)</span></p></td>
+<td><p>狭義の最大点</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(x^2-y^2\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\operatorname{diag}(2,-2)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(2,-2\)</span></p></td>
+<td><p>鞍点</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>すべての固有値が正の対称行列を<strong>正定値</strong>と呼ぶ。これは<span class="math notranslate nohighlight">\(\Delta\mathbf x\ne\mathbf0\)</span>なら
+<span class="math notranslate nohighlight">\(\Delta\mathbf x^TH_f\Delta\mathbf x&gt;0\)</span>となることを意味し、停留点の周りで関数値が増えることにつながる。</p>
+<p>すべての固有値が0以上の対称行列を<strong>半正定値</strong>、0以下のものを<strong>半負定値</strong>と呼ぶ。
+ヘッセ行列が半正定値・半負定値でゼロ固有値を含む場合は、二次の情報だけでは判定できない。
+例えば<span class="math notranslate nohighlight">\(x^4+y^4\)</span>、<span class="math notranslate nohighlight">\(-x^4-y^4\)</span>、<span class="math notranslate nohighlight">\(x^4-y^4\)</span>は原点で勾配もヘッセ行列もゼロだが、原点はそれぞれ最小点・最大点・鞍点である。
+なお、ゼロ固有値があっても正と負の固有値が混在していれば鞍点と判定できる。</p>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 鞍点の例をみるのに、x^2 - y^2 のグラフを描いてみる。</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">81</span><span class="p">)</span>
+<span class="n">sx</span><span class="p">,</span> <span class="n">sy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">grid</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">))</span>
+<span class="n">examples</span> <span class="o">=</span> <span class="p">[(</span><span class="n">sx</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">sy</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="s2">"Minimum: x² + y²"</span><span class="p">),</span>
+            <span class="p">(</span><span class="o">-</span><span class="n">sx</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">sy</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="s2">"Maximum: -x² - y²"</span><span class="p">),</span>
+            <span class="p">(</span><span class="n">sx</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">sy</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="s2">"Saddle: x² - y²"</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">title</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">examples</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">"3d"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">"coolwarm"</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.85</span><span class="p">,</span>
+                    <span class="n">vmin</span><span class="o">=-</span><span class="mf">4.5</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">4.5</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"x"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"y"</span><span class="p">,</span> <span class="n">zlabel</span><span class="o">=</span><span class="s2">"f"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">zlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">4.5</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">view_init</span><span class="p">(</span><span class="n">elev</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">azim</span><span class="o">=-</span><span class="mi">55</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/260239bc9d597d44e5b196da0a255b573a7aa2e9a4a65f2559ab2b9d5f26c34f.png" src="../_images/260239bc9d597d44e5b196da0a255b573a7aa2e9a4a65f2559ab2b9d5f26c34f.png" />
+</div>
+</div>
 </section>
 </section>
-<section id="id7">
-<h2><span class="section-number">1.4. </span>条件つき最適化<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<section id="id16">
+<h2><span class="section-number">1.5. </span>計算例: 線形回帰の勾配とヘッセ行列<a class="headerlink" href="#id16" title="Link to this heading">#</a></h2>
+<p>冒頭の線形回帰に戻り、ここまでの微分を実際に計算しよう。
+<span class="math notranslate nohighlight">\(N\geq1\)</span>個のデータ<span class="math notranslate nohighlight">\((x_i,y_i)\)</span>は固定し、パラメータ<span class="math notranslate nohighlight">\(\boldsymbol{\theta}=(a,b)^T\)</span>だけを変数とする。
+目的関数と残差を</p>
+<div class="math notranslate nohighlight">
+\[
+f(a,b)=\frac1N\sum_{i=1}^N r_i^2,\qquad r_i=ax_i+b-y_i
+\]</div>
+<p>と書く。残差の符号は冒頭と逆だが、二乗するため目的関数は同じである。
+<span class="math notranslate nohighlight">\(\partial r_i/\partial a=x_i\)</span>、<span class="math notranslate nohighlight">\(\partial r_i/\partial b=1\)</span>なので、連鎖律より</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial f}{\partial a}=\frac2N\sum_i r_i x_i,\qquad
+\frac{\partial f}{\partial b}=\frac2N\sum_i r_i.
+\]</div>
+<p>したがって、勾配とヘッセ行列は</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\nabla_{\boldsymbol{\theta}}f
+=\frac2N\begin{pmatrix}\sum_i r_i x_i\\\sum_i r_i\end{pmatrix},\qquad
+\boldsymbol{H}_f
+=\frac2N\begin{pmatrix}\sum_i x_i^2&amp;\sum_i x_i\\\sum_i x_i&amp;N\end{pmatrix}
+\end{split}\]</div>
+<p>となる。このヘッセ行列はパラメータ<span class="math notranslate nohighlight">\((a,b)\)</span>に依存しない。
+任意の変位<span class="math notranslate nohighlight">\(\Delta\boldsymbol{\theta}=(\Delta a,\Delta b)^T\)</span>に対して、</p>
+<div class="math notranslate nohighlight">
+\[
+\Delta\boldsymbol{\theta}^T\boldsymbol{H}_f\Delta\boldsymbol{\theta}
+=\frac2N\sum_i(x_i\Delta a+\Delta b)^2\geq0
+\]</div>
+<p>なので、<span class="math notranslate nohighlight">\(\boldsymbol{H}_f\)</span>は半正定値である。
+さらに、この目的関数は二次関数なので二次のテイラー展開の誤差は厳密に0となる。
+停留点<span class="math notranslate nohighlight">\(\boldsymbol{\theta}_*\)</span>では、任意の変位に対して</p>
+<div class="math notranslate nohighlight">
+\[
+f(\boldsymbol{\theta}_*+\Delta\boldsymbol{\theta})-f(\boldsymbol{\theta}_*)
+=\frac12\Delta\boldsymbol{\theta}^T\boldsymbol{H}_f\Delta\boldsymbol{\theta}\geq0
+\]</div>
+<p>である。この不等式は小さな変位だけでなく、任意の<span class="math notranslate nohighlight">\(\Delta\boldsymbol{\theta}\)</span>に対して成り立つ。
+つまり、どのパラメータと比較しても<span class="math notranslate nohighlight">\(f(\boldsymbol{\theta}_*)\)</span>より小さい値にはならないので、この停留点は<strong>大域的な最小点</strong>である。</p>
+<div class="attention admonition">
+<p class="admonition-title">注意: 一般の関数では局所的な情報と大域的な最適性を区別する</p>
+<p>一般の関数では、上の結論をそのまま使うことはできない。</p>
+<ul class="simple">
+<li><p>勾配がゼロであることは停留点の条件であり、最小点であることを保証しない。最大点や鞍点の場合もある。</p></li>
+<li><p>２階連続微分可能な関数の停留点でヘッセ行列が正定値なら、狭義の<strong>局所最小点</strong>とはいえる。しかし、離れた場所にさらに小さい関数値がある可能性は残る。</p></li>
+<li><p>その点のヘッセ行列が半正定値でゼロ固有値を含む場合は、局所最小点かどうかさえ二次の情報だけでは判定できない。</p></li>
+</ul>
+<p>例えば<span class="math notranslate nohighlight">\(f(x)=x^2-x^4\)</span>では、<span class="math notranslate nohighlight">\(f'(0)=0\)</span>かつ<span class="math notranslate nohighlight">\(f''(0)=2&gt;0\)</span>なので原点は局所最小点である。
+しかし<span class="math notranslate nohighlight">\(f(2)=-12&lt;f(0)=0\)</span>であり、大域的な最小点ではない。</p>
+<p>一般の関数の二次のテイラー展開は、その点の近くで成り立つ近似である。
+今回の線形回帰では、目的関数が二次関数なので展開の誤差が厳密に0となり、しかも二次の項が任意の変位について非負になる。
+この二つの性質によって、大域的な最小点であることまで確認できる。</p>
+</div>
+<section id="id17">
+<h3><span class="section-number">1.5.1. </span>解が一意に決まる条件<a class="headerlink" href="#id17" title="Link to this heading">#</a></h3>
+<p><span class="math notranslate nohighlight">\(x_i\)</span>に少なくとも二つの異なる値があれば、
+すべての<span class="math notranslate nohighlight">\(i\)</span>で<span class="math notranslate nohighlight">\(x_i\Delta a+\Delta b=0\)</span>となるのは<span class="math notranslate nohighlight">\(\Delta a=\Delta b=0\)</span>の場合だけである。
+このときヘッセ行列は正定値であり、最小点は一意に決まる。</p>
+<p>一方、すべての入力が<span class="math notranslate nohighlight">\(x_i=c\)</span>なら、予測値はすべて<span class="math notranslate nohighlight">\(ac+b\)</span>となり、
+データから区別できるのはこの組合せだけである。
+<span class="math notranslate nohighlight">\(\bar y=\frac1N\sum_i y_i\)</span>とすると、</p>
+<div class="math notranslate nohighlight">
+\[
+f(a,b)=(ac+b-\bar y)^2+\frac1N\sum_i(y_i-\bar y)^2
+\]</div>
+<p>なので、<span class="math notranslate nohighlight">\(ac+b=\bar y\)</span>を満たすすべての<span class="math notranslate nohighlight">\((a,b)\)</span>が最小点となる。
+変位<span class="math notranslate nohighlight">\((\Delta a,\Delta b)=(t,-ct)\)</span>に沿って予測値も目的関数も変わらず、この方向がヘッセ行列のゼロ固有値に対応する。</p>
+<p>計画行列<span class="math notranslate nohighlight">\(\mathbf{X}\)</span>の各行を<span class="math notranslate nohighlight">\((x_i,1)\)</span>とすれば、上の結果は
+<span class="math notranslate nohighlight">\(\nabla f=\frac2N\mathbf{X}^T(\mathbf{X}\boldsymbol{\theta}-\mathbf{y})\)</span>、
+<span class="math notranslate nohighlight">\(\boldsymbol{H}_f=\frac2N\mathbf{X}^T\mathbf{X}\)</span>とまとめられる。
+解の行列表現と一般の基底関数への拡張は<a class="reference internal" href="Chapter_linear_regression.html"><span class="std std-doc">線形回帰の章</span></a>で扱う。</p>
+</section>
+<section id="id18">
+<h3><span class="section-number">1.5.2. </span>中心差分による勾配の検算<a class="headerlink" href="#id18" title="Link to this heading">#</a></h3>
+<p>手計算やコードで求めた勾配は、各パラメータを少しだけ変えて検算できる。
+<span class="math notranslate nohighlight">\(\mathbf{e}_j\)</span>を<span class="math notranslate nohighlight">\(j\)</span>番目の成分だけが1の単位ベクトルとすると、中心差分は</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial f}{\partial\theta_j}(\boldsymbol{\theta})
+\approx\frac{f(\boldsymbol{\theta}+h\mathbf{e}_j)-f(\boldsymbol{\theta}-h\mathbf{e}_j)}{2h}
+\]</div>
+<p>である。十分滑らかな一般の関数では打切り誤差は<span class="math notranslate nohighlight">\(O(h^2)\)</span>だが、<span class="math notranslate nohighlight">\(h\)</span>を小さくしすぎると丸め誤差の影響が大きくなる。
+今回の二次関数では打切り誤差は厳密に0なので、数値的なずれは主に浮動小数点演算によるものである。
+次のコードで解析的な勾配との一致と、入力がすべて同じ場合のゼロ固有値を確認しよう。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">x_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">])</span>
+<span class="n">y_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">3.2</span><span class="p">,</span> <span class="mf">4.7</span><span class="p">])</span>
+<span class="n">design</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">x_data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">x_data</span><span class="p">)])</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.4</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">])</span>  <span class="c1"># (a, b)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">regression_loss</span><span class="p">(</span><span class="n">parameters</span><span class="p">):</span>
+    <span class="n">residual</span> <span class="o">=</span> <span class="n">design</span> <span class="o">@</span> <span class="n">parameters</span> <span class="o">-</span> <span class="n">y_data</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">residual</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+
+<span class="n">residual</span> <span class="o">=</span> <span class="n">design</span> <span class="o">@</span> <span class="n">theta</span> <span class="o">-</span> <span class="n">y_data</span>
+<span class="n">analytic_gradient</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">design</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">residual</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_data</span><span class="p">)</span>
+<span class="n">hessian</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">design</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">design</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_data</span><span class="p">)</span>
+<span class="n">h</span> <span class="o">=</span> <span class="mf">1e-5</span>
+<span class="n">finite_difference</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">(</span><span class="n">regression_loss</span><span class="p">(</span><span class="n">theta</span> <span class="o">+</span> <span class="n">h</span> <span class="o">*</span> <span class="n">direction</span><span class="p">)</span>
+     <span class="o">-</span> <span class="n">regression_loss</span><span class="p">(</span><span class="n">theta</span> <span class="o">-</span> <span class="n">h</span> <span class="o">*</span> <span class="n">direction</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">h</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">direction</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span>
+<span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Analytic gradient:"</span><span class="p">,</span> <span class="n">analytic_gradient</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Central difference:"</span><span class="p">,</span> <span class="n">finite_difference</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Maximum absolute error:"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">analytic_gradient</span> <span class="o">-</span> <span class="n">finite_difference</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Gradients agree:"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">analytic_gradient</span><span class="p">,</span> <span class="n">finite_difference</span><span class="p">,</span>
+                                     <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-7</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Hessian eigenvalues:"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvalsh</span><span class="p">(</span><span class="n">hessian</span><span class="p">))</span>
+
+<span class="c1"># 入力がすべて c = 2 の場合は (a, b) と (a + t, b - 2t) を区別できない。</span>
+<span class="n">constant_design</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x_data</span><span class="p">),</span> <span class="mf">2.0</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x_data</span><span class="p">))])</span>
+<span class="n">constant_hessian</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">constant_design</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">constant_design</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_data</span><span class="p">)</span>
+<span class="n">null_direction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Hessian eigenvalues (constant inputs):"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvalsh</span><span class="p">(</span><span class="n">constant_hessian</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Predictions unchanged along (1, -2):"</span><span class="p">,</span>
+      <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">constant_design</span> <span class="o">@</span> <span class="n">theta</span><span class="p">,</span>
+                  <span class="n">constant_design</span> <span class="o">@</span> <span class="p">(</span><span class="n">theta</span> <span class="o">+</span> <span class="n">null_direction</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Analytic gradient: [-5.7 -4. ]
+Central difference: [-5.7 -4. ]
+Maximum absolute error: 1.8204548979383617e-11
+Gradients agree: True
+Hessian eigenvalues: [1.38196601 3.61803399]
+Hessian eigenvalues (constant inputs): [ 0. 10.]
+Predictions unchanged along (1, -2): True
+</pre></div>
+</div>
+</div>
+</div>
+<div class="attention admonition">
+<p class="admonition-title">問題</p>
+<ol class="arabic simple">
+<li><p>上の中心差分で<span class="math notranslate nohighlight">\(h\)</span>を<span class="math notranslate nohighlight">\(10^{-2},10^{-5},10^{-8},10^{-11}\)</span>に変え、勾配の誤差を比較せよ。今回の目的関数が二次関数であることに注意し、<span class="math notranslate nohighlight">\(h\)</span>を小さくすれば常に誤差も小さくなるか考察せよ。</p></li>
+<li><p><span class="math notranslate nohighlight">\(f(x,y)=x^2+2y^2\)</span>の点<span class="math notranslate nohighlight">\((1,1)\)</span>において、<span class="math notranslate nohighlight">\(\mathbf{v}=(1,1)^T/\sqrt2\)</span>方向の方向微分を求めよ。また、単位長さあたりの減少率が最も大きい方向を求めよ。</p></li>
+<li><p><span class="math notranslate nohighlight">\(f(x,y)=x^2+xy+2y^2\)</span>について、点<span class="math notranslate nohighlight">\((1,0)\)</span>で二次までのテイラー展開を求め、元の関数と厳密に一致することを確認せよ。</p></li>
+</ol>
+</div>
+</section>
+</section>
+<section id="id19">
+<h2><span class="section-number">1.6. </span>条件つき最適化<a class="headerlink" href="#id19" title="Link to this heading">#</a></h2>
 <p>機械学習モデルのような特定のモデルでデータの説明を試みる場合、モデルのパラメータや変数に対して制約条件が課されることがある。
 こうした場合、制約条件を満たしつつ目的関数を最小化する必要がある。
 そのような問題を条件つき最適化問題と呼ぶが、中でも非常によく用いられる手法が <strong>ラグランジュ未定乗数法 (Lagrange multipliers)</strong> である。</p>
@@ -673,7 +1234,8 @@ f_m(\mathbf{x})
 \end{align*}
 \end{split}\]</div>
 <p>上の式の意味するところは、<span class="math notranslate nohighlight">\(m\)</span>個の制約条件<span class="math notranslate nohighlight">\(g_i(\mathbf{x}) = 0\)</span>を満たしつつ、目的関数<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>を最小化せよ、ということである。
-制約条件がない場合は、単に<span class="math notranslate nohighlight">\(\nabla f(\mathbf{x}) = 0\)</span>を解けばよいが、制約条件がある場合は以下のようにする。</p>
+制約のない微分可能な関数では、定義域の内部の極値候補を<span class="math notranslate nohighlight">\(\nabla f(\mathbf{x})=0\)</span>から探せるが、それだけで最小点と判定できるわけではない。
+等式制約がある場合は、ラグランジュ関数を導入して次の条件を考える。</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align*}
@@ -682,7 +1244,16 @@ f_m(\mathbf{x})
 \nabla_{\boldsymbol{\lambda}} \mathcal{L}(\mathbf{x}, \boldsymbol{\lambda}) &amp;= 0
 \end{align*}
 \end{split}\]</div>
-<p>この勾配の情報と、制約条件<span class="math notranslate nohighlight">\(g_i(\mathbf{x}) = 0\)</span>を同時に満たす点を探すことで、条件つき最適化問題を解くことができる。</p>
+<p><span class="math notranslate nohighlight">\(f,g_1,\ldots,g_m\)</span>が考える点の近傍で連続微分可能であり、制約を満たす局所最適点<span class="math notranslate nohighlight">\(\mathbf{x}_*\)</span>で
+制約勾配<span class="math notranslate nohighlight">\(\nabla g_1(\mathbf{x}_*),\ldots,\nabla g_m(\mathbf{x}_*)\)</span>が一次独立ならば、
+上の条件を満たす乗数<span class="math notranslate nohighlight">\(\boldsymbol{\lambda}\)</span>が存在する。
+これは局所最適点の<strong>必要条件</strong>であり、方程式の解が最小点であることを保証する十分条件ではない。
+得られた候補について、制約上での関数値の比較や二次の変化などを調べ、最適性を確認する必要がある。
+制約勾配が一次独立でない点や、別途定義域の境界がある場合の境界上の候補は、別に調べる必要がある。</p>
+<p>幾何学的には、制約を保つ接線方向<span class="math notranslate nohighlight">\(\mathbf{v}\)</span>は<span class="math notranslate nohighlight">\(\nabla g_i^T\mathbf{v}=0\)</span>を満たす。
+正則な制約上の局所最適点ではその方向の変化率<span class="math notranslate nohighlight">\(\nabla f^T\mathbf{v}\)</span>も0となるため、
+目的関数の勾配は制約勾配の線形結合<span class="math notranslate nohighlight">\(\nabla f=-\sum_i\lambda_i\nabla g_i\)</span>で表される。
+制約が一つなら、目的関数と制約の勾配が平行になる（目的関数の勾配がゼロの場合も含む）。</p>
 <p><strong>練習問題</strong></p>
 <blockquote>
 <div><p>制約条件<span class="math notranslate nohighlight">\(x+y=1\)</span>のもとで、関数<span class="math notranslate nohighlight">\(f(x,y) = x^2 + y^2\)</span>を最小化せよ。</p>
@@ -705,9 +1276,16 @@ x + y - 1
 \end{bmatrix}   = 0
 \end{align*}
 \end{split}\]</div>
-<p>したがって、<span class="math notranslate nohighlight">\(x = y = \frac{1}{2}\)</span>が最適解である。</p>
+<p>この方程式から、候補<span class="math notranslate nohighlight">\(x=y=\frac12\)</span>と<span class="math notranslate nohighlight">\(\lambda=-1\)</span>を得る。
+ここで制約勾配は<span class="math notranslate nohighlight">\((1,1)^T\ne\mathbf0\)</span>なので、上の必要条件を適用できる。
+最小点であることは、制約<span class="math notranslate nohighlight">\(y=1-x\)</span>を目的関数に代入して</p>
+<div class="math notranslate nohighlight">
+\[
+f(x,1-x)=x^2+(1-x)^2=2\left(x-\frac12\right)^2+\frac12\geq\frac12
+\]</div>
+<p>と書けば確認できる。等号は<span class="math notranslate nohighlight">\(x=y=\frac12\)</span>のときだけ成り立つので、これが制約上の一意な大域的最小点である。</p>
 <p>問題の式をみると、<span class="math notranslate nohighlight">\(f(x,y)\)</span>は<span class="math notranslate nohighlight">\(x,y\)</span>の二乗和でありこれを<span class="math notranslate nohighlight">\(r^2\)</span>とおけば、原点を中心とする半径<span class="math notranslate nohighlight">\(r\)</span>の円上の点を表せる。
-一方で、制約条件<span class="math notranslate nohighlight">\(x+y=1\)</span>は、<span class="math notranslate nohighlight">\(x\)</span>軸と<span class="math notranslate nohighlight">\(y\)</span>軸の交点<span class="math notranslate nohighlight">\((1,0)\)</span>と<span class="math notranslate nohighlight">\((0,1)\)</span>を結ぶ直線を表す。
+一方で、制約条件<span class="math notranslate nohighlight">\(x+y=1\)</span>は、<span class="math notranslate nohighlight">\(x\)</span>軸との交点<span class="math notranslate nohighlight">\((1,0)\)</span>と<span class="math notranslate nohighlight">\(y\)</span>軸との交点<span class="math notranslate nohighlight">\((0,1)\)</span>を通る直線を表す。
 したがって今の問題は、原点を中心とする半径<span class="math notranslate nohighlight">\(r\)</span>の円が、直線<span class="math notranslate nohighlight">\(x+y=1\)</span>に接するような<span class="math notranslate nohighlight">\(r\)</span>と接点を求める問題である事がわかる。</p>
 <p>簡単な問題の場合は、こうした幾何学的な解釈を行うことで、最適解を直感的に理解できることがあるが、より複雑な問題の場合は、ラグランジュ未定乗数法のような一般的な手法を用いるのが良いだろう。</p>
 <div class="attention admonition">
@@ -715,13 +1293,13 @@ x + y - 1
 <p>表面積が一定である直方体のうち、体積が最大となるものが立方体であることを示せ。</p>
 </div>
 </section>
-<section id="id8">
-<h2><span class="section-number">1.5. </span>学習の振り返りのためのチェックリスト<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
-<p>▢ 　一変数関数の微分の定義とテイラー展開を説明できる<br />
-▢ 　微分の線形性や積・商・合成関数の微分公式を説明できる<br />
-▢ 　多変数関数の偏微分と勾配（gradient）について説明できる<br />
-▢ 　ベクトル値関数の微分について説明できる<br />
-▢ 　ラグランジュ未定乗数法を用いた条件つき最適化問題の解法を説明できる</p>
+<section id="id20">
+<h2><span class="section-number">1.7. </span>学習の振り返りのためのチェックリスト<a class="headerlink" href="#id20" title="Link to this heading">#</a></h2>
+<p>▢ 　一変数関数の微分とテイラー展開の基本を説明できる<br />
+▢ 　偏微分・勾配の意味と、勾配降下法との関係を説明できる<br />
+▢ 　ヤコビ行列と連鎖律を用いて、合成関数を微分できる<br />
+▢ 　多変数のテイラー展開とヘッセ行列を用いた極値判定を説明できる<br />
+▢ 　ラグランジュ未定乗数法で条件つき最適化の候補を求め、最適性を確認できる</p>
 </section>
 </section>
 
@@ -757,7 +1335,7 @@ x + y - 1
 <div class="prev-next-area">
     <a class="left-prev"
        href="../home.html"
-       title="previous page">
+       title="前のページ">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">前へ</p>
@@ -766,7 +1344,7 @@ x + y - 1
     </a>
     <a class="right-next"
        href="Chapter_math_linearalgebra.html"
-       title="next page">
+       title="次ページ">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">次へ</p>
         <p class="prev-next-title"><span class="section-number">2. </span>線形代数</p>
@@ -780,27 +1358,46 @@ x + y - 1
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> 目次
   </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.1. 一変数の微分</a><ul class="visible nav section-nav flex-column">
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.1. 一変数の微分</a><ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">1.1.1. テイラー展開</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1.1.2. 微分の基本的性質</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">1.2. 偏微分: 多変数への拡張</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">1.3. ベクトル値関数の微分</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hessian">1.3.1. Hessian</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">1.2. 偏微分: 多変数への拡張</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">1.2.1. 全微分と一次近似</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">1.2.2. 方向微分と勾配の向き</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">1.2.3. 多変数関数の連鎖律</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">1.4. 条件つき最適化</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">1.5. 学習の振り返りのためのチェックリスト</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">1.3. ベクトル値関数の微分</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">1.3.1. ヤコビ行列による局所線形近似</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">1.3.2. ベクトル値関数どうしの連鎖律</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">1.3.3. 変数変換と面積・体積の変化</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">1.4. ヘッセ行列と二次近似</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">1.4.1. 多変数関数のテイラー展開</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">1.4.2. 停留点と極値の判定</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">1.5. 計算例: 線形回帰の勾配とヘッセ行列</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">1.5.1. 解が一意に決まる条件</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">1.5.2. 中心差分による勾配の検算</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">1.6. 条件つき最適化</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">1.7. 学習の振り返りのためのチェックリスト</a></li>
 </ul>
   </nav></div>
 
@@ -842,8 +1439,8 @@ x + y - 1
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
 
   <footer class="bd-footer">
   </footer>
