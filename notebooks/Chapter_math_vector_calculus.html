@@ -469,10 +469,22 @@ T_k(x) \equiv \sum_{n=0}^k \frac{f^{(n)}(x_0)}{n!} (x - x_0)^n
 <section id="id4">
 <h3><span class="section-number">1.1.2. </span>微分の基本的性質<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>線形性: <span class="math notranslate nohighlight">\(\frac{d}{dx}(af(x) + bg(x)) = a\frac{df}{dx} + b\frac{dg}{dx}\)</span></p></li>
-<li><p>積の微分: <span class="math notranslate nohighlight">\(\frac{d}{dx}(f(x)g(x)) = f(x)\frac{dg}{dx} + g(x)\frac{df}{dx}\)</span></p></li>
-<li><p>商の微分: <span class="math notranslate nohighlight">\(\frac{d}{dx}\left(\frac{f(x)}{g(x)}\right) = \frac{g(x)\frac{df}{dx} - f(x)\frac{dg}{dx}}{g(x)^2}\)</span>（<span class="math notranslate nohighlight">\(g(x)\ne0\)</span>）</p></li>
-<li><p>合成関数の微分: <span class="math notranslate nohighlight">\(\frac{d}{dx}f(g(x)) = f'(g(x))\frac{dg}{dx}\)</span></p></li>
+<li><p>線形性:
+$<span class="math notranslate nohighlight">\(
+  \frac{d}{dx}(af(x) + bg(x)) = a\frac{df}{dx} + b\frac{dg}{dx}
+  \)</span>$</p></li>
+<li><p>積の微分:
+$<span class="math notranslate nohighlight">\(
+  \frac{d}{dx}(f(x)g(x)) = f(x)\frac{dg}{dx} + g(x)\frac{df}{dx}
+  \)</span>$</p></li>
+<li><p>商の微分:
+$<span class="math notranslate nohighlight">\(
+  \frac{d}{dx}\left(\frac{f(x)}{g(x)}\right) = \frac{g(x)\frac{df}{dx} - f(x)\frac{dg}{dx}}{g(x)^2} \quad（g(x)\ne0）
+  \)</span>$</p></li>
+<li><p>合成関数の微分:
+$<span class="math notranslate nohighlight">\(
+  \frac{d}{dx}f(g(x)) = f'(g(x))\frac{dg}{dx}
+  \)</span>$</p></li>
 </ul>
 <p>特に合成関数の微分は連鎖律(チェインルール)とも呼ばれ、ニューラルネットワークの逆伝播アルゴリズムにおいて重要な役割を果たす。</p>
 <div class="attention admonition">
@@ -1249,68 +1261,11 @@ f(a,b)=(ac+b-\bar y)^2+\frac1N\sum_i(y_i-\bar y)^2
 \approx\frac{f(\boldsymbol{\theta}+h\mathbf{e}_j)-f(\boldsymbol{\theta}-h\mathbf{e}_j)}{2h}
 \]</div>
 <p>である。十分滑らかな一般の関数では打切り誤差は<span class="math notranslate nohighlight">\(O(h^2)\)</span>だが、<span class="math notranslate nohighlight">\(h\)</span>を小さくしすぎると丸め誤差の影響が大きくなる。
-今回の二次関数では打切り誤差は厳密に0なので、数値的なずれは主に浮動小数点演算によるものである。
-次のコードで解析的な勾配との一致と、入力がすべて同じ場合のゼロ固有値を確認しよう。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-
-<span class="n">x_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">])</span>
-<span class="n">y_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">3.2</span><span class="p">,</span> <span class="mf">4.7</span><span class="p">])</span>
-<span class="n">design</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">x_data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">x_data</span><span class="p">)])</span>
-<span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.4</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">])</span>  <span class="c1"># (a, b)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">regression_loss</span><span class="p">(</span><span class="n">parameters</span><span class="p">):</span>
-    <span class="n">residual</span> <span class="o">=</span> <span class="n">design</span> <span class="o">@</span> <span class="n">parameters</span> <span class="o">-</span> <span class="n">y_data</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">residual</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-
-
-<span class="n">residual</span> <span class="o">=</span> <span class="n">design</span> <span class="o">@</span> <span class="n">theta</span> <span class="o">-</span> <span class="n">y_data</span>
-<span class="n">analytic_gradient</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">design</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">residual</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_data</span><span class="p">)</span>
-<span class="n">hessian</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">design</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">design</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_data</span><span class="p">)</span>
-<span class="n">h</span> <span class="o">=</span> <span class="mf">1e-5</span>
-<span class="n">finite_difference</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
-    <span class="p">(</span><span class="n">regression_loss</span><span class="p">(</span><span class="n">theta</span> <span class="o">+</span> <span class="n">h</span> <span class="o">*</span> <span class="n">direction</span><span class="p">)</span>
-     <span class="o">-</span> <span class="n">regression_loss</span><span class="p">(</span><span class="n">theta</span> <span class="o">-</span> <span class="n">h</span> <span class="o">*</span> <span class="n">direction</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">h</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">direction</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span>
-<span class="p">])</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Analytic gradient:&quot;</span><span class="p">,</span> <span class="n">analytic_gradient</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Central difference:&quot;</span><span class="p">,</span> <span class="n">finite_difference</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Maximum absolute error:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">analytic_gradient</span> <span class="o">-</span> <span class="n">finite_difference</span><span class="p">)))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Gradients agree:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">analytic_gradient</span><span class="p">,</span> <span class="n">finite_difference</span><span class="p">,</span>
-                                     <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-7</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hessian eigenvalues:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvalsh</span><span class="p">(</span><span class="n">hessian</span><span class="p">))</span>
-
-<span class="c1"># 入力がすべて c = 2 の場合は (a, b) と (a + t, b - 2t) を区別できない。</span>
-<span class="n">constant_design</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x_data</span><span class="p">),</span> <span class="mf">2.0</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x_data</span><span class="p">))])</span>
-<span class="n">constant_hessian</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">constant_design</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">constant_design</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_data</span><span class="p">)</span>
-<span class="n">null_direction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.0</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hessian eigenvalues (constant inputs):&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvalsh</span><span class="p">(</span><span class="n">constant_hessian</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Predictions unchanged along (1, -2):&quot;</span><span class="p">,</span>
-      <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">constant_design</span> <span class="o">@</span> <span class="n">theta</span><span class="p">,</span>
-                  <span class="n">constant_design</span> <span class="o">@</span> <span class="p">(</span><span class="n">theta</span> <span class="o">+</span> <span class="n">null_direction</span><span class="p">)))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Analytic gradient: [-5.7 -4. ]
-Central difference: [-5.7 -4. ]
-Maximum absolute error: 1.8204548979383617e-11
-Gradients agree: True
-Hessian eigenvalues: [1.38196601 3.61803399]
-Hessian eigenvalues (constant inputs): [ 0. 10.]
-Predictions unchanged along (1, -2): True
-</pre></div>
-</div>
-</div>
-</div>
+今回の二次関数では打切り誤差は厳密に0なので、数値的なずれは主に浮動小数点演算によるものである。</p>
 <div class="attention admonition">
 <p class="admonition-title">問題</p>
 <ol class="arabic simple">
-<li><p>上の中心差分で<span class="math notranslate nohighlight">\(h\)</span>を<span class="math notranslate nohighlight">\(10^{-2},10^{-5},10^{-8},10^{-11}\)</span>に変え、勾配の誤差を比較せよ。今回の目的関数が二次関数であることに注意し、<span class="math notranslate nohighlight">\(h\)</span>を小さくすれば常に誤差も小さくなるか考察せよ。</p></li>
-<li><p><span class="math notranslate nohighlight">\(f(x,y)=x^2+2y^2\)</span>の点<span class="math notranslate nohighlight">\((1,1)\)</span>において、<span class="math notranslate nohighlight">\(\mathbf{v}=(1,1)^T/\sqrt2\)</span>方向の方向微分を求めよ。また、単位長さあたりの減少率が最も大きい方向を求めよ。</p></li>
+<li><p><span class="math notranslate nohighlight">\(f(x,y)=x^2+2y^2\)</span>の点<span class="math notranslate nohighlight">\((1,1)\)</span>において、<span class="math notranslate nohighlight">\(\mathbf{v}=(1,1)^T/\sqrt2\)</span>方向の方向微分を求めよ。ま1た、単位長さあたりの減少率が最も大きい方向を求めよ。</p></li>
 <li><p><span class="math notranslate nohighlight">\(f(x,y)=x^2+xy+2y^2\)</span>について、点<span class="math notranslate nohighlight">\((1,0)\)</span>で二次までのテイラー展開を求め、元の関数と厳密に一致することを確認せよ。</p></li>
 </ol>
 </div>
