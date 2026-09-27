@@ -372,12 +372,13 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cholesky-decomposition">2.6. コレスキー分解 (Cholesky decomposition)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.7. 固有値分解</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.8. 特異値分解</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">2.9. 行列の微分</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">2.10. 行列の指数関数</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pytorch">2.11. PyTorchにおける行列・ベクトルの表現</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">2.12. 学習の振り返りのためのチェックリスト</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lu">2.7. LU分解</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.8. 固有値分解</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.9. 特異値分解</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">2.10. 行列の微分</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">2.11. 行列の指数関数</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pytorch">2.12. PyTorchにおける行列・ベクトルの表現</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">2.13. 学習の振り返りのためのチェックリスト</a></li>
 </ul>
             </nav>
         </div>
@@ -720,7 +721,9 @@ A = LL^T
 </div>
 <p>例えば多次元正規分布の条件付き確率の計算や、ガウス過程などの確率過程の計算においてもコレスキー分解は重要な役割を果たす。
 確率分布の章で見るように、多次元正規分布の共分散行列は正定値行列であり、条件付き確率分布の共分散行列の計算の表式には、共分散行列の逆行列が必要になる。実際の数値計算において逆行列を陽に求めるよりも、コレスキー分解を用いることで、数値的に安定な計算で効率よく計算することができる。</p>
-<p><strong>LU分解</strong></p>
+</section>
+<section id="lu">
+<h2><span class="section-number">2.7. </span>LU分解<a class="headerlink" href="#lu" title="Link to this heading">#</a></h2>
 <p>LU分解は、任意の正方行列を下三角行列 <span class="math notranslate nohighlight">\(L\)</span> と上三角行列 <span class="math notranslate nohighlight">\(U\)</span> の積として表現する方法である。</p>
 <div class="note admonition">
 <p class="admonition-title">LU分解</p>
@@ -736,7 +739,7 @@ A = LU
 <span class="math notranslate nohighlight">\(L\)</span>の対角成分を1にすると分解は一意に定まる。</p>
 </section>
 <section id="id8">
-<h2><span class="section-number">2.7. </span>固有値分解<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">2.8. </span>固有値分解<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
 <div class="note admonition">
 <p class="admonition-title">対角化可能 (diagonalizable)と固有値分解</p>
 <p>正方行列 <span class="math notranslate nohighlight">\(A \in \mathbb{R}^{n \times n}\)</span>が対角化可能であるとは、対角行列<span class="math notranslate nohighlight">\(D\)</span>と可逆な行列 <span class="math notranslate nohighlight">\(P\)</span> を用いて以下のように表現できることをいう。</p>
@@ -759,7 +762,7 @@ A &amp; = P \begin{pmatrix}
 つまり、<span class="math notranslate nohighlight">\(P\)</span>は直交行列であり、<span class="math notranslate nohighlight">\(P^{-1} = P^T\)</span>となる。</p>
 </section>
 <section id="id9">
-<h2><span class="section-number">2.8. </span>特異値分解<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">2.9. </span>特異値分解<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
 <p>ここまでは、主に正方行列に対する演算を中心に説明してきた。
 しかし、機械学習やデータ分析の分野では、非正方行列に対する演算も頻繁に行われる。
 そこで、そのような非正方行列に対しても適用できる <strong>特異値分解(Singular Value Decomposition; SVD)</strong> を紹介する。</p>
@@ -895,7 +898,7 @@ rank 29 (~ 5 ％) Fnorm  4941.906716516428  # of m.e.  45849
 <p>5%程度の特異値を用いても、ややぼけるが、画像に宇〜太が写っていることは人間の目には明らかである。</p>
 </section>
 <section id="id10">
-<h2><span class="section-number">2.9. </span>行列の微分<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">2.10. </span>行列の微分<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
 <p>ベクトル解析の章と重複する部分があるが、行列の微分についても簡単に触れておく。</p>
 <p>ベクトルに対する微分を拡張して、行列に対する微分を考えることができる。
 まず、列ベクトル<span class="math notranslate nohighlight">\(\mathbf{a}(x)\)</span>のスカラー<span class="math notranslate nohighlight">\(x\)</span>に関する微分を以下のように定義する:</p>
@@ -1017,7 +1020,7 @@ a_1 &amp; a_2 &amp; \cdots &amp; a_n
 <p>したがって、対数の微分を考えると目的の式が得られる。</p>
 </section>
 <section id="id11">
-<h2><span class="section-number">2.10. </span>行列の指数関数<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">2.11. </span>行列の指数関数<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
 <p>線形常微分方程式の解法や、量子力学における時間発展など、行列の指数関数が重要な役割を果たす場合がある。</p>
 <p>行列<span class="math notranslate nohighlight">\(A\)</span>の指数関数は、テイラー展開を用いて以下のように定義される:</p>
 <div class="math notranslate nohighlight">
@@ -1041,7 +1044,7 @@ B \exp(A) B^{-1} &amp; = \exp(B A B^{-1}) \\
 <p>また、行列<span class="math notranslate nohighlight">\(U\)</span>がユニタリ行列(エルミート共役が逆行列に等しい)であるとき、<span class="math notranslate nohighlight">\(U\)</span>は反エルミート行列<span class="math notranslate nohighlight">\(X\)</span>の指数関数として表現できる。</p>
 </section>
 <section id="pytorch">
-<h2><span class="section-number">2.11. </span>PyTorchにおける行列・ベクトルの表現<a class="headerlink" href="#pytorch" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">2.12. </span>PyTorchにおける行列・ベクトルの表現<a class="headerlink" href="#pytorch" title="Link to this heading">#</a></h2>
 <p>PyTorchでは<code class="docutils literal notranslate"><span class="pre">Torch.Tensor</span></code>が行列やベクトルを表現する。
 <code class="docutils literal notranslate"><span class="pre">Torch.Tensor</span></code>は、行列・ベクトルに係る演算を効率化するために最適化されている。</p>
 <p>数値の配列を表現するのに、メモリ上でのデータの連続性を保つように設計されている。
@@ -1050,7 +1053,7 @@ B \exp(A) B^{-1} &amp; = \exp(B A B^{-1}) \\
 また、ニューラルネットワークの学習で重要となる誤差逆伝播法に適した自動微分機能を備えている。</p>
 </section>
 <section id="id12">
-<h2><span class="section-number">2.12. </span>学習の振り返りのためのチェックリスト<a class="headerlink" href="#id12" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">2.13. </span>学習の振り返りのためのチェックリスト<a class="headerlink" href="#id12" title="Link to this heading">#</a></h2>
 <p>▢ 　行列・ベクトルの基本的な演算を説明できる<br />
 ▢ 　行列式とトレースの意味や性質を説明できる<br />
 ▢ 　逆行列の定義と可逆行列(正則行列)の条件を説明できる<br />
@@ -1135,12 +1138,13 @@ B \exp(A) B^{-1} &amp; = \exp(B A B^{-1}) \\
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cholesky-decomposition">2.6. コレスキー分解 (Cholesky decomposition)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.7. 固有値分解</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.8. 特異値分解</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">2.9. 行列の微分</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">2.10. 行列の指数関数</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pytorch">2.11. PyTorchにおける行列・ベクトルの表現</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">2.12. 学習の振り返りのためのチェックリスト</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lu">2.7. LU分解</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.8. 固有値分解</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.9. 特異値分解</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">2.10. 行列の微分</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">2.11. 行列の指数関数</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pytorch">2.12. PyTorchにおける行列・ベクトルの表現</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">2.13. 学習の振り返りのためのチェックリスト</a></li>
 </ul>
   </nav></div>
 
