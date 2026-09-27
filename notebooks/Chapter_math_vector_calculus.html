@@ -468,23 +468,31 @@ T_k(x) \equiv \sum_{n=0}^k \frac{f^{(n)}(x_0)}{n!} (x - x_0)^n
 </section>
 <section id="id4">
 <h3><span class="section-number">1.1.2. </span>微分の基本的性質<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
-<ul class="simple">
-<li><p>線形性:
-$<span class="math notranslate nohighlight">\(
-  \frac{d}{dx}(af(x) + bg(x)) = a\frac{df}{dx} + b\frac{dg}{dx}
-  \)</span>$</p></li>
-<li><p>積の微分:
-$<span class="math notranslate nohighlight">\(
-  \frac{d}{dx}(f(x)g(x)) = f(x)\frac{dg}{dx} + g(x)\frac{df}{dx}
-  \)</span>$</p></li>
-<li><p>商の微分:
-$<span class="math notranslate nohighlight">\(
-  \frac{d}{dx}\left(\frac{f(x)}{g(x)}\right) = \frac{g(x)\frac{df}{dx} - f(x)\frac{dg}{dx}}{g(x)^2} \quad（g(x)\ne0）
-  \)</span>$</p></li>
-<li><p>合成関数の微分:
-$<span class="math notranslate nohighlight">\(
-  \frac{d}{dx}f(g(x)) = f'(g(x))\frac{dg}{dx}
-  \)</span>$</p></li>
+<ul>
+<li><p>線形性:</p>
+<div class="math notranslate nohighlight">
+\[
+    \frac{d}{dx}(af(x) + bg(x)) = a\frac{df}{dx} + b\frac{dg}{dx}
+    \]</div>
+</li>
+<li><p>積の微分:</p>
+<div class="math notranslate nohighlight">
+\[
+    \frac{d}{dx}(f(x)g(x)) = f(x)\frac{dg}{dx} + g(x)\frac{df}{dx}
+    \]</div>
+</li>
+<li><p>商の微分:</p>
+<div class="math notranslate nohighlight">
+\[
+    \frac{d}{dx}\left(\frac{f(x)}{g(x)}\right) = \frac{g(x)\frac{df}{dx} - f(x)\frac{dg}{dx}}{g(x)^2} \quad（g(x)\ne0）
+    \]</div>
+</li>
+<li><p>合成関数の微分:</p>
+<div class="math notranslate nohighlight">
+\[
+    \frac{d}{dx}f(g(x)) = f'(g(x))\frac{dg}{dx}
+    \]</div>
+</li>
 </ul>
 <p>特に合成関数の微分は連鎖律(チェインルール)とも呼ばれ、ニューラルネットワークの逆伝播アルゴリズムにおいて重要な役割を果たす。</p>
 <div class="attention admonition">
