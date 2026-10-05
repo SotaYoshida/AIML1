@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="750" viewBox="0 0 1050 750" role="img" aria-labelledby="title desc">
+<title id="title">変数変換による領域と面積の変化</title>
+<desc id="desc">左の単位正方形Aが、上段ではスケール変換で面積6の長方形Bに、下段ではxとyが結合する変換で面積3の平行四辺形Bに写る。格子と小領域も対応する。</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#51616f"/></marker><marker id="maparrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#64748b"/></marker></defs>
+<style>text{font-family:"Helvetica Neue",Arial,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;fill:#243745} .heading{font-size:24px;font-weight:700}.formula{font-size:20px}.small{font-size:17px}.region{font-size:24px;font-weight:700}.axis{stroke:#51616f;stroke-width:2;fill:none;marker-end:url(#arrow)}.grid{stroke:#8095a4;stroke-width:1.3;fill:none}.outline{stroke:#146c90;stroke-width:2.5;fill:#dceef4}.highlight{fill:#3985a8;fill-opacity:.65;stroke:#146c90;stroke-width:1.5}.target{stroke:#bd681d;stroke-width:2.5;fill:#ffead3}.targethi{fill:#e69a43;fill-opacity:.76;stroke:#bd681d;stroke-width:1.5}.map{stroke:#64748b;stroke-width:3;marker-end:url(#maparrow)}</style>
+<rect x="0" y="0" width="1050" height="750" fill="white"/>
+<line x1="35" y1="372" x2="1015" y2="372" stroke="#e1e8ed" stroke-width="2"/>
+
+<text x="42" y="48" class="heading">1. 座標軸ごとのスケール変換</text>
+<text x="42" y="84" class="formula">u = 2x,  v = 3y</text>
+<line x1="108.00" y1="340.00" x2="241.00" y2="340.00" class="axis"/>
+<line x1="130.00" y1="362.00" x2="130.00" y2="232.00" class="axis"/>
+<line x1="553.00" y1="340.00" x2="771.00" y2="340.00" class="axis"/>
+<line x1="575.00" y1="362.00" x2="575.00" y2="62.00" class="axis"/>
+<polygon points="130.00,340.00 215.00,340.00 215.00,255.00 130.00,255.00" class="outline"/>
+<line x1="151.25" y1="340.00" x2="151.25" y2="255.00" class="grid"/>
+<line x1="130.00" y1="318.75" x2="215.00" y2="318.75" class="grid"/>
+<line x1="172.50" y1="340.00" x2="172.50" y2="255.00" class="grid"/>
+<line x1="130.00" y1="297.50" x2="215.00" y2="297.50" class="grid"/>
+<line x1="193.75" y1="340.00" x2="193.75" y2="255.00" class="grid"/>
+<line x1="130.00" y1="276.25" x2="215.00" y2="276.25" class="grid"/>
+<polygon points="172.50,318.75 193.75,318.75 193.75,297.50 172.50,297.50" class="highlight"/>
+<polygon points="575.00,340.00 745.00,340.00 745.00,85.00 575.00,85.00" class="target"/>
+<line x1="617.50" y1="340.00" x2="617.50" y2="85.00" class="grid"/>
+<line x1="575.00" y1="276.25" x2="745.00" y2="276.25" class="grid"/>
+<line x1="660.00" y1="340.00" x2="660.00" y2="85.00" class="grid"/>
+<line x1="575.00" y1="212.50" x2="745.00" y2="212.50" class="grid"/>
+<line x1="702.50" y1="340.00" x2="702.50" y2="85.00" class="grid"/>
+<line x1="575.00" y1="148.75" x2="745.00" y2="148.75" class="grid"/>
+<polygon points="660.00,276.25 702.50,276.25 702.50,212.50 660.00,212.50" class="targethi"/>
+<text x="165" y="294" class="region" text-anchor="middle">A</text>
+<text x="670" y="200" class="region" text-anchor="middle">B</text>
+<text x="225" y="347" class="small">x</text>
+<text x="120" y="221" class="small">y</text>
+<text x="777" y="347" class="small">u</text>
+<text x="563" y="51" class="small">v</text>
+<line x1="290.00" y1="295.00" x2="475.00" y2="295.00" class="map"/>
+<text x="382" y="279" class="formula" text-anchor="middle">T</text>
+<text x="885" y="160" class="formula">|det J| = 6</text>
+<text x="885" y="193" class="small">面積(B) / 面積(A)</text>
+<text x="885" y="220" class="small">= 6</text>
+<text x="42" y="416" class="heading">2. x と y が結合する変換</text>
+<text x="42" y="452" class="formula">u = 2x + y,  v = x + 2y</text>
+<line x1="108.00" y1="710.00" x2="241.00" y2="710.00" class="axis"/>
+<line x1="130.00" y1="732.00" x2="130.00" y2="602.00" class="axis"/>
+<line x1="553.00" y1="710.00" x2="856.00" y2="710.00" class="axis"/>
+<line x1="575.00" y1="732.00" x2="575.00" y2="432.00" class="axis"/>
+<polygon points="130.00,710.00 215.00,710.00 215.00,625.00 130.00,625.00" class="outline"/>
+<line x1="151.25" y1="710.00" x2="151.25" y2="625.00" class="grid"/>
+<line x1="130.00" y1="688.75" x2="215.00" y2="688.75" class="grid"/>
+<line x1="172.50" y1="710.00" x2="172.50" y2="625.00" class="grid"/>
+<line x1="130.00" y1="667.50" x2="215.00" y2="667.50" class="grid"/>
+<line x1="193.75" y1="710.00" x2="193.75" y2="625.00" class="grid"/>
+<line x1="130.00" y1="646.25" x2="215.00" y2="646.25" class="grid"/>
+<polygon points="172.50,688.75 193.75,688.75 193.75,667.50 172.50,667.50" class="highlight"/>
+<polygon points="575.00,710.00 745.00,625.00 830.00,455.00 660.00,540.00" class="target"/>
+<line x1="617.50" y1="688.75" x2="702.50" y2="518.75" class="grid"/>
+<line x1="596.25" y1="667.50" x2="766.25" y2="582.50" class="grid"/>
+<line x1="660.00" y1="667.50" x2="745.00" y2="497.50" class="grid"/>
+<line x1="617.50" y1="625.00" x2="787.50" y2="540.00" class="grid"/>
+<line x1="702.50" y1="646.25" x2="787.50" y2="476.25" class="grid"/>
+<line x1="638.75" y1="582.50" x2="808.75" y2="497.50" class="grid"/>
+<polygon points="681.25,625.00 723.75,603.75 745.00,561.25 702.50,582.50" class="targethi"/>
+<text x="165" y="664" class="region" text-anchor="middle">A</text>
+<text x="708" y="583" class="region" text-anchor="middle">B</text>
+<text x="225" y="717" class="small">x</text>
+<text x="120" y="591" class="small">y</text>
+<text x="862" y="717" class="small">u</text>
+<text x="563" y="421" class="small">v</text>
+<line x1="290.00" y1="665.00" x2="475.00" y2="665.00" class="map"/>
+<text x="382" y="649" class="formula" text-anchor="middle">T</text>
+<text x="885" y="530" class="formula">|det J| = 3</text>
+<text x="885" y="563" class="small">面積(B) / 面積(A)</text>
+<text x="885" y="590" class="small">= 3</text>
+</svg>
