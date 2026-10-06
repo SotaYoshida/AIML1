@@ -97,10 +97,12 @@ LaTeX記法を用いて数式を表現する方法については、プログラ
 
 1. Pattern Recognition and Machine Learning, C.M. Bishop, 2006. [リンク](https://www.microsoft.com/en-us/research/people/cmbishop/prml-book/)  
     通称PRML, 機械学習の教科書として有名な書籍。回帰・分類の基礎からベイズやカーネル法,近似推論やMCMCまでカバーしていて非常に参考になるが、この授業の受講生が前から通読するのはあまりおすすめしない。微積・線形代数,確率・統計,ベイズ統計,機械学習などを一通りきちんと勉強した後に見返すと「あ、PRMLに書いてあるな」と気がつく、そんな本。ベイズ的な機械学習の本だと思う。
-2. Mathematics for Machine Learning, Marc Peter Deisenroth, A. Aldo Faisal, and Cheng Soon Ong [リンク](https://mml-book.github.io/)
-3. Gaussian Processes for Machine Learning, C.E. Rasmussen and C.K.I. Williams, 2006. [リンク](http://www.gaussianprocess.org/gpml/)
+2. Deep Learning: Foundations and Concepts, 2023. [リンク](https://www.deeplearningbook.org/)
+    深層学習の基礎を学ぶための教科書。深層学習の理論的な基礎から応用までをカバーしている。PRMLのビショップによる本。吉田研のゼミの教科書(2026年度)にも指定されている。
+3. Mathematics for Machine Learning, Marc Peter Deisenroth, A. Aldo Faisal, and Cheng Soon Ong [リンク](https://mml-book.github.io/)
+4. Gaussian Processes for Machine Learning, C.E. Rasmussen and C.K.I. Williams, 2006. [リンク](http://www.gaussianprocess.org/gpml/)
     ガウス過程に関する教科書。ガウス過程を用いた機械学習の基礎から応用までをカバーしている。ガウス過程に関する本としては最も有名な書籍である。
-4. Dive into Deep Learning, Aston Zhang, Zachary C. Lipton, Mu Li, and Alexander J. Smola, 2020. [リンク](https://d2l.ai/)
+5. Dive into Deep Learning, Aston Zhang, Zachary C. Lipton, Mu Li, and Alexander J. Smola, 2020. [リンク](https://d2l.ai/)
     深層学習に関するオープンアクセスの書籍。理論的な説明と実装の両方をカバーしている。深層学習に関する本としては最も有名な書籍の一つである。
-5. ゼロから作るDeep Learning: Pythonで学ぶディープラーニングの理論と実装, 斎藤 康毅, 2016. [リンク](https://www.oreilly.co.jp/books/9784873117584/)
+6. ゼロから作るDeep Learning: Pythonで学ぶディープラーニングの理論と実装, 斎藤 康毅, 2016. [リンク](https://www.oreilly.co.jp/books/9784873117584/)
     実装や理論・考え方の説明のバランスが良く、初学者にもおすすめの書籍。
