@@ -97,8 +97,8 @@ LaTeX記法を用いて数式を表現する方法については、プログラ
 
 1. Pattern Recognition and Machine Learning, C.M. Bishop, 2006. [リンク](https://www.microsoft.com/en-us/research/people/cmbishop/prml-book/)  
     通称PRML, 機械学習の教科書として有名な書籍。回帰・分類の基礎からベイズやカーネル法,近似推論やMCMCまでカバーしていて非常に参考になるが、この授業の受講生が前から通読するのはあまりおすすめしない。微積・線形代数,確率・統計,ベイズ統計,機械学習などを一通りきちんと勉強した後に見返すと「あ、PRMLに書いてあるな」と気がつく、そんな本。ベイズ的な機械学習の本だと思う。
-2. Deep Learning: Foundations and Concepts, 2023. [リンク](https://www.deeplearningbook.org/)
-    深層学習の基礎を学ぶための教科書。深層学習の理論的な基礎から応用までをカバーしている。PRMLのビショップによる本。吉田研のゼミの教科書(2026年度)にも指定されている。
+2. Deep Learning: Foundations and Concepts, 2023. [リンク](https://www.bishopbook.com)
+    深層学習の基礎を学ぶための教科書。深層学習の理論的な基礎から応用までをカバーしている。PRMLのビショップによる本。ちなみに、日本語版の上巻が、吉田研のゼミの教科書(2026年度)になっている。
 3. Mathematics for Machine Learning, Marc Peter Deisenroth, A. Aldo Faisal, and Cheng Soon Ong [リンク](https://mml-book.github.io/)
 4. Gaussian Processes for Machine Learning, C.E. Rasmussen and C.K.I. Williams, 2006. [リンク](http://www.gaussianprocess.org/gpml/)
     ガウス過程に関する教科書。ガウス過程を用いた機械学習の基礎から応用までをカバーしている。ガウス過程に関する本としては最も有名な書籍である。
