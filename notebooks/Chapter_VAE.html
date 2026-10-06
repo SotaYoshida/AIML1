@@ -16,37 +16,34 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!--
-    this give us a css class that will be invisible only if js is disabled
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
-
-    </style>
-  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=8c577342" />
   
-  <!-- So that users can add custom icons -->
-  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="../_static/documentation_options.js?v=1cf7f4d9"></script>
-    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
@@ -55,13 +52,11 @@
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
-    <script src="../_static/translations.js?v=91613774"></script>
+    <script src="../_static/translations.js?v=4755f45a"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/Chapter_VAE';</script>
@@ -71,7 +66,6 @@
     <link rel="prev" title="15. 混合ガウスモデル(Gaussian Mixture Model, GMM)" href="Chapter_GMM.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="ja"/>
-  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -79,16 +73,27 @@
 
   
   
-  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">本文へスキップ</a></div>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>トップに戻る</button>
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <dialog id="pst-search-dialog">
-    
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
 <form class="bd-search d-flex align-items-center"
       action="../search.html"
       method="get">
@@ -96,6 +101,7 @@
   <input type="search"
          class="form-control"
          name="q"
+         id="search-input"
          placeholder="Search..."
          aria-label="Search..."
          autocomplete="off"
@@ -103,11 +109,11 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-  </dialog>
+</form></div>
+  </div>
 
   <div class="pst-async-banner-revealer d-none">
-  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="バージョン警告"></aside>
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
 
   
@@ -120,8 +126,7 @@
       
       
       
-      <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -151,17 +156,21 @@
     
     
     <img src="../_static/logo_AIML1.png" class="logo__image only-light" alt="AI・機械学習論1/機械学習論 - Home"/>
-    <img src="../_static/logo_AIML1.png" class="logo__image only-dark pst-js-only" alt="AI・機械学習論1/機械学習論 - Home"/>
+    <script>document.write(`<img src="../_static/logo_AIML1.png" class="logo__image only-dark" alt="AI・機械学習論1/機械学習論 - Home"/>`);</script>
   
   
 </a></div>
         <div class="sidebar-primary-item">
 
-<button class="btn search-button-field search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">検索</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button></div>
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">検索</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">機械学習のための数学</span></p>
@@ -211,14 +220,9 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
-      <div class="sidebar-primary-item">
-<div id="ethical-ad-placement"
-      class="flat"
-      data-ea-publisher="readthedocs"
-      data-ea-type="readthedocs-sidebar"
-      data-ea-manual="true">
-</div></div>
   </div>
+  
+  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -315,16 +319,24 @@
 
 
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="ライト"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="ダーク"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
 
 
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="検索" aria-label="検索" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-</button>
+  </button>
+`);
+</script>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -408,7 +420,8 @@ VAEでは、潜在変数の分布を近似するために変分推論を使用�
 <li><p>潜在変数のサンプリング: 潜在変数 <span class="math notranslate nohighlight">\(z\)</span> を事前分布 <span class="math notranslate nohighlight">\(p(z)\)</span> (通常、正規分布)からサンプリングする。</p></li>
 <li><p>観測変数の生成: 潜在変数 <span class="math notranslate nohighlight">\(z\)</span> から観測変数 <span class="math notranslate nohighlight">\(x\)</span> を生成するために、条件付き分布 <span class="math notranslate nohighlight">\(p_\theta(x|z)\)</span> (例: ニューラルネットワークの出力+正規分布)を用いる。</p></li>
 </ol>
-<a class="reference internal image-reference" href="../_images/VAE_gen_sketch.png"><img alt="../_images/VAE_gen_sketch.png" class="align-center" src="../_images/VAE_gen_sketch.png" style="width: 500px;" /></a>
+<a class="reference internal image-reference" href="../_images/VAE_gen_sketch.png"><img alt="../_images/VAE_gen_sketch.png" class="align-center" src="../_images/VAE_gen_sketch.png" style="width: 500px;" />
+</a>
 <p>単一の潜在変数ではなく、その確率分布を考えることで、より多様なデータ生成が可能になる。
 また、ニューラルネットワークの出力値は入力値に対して確定的な値であるが、VAEではニューラルネットワークの出力を平均値とし、分散を持たせることで、同じ潜在変数からでも異なる観測変数が生成されるようにしているとも理解できる。</p>
 <div class="math notranslate nohighlight">
@@ -425,7 +438,8 @@ p_{\theta}(x|z) = \mathcal{N}\left(x; \hat{x}(z; \theta), I\right)
 <p>VAEでは、観測変数 <span class="math notranslate nohighlight">\(x\)</span> のモデル分布 <span class="math notranslate nohighlight">\(p_{\theta}(x)\)</span> を与えられたデータセット <span class="math notranslate nohighlight">\(\{x^{(i)}\}_{i=1}^{N}\)</span>に対して、モデルを特徴づけるパラメータ <span class="math notranslate nohighlight">\(\theta\)</span> を調整することで、データセットの分布をよく表現するようにしてやる。
 (モデルが単なる正規分布であれば、<span class="math notranslate nohighlight">\(\theta\)</span>は平均や分散だし、ニューラルネットワークであれば、<span class="math notranslate nohighlight">\(\theta\)</span>はその重みやバイアスになる。)
 下に、模式図を示す。</p>
-<a class="reference internal image-reference" href="../_images/likelihood.png"><img alt="../_images/likelihood.png" class="align-center" src="../_images/likelihood.png" style="width: 500px;" /></a>
+<a class="reference internal image-reference" href="../_images/likelihood.png"><img alt="../_images/likelihood.png" class="align-center" src="../_images/likelihood.png" style="width: 500px;" />
+</a>
 <p>これは、以下の対数尤度を最大化することと同値である。</p>
 <div class="math notranslate nohighlight" id="equation-eq-vae-loglikelihood">
 <span class="eqno">(16.1)<a class="headerlink" href="#equation-eq-vae-loglikelihood" title="Link to this equation">#</a></span>\[\begin{split}
@@ -482,7 +496,8 @@ p_{\theta}(x^{(i)}) = \int p_{\theta}(x^{(i)}|z) p(z) dz
 <p>これは、観測変数 <span class="math notranslate nohighlight">\(x\)</span> から潜在変数 <span class="math notranslate nohighlight">\(z\)</span> へのマッピングを学習するエンコーダ (Encoder)を導入することを意味している。
 今度はencoderのパラメータを <span class="math notranslate nohighlight">\(\phi\)</span> と表記しよう。すると、近似分布 <span class="math notranslate nohighlight">\(q(z)\)</span> は、ニューラルネットワークの出力 <span class="math notranslate nohighlight">\(\phi(x^{(i)}; \phi)\)</span> によって与えられることになる。
 図にすると以下のようになる。</p>
-<a class="reference internal image-reference" href="../_images/encoder_vae.png"><img alt="../_images/encoder_vae.png" class="align-center" src="../_images/encoder_vae.png" style="width: 500px;" /></a>
+<a class="reference internal image-reference" href="../_images/encoder_vae.png"><img alt="../_images/encoder_vae.png" class="align-center" src="../_images/encoder_vae.png" style="width: 500px;" />
+</a>
 <p>encoderによって生成される近似分布が正規分布であるとすると、非対角成分を持つ分散行列 <span class="math notranslate nohighlight">\(\Sigma\)</span> を生成することも考えられなくはないが、計算コストの観点から、<span class="math notranslate nohighlight">\(\Sigma\)</span>を対角行列とする(独立な各次元の分散を生成させる)のが一般的と思われる。</p>
 </section>
 <section id="elbo">
@@ -521,7 +536,8 @@ D_{KL}(q_{\phi}(z|x) || p(z)) &amp; = \frac{1}{2} \sum_{j=1}^{d} \left( \sigma_{
 <section id="id5">
 <h2><span class="section-number">16.6. </span>ELBOの最大化と変数変換トリック<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
 <p>ここまでで、VAEの基本的な構成要素が出揃ってきた。</p>
-<a class="reference internal image-reference" href="../_images/VAE_sketch.png"><img alt="../_images/VAE_sketch.png" class="align-center" src="../_images/VAE_sketch.png" style="width: 750px;" /></a>
+<a class="reference internal image-reference" href="../_images/VAE_sketch.png"><img alt="../_images/VAE_sketch.png" class="align-center" src="../_images/VAE_sketch.png" style="width: 750px;" />
+</a>
 <p>ELBOを最大化するためには、ELBOの勾配を計算し、その勾配に基づいてEncoder/Decoderのパラメータ <span class="math notranslate nohighlight">\(\theta\)</span> と <span class="math notranslate nohighlight">\(\phi\)</span> を更新していく必要がある。</p>
 <p>しかしながら、ELBOの第１項は、近似分布 <span class="math notranslate nohighlight">\(q_{\phi}(z|x)\)</span> からサンプリングした潜在変数 <span class="math notranslate nohighlight">\(z\)</span> に依存しているため、直接的に <span class="math notranslate nohighlight">\(\phi\)</span> に関する勾配を計算することが難しい。
 そこで、<strong>変数変換トリック (Reparameterization Trick)</strong> と呼ばれる手法を用いることで、勾配の計算を可能にする。</p>
@@ -539,10 +555,10 @@ z = \mu_{\phi}(x) + \sigma_{\phi}(x) \odot \epsilon \quad \mathrm{where} \quad \
 <section id="mnistvae">
 <h2><span class="section-number">16.7. </span>MNISTデータセットでのVAEの実装例<a class="headerlink" href="#mnistvae" title="Link to this heading">#</a></h2>
 <div class="cell tag_hide-input docutils container">
-<details class="hide above-input">
+<details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell source</span>
-<span class="expanded">Hide code cell source</span>
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
@@ -687,10 +703,10 @@ Epoch 15, Loss: 30.35
 </div>
 <p>学習済みのVAEで、手書き数字画像を生成してみる...</p>
 <div class="cell tag_hide-input docutils container">
-<details class="hide above-input">
+<details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
-<span class="collapsed">Show code cell source</span>
-<span class="expanded">Hide code cell source</span>
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
@@ -746,7 +762,7 @@ Epoch 15, Loss: 30.35
 <div class="prev-next-area">
     <a class="left-prev"
        href="Chapter_GMM.html"
-       title="前のページ">
+       title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">前へ</p>
@@ -755,7 +771,7 @@ Epoch 15, Loss: 30.35
     </a>
     <a class="right-next"
        href="Chapter_DiffusionModels.html"
-       title="次ページ">
+       title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">次へ</p>
         <p class="prev-next-title"><span class="section-number">17. </span>拡散モデル</p>
@@ -769,8 +785,7 @@ Epoch 15, Loss: 30.35
             
             
               
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -827,8 +842,8 @@ Epoch 15, Loss: 30.35
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
   </footer>
