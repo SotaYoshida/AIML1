@@ -550,21 +550,24 @@ P( a \leq X \leq b ) = \int_{a}^{b} f(x) \, dx
 <p>を満たすことがわかる。確率変数<span class="math notranslate nohighlight">\(X\)</span>が微小区間<span class="math notranslate nohighlight">\([x, x+dx]\)</span>に入る確率は<span class="math notranslate nohighlight">\(\simeq f(x)dx\)</span>であることから、<span class="math notranslate nohighlight">\(f(x)\)</span>が確率密度と呼ばれることも理解できる。</p>
 <p>連続型確率変数<span class="math notranslate nohighlight">\(X\)</span>の累積分布関数(cumulative distribution function; cdf)は、次のように定義される。</p>
 <div class="math notranslate nohighlight">
-\[
-F_X(\mathbf{x}) = P(X_1 \leq x_1, X_2 \leq x_2, \ldots, X_D \leq x_D) = \int_{-\infty}^{x_1} \int_{-\infty}^{x_2} \cdots \int_{-\infty}^{x_D} f(\mathbf{x}) \, dx_1 \, dx_2 \cdots dx_D
-\]</div>
+\[\begin{split}
+\begin{align*}
+F_X(\mathbf{x}) &amp; = P(X_1 \leq x_1, X_2 \leq x_2, \ldots, X_D \leq x_D) \\
+&amp; = \int_{-\infty}^{x_1} \int_{-\infty}^{x_2} \cdots \int_{-\infty}^{x_D} f(\mathbf{x}) \, dx_1 \, dx_2 \cdots dx_D
+\end{align*}
+\end{split}\]</div>
 <p>次に、確率変数<span class="math notranslate nohighlight">\(X\)</span>の期待値(expectation)と分散(variance)を定義する。</p>
 <p>期待値は、確率変数<span class="math notranslate nohighlight">\(X\)</span>の取り得る値にその確率を重み付けして合計したもので、次のように定義される。</p>
 <div class="math notranslate nohighlight">
 \[
-E[X] = \int_{-\infty}^{\infty} x f(x) \, dx
+E[X] = \int_{-\infty}^{\infty} x P(x) \, dx
 \]</div>
 <p>分散は、確率変数<span class="math notranslate nohighlight">\(X\)</span>の値が期待値からどれだけ散らばっているかを示す指標で、次のように定義される。</p>
 <div class="math notranslate nohighlight">
 \[
-\text{Var}[X] = E[(X - E[X])^2] = \int_{-\infty}^{\infty} (x - E[X])^2 f(x) \, dx
+\text{Var}[X] = E[(X - E[X])^2] = \int_{-\infty}^{\infty} (x - E[X])^2 P(x) \, dx
 \]</div>
-<p>確率密度関数を明示する <span class="math notranslate nohighlight">\(E_f[X]\)</span>といった表記もあるが、ここでは単に<span class="math notranslate nohighlight">\(E[X]\)</span>と書くことにした。</p>
+<p>複数の確率変数がある場合、どの確率変数に対する確率密度関数かを明示する表記もあるが、自明な場合は省略することもある。ここでは単に<span class="math notranslate nohighlight">\(E[X]\)</span>と書くことにした。</p>
 </section>
 <section id="id6">
 <h2><span class="section-number">3.4. </span>ガウス分布<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
