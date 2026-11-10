@@ -715,7 +715,7 @@ A = LL^T
 </section>
 <section id="lu">
 <h2><span class="section-number">2.7. </span>LU分解<a class="headerlink" href="#lu" title="Link to this heading">#</a></h2>
-<p>LU分解は、任意の正方行列を下三角行列 <span class="math notranslate nohighlight">\(L\)</span> と上三角行列 <span class="math notranslate nohighlight">\(U\)</span> の積として表現する方法である。</p>
+<p>LU分解は、正方行列を下三角行列 <span class="math notranslate nohighlight">\(L\)</span> と上三角行列 <span class="math notranslate nohighlight">\(U\)</span> の積として表現する方法である。</p>
 <div class="note admonition">
 <p class="admonition-title">LU分解</p>
 <p>正方行列 <span class="math notranslate nohighlight">\(A \in \mathbb{R}^{n \times n}\)</span>は、下三角行列 <span class="math notranslate nohighlight">\(L\)</span> と上三角行列 <span class="math notranslate nohighlight">\(U\)</span> を用いて以下のように表現することを考える。</p>
@@ -726,8 +726,14 @@ A = LU
 <p>ここで、<span class="math notranslate nohighlight">\(L\)</span>は下三角行列<span class="math notranslate nohighlight">\(U\)</span>は上三角行列である。</p>
 <p>LU分解が存在するための必要十分条件は、すべての首座小行列式が0でないこと(これは、正則よりも強い条件)である。</p>
 </div>
-<p>コレスキー分解は、LU分解の特別な場合であり、正定値行列に対するLU分解として解釈できる。
-<span class="math notranslate nohighlight">\(L\)</span>の対角成分を1にすると分解は一意に定まる。</p>
+<p>コレスキー分解は、LU分解の特別な場合であり、正定値行列に対するLU分解として解釈できる。<span class="math notranslate nohighlight">\(L\)</span>の対角成分を1にすると分解は一意に定まる。</p>
+<p><strong>補足:</strong></p>
+<p>行列Aが正則である場合、ピボット選択（≒行の入れ替え）を行うことで、常にLU分解を行うことができる。
+また、このときもLの対角成分を1にすると分解は一意に定まる。</p>
+<div class="math notranslate nohighlight">
+\[
+PA = LU
+\]</div>
 </section>
 <section id="id8">
 <h2><span class="section-number">2.8. </span>固有値分解<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
