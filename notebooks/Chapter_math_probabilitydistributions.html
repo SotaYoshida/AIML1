@@ -361,15 +361,20 @@
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3.2. 視覚的なイメージ</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">3.3. 確率密度関数</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3.4. ガウス分布</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.5. ガウス分布と機械学習の関係</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">3.6. 確率分布のベイズ推定</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3.4. ガウス分布</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.4.1. 特徴ベクトルを二つのグループに分ける</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">3.4.2. 周辺分布と条件付き分布</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">3.4.3. 条件付き分布の導出</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">3.5. ガウス分布と機械学習の関係</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">3.6. 確率分布のベイズ推定</a><ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">3.6.1. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 事後分布からのサンプリング</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">3.7. 多次元ガウス分布の最尤推定</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">3.8. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 多次元正規分布に関するベイズの定理</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">3.9. 学習の振り返りのためのチェックリスト</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">3.7. 多次元ガウス分布の最尤推定</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">3.8. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 多次元正規分布に関するベイズの定理</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">3.9. 学習の振り返りのためのチェックリスト</a></li>
 </ul>
             </nav>
         </div>
@@ -606,8 +611,63 @@ I &amp; = \sqrt{\frac{\pi}{\alpha}}
 \end{split}\]</div>
 <p><span class="math notranslate nohighlight">\(x=r \cos \theta, y=r \sin \theta\)</span>と置換して、極座標に変換した。Jacobianは<span class="math notranslate nohighlight">\(r\)</span>である。
 <span class="math notranslate nohighlight">\(\alpha=1/(2\sigma^2)\)</span>と置換すると、ガウス分布の正規化定数が得られる。</p>
-<p>以下では、多次元正規分布(ガウス分布)の数学的に優れた性質について説明する。
-時折、具体例として2次元の正規分布を考えるので、ここで絵を作っておこう。</p>
+<section id="id7">
+<h3><span class="section-number">3.4.1. </span>特徴ベクトルを二つのグループに分ける<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<p>以下では、多次元正規分布(ガウス分布)の周辺分布と条件付き分布について考える。
+まず、異なる種類の特徴量を持つデータを例に、何を求めたいのかを確認しよう。</p>
+<p>一人の人を、身長・体重・胸囲・握力・肺活量という5つの特徴量で表すことを考える。
+一人分のデータは5次元のベクトルであり、<strong>各成分の意味や単位は異なっていてよい</strong>。
+いま、ある人の身長・胸囲・握力がわかっていて、その人の体重と肺活量がどのような値を取りそうかを知りたいとする。
+そこで、知りたい成分を<span class="math notranslate nohighlight">\(\mathbf{x}_a\)</span>、値が与えられた成分を<span class="math notranslate nohighlight">\(\mathbf{x}_b\)</span>にまとめる。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{x}_a =
+\begin{pmatrix}
+\text{体重} \\
+\text{肺活量}
+\end{pmatrix}
+\in \mathbb{R}^{2},
+\qquad
+\mathbf{x}_b =
+\begin{pmatrix}
+\text{身長} \\
+\text{胸囲} \\
+\text{握力}
+\end{pmatrix}
+\in \mathbb{R}^{3}
+\end{split}\]</div>
+<p>対象とする集団で、これら5つの特徴量の <strong>同時分布(joint distribution)</strong> を5次元正規分布で近似できると仮定しよう。
+すると、身長・胸囲・握力の観測値を条件とした、体重と肺活量の分布も2次元正規分布になる。
+その平均ベクトルと共分散行列は、元の5次元正規分布の平均ベクトルと共分散行列から計算できる。
+つまり、残り2成分の予測値だけでなく、その不確実性と、条件を与えた後にも残る両者の相関まで求められる。
+ここでの仮定は5成分の同時分布についてのものであり、各成分がそれぞれ正規分布に従うというだけでは十分ではない。</p>
+<p>同じ種類の測定値を並べたデータでも、考え方は共通である。
+例えば、ある時刻の5か所の温度を一つのデータとし、3か所の測定値から残り2か所の温度の分布を求めたい場合にも、同じように成分を分けられる。</p>
+<p>一般に、<span class="math notranslate nohighlight">\(D\)</span>次元の特徴ベクトル<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>の成分を、<span class="math notranslate nohighlight">\(d\)</span>個と<span class="math notranslate nohighlight">\(D-d\)</span>個の二つのグループに分ける(<span class="math notranslate nohighlight">\(1 \leq d &lt; D\)</span>)。
+必要に応じて成分の順序を並べ替えると、次のように書ける。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{x} =
+\begin{pmatrix}
+\mathbf{x}_a \\
+\mathbf{x}_b
+\end{pmatrix}
+\in \mathbb{R}^{D},
+\qquad
+\mathbf{x}_a \in \mathbb{R}^{d},
+\quad
+\mathbf{x}_b \in \mathbb{R}^{D-d}
+\end{split}\]</div>
+<p>添字<span class="math notranslate nohighlight">\(a,b\)</span>は、成分のグループを区別するラベルである。
+<strong>各グループにいくつの成分を含めるか、どの成分を含めるかは自由に選べる</strong>。
+例えば、元の成分の並びが<span class="math notranslate nohighlight">\((x_1,x_2,x_3,x_4,x_5)^T\)</span>なら、<span class="math notranslate nohighlight">\((x_2,x_5)^T\)</span>と<span class="math notranslate nohighlight">\((x_1,x_3,x_4)^T\)</span>という分け方でもよい。
+平均ベクトルの成分と共分散行列の行・列も、特徴ベクトルと同じ順序に並べ替える。
+このように二つに分けても、二つのグループが独立であると仮定するわけではない。</p>
+<p>成分を分割して周辺分布や条件付き分布を考えること自体は、正規分布に限らない。
+その上で、<strong>同時分布が多次元正規分布なら、周辺分布も条件付き分布も正規分布になり、平均と共分散を計算すれば分布が定まる</strong>ことが、以下で説明する性質である。</p>
+<p>次の図では可視化のため、<span class="math notranslate nohighlight">\(D=2, d=1\)</span>、すなわち各グループが1成分の場合を示す。
+図中の横軸<span class="math notranslate nohighlight">\(x\)</span>と縦軸<span class="math notranslate nohighlight">\(y\)</span>は、それぞれこの場合の<span class="math notranslate nohighlight">\(x_a\)</span>と<span class="math notranslate nohighlight">\(x_b\)</span>に対応する。
+以下の式は、この図の2次元の場合に限らず、任意の<span class="math notranslate nohighlight">\(D\)</span>と<span class="math notranslate nohighlight">\(d\)</span>について成り立つ。</p>
 <div class="cell tag_hide-input docutils container">
 <details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -665,126 +725,190 @@ I &amp; = \sqrt{\frac{\pi}{\alpha}}
 <img alt="../_images/2869c6d9fedcff48b8ecce50c5abf41fc548b35ddcef1703d8b155340a2c6571.png" src="../_images/2869c6d9fedcff48b8ecce50c5abf41fc548b35ddcef1703d8b155340a2c6571.png" />
 </div>
 </div>
-<p>変数を２つに分けて、それらの <strong>同時分布(joint distribution)</strong> がガウス分布であるとみなすこともできる。</p>
+</section>
+<section id="id8">
+<h3><span class="section-number">3.4.2. </span>周辺分布と条件付き分布<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<p><span class="math notranslate nohighlight">\(D\)</span>次元正規分布の平均ベクトルと共分散行列を、特徴ベクトルの分割に合わせて次のように分ける。
+以下では、共分散行列<span class="math notranslate nohighlight">\(\Sigma\)</span>は正定値であるとする。</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-p(\mathbf{x}, \mathbf{y}) = \mathcal{N}\left(
-    \begin{bmatrix}
-        \mathbf{\mu}_x \\
-        \mathbf{\mu}_y
-    \end{bmatrix},
-    \begin{bmatrix}
-        \Sigma_{xx} &amp; \Sigma_{xy} \\
-        \Sigma_{yx} &amp; \Sigma_{yy}
-    \end{bmatrix}
-\right) 
+\boldsymbol{\mu} =
+\begin{pmatrix}
+\boldsymbol{\mu}_a \\
+\boldsymbol{\mu}_b
+\end{pmatrix},
+\qquad
+\Sigma =
+\begin{pmatrix}
+\Sigma_{aa} &amp; \Sigma_{ab} \\
+\Sigma_{ba} &amp; \Sigma_{bb}
+\end{pmatrix},
+\qquad
+p(\mathbf{x}_a,\mathbf{x}_b)
+= \mathcal{N}(\mathbf{x};\boldsymbol{\mu},\Sigma)
 \end{split}\]</div>
-<p>このとき<strong>周辺分布(marginal distribution)</strong>(特定の変数の積分を取ることで得られる分布)と条件付き分布もまたガウス分布になる性質がある。<span class="math notranslate nohighlight">\(\mathbf{y}\)</span>について周辺化した分布は、</p>
+<p><span class="math notranslate nohighlight">\(\Sigma_{aa}\)</span>と<span class="math notranslate nohighlight">\(\Sigma_{bb}\)</span>はそれぞれのグループ内の共分散、<span class="math notranslate nohighlight">\(\Sigma_{ab}\)</span>と<span class="math notranslate nohighlight">\(\Sigma_{ba}=\Sigma_{ab}^{T}\)</span>はグループ間の共分散をまとめた行列である。
+各ブロックの大きさは、次のようになる。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>ブロック</p></th>
+<th class="head text-left"><p>一般の場合</p></th>
+<th class="head text-left"><p>5次元を2成分と3成分に分ける例</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><span class="math notranslate nohighlight">\(\Sigma_{aa}\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(d \times d\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(2 \times 2\)</span></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><span class="math notranslate nohighlight">\(\Sigma_{ab}\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(d \times (D-d)\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(2 \times 3\)</span></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><span class="math notranslate nohighlight">\(\Sigma_{ba}\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\((D-d) \times d\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(3 \times 2\)</span></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><span class="math notranslate nohighlight">\(\Sigma_{bb}\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\((D-d) \times (D-d)\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(3 \times 3\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>特徴量の単位が異なっていても、この分割や以下の公式はそのまま使える。
+例えば体重と身長の共分散の単位は、体重の単位と身長の単位の積になる。
+標準化は必須ではない。</p>
+<p><strong>周辺分布(marginal distribution)</strong> は、<span class="math notranslate nohighlight">\(\mathbf{x}_b\)</span>の値を指定せず、その取り得る値すべてについて同時確率密度を積分したものである。
+正規分布の場合には、対応する平均と共分散のブロックを取り出すだけでよい。</p>
 <div class="math notranslate nohighlight">
 \[
-\begin{align*}
-\int d\mathbf{y} p(\mathbf{x}, \mathbf{y}) 
-&amp; = \mathcal{N}\left( \mathbf{\mu}_{x}, \Sigma_{xx} \right)
-\end{align*}
+p(\mathbf{x}_a)
+= \int_{\mathbb{R}^{D-d}} p(\mathbf{x}_a,\mathbf{x}_b)\,d\mathbf{x}_b
+= \mathcal{N}(\mathbf{x}_a;\boldsymbol{\mu}_a,\Sigma_{aa})
 \]</div>
-<p>条件付き分布は次のようになる。</p>
+<p>一方、<strong>条件付き分布(conditional distribution)</strong> では、<span class="math notranslate nohighlight">\(\mathbf{x}_b\)</span>が特定の観測値<span class="math notranslate nohighlight">\(\mathbf{b}\in\mathbb{R}^{D-d}\)</span>を取ったという情報を使う。
+身長・胸囲・握力の観測値がわかったときに、体重と肺活量の分布を求める操作はこちらに対応する。
+条件付き確率密度は、同時確率密度<span class="math notranslate nohighlight">\(p(\mathbf{x}_a,\mathbf{x}_b)\)</span>に<span class="math notranslate nohighlight">\(\mathbf{x}_b=\mathbf{b}\)</span>を代入し、<span class="math notranslate nohighlight">\(\mathbf{x}_a\)</span>について積分すると1になるように正規化したものであり、次のように表される。</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\begin{align*}
-p(\mathbf{x} | \mathbf{y}) &amp; = \mathcal{N}\left(
-    \mathbf{\mu}_{x|y},
-    \Sigma_{x|y}\right) \\
-\mathbf{\mu}_{x|y} &amp; = \mathbf{\mu}_x + \Sigma_{xy} \Sigma_{yy}^{-1} (\mathbf{y} - \mathbf{\mu}_y) \\
-\Sigma_{x|y} &amp; = \Sigma_{xx} - \Sigma_{xy} \Sigma_{yy}^{-1} \Sigma_{yx}
-\end{align*}
+\begin{aligned}
+p(\mathbf{x}_a \mid \mathbf{x}_b=\mathbf{b})
+&amp;= \mathcal{N}(\mathbf{x}_a;\boldsymbol{\mu}_{a|b},\Sigma_{a|b}) \\
+\boldsymbol{\mu}_{a|b}
+&amp;= \boldsymbol{\mu}_a + \Sigma_{ab}\Sigma_{bb}^{-1}(\mathbf{b}-\boldsymbol{\mu}_b) \\
+\Sigma_{a|b}
+&amp;= \Sigma_{aa} - \Sigma_{ab}\Sigma_{bb}^{-1}\Sigma_{ba}
+\end{aligned}
 \end{split}\]</div>
-<p>以下では、条件分布の式の導出を紹介しよう:</p>
-<p>ある行列<span class="math notranslate nohighlight">\(M\)</span>の逆行列が以下のように書けるとき</p>
+<p>平均の式は、観測値が元の平均からどれだけずれたかを、グループ間の共分散を通じて予測に反映する。
+共分散の式は、観測したグループの情報を使った後に残る不確実性を表す。
+5次元の例では、これらの計算から2成分の平均ベクトルと<span class="math notranslate nohighlight">\(2\times2\)</span>の共分散行列が得られ、体重と肺活量の条件付き分布が定まる。</p>
+<p>平均は観測値<span class="math notranslate nohighlight">\(\mathbf{b}\)</span>によって変わるが、同じ共分散行列と分割の下では、条件付き共分散は<span class="math notranslate nohighlight">\(\mathbf{b}\)</span>の値に依存しない。
+また、<span class="math notranslate nohighlight">\(\Sigma_{ab}=0\)</span>なら、この正規分布では二つのグループは独立であり、条件付き分布は周辺分布と一致する。</p>
+<p>以下では、この条件付き分布の式を導出しよう。</p>
+</section>
+<section id="id9">
+<h3><span class="section-number">3.4.3. </span>条件付き分布の導出<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<p>まず、ブロック行列の逆行列の公式を確認する。</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\begin{align*}
-M &amp; = \left( 
-\begin{matrix}
-A &amp; B \\
-C &amp; D
-\end{matrix}
-\right)^{-1} \\
-\end{align*}
+M = \begin{pmatrix} A &amp; B \\ C &amp; E \end{pmatrix},
+\qquad
+S = A - B E^{-1} C
 \end{split}\]</div>
-<div class="math notranslate nohighlight">
-\[
-S \equiv (A - B D^{-1} C)^{-1}
-\]</div>
-<p>で定義される行列<span class="math notranslate nohighlight">\(S\)</span>を用いて、<span class="math notranslate nohighlight">\(M\)</span>は以下のように表される:</p>
+<p>とし、<span class="math notranslate nohighlight">\(E\)</span>と<span class="math notranslate nohighlight">\(S\)</span>がともに可逆であるとする。
+このとき、<span class="math notranslate nohighlight">\(M\)</span>の逆行列は次のように表される。</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-M = \begin{pmatrix}
-S &amp; -S B D^{-1} \\
--D^{-1} C S &amp; D^{-1} + D^{-1} C S B D^{-1}
+M^{-1} = \begin{pmatrix}
+S^{-1} &amp; -S^{-1} B E^{-1} \\
+-E^{-1} C S^{-1} &amp; E^{-1} + E^{-1} C S^{-1} B E^{-1}
 \end{pmatrix}
 \end{split}\]</div>
-<p>なお、<span class="math notranslate nohighlight">\(S^{-1}\)</span>は行列<span class="math notranslate nohighlight">\(M\)</span>のSchur補行列(Schur complement)と呼ばれる。</p>
-<p>上記の関係を用いて、共分散行列の逆行列を、分割したそれぞれの部分行列の逆行列で表現することにする。</p>
+<p><span class="math notranslate nohighlight">\(S\)</span>は、<span class="math notranslate nohighlight">\(M\)</span>のブロック<span class="math notranslate nohighlight">\(E\)</span>に関するSchur補行列(Schur complement)と呼ばれる。
+この公式を共分散行列に適用する。</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\begin{align*}
-\Sigma^{-1} &amp; \equiv
-\left( 
-\begin{matrix}
-\Sigma_{xx} &amp; \Sigma_{xy} \\
-\Sigma_{yx} &amp; \Sigma_{yy}
-\end{matrix}
-\right)^{-1} \equiv \begin{pmatrix}
-\Lambda_{xx} &amp; \Lambda_{xy} \\
-\Lambda_{yx} &amp; \Lambda_{yy}
-\end{pmatrix} 
-\end{align*}
+\Sigma^{-1} =
+\begin{pmatrix}
+\Sigma_{aa} &amp; \Sigma_{ab} \\
+\Sigma_{ba} &amp; \Sigma_{bb}
+\end{pmatrix}^{-1}
+= \begin{pmatrix}
+\Lambda_{aa} &amp; \Lambda_{ab} \\
+\Lambda_{ba} &amp; \Lambda_{bb}
+\end{pmatrix}
 \end{split}\]</div>
-<p>共分散行列の逆行列を精度行列(precision matrix)と呼び、<span class="math notranslate nohighlight">\(\Lambda\)</span>で表す慣例に倣った。</p>
-<p>確率分布に係る係数等は一旦忘れて、条件付き確率分布のexponential関数の中身を見ていく。</p>
+<p>共分散行列の逆行列を精度行列(precision matrix)と呼び、<span class="math notranslate nohighlight">\(\Lambda\)</span>で表す慣例に倣った。
+上の公式から、</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\begin{align*}
-\log P(\mathbf{x}, \mathbf{y}) 
-=&amp; -\frac{1}{2} (\mathbf{x} - \boldsymbol{\mu}_x)^T \Lambda_{xx} (\mathbf{x} - \boldsymbol{\mu}_x) -\frac{1}{2} (\mathbf{x} - \boldsymbol{\mu}_x)^T \Lambda_{xy} (\mathbf{y} - \boldsymbol{\mu}_y) \\
-&amp; -\frac{1}{2} (\mathbf{y} - \boldsymbol{\mu}_y)^T \Lambda_{yx} (\mathbf{x} - \boldsymbol{\mu}_x) 
--\frac{1}{2} (\mathbf{y} - \boldsymbol{\mu}_y)^T \Lambda_{yy} (\mathbf{y} - \boldsymbol{\mu}_y) + \text{const.} 
-\end{align*}
+\begin{aligned}
+\Lambda_{aa}
+&amp;= (\Sigma_{aa}-\Sigma_{ab}\Sigma_{bb}^{-1}\Sigma_{ba})^{-1}
+= \Sigma_{a|b}^{-1} \\
+\Lambda_{ab}
+&amp;= -\Sigma_{a|b}^{-1}\Sigma_{ab}\Sigma_{bb}^{-1}
+\end{aligned}
 \end{split}\]</div>
-<p><span class="math notranslate nohighlight">\(\mathbf{x}\)</span>に関する1・2次の項をまとめよう。</p>
+<p>を得る。</p>
+<p>次に、<span class="math notranslate nohighlight">\(\mathbf{x}_b=\mathbf{b}\)</span>を固定し、<span class="math notranslate nohighlight">\(\mathbf{x}_a\)</span>についての確率密度を考える。
+条件付き確率密度は同時確率密度を<span class="math notranslate nohighlight">\(\mathbf{x}_b\)</span>の周辺確率密度で割ったものなので、その対数は<span class="math notranslate nohighlight">\(\mathbf{x}_a\)</span>に依存しない項を除いて一致する。
+同時確率密度の指数部分を展開し、<span class="math notranslate nohighlight">\(\Lambda_{ab}=\Lambda_{ba}^{T}\)</span>を用いて交差項をまとめると、</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\log p(\mathbf{x}_a \mid \mathbf{x}_b=\mathbf{b})
+={}&amp; -\frac{1}{2}(\mathbf{x}_a-\boldsymbol{\mu}_a)^T
+\Lambda_{aa}(\mathbf{x}_a-\boldsymbol{\mu}_a) \\
+&amp; -(\mathbf{x}_a-\boldsymbol{\mu}_a)^T
+\Lambda_{ab}(\mathbf{b}-\boldsymbol{\mu}_b)
++ \text{const.}
+\end{aligned}
+\end{split}\]</div>
+<p>となる。ここで<span class="math notranslate nohighlight">\(\text{const.}\)</span>は、<span class="math notranslate nohighlight">\(\mathbf{x}_a\)</span>に依存しない項を表し、観測値<span class="math notranslate nohighlight">\(\mathbf{b}\)</span>には依存してよい。
+<span class="math notranslate nohighlight">\(\mathbf{x}_a\)</span>に関する1・2次の項をまとめると、</p>
 <div class="math notranslate nohighlight">
 \[
-\begin{align*}
--\frac{1}{2} \mathbf{x}^T \Lambda_{xx} \mathbf{x} 
-+ \mathbf{x}^T (\Lambda_{xx} \boldsymbol{\mu}_x - \Lambda_{xy} (\mathbf{y} - \boldsymbol{\mu}_y) )
-\end{align*}
+-\frac{1}{2}\mathbf{x}_a^T\Lambda_{aa}\mathbf{x}_a
++\mathbf{x}_a^T\left[
+\Lambda_{aa}\boldsymbol{\mu}_a
+-\Lambda_{ab}(\mathbf{b}-\boldsymbol{\mu}_b)
+\right]
++\text{const.}
 \]</div>
-<p>ここで、<span class="math notranslate nohighlight">\(\Lambda_{xy} = \Lambda_{yx}^T\)</span>であることを用いた。</p>
-<p>さらに、</p>
+<p>を得る。平方完成したときの中心は、</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\begin{align*}
-\Lambda_{xx} &amp;= (\Sigma_{xx} - \Sigma_{xy} \Sigma_{yy}^{-1} \Sigma_{yx})^{-1} = \Sigma_{x|y}^{-1}\\
-\Lambda_{xy} &amp;= -\Sigma_{x|y}^{-1} \Sigma_{xy} \Sigma_{yy}^{-1}
-\end{align*}
+\begin{aligned}
+\boldsymbol{\mu}_{a|b}
+&amp;= \boldsymbol{\mu}_a
+-\Lambda_{aa}^{-1}\Lambda_{ab}(\mathbf{b}-\boldsymbol{\mu}_b) \\
+&amp;= \boldsymbol{\mu}_a
++\Sigma_{ab}\Sigma_{bb}^{-1}(\mathbf{b}-\boldsymbol{\mu}_b)
+\end{aligned}
 \end{split}\]</div>
-<p>から、</p>
+<p>である。したがって、</p>
 <div class="math notranslate nohighlight">
 \[
-\begin{align*}
-\log P(\mathbf{x} | \mathbf{y}) &amp;= -\frac{1}{2} (\mathbf{x} - \boldsymbol{\mu}_{x|y})^T \Sigma_{x|y}^{-1} (\mathbf{x} - \boldsymbol{\mu}_{x|y}) + \text{const.}
-\end{align*}
+\log p(\mathbf{x}_a \mid \mathbf{x}_b=\mathbf{b})
+= -\frac{1}{2}(\mathbf{x}_a-\boldsymbol{\mu}_{a|b})^T
+\Sigma_{a|b}^{-1}(\mathbf{x}_a-\boldsymbol{\mu}_{a|b})
++\text{const.}
 \]</div>
-<p>となる。正規化すると、条件確率が上のガウス分布になることがわかる。
+<p>となり、正規化すると、上に示した<span class="math notranslate nohighlight">\(d\)</span>次元の正規分布が得られる。
 ここでは、対称可逆な行列に対する下記の性質を用いた。</p>
 <div class="tip admonition">
 <p class="admonition-title">行列・ベクトルの平方完成</p>
-<p>行列版の平方完成と言える。</p>
+<p>対称可逆な行列<span class="math notranslate nohighlight">\(A\)</span>とベクトル<span class="math notranslate nohighlight">\(\mathbf{u},\mathbf{h}\)</span>について、次の恒等式が成り立つ。</p>
 <div class="math notranslate nohighlight">
 \[
--\frac{1}{2} \mathbf{x}^T A \mathbf{x} + \mathbf{x}^T \mathbf{b} = -\frac{1}{2} (\mathbf{x} - A^{-1} \mathbf{b})^T A (\mathbf{x} - A^{-1} \mathbf{b}) + \frac{1}{2} \mathbf{b}^T A^{-1} \mathbf{b}
+-\frac{1}{2}\mathbf{u}^T A\mathbf{u}+\mathbf{u}^T\mathbf{h}
+= -\frac{1}{2}(\mathbf{u}-A^{-1}\mathbf{h})^T A(\mathbf{u}-A^{-1}\mathbf{h})
++\frac{1}{2}\mathbf{h}^T A^{-1}\mathbf{h}
 \]</div>
-<p>右辺第2項は定数項なので、確率分布の正規化には影響しない。</p>
+<p>右辺第2項は<span class="math notranslate nohighlight">\(\mathbf{u}\)</span>に依存しないため、指数関数の係数として正規化定数に吸収できる。</p>
 </div>
 <div class="attention admonition">
 <p class="admonition-title">問題</p>
@@ -793,19 +917,20 @@ S &amp; -S B D^{-1} \\
 </div>
 <div class="attention admonition">
 <p class="admonition-title">問題</p>
-<p>独立な正規分布に従う2つの確率変数</p>
+<p>独立な正規分布に従う、同じ次元の二つの確率ベクトル<span class="math notranslate nohighlight">\(\mathbf{u},\mathbf{v}\in\mathbb{R}^{D}\)</span>を考える。</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\begin{align*}
-\mathbf{x} &amp; \sim \mathcal{N}(\boldsymbol{\mu}_1, \boldsymbol{\Sigma_1}) \\
-\mathbf{y} &amp; \sim \mathcal{N}(\boldsymbol{\mu}_2, \boldsymbol{\Sigma_2}) 
-\end{align*}
+\begin{aligned}
+\mathbf{u} &amp;\sim \mathcal{N}(\boldsymbol{\mu}_1,\Sigma_1) \\
+\mathbf{v} &amp;\sim \mathcal{N}(\boldsymbol{\mu}_2,\Sigma_2)
+\end{aligned}
 \end{split}\]</div>
-<p>があるとき、<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>と<span class="math notranslate nohighlight">\(\mathbf{y}\)</span>の和<span class="math notranslate nohighlight">\(\mathbf{z} = \mathbf{x} + \mathbf{y}\)</span>が正規分布に従うことを示し、その平均ベクトル・共分散行列を、元の分布のパラメータを用いて表せ。</p>
+<p>和<span class="math notranslate nohighlight">\(\mathbf{z}=\mathbf{u}+\mathbf{v}\)</span>が正規分布に従うことを示し、その平均ベクトル・共分散行列を、元の分布のパラメータを用いて表せ。</p>
 </div>
 </section>
-<section id="id7">
-<h2><span class="section-number">3.5. </span>ガウス分布と機械学習の関係<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+</section>
+<section id="id10">
+<h2><span class="section-number">3.5. </span>ガウス分布と機械学習の関係<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
 <p>機械学習分野において、ガウス分布は非常に重要な役割を果たす。
 全てを列挙することはできないが、幾つか代表的な例を挙げておく。</p>
 <ul class="simple">
@@ -817,32 +942,32 @@ S &amp; -S B D^{-1} \\
 </ul>
 <p>上記のうちのいくつかは、この資料でも説明してあるので適宜参照のこと。</p>
 </section>
-<section id="id8">
-<h2><span class="section-number">3.6. </span>確率分布のベイズ推定<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
-<p>2つの確率変数の同時分布を <span class="math notranslate nohighlight">\(p(\mathbf{x}, \mathbf{y})\)</span>、
-<span class="math notranslate nohighlight">\(p(\mathbf{x}), p(\mathbf{y})\)</span> はそれぞれの確率変数の周辺分布と呼ぶ。</p>
+<section id="id11">
+<h2><span class="section-number">3.6. </span>確率分布のベイズ推定<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+<p>前節と同じく、特徴ベクトルの成分を二つのグループ<span class="math notranslate nohighlight">\(\mathbf{x}_a,\mathbf{x}_b\)</span>に分ける。その同時分布を <span class="math notranslate nohighlight">\(p(\mathbf{x}_a, \mathbf{x}_b)\)</span>、
+<span class="math notranslate nohighlight">\(p(\mathbf{x}_a), p(\mathbf{x}_b)\)</span> はそれぞれのグループの周辺分布と呼ぶ。</p>
 <p>確率の和の規則により、</p>
 <div class="math notranslate nohighlight">
 \[
-p(\mathbf{x}) = \int p(\mathbf{x}, \mathbf{y}) d\mathbf{y}
+p(\mathbf{x}_a) = \int p(\mathbf{x}_a, \mathbf{x}_b) d\mathbf{x}_b
 \]</div>
 <div class="math notranslate nohighlight">
 \[
-p(\mathbf{y}) = \int p(\mathbf{x}, \mathbf{y}) d\mathbf{x}
+p(\mathbf{x}_b) = \int p(\mathbf{x}_a, \mathbf{x}_b) d\mathbf{x}_a
 \]</div>
 <p>が成り立つ。離散的な場合は積分を和に置き換えればよい。</p>
 <p>また積の規則と呼ばれる法則は、同時分布と条件付き分布を結びつける:</p>
 <div class="math notranslate nohighlight">
 \[
-p(\mathbf{x}, \mathbf{y}) = p(\mathbf{x} | \mathbf{y}) p(\mathbf{y}) = p(\mathbf{y} | \mathbf{x}) p(\mathbf{x})
+p(\mathbf{x}_a, \mathbf{x}_b) = p(\mathbf{x}_a | \mathbf{x}_b) p(\mathbf{x}_b) = p(\mathbf{x}_b | \mathbf{x}_a) p(\mathbf{x}_a)
 \]</div>
 <p>ここから確率分布に対するベイズの定理が導かれる:</p>
 <div class="math notranslate nohighlight">
 \[
-p(\mathbf{x} | \mathbf{y}) = \frac{p(\mathbf{y} | \mathbf{x}) p(\mathbf{x})}{p(\mathbf{y})}
+p(\mathbf{x}_a | \mathbf{x}_b) = \frac{p(\mathbf{x}_b | \mathbf{x}_a) p(\mathbf{x}_a)}{p(\mathbf{x}_b)}
 \]</div>
-<p>特に、<span class="math notranslate nohighlight">\(p(\mathbf{x})\)</span>を事前分布(prior distribution)、<span class="math notranslate nohighlight">\(p(\mathbf{y} | \mathbf{x})\)</span>を尤度(likelihood)、<span class="math notranslate nohighlight">\(p(\mathbf{x} | \mathbf{y})\)</span>を事後分布(posterior distribution)と呼ぶ。</p>
-<p>確率変数を<span class="math notranslate nohighlight">\(x, y\)</span>とかくと、なんとなく等価・類似性のある量を２つ並べたように見えるが、もう少し機械学習の文脈に即した例を考えてみよう。</p>
+<p>特に、<span class="math notranslate nohighlight">\(p(\mathbf{x}_a)\)</span>を事前分布(prior distribution)、<span class="math notranslate nohighlight">\(p(\mathbf{x}_b | \mathbf{x}_a)\)</span>を尤度(likelihood)、<span class="math notranslate nohighlight">\(p(\mathbf{x}_a | \mathbf{x}_b)\)</span>を事後分布(posterior distribution)と呼ぶ。</p>
+<p>ここまでは成分のグループを<span class="math notranslate nohighlight">\(a,b\)</span>で区別したが、ベイズ推定では、知りたい量と観測した量を、それぞれモデルのパラメータとデータとして具体化できる。機械学習の文脈に即した例を考えてみよう。</p>
 <p>いま何らかの現象やデータを説明することを目的に何らかのパラメータを持つモデル(ニューラルネットワークなど)を考え、
 さらにそのモデルのパラメータを<span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span>という変数で表すことにする。
 このとき、入力データを<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>、出力データを<span class="math notranslate nohighlight">\(\mathbf{y}\)</span>とし、幾つかのデータ点 <span class="math notranslate nohighlight">\(D = \{(\mathbf{x}_i, \mathbf{y}_i)\}_{i=1}^N\)</span>が得られていたとする。</p>
@@ -886,8 +1011,8 @@ p(D | \mathbf{\theta}) =C \exp\left(-\frac{1}{2\sigma^2} \sum_{i=1}^N ||\mathbf{
 また、次元(≒パラメータ数)の小さい領域では、HMCが比較的安定して収束したサンプリングを与えることが多いが、勾配の計算が高コストになる状況ではあまり適さず、複数のworkerで並列に動作する方法、とくにAffine Invariant MCMCが有効であることが多い印象を持っている。</p>
 </section>
 </section>
-<section id="id9">
-<h2><span class="section-number">3.7. </span>多次元ガウス分布の最尤推定<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<section id="id12">
+<h2><span class="section-number">3.7. </span>多次元ガウス分布の最尤推定<a class="headerlink" href="#id12" title="Link to this heading">#</a></h2>
 <div class="math notranslate nohighlight">
 \[
 \mathcal{N}(\mathbf{x}; \boldsymbol{\mu}, \boldsymbol{\Sigma}) 
@@ -972,8 +1097,8 @@ L(\boldsymbol{\mu}, \boldsymbol{\Sigma})
 \]</div>
 <p>となり、<span class="math notranslate nohighlight">\(\boldsymbol{\mu} = \hat{\boldsymbol{\mu}}\)</span>を代入すると、上の共分散行列の最尤推定量が得られる。</p>
 </section>
-<section id="id10">
-<h2><span class="section-number">3.8. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> 多次元正規分布に関するベイズの定理<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<section id="id13">
+<h2><span class="section-number">3.8. </span><span class="math notranslate nohighlight">\(\clubsuit\)</span> 多次元正規分布に関するベイズの定理<a class="headerlink" href="#id13" title="Link to this heading">#</a></h2>
 <p>多次元正規分布に従う確率変数に関するベイズの定理で度々登場する例を紹介しておく。
 ある変数<span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^D\)</span>が、平均ベクトル<span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span>、共分散行列<span class="math notranslate nohighlight">\(\Sigma\)</span> (あるいは精度行列<span class="math notranslate nohighlight">\(\Lambda = \Sigma^{-1}\)</span>)を持つ多次元正規分布に従うとする:</p>
 <div class="math notranslate nohighlight">
@@ -998,8 +1123,8 @@ p(\mathbf{x} | \mathbf{y}) &amp; = \mathcal{N}(\mathbf{x}| \boldsymbol{\Sigma} \
 \end{split}\]</div>
 <p>これは、多次元正規分布に従う確率変数の線形変換もまた多次元正規分布に従うことを表している。</p>
 </section>
-<section id="id11">
-<h2><span class="section-number">3.9. </span>学習の振り返りのためのチェックリスト<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+<section id="id14">
+<h2><span class="section-number">3.9. </span>学習の振り返りのためのチェックリスト<a class="headerlink" href="#id14" title="Link to this heading">#</a></h2>
 <p>▢ 　条件付き確率とベイズの定理を説明できる<br />
 ▢ 　確率密度関数の定義と性質を説明できる<br />
 ▢ 　正規分布の性質(1次元・多次元)を説明できる<br />
@@ -1080,15 +1205,20 @@ p(\mathbf{x} | \mathbf{y}) &amp; = \mathcal{N}(\mathbf{x}| \boldsymbol{\Sigma} \
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3.2. 視覚的なイメージ</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">3.3. 確率密度関数</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3.4. ガウス分布</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.5. ガウス分布と機械学習の関係</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">3.6. 確率分布のベイズ推定</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3.4. ガウス分布</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.4.1. 特徴ベクトルを二つのグループに分ける</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">3.4.2. 周辺分布と条件付き分布</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">3.4.3. 条件付き分布の導出</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">3.5. ガウス分布と機械学習の関係</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">3.6. 確率分布のベイズ推定</a><ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clubsuit">3.6.1. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 事後分布からのサンプリング</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">3.7. 多次元ガウス分布の最尤推定</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">3.8. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 多次元正規分布に関するベイズの定理</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">3.9. 学習の振り返りのためのチェックリスト</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">3.7. 多次元ガウス分布の最尤推定</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">3.8. <span class="math notranslate nohighlight">\(\clubsuit\)</span> 多次元正規分布に関するベイズの定理</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">3.9. 学習の振り返りのためのチェックリスト</a></li>
 </ul>
   </nav></div>
 
